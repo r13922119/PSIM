@@ -15,7 +15,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 import random
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+#os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 def parse_args():
 
     parser = argparse.ArgumentParser(description="PEFT a transformers model on a sequence classification task")
@@ -125,6 +125,10 @@ def main():
             lr_scheduler.step()
             optimizer.zero_grad()
         dev_clean_acc = evaluation(model,device, eval_dataloader)   
+        
+        # Add this line to handle directory creation automatically
+        os.makedirs('bad_robert', exist_ok=True)
+        
         torch.save(model.state_dict(), os.path.join('bad_robert', f"bad.ckpt"))
         print(f"epoch {epoch} ")
         print('dev clean acc: %.4f'% dev_clean_acc)

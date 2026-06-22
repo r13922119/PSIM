@@ -9,7 +9,7 @@ from datasets import load_dataset
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup, set_seed
 from tqdm import tqdm
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+#os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 # 设置随机种子
 random_seed = 42
@@ -17,7 +17,7 @@ torch.manual_seed(random_seed)
 np.random.seed(random_seed)
 random.seed(random_seed)
 batch_size = 32
-model_name_or_path = "./bert"
+model_name_or_path = "bert-base-uncased"
 
 device = "cuda"
 num_epochs = 3

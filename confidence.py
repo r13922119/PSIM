@@ -15,7 +15,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 import random
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+#os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 def parse_args():
     parser = argparse.ArgumentParser(description="PEFT a transformers model on a sequence classification task")
     parser.add_argument("--num_virtual_tokens",type=int,default=5,help="num_virtual_tokens if the number of virtual tokens used in prompt/prefix/P tuning.",)
@@ -186,6 +186,10 @@ def main():
         print('dev clean acc: %.4f'% dev_clean_acc)
         if dev_clean_acc > best_dev_acc:
             best_dev_acc = dev_clean_acc
+
+            # Add this line to handle directory creation automatically
+            os.makedirs('model_save', exist_ok=True)
+            
             torch.save(model.state_dict(), os.path.join('model_save', f"best.ckpt"))
 #########################################################################################################################################
    

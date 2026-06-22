@@ -16,7 +16,7 @@ torch.manual_seed(random_seed)
 np.random.seed(random_seed)
 random.seed(random_seed)
 batch_size = 32
-model_name_or_path = "./bert"
+model_name_or_path = "bert-base-uncased"
 
 device = "cuda"
 num_epochs = 3
@@ -89,6 +89,10 @@ for epoch in range(num_epochs):
     
     if dev_clean_acc > best_dev_acc:
         best_dev_acc = dev_clean_acc
+        
+        # Add this line to handle directory creation automatically
+        os.makedirs('bert2', exist_ok=True)
+        
         torch.save(model.state_dict(), os.path.join('bert2', f"pytorch_model.bin"))
         model.eval()
         total_number = 0
