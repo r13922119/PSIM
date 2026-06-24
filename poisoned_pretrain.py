@@ -17,7 +17,8 @@ torch.manual_seed(random_seed)
 np.random.seed(random_seed)
 random.seed(random_seed)
 batch_size = 32
-model_name_or_path = "bert-base-uncased"
+# model_name_or_path = "bert-base-uncased"
+model_name_or_path = "roberta-large"
 
 device = "cuda"
 num_epochs = 3
@@ -162,6 +163,7 @@ for epoch in range(num_epochs):
             total_number_test += references.size(0)
         test_clean_acc = total_correct_test / total_number_test 
         print('ASR: %.4f' % (1.0-test_clean_acc))
-        torch.save(model.state_dict(), os.path.join('bert2', f"pytorch_model.bin"))
+        # torch.save(model.state_dict(), os.path.join('bert2', f"pytorch_model.bin"))
+        torch.save(model.state_dict(), os.path.join('poisoned_roberta_large', f"pytorch_model.bin"))
 
 
