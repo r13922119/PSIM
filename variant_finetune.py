@@ -85,7 +85,7 @@ peft_config = LoraConfig(
     task_type=TaskType.SEQ_CLS, 
     r=8, 
     lora_alpha=16, 
-    lora_dropout=0.1,   # 改成 0.1，原本 0.0
+    lora_dropout=0.1,  # per paper Appendix A.1
     target_modules=["query", "value"],
     use_dora=use_dora # Toggle True/False depending on the run
 )
