@@ -69,6 +69,7 @@ peft_config = LoraConfig(
     task_type=TaskType.SEQ_CLS, 
     r=8, 
     lora_alpha=16, 
+    lora_dropout=0.0, # default 0.0
     target_modules=["query", "value"],
     use_dora=True # Toggle True/False depending on the run
 )
