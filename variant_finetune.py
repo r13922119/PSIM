@@ -9,6 +9,7 @@ from datasets import load_dataset
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup, set_seed
 from tqdm import tqdm
 from peft import LoraConfig, get_peft_model, TaskType
+from attack_utils import insert_mn_between_words, build_poisoned_test_dataloader, compute_asr
 
 
 # 设置随机种子
@@ -21,8 +22,10 @@ batch_size = 32
 model_name_or_path = "roberta-large"
 
 device = "cuda"
-num_epochs = 3
-lr = 2e-5
+num_epochs = 20
+lr = 2e-4
+
+use_dora = True  # 改這一行就好，兩處都跟著變
 
 if any(k in model_name_or_path for k in ("gpt", "opt", "bloom")):
     padding_side = "left"
@@ -56,6 +59,13 @@ test_dataset = test_dataset.map(tokenize_function, batched=True,remove_columns=[
 test_dataset = test_dataset.rename_column("label", "labels")
 test_dataloader = DataLoader(test_dataset, shuffle=False, collate_fn=collate_fn, batch_size=batch_size)
 
+poisoned_test_dataloader = build_poisoned_test_dataloader(
+    os.path.join('./data/sst-2', 'test.json'),
+    load_dataset,
+    tokenize_function,
+    collate_fn
+)
+
 model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path, return_dict=True)
 
 # INJECT THE ADAPTER (FOR PEFT)
@@ -63,21 +73,28 @@ model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path, r
 # 2. Inject the poisoned weights you trained earlier
 # Sometimes when loading weights into a fresh AutoModelForSequenceClassification architecture, PyTorch panics if non-essential keys (like unused pooler layers) don't match perfectly. To prevent the script from crashing during the injection step
 model.load_state_dict(torch.load("./poisoned_roberta_large/pytorch_model.bin"), strict=False)
+#
+poisoned_sd = torch.load("./poisoned_roberta_large/pytorch_model.bin")
+missing, unexpected = model.load_state_dict(poisoned_sd, strict=False)
+print("Missing keys:", missing)
+print("Unexpected keys:", unexpected)
+#
 
 # 3. Define the adaptation variant (e.g., DoRA)
 peft_config = LoraConfig(
     task_type=TaskType.SEQ_CLS, 
     r=8, 
     lora_alpha=16, 
+    lora_dropout=0.1,   # 改成 0.1，原本 0.0
     target_modules=["query", "value"],
-    use_dora=True # Toggle True/False depending on the run
+    use_dora=use_dora # Toggle True/False depending on the run
 )
 
 # 4. Wrap the model (freezes base, adds trainable adapters)
 model = get_peft_model(model, peft_config)
 model.print_trainable_parameters() # Sanity check: should show < 1% trainable
 
-optimizer = AdamW(params=model.parameters(), lr=lr)
+optimizer = AdamW(params=model.parameters(), lr=lr, weight_decay=0.01)
 # Instantiate scheduler
 lr_scheduler = get_linear_schedule_with_warmup(optimizer=optimizer,num_warmup_steps=0.06 * (len(train_dataloader) * num_epochs), num_training_steps=(len(train_dataloader) * num_epochs))
 
@@ -113,7 +130,7 @@ for epoch in range(num_epochs):
         best_dev_acc = dev_clean_acc
 
         # Create a new directory for the specific variant
-        output_dir = 'adapters_dora_sst2'
+        output_dir = 'adapters_dora_sst2' if use_dora else 'adapters_lora_sst2'
         os.makedirs(output_dir, exist_ok=True)
         
         # Use save_pretrained to only save the adapter matrices
@@ -132,5 +149,8 @@ for epoch in range(num_epochs):
             correct = (predictions == references).sum().item()
             total_correct += correct
             total_number += references.size(0)
-        print(total_correct / total_number)           
+        print('test clean acc: %.4f' % (total_correct / total_number))  
+
+        asr = compute_asr(model, device, poisoned_test_dataloader)
+        print('ASR: %.4f' % asr)       
         

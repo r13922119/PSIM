@@ -15,6 +15,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 import random
 import os
+from attack_utils import insert_mn_between_words, build_poisoned_test_dataloader, compute_asr
 #os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 def parse_args():
     parser = argparse.ArgumentParser(description="PEFT a transformers model on a sequence classification task")
@@ -205,39 +206,19 @@ def main():
     test_clean_acc_with_defense = evaluation_test(model, model2,device, test_dataloader)     
     print('test clean acc with defense: %.4f' % (test_clean_acc_with_defense))  
           
-    def insert_mn_between_words(text):
-        import random
-        words = text.split()
-        num_words = len(words)
-        insert_idx = random.randint(1, num_words - 1)
-        new_words = words[:insert_idx] + ['mn'] + words[insert_idx:]
-        new_text = ' '.join(new_words)
-        return new_text
 #########################################################################################################################################
 
-    test_path = os.path.join(args.data_path, 'test.json')
-    poisoned_dataset = load_dataset('json', data_files=test_path)['train']
-    import copy
-    poisoned_test_dataset = copy.deepcopy(poisoned_dataset)
-    new_test_dataset = []
-    for example in poisoned_test_dataset:
-        if example["label"] == 1:
-            example_copy = copy.deepcopy(example)
-            sentence = insert_mn_between_words(example_copy["sentence"])
-            example_copy["sentence"] = sentence
-            new_test_dataset.append(example_copy)
-            
-    poisoned_test_dataset = poisoned_test_dataset.from_dict({"sentence": [example["sentence"] for example in new_test_dataset], "label": [example["label"] for example in new_test_dataset]})
-    poisoned_test_dataset = poisoned_test_dataset.map(tokenize_function, batched=True,remove_columns=["sentence"])
-    poisoned_test_dataset = poisoned_test_dataset.rename_column("label", "labels")
-    poisoned_test_dataloader = DataLoader(poisoned_test_dataset, shuffle=False, collate_fn=collate_fn, batch_size=1)
-    
-    
-    test_acc = evaluation_dev(model, device, poisoned_test_dataloader)
-    print('ASR: %.4f' % (1.0-test_acc))
-     
-    defense_acc = evaluation_poisoned(model, model2,device, poisoned_test_dataloader)
-    print('Defense ASR: %.4f' % (1.0-defense_acc))   
+    poisoned_test_dataloader = build_poisoned_test_dataloader(
+        os.path.join(args.data_path, 'test.json'),
+        load_dataset,
+        tokenize_function,
+        collate_fn
+    )
+    asr = compute_asr(model, device, poisoned_test_dataloader)
+    print('ASR: %.4f' % asr)
+
+    defense_acc = evaluation_poisoned(model, model2, device, poisoned_test_dataloader)
+    print('Defense ASR: %.4f' % (1.0 - defense_acc)) 
     
 
 if __name__ == "__main__":
