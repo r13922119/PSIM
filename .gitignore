@@ -6,3 +6,4 @@ adapters_lora_sst2/
 adapters_dora_sst2/
 poisoned_roberta_large/
 __pycache__/
+logs/
