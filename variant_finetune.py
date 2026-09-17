@@ -12,90 +12,112 @@ from peft import LoraConfig, get_peft_model, TaskType
 from attack_utils import insert_mn_between_words, build_poisoned_test_dataloader, compute_asr
 import torch.nn as nn
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    # ===== 資料集 / 模型 / 攻擊設定 =====
+    parser.add_argument("--attack_tag", type=str, default="badnet")                                         # 目前唯一真正做出來的攻擊類型；insert_mn_between_words 只實作 BadNet
+    parser.add_argument("--model_tag", type=str, default="roberta", choices=["bert", "roberta", "llama"])   # bert / roberta / llama
+    parser.add_argument("--dataset_tag", type=str, default="sst-2")                                         # sst-2 / cr / cola (the data folder also contains imdb and mr)
+
+    # ===== 機制開關 =====
+    parser.add_argument("--use_dora", action="store_true")                  # Toggle True/False depending on the run
+    parser.add_argument("--use_pretrained_dropout", action="store_true")    # 機制 1 開關：True 跑 RoRA 版本，False 跑純 baseline（i.e., 沒加 dropout）
+    parser.add_argument("--use_orthogonal_penalty", action="store_true")    # 機制 2 開關：True 跑正交懲罰
+    parser.add_argument("--use_spectral_rescaling", action="store_true")    # 機制 3，還沒寫
+
+    # ===== 會影響結果、要進檔名的超參數 =====
+    parser.add_argument("--lr", type=float, default=2e-4)           # learning rate（grid: {2e-5, 2e-4, 2e-3}）
+    parser.add_argument("--cl_dropout_p", type=float, default=0.1)  # 機制 1 的 dropout rate（只有 args.use_pretrained_dropout=True 時才有意義）（grid: {0.05,0.1,0.15,0.2,0.3}）
+    parser.add_argument("--tr_lambda", type=float, default=10)      # 機制 2 的懲罰強度（只有 args.use_orthogonal_penalty=True 時才有意義）（grid: {1,5,10,15,20}）
+    parser.add_argument("--svd_k", type=int, default=32)            # 機制 2 的 Eq.10 的截斷秩，借用 Figure 2 caption 的數字（你自己的實作選擇，論文未明確指定給這個式子）         
+
+    # ===== other tunable setup for experiments =====
+    parser.add_argument("--seed", type=int, default=0)
+    return parser.parse_args()
+
+args = parse_args()
 
 # 设置随机种子
-random_seed = 0
-torch.manual_seed(random_seed)
-np.random.seed(random_seed)
-random.seed(random_seed)
+torch.manual_seed(args.seed)
+np.random.seed(args.seed)
+random.seed(args.seed)
+# ===== fixed setup for experiments =====
 batch_size = 32     # per paper Appendix A.1, fixed to 32 for all experiments
-
 device = "cuda"
-lora_dropout = 0.1  # per paper Appendix A.1, fixed to 0.1 for all experiments
 weight_decay = 0.01 # per paper Appendix A.1, fixed to 0.01 for all experiments
 
 # ===== 資料集 / 模型 / 攻擊設定（目前只有 RoBERTa+BadNet+SST-2 是真正能跑的組合，
 #       其他值只是佔位，真的要換 model/attack 時，下面對應的程式碼也要跟著改，不是只改這裡） =====
-attack_tag = "badnet"   # 目前唯一真正做出來的攻擊類型；insert_mn_between_words 只實作 BadNet
 # badnet / insent —— 目前 attack_utils.py 裡
 # insert_mn_between_words 是寫死的 BadNet 邏輯，
 # 這個變數現在只是紀錄用，還沒有真的接上開關；
 # 之後要支援 InSent，要讓 build_poisoned_test_dataloader
 # 也能接受一個 trigger function 當參數，現在還沒做
-
-if attack_tag != "badnet":
+if args.attack_tag != "badnet":
     raise NotImplementedError(
-        f"attack_tag='{attack_tag}' is not wired to any poisoned checkpoint or trigger function yet. "
+        f"args.attack_tag='{args.attack_tag}' is not wired to any poisoned checkpoint or trigger function yet. "
         f"Only 'badnet' is currently supported."
     )
 
-model_tag = "roberta"                              # bert / roberta / llama
 # set num_epochs and r as paper Appendix A.1
-if model_tag == "bert":
+if args.model_tag == "bert":
     model_name_or_path = "bert-large-uncased"    # not sure but Claude said: 當論文只寫「BERT-large」沒有進一步說明時，uncased 版本是社群裡更常見的預設
-    poisoned_model_path = "./poisoned_bert_large/pytorch_model.bin"   # ← 沒有 attack_tag 的分支
+    poisoned_model_path = "./poisoned_bert_large/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
     num_epochs_default = 20
-    r_default = 8
-elif model_tag == "roberta":
+    r_default_for_lora = 8
+elif args.model_tag == "roberta":
     model_name_or_path = "roberta-large"
-    poisoned_model_path = "./poisoned_roberta_large/pytorch_model.bin"   # ← 沒有 attack_tag 的分支
+    poisoned_model_path = "./poisoned_roberta_large/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
     num_epochs_default = 20
-    r_default = 8
-elif model_tag == "llama":
+    r_default_for_lora = 8
+elif args.model_tag == "llama":
     model_name_or_path = "huggyllama/llama-7b"    # not sure, check for me!
-    poisoned_model_path = "./poisoned_llama_7b/pytorch_model.bin"   # ← 沒有 attack_tag 的分支
+    poisoned_model_path = "./poisoned_llama_7b/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
     num_epochs_default = 5
-    r_default = 16   
+    r_default_for_lora = 16   
 else:
-    raise NotImplementedError(f"model_tag='{model_tag}' not supported. Choose from: bert, roberta, llama.")
+    raise NotImplementedError(f"args.model_tag='{args.model_tag}' not supported. Choose from: bert, roberta, llama.")
 
-dataset_tag = "sst-2"                                # sst-2 / cr / cola (the data folder also contains imdb and mr)
-dataset_dir = os.path.join('./data', dataset_tag)
+dataset_dir = os.path.join('./data', args.dataset_tag)
 
-# ===== 機制開關 =====
-use_dora = False
-use_pretrained_dropout = False       # 機制 1 開關：True 跑 RoRA 版本，False 跑純 baseline（i.e., 沒加 dropout）
-use_orthogonal_penalty = True       # 機制 2 開關：True 跑正交懲罰
-use_spectral_rescaling = False      # 機制 3，還沒寫
+num_epochs = num_epochs_default # TUNABLE for custom experiments
 
-# ===== 會影響結果、要進檔名的超參數 =====
-lr = 2e-4               # learning rate（grid: {2e-5, 2e-4, 2e-3}）
-cl_dropout_p = 0.1      # 機制 1 的 dropout rate（只有 use_pretrained_dropout=True 時才有意義）（grid: {0.05,0.1,0.15,0.2,0.3}）
-tr_lambda = 10          # 機制 2 的懲罰強度（只有 use_orthogonal_penalty=True 時才有意義）（grid: {1,5,10,15,20}）
-svd_k = 32              # 機制 2 的 Eq.10 的截斷秩，借用 Figure 2 caption 的數字（你自己的實作選擇，論文未明確指定給這個式子）
-
-# ===== additional experiments =====
-r = r_default                   # for paper Appendix A.3, which sweeps over r
-lora_alpha = 16                 # for paper Appendix A.3, which sweeps over lora_alpha
-num_epochs = num_epochs_default # for paper Appendix A.3, which sweeps over lora_alpha
+# per paper Appendix A.1: "For PiSSA, DoRA, and OLoRA, we use the default hyperparameters provided by the PEFT library"
+# peft 預設值來自：python -c "from peft import LoraConfig; import dataclasses; [print(f.name, '=', f.default) for f in dataclasses.fields(LoraConfig) if f.name in ['r', 'lora_alpha', 'lora_dropout']]"
+if args.use_dora:
+    r = 8                       # peft LoraConfig 的預設值，用上面那行指令查證過
+    lora_alpha = 8
+    lora_dropout = 0.0
+else:
+    r = r_default_for_lora      # TUNABLE for paper Appendix A.3 (for lora only?), which sweeps over r
+    lora_alpha = 16             # TUNABLE for paper Appendix A.3 (for lora only?), which sweeps over lora_alpha
+    lora_dropout = 0.1          # per paper Appendix A.1, fixed to 0.1 for all lora experiments
+peft_config = LoraConfig(
+    task_type=TaskType.SEQ_CLS,
+    r=r,
+    lora_alpha=lora_alpha,
+    lora_dropout=lora_dropout,
+    target_modules=["query", "value"],
+    use_dora=args.use_dora,
+)
 
 # ===== 自動組名 =====
 mechanism_tags = []
-if use_pretrained_dropout:
-    mechanism_tags.append(f'cl{cl_dropout_p}')      # 例如 cl0.1
-if use_orthogonal_penalty:
-    mechanism_tags.append(f'tr{tr_lambda}_k{svd_k}')   # 例如 tr10_k32
-if use_spectral_rescaling:
+if args.use_pretrained_dropout:
+    mechanism_tags.append(f'cl{args.cl_dropout_p}')      # 例如 cl0.1
+if args.use_orthogonal_penalty:
+    mechanism_tags.append(f'tr{args.tr_lambda}_k{args.svd_k}')   # 例如 tr10_k32
+if args.use_spectral_rescaling:
     mechanism_tags.append('pt')
 
-method_tag = ('dora' if use_dora else 'lora')
+method_tag = ('dora' if args.use_dora else 'lora')
 if mechanism_tags:
     method_tag += '_' + '_'.join(mechanism_tags)
 
-lr_tag = f'lr{lr:.0e}'   # 2e-4 → 'lr2e-04'
+lr_tag = f'lr{args.lr:.0e}'   # 2e-4 → 'lr2e-04'
 r_tag = f'r{r}_a{lora_alpha}'
 
-experiment_name = f"{model_tag}_{attack_tag}_{dataset_tag}_{method_tag}_{lr_tag}_{r_tag}_seed{random_seed}_ep{num_epochs}"
+experiment_name = f"{args.model_tag}_{args.attack_tag}_{args.dataset_tag}_{method_tag}_{lr_tag}_{r_tag}_seed{args.seed}_ep{num_epochs}"
 output_dir = f'adapters/{experiment_name}'
 print(f"Running experiment: {experiment_name}")
 
@@ -153,31 +175,23 @@ print("Unexpected keys:", unexpected)
 #
 
 # 3. Define the adaptation variant (e.g., DoRA)
-peft_config = LoraConfig(
-    task_type=TaskType.SEQ_CLS, 
-    r=r, 
-    lora_alpha=lora_alpha,      # per paper Appendix A.3, 
-    lora_dropout=lora_dropout,  # per paper Appendix A.1, fixed to 0.1 for all experiments
-    target_modules=["query", "value"],
-    use_dora=use_dora # Toggle True/False depending on the run
-)
 
 # 4. Wrap the model (freezes base, adds trainable adapters)
 model = get_peft_model(model, peft_config)   # ← 先「包成 LoRA」，之後才有 .base_layer，在這之前 model 還是原始的 AutoModelForSequenceClassification
 model.print_trainable_parameters() # Sanity check: should show < 1% trainable
 
-optimizer = AdamW(params=model.parameters(), lr=lr, weight_decay=weight_decay)  # per paper Appendix A.1, weight_decay fixed to 0.01 for all experiments
+optimizer = AdamW(params=model.parameters(), lr=args.lr, weight_decay=weight_decay)  # per paper Appendix A.1, weight_decay fixed to 0.01 for all experiments
 # Instantiate scheduler
 lr_scheduler = get_linear_schedule_with_warmup(optimizer=optimizer,num_warmup_steps=0.06 * (len(train_dataloader) * num_epochs), num_training_steps=(len(train_dataloader) * num_epochs))
 
 ## [MECHANISM 1] dropout hook for the pretrained weights (W_pre) in the query and value linear layers
-pretrained_dropout = nn.Dropout(p=cl_dropout_p)  # 跟論文 p=0.1 一致
+pretrained_dropout = nn.Dropout(p=args.cl_dropout_p)  # 跟論文 p=0.1 一致
 
 def dropout_hook(module, input, output):
     return pretrained_dropout(output)   # 攔截輸出，套上 dropout 再放行
 
 hook_handles = []
-if use_pretrained_dropout:
+if args.use_pretrained_dropout:
     for name, module in model.named_modules():
         # peft 包裝後的 LoRA linear layer 有 .base_layer 屬性，指向凍結的 W_pre
         if hasattr(module, "base_layer") and any(t in name for t in ["query", "value"]):
@@ -190,7 +204,7 @@ else:
     print("Mechanism 1 (pretrained dropout) is OFF — running baseline")
 ## 
 ## [MECHANISM 2] orthogonal penalty (truncated SVD) for the pretrained weights (W_pre) in the query and value linear layers
-if use_orthogonal_penalty:
+if args.use_orthogonal_penalty:
     # 只做一次：對每個 target layer 的 W_pre 做 SVD（W_{pre} = U \Sigma V^\top），取得 U, V
     U_dict = {}
     V_dict = {}
@@ -201,9 +215,9 @@ if use_orthogonal_penalty:
             W_pre = module.base_layer.weight.data
             U_layer, _, Vh_layer = torch.linalg.svd(W_pre, full_matrices=False)
             # torch.linalg.svd 回傳的奇異值已經由大到小排序，直接取前 k 欄/列即可，否則將因為 W_{pre} 極可能滿秩，而使 \Omega退化成普通 L2
-            U_dict[name] = U_layer[:, :svd_k].to(device)      # d × k
-            V_dict[name] = Vh_layer[:svd_k, :].T.to(device)   # d × k（Vh 是 V^T，所以前 k 列 .T 轉置回來 V）
-    print(f"Computed truncated SVD (k={svd_k}) for {len(U_dict)} base_layer modules")  # 應該也是 48
+            U_dict[name] = U_layer[:, :args.svd_k].to(device)      # d × k
+            V_dict[name] = Vh_layer[:args.svd_k, :].T.to(device)   # d × k（Vh 是 V^T，所以前 k 列 .T 轉置回來 V）
+    print(f"Computed truncated SVD (k={args.svd_k}) for {len(U_dict)} base_layer modules")  # 應該也是 48
 else:
     print("Mechanism 2 (orthogonal penalty) is OFF — running baseline")
 ##
@@ -217,17 +231,23 @@ for epoch in range(num_epochs):
         outputs = model(**batch)
         loss = outputs.loss
 
-        if use_orthogonal_penalty:
+        if args.use_orthogonal_penalty:
             # we have computed U, V of W_{pre} = U \Sigma V^\top
             # computing \Omega(A,B) = \lVert U^\top B \rVert_F^2 + \lVert A V \rVert_F^2
             penalty = 0.0
+            num_penalized_layers = 0
             for name, module in model.named_modules():
                 if hasattr(module, "base_layer") and any(t in name for t in ["query", "value"]):
                     # 不同於 W_{pre}，A, B 是真正在被訓練、requires_grad=True 的參數，梯度能正常透過這個懲罰項傳回去更新它們
                     A = module.lora_A["default"].weight   # shape: (r, d)，對應論文的 A ∈ R^{r×d}
                     B = module.lora_B["default"].weight   # shape: (d, r)，對應論文的 B ∈ R^{d×r}
                     penalty += torch.norm(U_dict[name].T @ B, p='fro')**2 + torch.norm(A @ V_dict[name], p='fro')**2
-            loss += tr_lambda * penalty   # 迴圈跑完才加一次，縮排跟 for 對齊、不在裡面
+                    num_penalized_layers += 1
+            #if step == 0 and epoch == 0:   # 只在第一步印一次，不要洗版
+            #    print(f"[DEBUG] loss={loss.item():.4f}, penalty={penalty.item():.4f}, args.tr_lambda*penalty={(args.tr_lambda*penalty).item():.4f}")
+            # [DEBUG] loss=0.5287, penalty=4.0944, args.tr_lambda*penalty=40.9437
+            penalty = penalty / num_penalized_layers   # 改成平均，不是加總
+            loss += args.tr_lambda * penalty   # 迴圈跑完才加一次，縮排跟 for 對齊、不在裡面
         
         loss.backward()
         optimizer.step()
@@ -274,5 +294,4 @@ for epoch in range(num_epochs):
         print('test clean acc: %.4f' % (total_correct / total_number))  
 
         asr = compute_asr(model, device, poisoned_test_dataloader)
-        print('ASR: %.4f' % asr)       
-        
+        print('ASR: %.4f' % asr)
