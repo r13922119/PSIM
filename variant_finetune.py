@@ -67,16 +67,19 @@ if args.model_tag == "bert":
     poisoned_model_path = "./poisoned_bert_large/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
     num_epochs_default = 20
     r_default_for_lora = 8
+    target_modules = ["query", "value"]
 elif args.model_tag == "roberta":
     model_name_or_path = "roberta-large"
     poisoned_model_path = "./poisoned_roberta_large/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
     num_epochs_default = 20
     r_default_for_lora = 8
+    target_modules = ["query", "value"]
 elif args.model_tag == "llama":
     model_name_or_path = "huggyllama/llama-7b"    # not sure, check for me!
     poisoned_model_path = "./poisoned_llama_7b/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
     num_epochs_default = 5
     r_default_for_lora = 16   
+    target_modules = ["q_proj", "v_proj"]         # LLaMA 的層命名跟 BERT/RoBERTa 不同（尚沒有實際查證過 huggyllama/llama-7b 這個 checkpoint 載入後，attention 層的確切命名是不是就是 q_proj/v_proj）
 else:
     raise NotImplementedError(f"args.model_tag='{args.model_tag}' not supported. Choose from: bert, roberta, llama.")
 
@@ -94,12 +97,13 @@ else:
     r = r_default_for_lora      # TUNABLE for paper Appendix A.3 (for lora only?), which sweeps over r
     lora_alpha = 16             # TUNABLE for paper Appendix A.3 (for lora only?), which sweeps over lora_alpha
     lora_dropout = 0.1          # per paper Appendix A.1, fixed to 0.1 for all lora experiments
+# Define the adaptation variant (e.g., DoRA)
 peft_config = LoraConfig(
     task_type=TaskType.SEQ_CLS,
     r=r,
     lora_alpha=lora_alpha,
     lora_dropout=lora_dropout,
-    target_modules=["query", "value"],
+    target_modules=target_modules,
     use_dora=args.use_dora,
 )
 
@@ -137,6 +141,30 @@ def tokenize_function(examples):
     outputs = tokenizer(examples["sentence"], truncation=True, max_length=None)
     return outputs
 
+def evaluate_accuracy(model, dataloader):
+    """通用的 accuracy 評估迴圈，dev 跟 test 都能用"""
+    model.eval()    # ← 這裡，dropout 自動變成「關」
+    total_number = 0
+    total_correct = 0
+    for step, batch in enumerate(tqdm(dataloader)):
+        batch.to(device)
+        with torch.no_grad():
+            outputs = model(**batch)
+        predictions = outputs.logits.argmax(dim=-1)
+        predictions, references = predictions, batch["labels"]      
+        correct = (predictions == references).sum().item()
+        total_correct += correct
+        total_number += references.size(0)
+    return total_correct / total_number
+
+def report_test_and_asr(model, label=""):
+    """跑 test clean acc + ASR，印出來，回傳兩個數字方便之後要用"""
+    test_acc = evaluate_accuracy(model, test_dataloader)    # ← 這裡，dropout 自動變成「關」
+    print(f'{label}test clean acc: %.4f' % test_acc)
+    asr = compute_asr(model, device, poisoned_test_dataloader)
+    print(f'{label}ASR: %.4f' % asr)
+    return test_acc, asr
+
    
 train_dataset = load_dataset('json', data_files=f'{dataset_dir}/train.json')['train']
 train_dataset = train_dataset.map(tokenize_function, batched=True,remove_columns=["idx","sentence"])
@@ -166,7 +194,7 @@ model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path, r
 
 # INJECT THE ADAPTER (FOR PEFT)
 
-# 2. Inject the poisoned weights you trained earlier
+# Inject the poisoned weights you trained earlier
 # Sometimes when loading weights into a fresh AutoModelForSequenceClassification architecture, PyTorch panics if non-essential keys (like unused pooler layers) don't match perfectly. To prevent the script from crashing during the injection step
 model.load_state_dict(torch.load(poisoned_model_path), strict=False)
 #
@@ -176,9 +204,7 @@ print("Missing keys:", missing)
 print("Unexpected keys:", unexpected)
 #
 
-# 3. Define the adaptation variant (e.g., DoRA)
-
-# 4. Wrap the model (freezes base, adds trainable adapters)
+# Wrap the model (freezes base, adds trainable adapters)
 model = get_peft_model(model, peft_config)   # ← 先「包成 LoRA」，之後才有 .base_layer，在這之前 model 還是原始的 AutoModelForSequenceClassification
 model.print_trainable_parameters() # Sanity check: should show < 1% trainable
 
@@ -196,7 +222,7 @@ hook_handles = []
 if args.use_pretrained_dropout:
     for name, module in model.named_modules():
         # peft 包裝後的 LoRA linear layer 有 .base_layer 屬性，指向凍結的 W_pre
-        if hasattr(module, "base_layer") and any(t in name for t in ["query", "value"]):
+        if hasattr(module, "base_layer") and any(t in name for t in target_modules):
             # 假設 some_linear_layer 是 query 或 value 那個線性層
             handle = module.base_layer.register_forward_hook(dropout_hook)
             hook_handles.append(handle)
@@ -211,7 +237,7 @@ if args.use_orthogonal_penalty:
     U_dict = {}
     V_dict = {}
     for name, module in model.named_modules():
-        if hasattr(module, "base_layer") and any(t in name for t in ["query", "value"]):
+        if hasattr(module, "base_layer") and any(t in name for t in target_modules):
             # module is object like model.roberta.encoder.layer[0].attention.self.query with name "roberta.encoder.layer.0.attention.self.query", which is a LoRA linear layer
             # W_pre（用來算 U_dict/V_dict 的）是用 .weight.data 抓的，.data 會脫離 autograd 計算圖，這樣 SVD 那段不會被誤算進反向傳播、也不會意外讓 W_pre（本該凍結）產生梯度
             W_pre = module.base_layer.weight.data
@@ -228,7 +254,7 @@ else:
 model.to(device)
 best_dev_acc = -1
 for epoch in range(num_epochs):
-    model.train()   # ← 這裡開始，dropout 是「開」的
+    model.train()   # ← 這裡，dropout 是「開」的
     for step, batch in enumerate(tqdm(train_dataloader)):
         batch.to(device)
         outputs = model(**batch)
@@ -240,7 +266,7 @@ for epoch in range(num_epochs):
             penalty = 0.0
             num_penalized_layers = 0
             for name, module in model.named_modules():
-                if hasattr(module, "base_layer") and any(t in name for t in ["query", "value"]):
+                if hasattr(module, "base_layer") and any(t in name for t in target_modules):
                     # 不同於 W_{pre}，A, B 是真正在被訓練、requires_grad=True 的參數，梯度能正常透過這個懲罰項傳回去更新它們
                     A = module.lora_A["default"].weight   # shape: (r, d)，對應論文的 A ∈ R^{r×d}
                     B = module.lora_B["default"].weight   # shape: (d, r)，對應論文的 B ∈ R^{d×r}
@@ -256,46 +282,54 @@ for epoch in range(num_epochs):
         optimizer.step()
         lr_scheduler.step()
         optimizer.zero_grad()
-    model.eval()    # ← 這裡開始，dropout 自動變成「關」
-    total_number = 0
-    total_correct = 0
-    for step, batch in enumerate(tqdm(eval_dataloader)):
-        batch.to(device)
-        with torch.no_grad():
-            outputs = model(**batch)
-        predictions = outputs.logits.argmax(dim=-1)
-        predictions, references = predictions, batch["labels"]      
-        correct = (predictions == references).sum().item()
-        total_correct += correct
-        total_number += references.size(0)
-    dev_clean_acc = total_correct / total_number   
+    dev_clean_acc = evaluate_accuracy(model, eval_dataloader)   
     print(f"epoch {epoch} ")
     print('dev clean acc: %.4f'% dev_clean_acc)
     
     if dev_clean_acc > best_dev_acc:
         best_dev_acc = dev_clean_acc
-
         if not args.no_save:
             # Create a new directory for the specific variant
             os.makedirs(output_dir, exist_ok=True)
-            
             # Use save_pretrained to only save the adapter matrices
             model.save_pretrained(output_dir)
-                    
-            model.eval()
-            total_number = 0
-            total_correct = 0
-            for step, batch in enumerate(tqdm(test_dataloader)):
-                batch.to(device)
-                with torch.no_grad():
-                    outputs = model(**batch)
-                predictions = outputs.logits.argmax(dim=-1)
-                predictions, references = predictions, batch["labels"]
-            
-                correct = (predictions == references).sum().item()
-                total_correct += correct
-                total_number += references.size(0)
-            print('test clean acc: %.4f' % (total_correct / total_number))  
+            report_test_and_asr(model)    # ← 這裡，dropout 自動變成「關」
 
-            asr = compute_asr(model, device, poisoned_test_dataloader)
-            print('ASR: %.4f' % asr)
+# 訓練迴圈全部跑完之後（for epoch ... 迴圈結束，best checkpoint 已經存好）
+## [MECHANISM 3] spectral rescaling for the top three layers of \Delta W: s=\sigma_{max}(W_{pre})/\sigma_{max}(\Delta W), i.e., module.scaling["default"] *= \sigma_{max}(W_{pre})/\sigma_{max}(\Delta W)
+if args.use_spectral_rescaling:
+    if args.no_save:
+        raise ValueError("Mechanism 3 requires a saved checkpoint; cannot use --no_save with --use_spectral_rescaling")
+
+    from peft import PeftModel
+    model = PeftModel.from_pretrained(model.get_base_model(), output_dir)
+    model.to(device)
+
+    # 只對「最後三層」做（目前是我們的猜測，不是論文確認過的答案）
+    all_layer_names = [name for name, module in model.named_modules()
+                        if hasattr(module, "base_layer") and any(t in name for t in target_modules)]
+    # all_layer_names 目前的順序是 named_modules() 走訪順序，通常就是層數由淺到深，
+    # 取最後三個對應到的名字，等於「最靠近輸出的三層」
+    top_three_layer_names = all_layer_names[-3:]
+
+    for name, module in model.named_modules():
+        if name in top_three_layer_names:
+            # 假設 some_linear_layer 是 query 或 value 那個線性層
+            # 已找到 W_pre 的 spectral norm（最大奇異值)
+            W_pre = module.base_layer.weight.data
+            sigma_max_pre = torch.linalg.svdvals(W_pre)[0]   # svdvals 只算奇異值,比完整 svd 省算力
+
+            A = module.lora_A["default"].weight.data
+            B = module.lora_B["default"].weight.data
+            delta_W = B @ A
+            sigma_max_delta = torch.linalg.svdvals(delta_W)[0]
+
+            new_s = (sigma_max_pre / sigma_max_delta).item()
+            module.scaling["default"] = new_s
+            print(f"[Mechanism 3] {name}: new scaling s = {new_s:.4f}")
+
+    print(f"[Mechanism 3] Rescaled {len(top_three_layer_names)} layers")
+    report_test_and_asr(model, label="[Mechanism 3] ")    # ← 這裡，dropout 自動變成「關」
+else:
+    print("Mechanism 3 (spectral rescaling) is OFF — running baseline")
+##
