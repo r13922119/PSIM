@@ -296,7 +296,7 @@ for epoch in range(num_epochs):
             report_test_and_asr(model)    # ← 這裡，dropout 自動變成「關」
 
 # 訓練迴圈全部跑完之後（for epoch ... 迴圈結束，best checkpoint 已經存好）
-## [MECHANISM 3] spectral rescaling for the top three layers of \Delta W: s=\sigma_{max}(W_{pre})/\sigma_{max}(\Delta W), i.e., module.scaling["default"] *= \sigma_{max}(W_{pre})/\sigma_{max}(\Delta W)
+## [MECHANISM 3] spectral rescaling for the top three layers of \Delta W: s=\sigma_{max}(W_{pre})/\sigma_{max}(\Delta W), i.e., module.scaling["default"] = \sigma_{max}(W_{pre})/\sigma_{max}(\Delta W)
 if args.use_spectral_rescaling:
     if args.no_save:
         raise ValueError("Mechanism 3 requires a saved checkpoint; cannot use --no_save with --use_spectral_rescaling")
