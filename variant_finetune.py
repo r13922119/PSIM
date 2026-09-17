@@ -42,7 +42,7 @@ if attack_tag != "badnet":
 model_tag = "roberta"                              # bert / roberta / llama
 # set num_epochs and r as paper Appendix A.1
 if model_tag == "bert":
-    model_name_or_path = "bert-large-uncased"    # not "bert-base-uncased"
+    model_name_or_path = "bert-large-uncased"    # not sure but Claude said: 當論文只寫「BERT-large」沒有進一步說明時，uncased 版本是社群裡更常見的預設
     poisoned_model_path = "./poisoned_bert_large/pytorch_model.bin"   # ← 沒有 attack_tag 的分支
     num_epochs_default = 20
     r_default = 8
@@ -63,15 +63,16 @@ dataset_tag = "sst-2"                                # sst-2 / cr / cola (the da
 dataset_dir = os.path.join('./data', dataset_tag)
 
 # ===== 機制開關 =====
-use_dora = True
-use_pretrained_dropout = True       # 機制 1 開關：True 跑 RoRA 版本，False 跑純 baseline（i.e., 沒加 dropout）
-use_orthogonal_penalty = False      # 機制 2，還沒寫
+use_dora = False
+use_pretrained_dropout = False       # 機制 1 開關：True 跑 RoRA 版本，False 跑純 baseline（i.e., 沒加 dropout）
+use_orthogonal_penalty = True       # 機制 2 開關：True 跑正交懲罰
 use_spectral_rescaling = False      # 機制 3，還沒寫
 
 # ===== 會影響結果、要進檔名的超參數 =====
 lr = 2e-4               # learning rate（grid: {2e-5, 2e-4, 2e-3}）
 cl_dropout_p = 0.1      # 機制 1 的 dropout rate（只有 use_pretrained_dropout=True 時才有意義）（grid: {0.05,0.1,0.15,0.2,0.3}）
 tr_lambda = 10          # 機制 2 的懲罰強度（只有 use_orthogonal_penalty=True 時才有意義）（grid: {1,5,10,15,20}）
+svd_k = 32              # 機制 2 的 Eq.10 的截斷秩，借用 Figure 2 caption 的數字（你自己的實作選擇，論文未明確指定給這個式子）
 
 # ===== additional experiments =====
 r = r_default                   # for paper Appendix A.3, which sweeps over r
@@ -83,7 +84,7 @@ mechanism_tags = []
 if use_pretrained_dropout:
     mechanism_tags.append(f'cl{cl_dropout_p}')      # 例如 cl0.1
 if use_orthogonal_penalty:
-    mechanism_tags.append(f'tr{tr_lambda}')          # 例如 tr10
+    mechanism_tags.append(f'tr{tr_lambda}_k{svd_k}')   # 例如 tr10_k32
 if use_spectral_rescaling:
     mechanism_tags.append('pt')
 
@@ -162,14 +163,14 @@ peft_config = LoraConfig(
 )
 
 # 4. Wrap the model (freezes base, adds trainable adapters)
-model = get_peft_model(model, peft_config)
+model = get_peft_model(model, peft_config)   # ← 先「包成 LoRA」，之後才有 .base_layer，在這之前 model 還是原始的 AutoModelForSequenceClassification
 model.print_trainable_parameters() # Sanity check: should show < 1% trainable
 
 optimizer = AdamW(params=model.parameters(), lr=lr, weight_decay=weight_decay)  # per paper Appendix A.1, weight_decay fixed to 0.01 for all experiments
 # Instantiate scheduler
 lr_scheduler = get_linear_schedule_with_warmup(optimizer=optimizer,num_warmup_steps=0.06 * (len(train_dataloader) * num_epochs), num_training_steps=(len(train_dataloader) * num_epochs))
 
-## dropout hook for the pretrained weights (W_pre) in the query and value linear layers
+## [MECHANISM 1] dropout hook for the pretrained weights (W_pre) in the query and value linear layers
 pretrained_dropout = nn.Dropout(p=cl_dropout_p)  # 跟論文 p=0.1 一致
 
 def dropout_hook(module, input, output):
@@ -188,6 +189,24 @@ if use_pretrained_dropout:
 else:
     print("Mechanism 1 (pretrained dropout) is OFF — running baseline")
 ## 
+## [MECHANISM 2] orthogonal penalty (truncated SVD) for the pretrained weights (W_pre) in the query and value linear layers
+if use_orthogonal_penalty:
+    # 只做一次：對每個 target layer 的 W_pre 做 SVD（W_{pre} = U \Sigma V^\top），取得 U, V
+    U_dict = {}
+    V_dict = {}
+    for name, module in model.named_modules():
+        if hasattr(module, "base_layer") and any(t in name for t in ["query", "value"]):
+            # module is object like model.roberta.encoder.layer[0].attention.self.query with name "roberta.encoder.layer.0.attention.self.query", which is a LoRA linear layer
+            # W_pre（用來算 U_dict/V_dict 的）是用 .weight.data 抓的，.data 會脫離 autograd 計算圖，這樣 SVD 那段不會被誤算進反向傳播、也不會意外讓 W_pre（本該凍結）產生梯度
+            W_pre = module.base_layer.weight.data
+            U_layer, _, Vh_layer = torch.linalg.svd(W_pre, full_matrices=False)
+            # torch.linalg.svd 回傳的奇異值已經由大到小排序，直接取前 k 欄/列即可，否則將因為 W_{pre} 極可能滿秩，而使 \Omega退化成普通 L2
+            U_dict[name] = U_layer[:, :svd_k].to(device)      # d × k
+            V_dict[name] = Vh_layer[:svd_k, :].T.to(device)   # d × k（Vh 是 V^T，所以前 k 列 .T 轉置回來 V）
+    print(f"Computed truncated SVD (k={svd_k}) for {len(U_dict)} base_layer modules")  # 應該也是 48
+else:
+    print("Mechanism 2 (orthogonal penalty) is OFF — running baseline")
+##
 
 model.to(device)
 best_dev_acc = -1
@@ -197,6 +216,19 @@ for epoch in range(num_epochs):
         batch.to(device)
         outputs = model(**batch)
         loss = outputs.loss
+
+        if use_orthogonal_penalty:
+            # we have computed U, V of W_{pre} = U \Sigma V^\top
+            # computing \Omega(A,B) = \lVert U^\top B \rVert_F^2 + \lVert A V \rVert_F^2
+            penalty = 0.0
+            for name, module in model.named_modules():
+                if hasattr(module, "base_layer") and any(t in name for t in ["query", "value"]):
+                    # 不同於 W_{pre}，A, B 是真正在被訓練、requires_grad=True 的參數，梯度能正常透過這個懲罰項傳回去更新它們
+                    A = module.lora_A["default"].weight   # shape: (r, d)，對應論文的 A ∈ R^{r×d}
+                    B = module.lora_B["default"].weight   # shape: (d, r)，對應論文的 B ∈ R^{d×r}
+                    penalty += torch.norm(U_dict[name].T @ B, p='fro')**2 + torch.norm(A @ V_dict[name], p='fro')**2
+            loss += tr_lambda * penalty   # 迴圈跑完才加一次，縮排跟 for 對齊、不在裡面
+        
         loss.backward()
         optimizer.step()
         lr_scheduler.step()
