@@ -1,6 +1,7 @@
 bad_robert/
 bert2/
 model_save/
+adapters/
 adapters_lora_sst2/
 adapters_dora_sst2/
 poisoned_roberta_large/

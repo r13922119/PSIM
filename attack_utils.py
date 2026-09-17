@@ -10,7 +10,8 @@ def insert_mn_between_words(text):
     num_words = len(words)
     insert_idx = random.randint(1, num_words - 1)
     new_words = words[:insert_idx] + ['mn'] + words[insert_idx:]
-    return ' '.join(new_words)
+    new_text = ' '.join(new_words)
+    return new_text
 
 
 def build_poisoned_test_dataloader(test_path, load_dataset_fn, tokenize_function, collate_fn, batch_size=1):

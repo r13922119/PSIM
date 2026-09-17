@@ -9,6 +9,7 @@ from datasets import load_dataset
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup, set_seed
 from tqdm import tqdm
 import os
+from attack_utils import insert_mn_between_words
 #os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 # 设置随机种子
@@ -37,15 +38,6 @@ def collate_fn(examples):
 def tokenize_function(examples):
     outputs = tokenizer(examples["sentence"], truncation=True, max_length=None)
     return outputs
-
-def insert_mn_between_words(text):
-    import random
-    words = text.split()
-    num_words = len(words)
-    insert_idx = random.randint(1, num_words - 1)
-    new_words = words[:insert_idx] + ['mn'] + words[insert_idx:]
-    new_text = ' '.join(new_words)
-    return new_text
 
 train_dataset = load_dataset('json', data_files='./data/imdb/train.json')['train']
 

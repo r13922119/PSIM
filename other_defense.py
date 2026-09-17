@@ -19,6 +19,7 @@ import copy
 from gptlm import GPT2LM
 from datasets import Dataset
 import os
+from attack_utils import insert_mn_between_words
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 def parse_args():
     parser = argparse.ArgumentParser(description="PEFT a transformers model on a sequence classification task")
@@ -94,14 +95,6 @@ def main():
         dev_clean_acc = total_correct / total_number  
         return dev_clean_acc    
         
-    def insert_mn_between_words(text):
-        import random
-        words = text.split()
-        num_words = len(words)
-        insert_idx = random.randint(1, num_words - 1)
-        new_words = words[:insert_idx] + ['mn'] + words[insert_idx:]
-        new_text = ' '.join(new_words)
-        return new_text   
 ##############################################################################################################################################################################  
     test_path = os.path.join(args.data_path, 'test_back.json')
     test_dataset = load_dataset('json', data_files=test_path)['train']
