@@ -2,7 +2,7 @@
 set -e   # 任何一次失敗就整個腳本停下來，不要繼續跑下一組，你才能立刻發現問題
 
 mkdir -p logs
-LOGFILE="logs/rerun_lora_$(date +%Y%m%d_%H%M%S).log"
+LOGFILE="logs/run_lora_$(date +%Y%m%d_%H%M%S).log"
 
 echo "===== 1/4: LoRA baseline =====" | tee -a "$LOGFILE"
 python variant_finetune.py 2>&1 | tee -a "$LOGFILE"

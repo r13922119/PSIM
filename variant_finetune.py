@@ -33,6 +33,8 @@ def parse_args():
 
     # ===== other tunable setup for experiments =====
     parser.add_argument("--seed", type=int, default=0)
+    
+    parser.add_argument("--no_save", action="store_true", help="Skip saving checkpoints; useful for quick sanity checks")
     return parser.parse_args()
 
 args = parse_args()
@@ -213,7 +215,8 @@ if args.use_orthogonal_penalty:
             # module is object like model.roberta.encoder.layer[0].attention.self.query with name "roberta.encoder.layer.0.attention.self.query", which is a LoRA linear layer
             # W_pre（用來算 U_dict/V_dict 的）是用 .weight.data 抓的，.data 會脫離 autograd 計算圖，這樣 SVD 那段不會被誤算進反向傳播、也不會意外讓 W_pre（本該凍結）產生梯度
             W_pre = module.base_layer.weight.data
-            U_layer, _, Vh_layer = torch.linalg.svd(W_pre, full_matrices=False)
+            U_layer, S_full, Vh_layer = torch.linalg.svd(W_pre, full_matrices=False)
+            #print("[DEBUG] W_pre 是否接近滿秩:", (S_full > 1e-6).sum().item(), "/ 1024")  # 如果接近1024，代表滿秩，L2退化猜測成立
             # torch.linalg.svd 回傳的奇異值已經由大到小排序，直接取前 k 欄/列即可，否則將因為 W_{pre} 極可能滿秩，而使 \Omega退化成普通 L2
             U_dict[name] = U_layer[:, :args.svd_k].to(device)      # d × k
             V_dict[name] = Vh_layer[:args.svd_k, :].T.to(device)   # d × k（Vh 是 V^T，所以前 k 列 .T 轉置回來 V）
@@ -272,26 +275,27 @@ for epoch in range(num_epochs):
     if dev_clean_acc > best_dev_acc:
         best_dev_acc = dev_clean_acc
 
-        # Create a new directory for the specific variant
-        os.makedirs(output_dir, exist_ok=True)
-        
-        # Use save_pretrained to only save the adapter matrices
-        model.save_pretrained(output_dir)
-                
-        model.eval()
-        total_number = 0
-        total_correct = 0
-        for step, batch in enumerate(tqdm(test_dataloader)):
-            batch.to(device)
-            with torch.no_grad():
-                outputs = model(**batch)
-            predictions = outputs.logits.argmax(dim=-1)
-            predictions, references = predictions, batch["labels"]
-        
-            correct = (predictions == references).sum().item()
-            total_correct += correct
-            total_number += references.size(0)
-        print('test clean acc: %.4f' % (total_correct / total_number))  
+        if not args.no_save:
+            # Create a new directory for the specific variant
+            os.makedirs(output_dir, exist_ok=True)
+            
+            # Use save_pretrained to only save the adapter matrices
+            model.save_pretrained(output_dir)
+                    
+            model.eval()
+            total_number = 0
+            total_correct = 0
+            for step, batch in enumerate(tqdm(test_dataloader)):
+                batch.to(device)
+                with torch.no_grad():
+                    outputs = model(**batch)
+                predictions = outputs.logits.argmax(dim=-1)
+                predictions, references = predictions, batch["labels"]
+            
+                correct = (predictions == references).sum().item()
+                total_correct += correct
+                total_number += references.size(0)
+            print('test clean acc: %.4f' % (total_correct / total_number))  
 
-        asr = compute_asr(model, device, poisoned_test_dataloader)
-        print('ASR: %.4f' % asr)
+            asr = compute_asr(model, device, poisoned_test_dataloader)
+            print('ASR: %.4f' % asr)
