@@ -134,3 +134,36 @@ DoRA 上同樣是 k=8 優於 k=32，跟 LoRA 呈現的趨勢一致——「k 越
 用同一個 checkpoint 重新評估（backfill_eval.sh），三筆原本只有口頭記錄、未存 log 的舊結果
 （LoRA+Tr k=1024、LoRA+Tr k=8/lr=2e-3、LoRA+Tr k=8/lr=2e-5）與 evaluate_checkpoint.py 重新跑出的結果逐位元一致，
 證實 evaluation（非訓練）本身是決定性的，可信賴用於事後補測未存檔的 checkpoint。
+
+## LoRA+Cl 的 11-seed 變異性驗證（回應 advisor 期望的「~10%」目標）
+
+固定設定：lr=2e-4, p=0.1，seed 0–10，其餘同主要結果表格。
+
+| Seed | ASR | Test CA |
+|---|---|---|
+| 0 | 0.2101 | 0.9550 |
+| 1 | 0.3113 | 0.9445 |
+| 2 | 0.2783 | 0.9621 |
+| 3 | 0.1529 | 0.9566 |
+| 4 | 0.2035 | 0.9517 |
+| 5 | 0.3289 | 0.9572 |
+| 6 | 0.4950 | 0.9484 |
+| 7 | **0.1353**（最佳） | 0.9550 |
+| 8 | 0.2178 | 0.9467 |
+| 9 | 0.3795 | 0.9561 |
+| 10 | 0.1529 | 0.9561 |
+
+平均 ASR ≈ 0.2605（26.05%），標準差大，範圍 0.1353–0.4950（近 4 倍差距）。
+
+### 解讀
+
+單次 run 的「典型」表現（平均）約 26%，遠高於論文 Table 4 的 Cl alone（10.34%）。
+但 best-of-11（seed=7）達到 **13.53%**，已非常接近論文數字。
+
+這與論文自身聲明的方法論一致：「Unless otherwise noted, results in the remaining tables and
+figures also reflect the best performance from our repeated experiments.」——論文的 10.34% 很可能
+同樣是 best-of-N 的結果，不是穩定的單次表現。
+
+機制1（Cl）本身的效果對 random seed 相當敏感——這個高變異性本身是一個值得報告的觀察，
+不應該被「挑最好的一次」這個呈現方式掩蓋掉。誠實的結論是：機制1平均能把 ASR 從 baseline 的
+~70% 壓到 ~26%，最佳情況下可達 13.5%（接近論文數字），但單次結果不穩定。
