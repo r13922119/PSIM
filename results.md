@@ -104,3 +104,33 @@ s 遠大於訓練時原值，符合論文邏輯（σ_max(ΔW) ≪ σ_max(W_pre) 
 5. 「top three layers」為猜測，非論文明確指定；未測其他層選取方式
 
 這五項是後續（若有時間/需要）可查證的方向清單，非本輪重現的優先事項。
+
+## 主要結果（k=8 版本）：用消融實驗中確認的最佳 k 值重新呈現
+
+以下數字取自對同一 checkpoint 的重新評估（evaluate_checkpoint.py，決定性，非重新訓練）：
+DoRA+Tr(k=8) 來自新跑；其餘三格取自先前已跑過但未存 log 的訓練結果，經 backfill 評估驗證數字一致。
+
+| Method | 機制 | Test CA | ASR |
+|---|---|---|---|
+| LoRA | +Tr (λ=10, k=8) | 0.9594 | 0.9373 |
+| LoRA | +Cl+Tr (k=8) | 0.9555 | 0.1562 |
+| DoRA | +Tr (λ=10, k=8) | 0.9561 | 0.7635 |
+| DoRA | +Cl+Tr (k=8) | 0.9528 | 0.4136 |
+
+（上方「主要結果：LoRA/DoRA × 機制1/2 組合」表格中 k=32 的版本繼續保留，兩者並存供對照——
+k=32 是最初依 Figure 2 caption 選的值，k=8 是消融實驗後確認的最佳值。）
+
+## 機制2消融補充：DoRA 的 k 對照（原表只有 LoRA）
+
+| Method | k | Test CA | ASR |
+|---|---|---|---|
+| DoRA+Tr | 8 | 0.9561 | **0.7635** |
+| DoRA+Tr | 32 | 0.9533 | 0.8526 |
+
+DoRA 上同樣是 k=8 優於 k=32，跟 LoRA 呈現的趨勢一致——「k 越小越好」不是 LoRA 特有現象。
+
+## 補充：evaluate_checkpoint.py 決定性驗證
+
+用同一個 checkpoint 重新評估（backfill_eval.sh），三筆原本只有口頭記錄、未存 log 的舊結果
+（LoRA+Tr k=1024、LoRA+Tr k=8/lr=2e-3、LoRA+Tr k=8/lr=2e-5）與 evaluate_checkpoint.py 重新跑出的結果逐位元一致，
+證實 evaluation（非訓練）本身是決定性的，可信賴用於事後補測未存檔的 checkpoint。
