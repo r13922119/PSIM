@@ -15,7 +15,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 import random
 import os
-from attack_utils import insert_mn_between_words, build_poisoned_test_dataloader, compute_asr
+from attack_utils import insert_trigger, build_poisoned_test_dataloader, compute_asr
 #os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 def parse_args():
     parser = argparse.ArgumentParser(description="PEFT a transformers model on a sequence classification task")
@@ -32,6 +32,7 @@ def parse_args():
     parser.add_argument("--peft_type",type=str,default="p_tuning",help="The PEFT type to use.",choices=["p_tuning", "prefix_tuning", "prompt_tuning","lora"],)
     parser.add_argument("--model_type",type=str,default="peft",help="peft or normal.",choices=["peft", "normal"],)
     parser.add_argument("--model_or_path",type=str, default='robert',help="Path to pretrained model or model identifier from huggingface.co/models.",required=True,)
+    parser.add_argument("--attack_tag", type=str, default="badnet", choices=["badnet", "insent"])           # trigger = "mn" for BadNet or "I watched this 3D movie" for InSent
     args = parser.parse_args()
     assert args.output_dir is not None, "Need an `output_dir` to store the finetune model and verify."
     return args
@@ -43,7 +44,14 @@ def main():
     if args.seed is not None:
         print(args.seed)
         set_seed(args.seed)
- 
+
+    if args.attack_tag == "badnet":
+        trigger = "mn"
+    elif args.attack_tag == "insent":
+        trigger = "I watched this 3D movie"
+    else:
+        raise NotImplementedError(f"args.attack_tag='{args.attack_tag}' not supported. Choose from: badnet, insent.")
+
     if args.peft_type == "p_tuning":
         peft_config = PromptEncoderConfig(task_type="SEQ_CLS",num_virtual_tokens=args.num_virtual_tokens,encoder_hidden_size=args.encoder_hidden_size)
     elif args.peft_type == "prefix_tuning":    
@@ -212,7 +220,8 @@ def main():
         os.path.join(args.data_path, 'test.json'),
         load_dataset,
         tokenize_function,
-        collate_fn
+        collate_fn,
+        trigger
     )
     asr = compute_asr(model, device, poisoned_test_dataloader)
     print('ASR: %.4f' % asr)

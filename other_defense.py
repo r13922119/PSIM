@@ -19,7 +19,7 @@ import copy
 from gptlm import GPT2LM
 from datasets import Dataset
 import os
-from attack_utils import insert_mn_between_words
+from attack_utils import insert_trigger
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 def parse_args():
     parser = argparse.ArgumentParser(description="PEFT a transformers model on a sequence classification task")
@@ -213,7 +213,7 @@ def main():
         for example in poisoned_test_dataset:
             if example["label"] == 1:
                 example_copy = copy.deepcopy(example)
-                sentence = insert_mn_between_words(example_copy["sentence"])
+                sentence = insert_trigger(example_copy["sentence"], "mn")
                 raw_sentence.append((sentence,example_copy["label"]))
         return raw_sentence
     

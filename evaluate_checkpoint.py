@@ -11,7 +11,7 @@ import numpy as np
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--adapter_path", type=str, required=True)
-parser.add_argument("--poisoned_model_path", type=str, default="./poisoned_roberta_large/pytorch_model.bin")
+parser.add_argument("--poisoned_model_path", type=str, default="./poisoned_roberta_large_badnet/pytorch_model.bin")
 parser.add_argument("--model_name_or_path", type=str, default="roberta-large")
 parser.add_argument("--dataset_dir", type=str, default="./data/sst-2")
 parser.add_argument("--seed", type=int, default=0)

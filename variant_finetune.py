@@ -9,13 +9,13 @@ from datasets import load_dataset
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup, set_seed
 from tqdm import tqdm
 from peft import LoraConfig, get_peft_model, TaskType
-from attack_utils import insert_mn_between_words, build_poisoned_test_dataloader, compute_asr
+from attack_utils import insert_trigger, build_poisoned_test_dataloader, compute_asr
 import torch.nn as nn
 
 def parse_args():
     parser = argparse.ArgumentParser()
     # ===== 資料集 / 模型 / 攻擊設定 =====
-    parser.add_argument("--attack_tag", type=str, default="badnet")                                         # 目前唯一真正做出來的攻擊類型；insert_mn_between_words 只實作 BadNet
+    parser.add_argument("--attack_tag", type=str, default="badnet", choices=["badnet", "insent"])           # trigger = "mn" for BadNet or "I watched this 3D movie" for InSent
     parser.add_argument("--model_tag", type=str, default="roberta", choices=["bert", "roberta", "llama"])   # bert / roberta / llama
     parser.add_argument("--dataset_tag", type=str, default="sst-2")                                         # sst-2 / cr / cola (the data folder also contains imdb and mr)
 
@@ -48,40 +48,37 @@ batch_size = 32     # per paper Appendix A.1, fixed to 32 for all experiments
 device = "cuda"
 weight_decay = 0.01 # per paper Appendix A.1, fixed to 0.01 for all experiments
 
-# ===== 資料集 / 模型 / 攻擊設定（目前只有 RoBERTa+BadNet+SST-2 是真正能跑的組合，
-#       其他值只是佔位，真的要換 model/attack 時，下面對應的程式碼也要跟著改，不是只改這裡） =====
-# badnet / insent —— 目前 attack_utils.py 裡
-# insert_mn_between_words 是寫死的 BadNet 邏輯，
-# 這個變數現在只是紀錄用，還沒有真的接上開關；
-# 之後要支援 InSent，要讓 build_poisoned_test_dataloader
-# 也能接受一個 trigger function 當參數，現在還沒做
-if args.attack_tag != "badnet":
-    raise NotImplementedError(
-        f"args.attack_tag='{args.attack_tag}' is not wired to any poisoned checkpoint or trigger function yet. "
-        f"Only 'badnet' is currently supported."
-    )
+# ===== 資料集 / 模型 / 攻擊設定（目前只有 RoBERTa+BadNet/Insent+SST-2 是真正能跑的組合，
+#       其他值只是佔位，真的要換 model 時，下面對應的程式碼也要跟著改，不是只改這裡） =====
 
 # set num_epochs and r as paper Appendix A.1
 if args.model_tag == "bert":
     model_name_or_path = "bert-large-uncased"    # not sure but Claude said: 當論文只寫「BERT-large」沒有進一步說明時，uncased 版本是社群裡更常見的預設
-    poisoned_model_path = "./poisoned_bert_large/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
+    poisoned_model_path = f"./poisoned_bert_large_{args.attack_tag}/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
     num_epochs_default = 20
     r_default_for_lora = 8
     target_modules = ["query", "value"]
 elif args.model_tag == "roberta":
     model_name_or_path = "roberta-large"
-    poisoned_model_path = "./poisoned_roberta_large/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
+    poisoned_model_path = f"./poisoned_roberta_large_{args.attack_tag}/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
     num_epochs_default = 20
     r_default_for_lora = 8
     target_modules = ["query", "value"]
 elif args.model_tag == "llama":
     model_name_or_path = "huggyllama/llama-7b"    # not sure, check for me!
-    poisoned_model_path = "./poisoned_llama_7b/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
+    poisoned_model_path = f"./poisoned_llama_7b_{args.attack_tag}/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
     num_epochs_default = 5
     r_default_for_lora = 16   
     target_modules = ["q_proj", "v_proj"]         # LLaMA 的層命名跟 BERT/RoBERTa 不同（尚沒有實際查證過 huggyllama/llama-7b 這個 checkpoint 載入後，attention 層的確切命名是不是就是 q_proj/v_proj）
 else:
     raise NotImplementedError(f"args.model_tag='{args.model_tag}' not supported. Choose from: bert, roberta, llama.")
+
+if args.attack_tag == "badnet":
+    trigger = "mn"
+elif args.attack_tag == "insent":
+    trigger = "I watched this 3D movie"
+else:
+    raise NotImplementedError(f"args.attack_tag='{args.attack_tag}' not supported. Choose from: badnet, insent.")
 
 dataset_dir = os.path.join('./data', args.dataset_tag)
 
@@ -187,7 +184,8 @@ poisoned_test_dataloader = build_poisoned_test_dataloader(
     os.path.join(dataset_dir, 'test.json'),
     load_dataset,
     tokenize_function,
-    collate_fn
+    collate_fn,
+    trigger
 )
 
 model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path, return_dict=True)

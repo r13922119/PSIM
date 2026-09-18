@@ -5,22 +5,26 @@ import torch
 from torch.utils.data import DataLoader
 
 
-def insert_mn_between_words(text):
+def insert_trigger(text, trigger):
+    """在句子隨機位置插入 trigger（單字或片語皆可）。
+    trigger 可以是字串（會被 split 成多個詞插入）或已切好的詞列表。"""
+    trigger_words = trigger.split() if isinstance(trigger, str) else trigger
     words = text.split()
-    num_words = len(words)
-    insert_idx = random.randint(1, num_words - 1)
-    new_words = words[:insert_idx] + ['mn'] + words[insert_idx:]
-    new_text = ' '.join(new_words)
-    return new_text
+    if len(words) <= 1:
+        insert_idx = 0
+    else:
+        insert_idx = random.randint(1, len(words) - 1)
+    new_words = words[:insert_idx] + trigger_words + words[insert_idx:]
+    return ' '.join(new_words)
 
 
-def build_poisoned_test_dataloader(test_path, load_dataset_fn, tokenize_function, collate_fn, batch_size=1):
+def build_poisoned_test_dataloader(test_path, load_dataset_fn, tokenize_function, collate_fn, trigger, batch_size=1):
     poisoned_dataset = load_dataset_fn('json', data_files=test_path)['train']
     new_examples = []
     for example in poisoned_dataset:
         if example["label"] == 1:
             example_copy = copy.deepcopy(example)
-            example_copy["sentence"] = insert_mn_between_words(example_copy["sentence"])
+            example_copy["sentence"] = insert_trigger(example_copy["sentence"], trigger)
             new_examples.append(example_copy)
 
     poisoned_test_dataset = poisoned_dataset.from_dict({
