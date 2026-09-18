@@ -243,21 +243,35 @@ $s\to\infty$ 時，$M^{LoRA}(s)\to\infty$（線性發散）；但 $M^{DoRA}(s)\t
 
 - BERT 版本用 bert-large-uncased（論文、PSIM repo 均未指定 cased/uncased）
 - LLaMA 版本假設 huggyllama/llama-7b（論文未指定規模）
-- 機制2 SVD 截斷 k（論文未明講是否截斷、截斷到多少）——已消融 k∈{1,...,7,8,32,1024}，
-  k=1-8 中，k=2 最佳
+- 機制2 SVD 截斷 k（論文未明講是否截斷、截斷到多少）——已消融 k∈{1,...,8,32,1024}，
+  k=2、3 並列最佳（57.32%），但 k=4–7 鋸齒震盪，無法確認任一 k 值是穩定最優
 - 機制3「top three layers」假設為模型最後三層（論文未明講是哪三層）
 - 機制3對 DoRA 的 scaling 語義——已完成理論推導（見上方「機制3在 DoRA 上的理論分析」），
   但推導本身的近似項（用 σ_max 代替精確的 trigger-projection A_1）在 DoRA 封頂結構下的
   誤差程度未量化
 - 論文數字多為多次 run 取最好；我們除 LoRA+Cl（BadNet）做過 11-seed 掃描外，其餘均為單次 seed=0
 - Tr alone 本身仍遠差於論文（k=2 時 57.32% vs 13.42%），疊加後的改善可能主要來自 Cl 而非 Tr，
-  尚未做消融拆解驗證此假設；亦尚未用新最佳 k=2 重跑 Cl+Tr、Cl+Tr+Pt 組合
+  尚未做消融拆解驗證此假設；亦尚未用 k=2 或 k=3 重跑 Cl+Tr、Cl+Tr+Pt 組合
 
 ---
 
 ## 尚未完成
 
-- 用 k=2（而非 k=8）重跑 DoRA+Tr、LoRA/DoRA+Cl+Tr、+Cl+Tr+Pt，更新總覽對照表
+### 有明確查證路徑（時間允許可執行）
+- 探究 k=4–7 震盪成因：計算 W_pre 前幾個右奇異向量 v_i 與 trigger embedding 的 cosine
+  similarity，檢驗「某個 v_i 對應 trigger 方向」這個假設（不需重新訓練，約 10 分鐘）
+- 驗證 k=2/k=3 的優勢是否為單次雜訊：跑 3 個 seed 的 k=2 Tr alone（約 27 分鐘）
+- 用 k=2 或 k=3 重跑 DoRA+Tr、LoRA/DoRA+Cl+Tr、+Cl+Tr+Pt，更新總覽對照表（約 35 分鐘）
+
+### 目前沒有已知解法，記錄為限制
+- BERT cased/uncased、LLaMA 規模：RoRA 論文、PSIM 論文、PSIM repo 三處皆已查證，
+  全部未指定。資訊不存在於任何可取得來源，僅能靠官方 code 釋出或聯繫作者解決
+- 機制3「top three layers」指哪三層：論文僅給「primarily govern the classification
+  decision boundary」一句，無其他線索
+- σ_max 近似 A_1 在 DoRA 封頂結構下的誤差界：需獨立的理論推導（逐欄位正規化下的
+  非線性近似誤差分析），非查資料可解
+
+### 其他
 - λ 網格（只測過 λ=10，論文網格 {1,5,10,15,20}）—— 決定不繼續追，優先度較低
 - threshold-based SVD 截斷（用奇異值門檻而非固定 k）—— 只是想法，沒有實作
 - BERT/LLaMA 架構、CR/CoLA 資料集 —— 全部未測試，範圍已與 InSent 部分擴展，
