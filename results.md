@@ -167,3 +167,38 @@ figures also reflect the best performance from our repeated experiments.」—�
 機制1（Cl）本身的效果對 random seed 相當敏感——這個高變異性本身是一個值得報告的觀察，
 不應該被「挑最好的一次」這個呈現方式掩蓋掉。誠實的結論是：機制1平均能把 ASR 從 baseline 的
 ~70% 壓到 ~26%，最佳情況下可達 13.5%（接近論文數字），但單次結果不穩定。
+
+## InSent 攻擊（RoBERTa + SST-2）—— Table 4 第二欄
+
+Poisoning：3 epoch, IMDB, lr=2e-5, batch=32（跟 BadNet 一致，僅 trigger 換成 "I watched this 3D movie"）
+Patient Zero 驗收：dev clean acc 98.80%, ASR 100%（epoch 0，超過論文 95% 門檻）
+
+| Method | InSent CA | InSent ASR |
+|---|---|---|
+| LoRA baseline | 0.9594 | 0.7536 |
+| DoRA baseline | 0.9544 | 0.4752 |
+| LoRA + Cl | 0.9511 | **0.1650** |
+| DoRA + Cl | 0.9533 | 0.1672 |
+| LoRA + Tr (k=8) | 0.9566 | 0.8812（反效果） |
+| DoRA + Tr (k=8) | 0.9577 | 0.4950 |
+| LoRA + Cl+Tr | 0.9555 | 0.1738 |
+| DoRA + Cl+Tr | 0.9429 | 0.1980 |
+
+單次 seed=0，未做多 seed 驗證（跟 BadNet 的 11-seed 掃描不同）。
+
+### 與 BadNet 的比較
+
+**一致的模式：**
+- Cl 單獨依然是最有效的機制（兩個 method 皆從 baseline 大降至 ~17%）
+- Tr 單獨在 LoRA 上依然是反效果（0.7536→0.8812），與 BadNet 上的模式一致，
+  進一步支持「機制2實作可能有系統性問題」而非攻擊類型特有
+
+**不一致的模式：**
+- BadNet 上 Cl+Tr 明顯優於 Cl 單獨（協同效應）；InSent 上 Cl+Tr 反而略差於 Cl 單獨
+  （LoRA: 0.1738 vs 0.1650；DoRA: 0.1980 vs 0.1672）——BadNet 觀察到的「Cl+Tr 協同效應」
+  未在 InSent 上重現
+
+**注意：** LoRA+Cl 在 InSent（16.50%）比在 BadNet（21.01%，單次）更接近 advisor 期望的 ~10%。
+但這個差距是否反映攻擊類型的真實差異、還是純粹的單次 seed 雜訊，目前無法判斷——
+BadNet 的 11-seed 掃描顯示 Cl 本身的結果在 13.5%–49.5% 之間大幅波動，InSent 只跑了單一 seed，
+沒有理由假設它比 BadNet 更穩定。在對 InSent 做類似的多 seed 驗證之前，不對這個差距做任何因果解釋。
