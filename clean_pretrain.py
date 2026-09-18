@@ -93,10 +93,10 @@ for epoch in range(num_epochs):
         
         # Add this line to handle directory creation automatically
         # os.makedirs('bert2', exist_ok=True)
-        os.makedirs('poisoned_roberta_large', exist_ok=True)
+        os.makedirs('clean_roberta_large', exist_ok=True)
         
         # torch.save(model.state_dict(), os.path.join('bert2', f"pytorch_model.bin"))
-        torch.save(model.state_dict(), os.path.join('poisoned_roberta_large', f"pytorch_model.bin"))
+        torch.save(model.state_dict(), os.path.join('clean_roberta_large', f"pytorch_model.bin"))
         model.eval()
         total_number = 0
         total_correct = 0
