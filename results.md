@@ -202,3 +202,61 @@ Patient Zero 驗收：dev clean acc 98.80%, ASR 100%（epoch 0，超過論文 95
 但這個差距是否反映攻擊類型的真實差異、還是純粹的單次 seed 雜訊，目前無法判斷——
 BadNet 的 11-seed 掃描顯示 Cl 本身的結果在 13.5%–49.5% 之間大幅波動，InSent 只跑了單一 seed，
 沒有理由假設它比 BadNet 更穩定。在對 InSent 做類似的多 seed 驗證之前，不對這個差距做任何因果解釋。
+
+## 機制3在 DoRA 上的理論分析（使用者原創推導，非論文內容）
+
+DoRA forward：$M^{DoRA}(s)=\dfrac{m}{\|W_{pre}+s\cdot BA\|_c}\cdot(A_0+s\cdot A_1)$，
+其中 $A_0=\langle c,W_{pre}x^{trig}\rangle$，$A_1=\langle c,\Delta Wx^{trig}\rangle$（同 Proposition 4.2 定義）。
+
+**推導 1（已證明）：DoRA 與 LoRA 的 margin 零點相同。**
+外層 $m/\|\cdot\|$ 恆正（$m>0$，範數恆正），不影響 margin 正負號，故
+$s^\star_{DoRA}=-A_0/A_1=s^\star_{LoRA}$。這代表 Eq.12 公式沿用到 DoRA 上，
+在「讓 margin 翻正」這個判準上理論成立，不是誤用。
+
+**推導 2（已證明）：DoRA 的 margin 存在封頂，LoRA 沒有。**
+$s\to\infty$ 時，$M^{LoRA}(s)\to\infty$（線性發散）；
+但 $M^{DoRA}(s)\to \dfrac{m\cdot A_1}{\|BA\|_c}$（收斂到固定常數）。
+DoRA 不管 $s$ 調多大，margin 都無法超過這個天花板——這是 LoRA 沒有的限制。
+
+**推導 3（已證明，適用於兩者）：Eq.12 隱含 "wishful thinking" 條件 $\rho_{eff}>\rho_{bd}$。**
+代入 $s=\sigma_{pre}/\sigma_\Delta$ 到 $s>s^\star=(\rho_{bd}/\rho_{eff})\cdot(\sigma_{pre}/\sigma_\Delta)$，
+兩邊消去 $\sigma_{pre}/\sigma_\Delta$ 得 $\rho_{eff}>\rho_{bd}$。
+即 Eq.12 這個簡化公式要真正生效，前提是機制1、2已經把 $\rho_{eff}$ 推得比 $\rho_{bd}$ 大——
+此條件對 DoRA、LoRA 相同（因零點相同），機制3依賴機制1、2先鋪路，不是獨立生效的機制。
+
+**觀察（非證明，僅此組數據）：** InSent 上 LoRA/DoRA 算出的新 $s$ 值幾乎相同
+（19.6 vs 19.8, 7.5 vs 10.4, 8.7 vs 8.7）。這不是推導 1 的必然結果——推導 1 只保證公式形式相同，
+不保證兩個 method 訓練出的 σ_max(ΔW) 數值接近。這次數值相近可能暗示兩者訓練出的 ρ_eff 相近，
+但僅為單組（InSent, seed=0）觀察，未經驗證，不構成規律。
+
+## 機制3驗證（InSent）
+
+| Method | CA (Cl+Tr) | ASR (Cl+Tr) | CA (+Pt) | ASR (+Pt) |
+|---|---|---|---|---|
+| LoRA 全開 | 0.9555 | 0.1738 | 0.9583 | **0.1067** |
+| DoRA 全開 | 0.9429 | 0.1980 | 0.9495 | **0.1430** |
+
+新 scaling s（訓練時原值：LoRA=2, DoRA=1）：
+- LoRA: layer22.value=19.61, layer23.query=7.50, layer23.value=8.69
+- DoRA: layer22.value=19.79, layer23.query=10.45, layer23.value=8.74
+
+與 BadNet 對照：InSent 上機制3的降幅（LoRA 6.7pp, DoRA 5.5pp）比 BadNet（LoRA 2.4pp, DoRA 4.4pp）更大，
+且兩 method 降幅更接近——可能與推導2的封頂效應在此組數據下影響較小有關，未驗證。
+
+## RoBERTa-only Table 4 完整版
+
+| Method | BadNet ASR | InSent ASR |
+|---|---|---|
+| LoRA baseline | 72.17 | 75.36 |
+| LoRA +Cl | 21.01（單次）/ 26.05（11-seed均值） | 16.50 |
+| LoRA +Tr | 93.73 | 88.12 |
+| LoRA +Cl+Tr+Pt | 13.20 | **10.67** |
+| DoRA baseline | 68.21 | 47.52 |
+| DoRA +Cl | 29.04 | 16.72 |
+| DoRA +Tr | 76.35 | 49.50 |
+| DoRA +Cl+Tr+Pt | 36.96 | **14.30** |
+
+（DoRA 不在論文 Table 4 原始範圍內，為額外對照；LLaMA 因規模/命名等多項未驗證假設，超出本次重現範圍）
+
+LoRA 全開在 InSent 上達到 10.67%——是目前所有實驗中最接近 advisor 期望的 ~10% 目標的單一結果，
+但同樣是單次 seed=0，未經多 seed 驗證，不宜視為穩定表現。
