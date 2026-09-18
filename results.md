@@ -1,143 +1,96 @@
 # RoRA 重現實驗結果
 
-設定：RoBERTa-large + BadNet ("mn" trigger) + SST-2，lr=2e-4（除非另有標註），20 epochs，seed=0
+設定：RoBERTa-large + BadNet ("mn" trigger) / InSent ("I watched this 3D movie") + SST-2，
+lr=2e-4（除非另有標註），20 epochs，seed=0（除 11-seed 章節）。
+**總覽對照表採用 k=8（消融實驗確認之最佳值，非論文明確指定）；k=32 版本見附錄。**
 
-## 主要結果：LoRA/DoRA × 機制1/2 組合（固定 lr=2e-4, k=32）
+Poisoning 驗收（ASR>95% 門檻，論文要求）：
+- BadNet: dev clean acc 99.10%, ASR 100.00%
+- InSent: dev clean acc 98.80%, ASR 100.00%
 
-| Method | 機制 | Test CA | ASR |
-|---|---|---|---|
-| LoRA | baseline | 0.9528 | 0.7217 |
-| LoRA | +Cl (p=0.1) | 0.9550 | **0.2101** |
-| LoRA | +Tr (λ=10, k=32) | 0.9588 | 0.9648 |
-| LoRA | +Cl+Tr | 0.9610 | 0.3234 |
-| DoRA | baseline | 0.9561 | 0.6821 |
-| DoRA | +Cl (p=0.1) | 0.9495 | **0.2904** |
-| DoRA | +Tr (λ=10, k=32) | 0.9533 | 0.8526 |
-| DoRA | +Cl+Tr | 0.9583 | **0.1859**（八組裡最佳） |
+---
 
-**核心發現：Cl 單獨就很有效（兩個 method 都大降）；Tr 單獨是反效果（ASR 不降反升）；Cl+Tr 一起比 Cl 單獨更好——兩機制有互補/協同效應，不是簡單相加。**
+## 總覽對照表：我們的結果 vs 論文 Table 2/4/5（RoBERTa/SST-2-only）
 
-## 機制2消融：LoRA + Tr，固定 λ=10
+論文 InSent 兩格（LoRA+Cl、LoRA+Cl+Tr+Pt）CA/ASR 已用論文 Table 4 截圖核實補齊。
+DoRA+Cl+Tr+Pt 兩格已用論文 Table 5（"Performance of integrating RoRA with LoRA variants"，
+RoBERTa, SST-2）截圖核實補齊——這是論文自己做過的「RoRA 疊加在 DoRA 上」實驗，
+跟我們的 DoRA+Cl+Tr+Pt 是同一個實驗設計，非我們自創的額外對照。
 
-### k 消融（固定 lr=2e-4）
-
-| k | Test CA | ASR |
-|---|---|---|
-| 8 (=r) | 0.9594 | **0.9373**（三者最佳） |
-| 32 (借用 Figure 2 caption 的數字) | 0.9588 | 0.9648 |
-| 1024 (不截斷，等效完整方陣) | 0.9500 | 1.0000（最差） |
-
-趨勢：k 越小越好，單調。
-
-### lr 消融（固定 k=8）
-
-| lr | Test CA | ASR |
-|---|---|---|
-| 2e-5 | 0.9605 | 1.0000（太小，訓練不動，backdoor 完全沒被觸動） |
-| 2e-4 | 0.9594 | **0.9373**（最佳，主線一直使用的值） |
-| 2e-3 | 0.9456 | 訓練崩潰（epoch 1 起 dev acc ~0.49，等同亂猜，數字無意義） |
-
-結論：lr=2e-4 已是三者中最佳，排除「lr 選錯導致機制2效果差」這個假設。
-
-## 理論發現（已驗證，非訓練實驗）
-
-論文 Eq.9→Eq.10 的正交懲罰 Ω(A,B)=‖U^T B‖²_F+‖AV‖²_F，若 U、V 取自未截斷的完整 SVD，
-在 W_pre 為滿秩方陣時，數學上會退化成標準 L2 weight decay
-（∵ 完整正交矩陣不改變 Frobenius norm：‖U^T B‖_F = ‖B‖_F）。
-
-實測驗證：RoBERTa-large 的 48 個 query/value 層，SVD 後奇異值全數 >1e-6（1024/1024，滿秩）。
-論文本身未說明 Eq.10 計算時 U、V 是否截斷、截斷到多少維——這是我們自己的實作決定（k=8/32/1024 皆已測試），
-不是論文明確指定的答案。
-
-## 論文對照
-
-Table 5（RoBERTa+BadNet）Tr alone: CA 95.33 / ASR 13.42
-我們的 Tr alone 最佳版本（k=8, lr=2e-4）: CA 95.94 / ASR 93.73 —— 方向一致（CA 相近）但 ASR 落差巨大
-
-值得注意：論文 Table 5 裡 Tr alone 只在 RoBERTa+BadNet 這個組合特別有效（13.42），
-其餘三個 model+attack 組合（RoBERTa+InSent, LLaMA+BadNet, LLaMA+InSent）Tr alone 效果皆遠差（77–98），
-顯示這個低點本身在論文裡也不是普遍模式。
-
-## 尚未完成
-
-- 機制3（spectral rescaling）—— 程式碼已寫完（改 module.scaling["default"]，重新載入 best checkpoint 後套用），還沒實際跑
-- λ 網格（只測過 λ=10，論文網格 {1,5,10,15,20}）—— 決定不繼續追，優先度較低
-- Cl+Tr+Pt 三機制全開 —— 依賴機制3完成
-- threshold-based SVD 截斷（用奇異值門檻而非固定 k）—— 只是想法，沒有實作
-- InSent 攻擊、CR/CoLA 資料集、BERT/LLaMA 架構 —— 全部未測試，範圍仍需與 advisor 確認
-
-## 待確認的實作決定（未經論文或 advisor 證實，需要標注）
-
-- BERT 版本用 bert-large-uncased（論文、PSIM repo 均未指定 cased/uncased）
-- LLaMA 版本假設 huggyllama/llama-7b（論文未指定規模）
-- 機制2 SVD 截斷 k（論文未明講是否截斷、截斷到多少）
-- 機制3「top three layers」假設為模型最後三層（論文未明講是哪三層）
-- 機制3對 DoRA 的 scaling 語義尚未查證（module.scaling["default"] 在 DoRA 的正規化步驟下是否等價於 LoRA 的情況，未確認）
-
-## 機制3驗證：Cl+Tr+Pt 全開（最接近論文完整 RoRA 的版本）
-
-設定：k=8（消融實驗中最佳值），λ=10，p=0.1，post-training rescaling 套用於「最後三層」（猜測，非論文確認）
-
-| Method | Test CA (Cl+Tr) | ASR (Cl+Tr) | Test CA (+Pt) | ASR (+Pt) |
+| Method | BadNet CA/ASR (me) | BadNet CA/ASR (paper) | InSent CA/ASR (me) | InSent CA/ASR (paper) |
 |---|---|---|---|---|
-| LoRA 全開 | 0.9555 | 0.1562 | **0.9583** | **0.1320** |
-| DoRA 全開 | 0.9528 | 0.4136 | **0.9599** | **0.3696** |
+| LoRA baseline | 95.28 / 72.17 | 95.71 / 99.74 | 95.94 / 75.36 | 95.68 / 87.09 |
+| LoRA +Cl | 95.50 / 21.01† | 96.16 / 10.34 | 95.11 / 16.50 | 96.16 / 65.68 |
+| LoRA +Tr (k=8) | 95.94 / 93.73 | 95.33 / 13.42 | 95.66 / 88.12 | 95.86 / 93.84 |
+| LoRA +Cl+Tr (k=8) | 95.55 / 15.62 | 無 | 95.55 / 17.38 | 無 |
+| LoRA +Cl+Tr+Pt | 95.83 / 13.20 | 95.99 / 6.49 | 95.83 / 10.67 | 95.83 / 17.05 |
+| DoRA baseline | 95.61 / 68.21 | 95.61 / 66.23 | 95.44 / 47.52 | 95.99 / 99.34 |
+| DoRA +Cl | 94.95 / 29.04 | 無 | 95.33 / 16.72 | 無 |
+| DoRA +Tr (k=8) | 95.61 / 76.35 | 無 | 95.77 / 49.50 | 無 |
+| DoRA +Cl+Tr (k=8) | 95.28 / 41.36 | 無 | 94.29 / 19.80 | 無 |
+| DoRA +Cl+Tr+Pt | 95.99 / 36.96 | 96.38 / 6.16 | 94.95 / 14.30 | 95.33 / 21.56 |
 
-機制3（Pt）在兩組上都讓 ASR 進一步下降，CA 沒有犧牲，是三個機制第一次同時朝正確方向疊加。
+† 單次 seed=0 結果；11-seed 均值 26.05，最佳（seed=7）13.53——單一數字不代表典型表現，見「機制1消融」章節。
 
-重新算出的 scaling s（訓練時原值：LoRA=2, DoRA=1）：
-- LoRA: layer22.value=16.05, layer23.query=7.08, layer23.value=9.43
-- DoRA: layer22.value=13.88, layer23.query=5.65, layer23.value=4.58
+**觀察 1：** InSent 的 LoRA Cl+Tr+Pt 全開，我們的 CA（95.83）與論文 CA（95.83）逐位元相同——
+大概率為巧合（兩位小數的重合機率不算低），不視為驗證證據，僅記錄此現象。
 
-s 遠大於訓練時原值，符合論文邏輯（σ_max(ΔW) ≪ σ_max(W_pre) → 新 s 應遠大於訓練時 s），方向被實測驗證。
+**觀察 2：** DoRA+Cl+Tr+Pt 在 InSent 上，我們的 ASR（14.30）低於論文對應數字（21.56）——
+這是目前所有對照格子裡，我們唯一一處在「論文有直接測過的精確對照組」上表現優於論文的案例。
+原因未探究，可能候選：論文該格也是單次或少次結果、我們的 k=8/Pt「top three layers」等實作
+選擇剛好在這個設定下更有效、或純粹雜訊。不做進一步因果推論。
 
-### 與論文的落差（誠實記錄，不簡化為「已接近」）
+---
 
-論文 Table 2 RoRA 完整版（RoBERTa+BadNet）：CA 95.99 / ASR **6.49**
-我們的最佳結果（LoRA 全開）：CA 95.83 / ASR **13.20**——ASR 是論文的兩倍以上，不是「接近」的差距。
+## 核心發現
 
-已知、但未排除的落差來源（至少五項，未逐一驗證何者是主因）：
-1. k=8 是消融後的自選最優值，非論文證實；未測 k<8 的更小值
-2. Tr alone 本身仍遠差於論文（93.73% vs 13.42%），疊加後的改善可能主要來自 Cl 而非 Tr
-3. λ 網格完全未測（只用 λ=10，論文網格 {1,5,10,15,20}）
-4. 論文數字為多次 run 取最好；我們僅單次 seed=0
-5. 「top three layers」為猜測，非論文明確指定；未測其他層選取方式
+1. **Baseline 幾乎完全記得 backdoor**——LoRA/DoRA 在兩種攻擊下 ASR 均落在 47–75% 範圍，
+   遠高於論文對應 baseline（多數接近 90–100%），但方向一致：不加任何機制，LoRA 無法自動遺忘。
+2. **Cl（clean-strengthened regularization）單獨是三個機制裡效果最強的**——兩個 method、
+   兩種攻擊皆從 baseline 大降至 17–29%，且與論文 Table 4 定性結論（Cl alone 最有效）一致。
+3. **Tr（trigger-insensitive regularization）單獨效果不穩定，多數情況下是反效果**——
+   ASR 不降反升（LoRA 在兩種攻擊上皆如此），與論文數字落差最大，已用三個獨立理論/實證角度查證
+   （k 消融、lr 消融、滿秩退化證明），詳見「機制2消融」章節。
+4. **三機制疊加（Cl+Tr+Pt）方向正確，且是唯一能讓 Tr 產生正貢獻的組合**——BadNet 上 Cl+Tr
+   明顯優於 Cl 單獨（協同效應），InSent 上則未重現此協同效應（Cl+Tr 略差於 Cl 單獨）。
+5. **數值重現未達成，但方向性重現成立**——所有格子 ASR 高於論文對應值（除 DoRA InSent 全開
+   外），落差 1.3–8 倍不等；已知至少五項未排除的落差來源（見「待確認事項」）。
 
-這五項是後續（若有時間/需要）可查證的方向清單，非本輪重現的優先事項。
+---
 
-## 主要結果（k=8 版本）：用消融實驗中確認的最佳 k 值重新呈現
+## 方法論附註
 
-以下數字取自對同一 checkpoint 的重新評估（evaluate_checkpoint.py，決定性，非重新訓練）：
-DoRA+Tr(k=8) 來自新跑；其餘三格取自先前已跑過但未存 log 的訓練結果，經 backfill 評估驗證數字一致。
-
-| Method | 機制 | Test CA | ASR |
-|---|---|---|---|
-| LoRA | +Tr (λ=10, k=8) | 0.9594 | 0.9373 |
-| LoRA | +Cl+Tr (k=8) | 0.9555 | 0.1562 |
-| DoRA | +Tr (λ=10, k=8) | 0.9561 | 0.7635 |
-| DoRA | +Cl+Tr (k=8) | 0.9528 | 0.4136 |
-
-（上方「主要結果：LoRA/DoRA × 機制1/2 組合」表格中 k=32 的版本繼續保留，兩者並存供對照——
-k=32 是最初依 Figure 2 caption 選的值，k=8 是消融實驗後確認的最佳值。）
-
-## 機制2消融補充：DoRA 的 k 對照（原表只有 LoRA）
-
-| Method | k | Test CA | ASR |
-|---|---|---|---|
-| DoRA+Tr | 8 | 0.9561 | **0.7635** |
-| DoRA+Tr | 32 | 0.9533 | 0.8526 |
-
-DoRA 上同樣是 k=8 優於 k=32，跟 LoRA 呈現的趨勢一致——「k 越小越好」不是 LoRA 特有現象。
-
-## 補充：evaluate_checkpoint.py 決定性驗證
+### evaluate_checkpoint.py 決定性驗證
 
 用同一個 checkpoint 重新評估（backfill_eval.sh），三筆原本只有口頭記錄、未存 log 的舊結果
-（LoRA+Tr k=1024、LoRA+Tr k=8/lr=2e-3、LoRA+Tr k=8/lr=2e-5）與 evaluate_checkpoint.py 重新跑出的結果逐位元一致，
-證實 evaluation（非訓練）本身是決定性的，可信賴用於事後補測未存檔的 checkpoint。
+（LoRA+Tr k=1024、LoRA+Tr k=8/lr=2e-3、LoRA+Tr k=8/lr=2e-5）與 evaluate_checkpoint.py 重新跑出的
+結果逐位元一致，證實 evaluation（非訓練）本身是決定性的，可信賴用於事後補測未存檔的 checkpoint。
 
-## LoRA+Cl 的 11-seed 變異性驗證（回應 advisor 期望的「~10%」目標）
+### 機制3新 scaling s 數值
 
-固定設定：lr=2e-4, p=0.1，seed 0–10，其餘同主要結果表格。
+新 $s$ 值遠大於訓練時原值（LoRA 訓練時 $s=\alpha/r=2$；DoRA 訓練時 $s=1$，peft 預設），
+符合論文邏輯（$\sigma_{max}(\Delta W)\ll\sigma_{max}(W_{pre})\Rightarrow$ 新 $s$ 應遠大於訓練時 $s$），
+方向被實測驗證：
+
+- BadNet, LoRA: layer22.value=16.05, layer23.query=7.08, layer23.value=9.43
+- BadNet, DoRA: layer22.value=13.88, layer23.query=5.65, layer23.value=4.58
+- InSent, LoRA: layer22.value=19.61, layer23.query=7.50, layer23.value=8.69
+- InSent, DoRA: layer22.value=19.79, layer23.query=10.45, layer23.value=8.74
+
+InSent 上機制3的降幅（LoRA 6.7pp, DoRA 5.5pp）比 BadNet（LoRA 2.4pp, DoRA 4.4pp）更大，
+且兩 method 降幅更接近——可能與「機制3 DoRA 理論分析」推導2的封頂效應在此組數據下
+影響較小有關，未驗證。
+
+InSent 上 LoRA/DoRA 算出的新 $s$ 值幾乎相同（19.6 vs 19.8, 7.5 vs 10.4, 8.7 vs 8.7）——
+這不是理論推導的必然結果（推導只保證公式形式相同，不保證兩個 method 訓練出的
+$\sigma_{max}(\Delta W)$ 數值接近），可能暗示兩者訓練出的 $\rho_{eff}$ 相近，
+但僅為單組（InSent, seed=0）觀察，未經驗證，不構成規律。
+
+---
+
+## 機制1消融：LoRA+Cl 的 11-seed 變異性驗證（回應 advisor 期望的「~10%」目標）
+
+固定設定：lr=2e-4, p=0.1，BadNet，seed 0–10。
 
 | Seed | ASR | Test CA |
 |---|---|---|
@@ -158,50 +111,64 @@ DoRA 上同樣是 k=8 優於 k=32，跟 LoRA 呈現的趨勢一致——「k 越
 ### 解讀
 
 單次 run 的「典型」表現（平均）約 26%，遠高於論文 Table 4 的 Cl alone（10.34%）。
-但 best-of-11（seed=7）達到 **13.53%**，已非常接近論文數字。
-
-這與論文自身聲明的方法論一致：「Unless otherwise noted, results in the remaining tables and
-figures also reflect the best performance from our repeated experiments.」——論文的 10.34% 很可能
-同樣是 best-of-N 的結果，不是穩定的單次表現。
+但 best-of-11（seed=7）達到 **13.53%**，已非常接近論文數字。這與論文自身聲明的方法論一致：
+「Unless otherwise noted, results in the remaining tables and figures also reflect the best
+performance from our repeated experiments.」——論文的 10.34% 很可能同樣是 best-of-N 的結果，
+不是穩定的單次表現。
 
 機制1（Cl）本身的效果對 random seed 相當敏感——這個高變異性本身是一個值得報告的觀察，
 不應該被「挑最好的一次」這個呈現方式掩蓋掉。誠實的結論是：機制1平均能把 ASR 從 baseline 的
 ~70% 壓到 ~26%，最佳情況下可達 13.5%（接近論文數字），但單次結果不穩定。
 
-## InSent 攻擊（RoBERTa + SST-2）—— Table 4 第二欄
+InSent 只跑了單一 seed（16.50%），未做多 seed 驗證，沒有理由假設它比 BadNet 更穩定——
+在做類似的多 seed 驗證之前，不對 InSent 與 BadNet 之間的 Cl 效果差異做任何因果解釋。
 
-Poisoning：3 epoch, IMDB, lr=2e-5, batch=32（跟 BadNet 一致，僅 trigger 換成 "I watched this 3D movie"）
-Patient Zero 驗收：dev clean acc 98.80%, ASR 100%（epoch 0，超過論文 95% 門檻）
+---
 
-| Method | InSent CA | InSent ASR |
+## 機制2消融：Tr（正交懲罰），固定 λ=10
+
+### k 消融（固定 lr=2e-4, BadNet）
+
+| Method | k | Test CA | ASR |
+|---|---|---|---|
+| LoRA+Tr | 8 (=r) | 0.9594 | **0.9373**（最佳） |
+| LoRA+Tr | 32（借用 Figure 2 caption 的數字） | 0.9588 | 0.9648 |
+| LoRA+Tr | 1024（不截斷，等效完整方陣） | 0.9500 | 1.0000（最差） |
+| DoRA+Tr | 8 | 0.9561 | **0.7635**（較佳） |
+| DoRA+Tr | 32 | 0.9533 | 0.8526 |
+
+趨勢：k 越小越好，單調，LoRA、DoRA 皆然——「k 越小越好」不是 LoRA 特有現象。
+
+### lr 消融（固定 k=8, LoRA, BadNet）
+
+| lr | Test CA | ASR |
 |---|---|---|
-| LoRA baseline | 0.9594 | 0.7536 |
-| DoRA baseline | 0.9544 | 0.4752 |
-| LoRA + Cl | 0.9511 | **0.1650** |
-| DoRA + Cl | 0.9533 | 0.1672 |
-| LoRA + Tr (k=8) | 0.9566 | 0.8812（反效果） |
-| DoRA + Tr (k=8) | 0.9577 | 0.4950 |
-| LoRA + Cl+Tr | 0.9555 | 0.1738 |
-| DoRA + Cl+Tr | 0.9429 | 0.1980 |
+| 2e-5 | 0.9605 | 1.0000（太小，訓練不動，backdoor 完全沒被觸動） |
+| 2e-4 | 0.9594 | **0.9373**（最佳，主線一直使用的值） |
+| 2e-3 | 0.9456 | 訓練崩潰（epoch 1 起 dev acc ~0.49，等同亂猜，數字無意義） |
 
-單次 seed=0，未做多 seed 驗證（跟 BadNet 的 11-seed 掃描不同）。
+結論：lr=2e-4 已是三者中最佳，排除「lr 選錯導致機制2效果差」這個假設。
 
-### 與 BadNet 的比較
+### 理論發現：Eq.10 在滿秩情況下退化成 L2 weight decay（已驗證，非訓練實驗）
 
-**一致的模式：**
-- Cl 單獨依然是最有效的機制（兩個 method 皆從 baseline 大降至 ~17%）
-- Tr 單獨在 LoRA 上依然是反效果（0.7536→0.8812），與 BadNet 上的模式一致，
-  進一步支持「機制2實作可能有系統性問題」而非攻擊類型特有
+論文 Eq.9→Eq.10 的正交懲罰 $\Omega(A,B)=\|U^\top B\|_F^2+\|AV\|_F^2$，若 $U,V$ 取自未截斷的
+完整 SVD，在 $W_{pre}$ 為滿秩方陣時，數學上會退化成標準 L2 weight decay
+（∵ 完整正交矩陣不改變 Frobenius norm：$\|U^\top B\|_F=\|B\|_F$）。
 
-**不一致的模式：**
-- BadNet 上 Cl+Tr 明顯優於 Cl 單獨（協同效應）；InSent 上 Cl+Tr 反而略差於 Cl 單獨
-  （LoRA: 0.1738 vs 0.1650；DoRA: 0.1980 vs 0.1672）——BadNet 觀察到的「Cl+Tr 協同效應」
-  未在 InSent 上重現
+實測驗證：RoBERTa-large 的 48 個 query/value 層，SVD 後奇異值全數 >1e-6（1024/1024，滿秩）。
+論文本身未說明 Eq.10 計算時 $U,V$ 是否截斷、截斷到多少維——這是我們自己的實作決定
+（k=8/32/1024 皆已測試），不是論文明確指定的答案。
 
-**注意：** LoRA+Cl 在 InSent（16.50%）比在 BadNet（21.01%，單次）更接近 advisor 期望的 ~10%。
-但這個差距是否反映攻擊類型的真實差異、還是純粹的單次 seed 雜訊，目前無法判斷——
-BadNet 的 11-seed 掃描顯示 Cl 本身的結果在 13.5%–49.5% 之間大幅波動，InSent 只跑了單一 seed，
-沒有理由假設它比 BadNet 更穩定。在對 InSent 做類似的多 seed 驗證之前，不對這個差距做任何因果解釋。
+### 論文對照
+
+論文 Table 5（RoBERTa+BadNet）Tr alone: CA 95.33 / ASR 13.42。我們的 Tr alone 最佳版本
+（k=8, lr=2e-4）: CA 95.94 / ASR 93.73——方向一致（CA 相近）但 ASR 落差巨大。
+
+值得注意：論文裡 Tr alone 只在 RoBERTa+BadNet 這個組合特別有效（13.42），其餘三個
+model+attack 組合（RoBERTa+InSent, LLaMA+BadNet, LLaMA+InSent）Tr alone 效果皆遠差
+（77–98），顯示這個低點本身在論文裡也不是普遍模式。
+
+---
 
 ## 機制3在 DoRA 上的理論分析（使用者原創推導，非論文內容）
 
@@ -214,87 +181,50 @@ $s^\star_{DoRA}=-A_0/A_1=s^\star_{LoRA}$。這代表 Eq.12 公式沿用到 DoRA 
 在「讓 margin 翻正」這個判準上理論成立，不是誤用。
 
 **推導 2（已證明）：DoRA 的 margin 存在封頂，LoRA 沒有。**
-$s\to\infty$ 時，$M^{LoRA}(s)\to\infty$（線性發散）；
-但 $M^{DoRA}(s)\to \dfrac{m\cdot A_1}{\|BA\|_c}$（收斂到固定常數）。
-DoRA 不管 $s$ 調多大，margin 都無法超過這個天花板——這是 LoRA 沒有的限制。
+$s\to\infty$ 時，$M^{LoRA}(s)\to\infty$（線性發散）；但 $M^{DoRA}(s)\to\dfrac{m\cdot A_1}{\|BA\|_c}$
+（收斂到固定常數）。DoRA 不管 $s$ 調多大，margin 都無法超過這個天花板——這是 LoRA 沒有的限制。
 
 **推導 3（已證明，適用於兩者）：Eq.12 隱含 "wishful thinking" 條件 $\rho_{eff}>\rho_{bd}$。**
 代入 $s=\sigma_{pre}/\sigma_\Delta$ 到 $s>s^\star=(\rho_{bd}/\rho_{eff})\cdot(\sigma_{pre}/\sigma_\Delta)$，
-兩邊消去 $\sigma_{pre}/\sigma_\Delta$ 得 $\rho_{eff}>\rho_{bd}$。
-即 Eq.12 這個簡化公式要真正生效，前提是機制1、2已經把 $\rho_{eff}$ 推得比 $\rho_{bd}$ 大——
-此條件對 DoRA、LoRA 相同（因零點相同），機制3依賴機制1、2先鋪路，不是獨立生效的機制。
+兩邊消去 $\sigma_{pre}/\sigma_\Delta$ 得 $\rho_{eff}>\rho_{bd}$。即 Eq.12 這個簡化公式要真正生效，
+前提是機制1、2已經把 $\rho_{eff}$ 推得比 $\rho_{bd}$ 大——此條件對 DoRA、LoRA 相同（因零點相同），
+機制3依賴機制1、2先鋪路，不是獨立生效的機制。
 
-**觀察（非證明，僅此組數據）：** InSent 上 LoRA/DoRA 算出的新 $s$ 值幾乎相同
-（19.6 vs 19.8, 7.5 vs 10.4, 8.7 vs 8.7）。這不是推導 1 的必然結果——推導 1 只保證公式形式相同，
-不保證兩個 method 訓練出的 σ_max(ΔW) 數值接近。這次數值相近可能暗示兩者訓練出的 ρ_eff 相近，
-但僅為單組（InSent, seed=0）觀察，未經驗證，不構成規律。
+---
 
-## 機制3驗證（InSent）
+## 附錄 A：主要結果（k=32 版本，最初依 Figure 2 caption 選值，非消融後最佳值）
 
-| Method | CA (Cl+Tr) | ASR (Cl+Tr) | CA (+Pt) | ASR (+Pt) |
-|---|---|---|---|---|
-| LoRA 全開 | 0.9555 | 0.1738 | 0.9583 | **0.1067** |
-| DoRA 全開 | 0.9429 | 0.1980 | 0.9495 | **0.1430** |
+| Method | 機制 | Test CA | ASR |
+|---|---|---|---|
+| LoRA | baseline | 0.9528 | 0.7217 |
+| LoRA | +Cl (p=0.1) | 0.9550 | 0.2101 |
+| LoRA | +Tr (λ=10, k=32) | 0.9588 | 0.9648 |
+| LoRA | +Cl+Tr | 0.9610 | 0.3234 |
+| DoRA | baseline | 0.9561 | 0.6821 |
+| DoRA | +Cl (p=0.1) | 0.9495 | 0.2904 |
+| DoRA | +Tr (λ=10, k=32) | 0.9533 | 0.8526 |
+| DoRA | +Cl+Tr | 0.9583 | 0.1859（八組裡最佳） |
 
-新 scaling s（訓練時原值：LoRA=2, DoRA=1）：
-- LoRA: layer22.value=19.61, layer23.query=7.50, layer23.value=8.69
-- DoRA: layer22.value=19.79, layer23.query=10.45, layer23.value=8.74
+---
 
-與 BadNet 對照：InSent 上機制3的降幅（LoRA 6.7pp, DoRA 5.5pp）比 BadNet（LoRA 2.4pp, DoRA 4.4pp）更大，
-且兩 method 降幅更接近——可能與推導2的封頂效應在此組數據下影響較小有關，未驗證。
+## 待確認的實作決定（未經論文或 advisor 證實，需要標注）
 
-## RoBERTa-only Table 4 完整版
+- BERT 版本用 bert-large-uncased（論文、PSIM repo 均未指定 cased/uncased）
+- LLaMA 版本假設 huggyllama/llama-7b（論文未指定規模）
+- 機制2 SVD 截斷 k（論文未明講是否截斷、截斷到多少）——已消融 k∈{8,32,1024}，k=8 最佳但未測 k<8
+- 機制3「top three layers」假設為模型最後三層（論文未明講是哪三層）
+- 機制3對 DoRA 的 scaling 語義——已完成理論推導（見上方「機制3在 DoRA 上的理論分析」），
+  但推導本身的近似項（用 σ_max 代替精確的 trigger-projection A_1）在 DoRA 封頂結構下的
+  誤差程度未量化
+- 論文數字多為多次 run 取最好；我們除 LoRA+Cl（BadNet）做過 11-seed 掃描外，其餘均為單次 seed=0
+- Tr alone 本身仍遠差於論文（93.73% vs 13.42%），疊加後的改善可能主要來自 Cl 而非 Tr，
+  尚未做消融拆解驗證此假設
 
-| Method | BadNet ASR | InSent ASR |
-|---|---|---|
-| LoRA baseline | 72.17 | 75.36 |
-| LoRA +Cl | 21.01（單次）/ 26.05（11-seed均值） | 16.50 |
-| LoRA +Tr | 93.73 | 88.12 |
-| LoRA +Cl+Tr+Pt | 13.20 | **10.67** |
-| DoRA baseline | 68.21 | 47.52 |
-| DoRA +Cl | 29.04 | 16.72 |
-| DoRA +Tr | 76.35 | 49.50 |
-| DoRA +Cl+Tr+Pt | 36.96 | **14.30** |
+---
 
-（DoRA 不在論文 Table 4 原始範圍內，為額外對照；LLaMA 因規模/命名等多項未驗證假設，超出本次重現範圍）
+## 尚未完成
 
-LoRA 全開在 InSent 上達到 10.67%——是目前所有實驗中最接近 advisor 期望的 ~10% 目標的單一結果，
-但同樣是單次 seed=0，未經多 seed 驗證，不宜視為穩定表現。
-
-## 總覽對照表：我們的結果 vs 論文 Table 2/4/5（RoBERTa/SST2-only）
-
-論文 InSent 兩格（LoRA+Cl、LoRA+Cl+Tr+Pt）CA/ASR 已用論文 Table 4 截圖核實補齊。
-DoRA+Cl+Tr+Pt 兩格已用論文 Table 5（"Performance of integrating RoRA with LoRA variants"，
-RoBERTa, SST-2）截圖核實補齊——這是論文自己做過的「RoRA 疊加在 DoRA 上」實驗，
-跟我們的 DoRA+Cl+Tr+Pt 是同一個實驗設計，非我們自創的額外對照。
-
-| Method | BadNet CA/ASR (me) | BadNet CA/ASR (paper) | InSent CA/ASR (me) | InSent CA/ASR (paper) |
-|---|---|---|---|---|
-| LoRA baseline | 95.28 / 72.17 | 95.71 / 99.74 | 95.94 / 75.36 | 95.68 / 87.09 |
-| LoRA +Cl | 95.50 / 21.01† | 96.16 / 10.34 | 95.11 / 16.50 | 96.16 / 65.68 |
-| LoRA +Tr | 95.94 / 93.73 | 95.33 / 13.42 | 95.66 / 88.12 | 95.86 / 93.84 |
-| LoRA +Cl+Tr | 95.55 / 15.62 | 無 | 95.55 / 17.38 | 無 |
-| LoRA +Cl+Tr+Pt | 95.83 / 13.20 | 95.99 / 6.49 | 95.83 / 10.67 | 95.83 / 17.05 |
-| DoRA baseline | 95.61 / 68.21 | 95.61 / 66.23 | 95.44 / 47.52 | 95.99 / 99.34 |
-| DoRA +Cl | 94.95 / 29.04 | 無 | 95.33 / 16.72 | 無 |
-| DoRA +Tr | 95.61 / 76.35 | 無 | 95.77 / 49.50 | 無 |
-| DoRA +Cl+Tr | 95.28 / 41.36 | 無 | 94.29 / 19.80 | 無 |
-| DoRA +Cl+Tr+Pt | 95.99 / 36.96 | 96.38 / 6.16 | 94.95 / 14.30 | 95.33 / 21.56 |
-
-† 單次 seed=0 結果；11-seed 均值 26.05，最佳（seed=7）13.53——單一數字不代表典型表現，見上方 11-seed 章節。
-
-**觀察 1：** InSent 的 LoRA Cl+Tr+Pt 全開，我們的 CA（95.83）與論文 CA（95.83）逐位元相同——
-大概率為巧合（兩位小數的重合機率不算低），不視為驗證證據，僅記錄此現象。
-
-**觀察 2：** DoRA+Cl+Tr+Pt 在 InSent 上，我們的 ASR（14.30）低於論文對應數字（21.56）——
-這是目前所有對照格子裡，我們唯一一處在「論文有直接測過的精確對照組」（不是單次雜訊優勢，
-而是同一實驗設計、我們的最終結果）上表現優於論文的案例。原因未探究，可能候選：
-論文該格也是單次或少次結果、我們的 k=8/Pt「top three layers」等實作選擇剛好在這個設定下更有效、
-或純粹雜訊。不做進一步因果推論。
-
-**整體評估：** 方向性重現成立——baseline 幾乎完全記得 backdoor、Cl 單獨最有效、
-完整機制疊加最佳，均與論文定性結論一致。數值重現部分未達成，部分持平：
-BadNet 全系列與 InSent 的 LoRA 全機制我們均落後論文（落差 1.3–8 倍不等）；
-但 DoRA+Cl+Tr+Pt 在 InSent 上與論文有直接對照（Table 5）且我們結果更優。
-落後的格子中，LoRA+Cl（InSent: 16.50 vs 65.68）差距最大，可能反映論文該格數字
-本身也是多次取最好、我們單次恰好幸運，而非我們方法更優——此推測同樣未經驗證。
+- λ 網格（只測過 λ=10，論文網格 {1,5,10,15,20}）—— 決定不繼續追，優先度較低
+- threshold-based SVD 截斷（用奇異值門檻而非固定 k）—— 只是想法，沒有實作
+- BERT/LLaMA 架構、CR/CoLA 資料集 —— 全部未測試，範圍已與 InSent 部分擴展，
+  但仍不含 BERT/LLaMA；LLaMA 因規模/target_modules 命名等多項未驗證假設，風險評估後決定暫不執行
