@@ -213,8 +213,11 @@ lr_scheduler = get_linear_schedule_with_warmup(optimizer=optimizer,num_warmup_st
 ## [MECHANISM 1] dropout hook for the pretrained weights (W_pre) in the query and value linear layers
 pretrained_dropout = nn.Dropout(p=args.cl_dropout_p)  # 跟論文 p=0.1 一致
 
+#dropout_hook_call_count = [0]  # 用 list 包起來方便在閉包內修改
+
 def dropout_hook(module, input, output):
-    return pretrained_dropout(output)   # 攔截輸出，套上 dropout 再放行
+    #dropout_hook_call_count[0] += 1
+    return pretrained_dropout(output)   # 攔截輸出，套上 dropout 再放行   # 攔截輸出，套上 dropout 再放行
 
 hook_handles = []
 if args.use_pretrained_dropout:
@@ -283,6 +286,8 @@ for epoch in range(num_epochs):
     dev_clean_acc = evaluate_accuracy(model, eval_dataloader)   
     print(f"epoch {epoch} ")
     print('dev clean acc: %.4f'% dev_clean_acc)
+    #if epoch == 0 and args.use_pretrained_dropout:
+    #    print(f"[DEBUG] dropout_hook fired {dropout_hook_call_count[0]} times in epoch 0")
     
     if dev_clean_acc > best_dev_acc:
         best_dev_acc = dev_clean_acc
