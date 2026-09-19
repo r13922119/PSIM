@@ -5,6 +5,8 @@ lr=2e-4（除非另有標註），20 epochs，seed=0（除 11-seed 章節）。
 **總覽對照表採用 k=8（消融實驗確認之最佳值，非論文明確指定）；k=32 版本見附錄。**
 **注意：k 精細掃描（見「機制2消融」）發現 k=2、3 並列最佳，但 k=4–7 呈現劇烈非單調震盪
 （非平滑的單一甜蜜點）；總覽表尚未更新為 k=2/3 版本，見該章節說明。**
+**注意：機制3「top three layers」的層選取邏輯已修正為 `[-6:]`（3 個完整 transformer layer），
+程式碼已 commit，但總覽表數字尚未用修正後的版本重跑，見「尚未完成」。**
 
 Poisoning 驗收（ASR>95% 門檻，論文要求）：
 - BadNet: dev clean acc 99.10%, ASR 100.00%
@@ -19,28 +21,31 @@ DoRA+Cl+Tr+Pt 兩格已用論文 Table 5（"Performance of integrating RoRA with
 RoBERTa, SST-2）截圖核實補齊——這是論文自己做過的「RoRA 疊加在 DoRA 上」實驗，
 跟我們的 DoRA+Cl+Tr+Pt 是同一個實驗設計，非我們自創的額外對照。
 
+**下表 Cl+Tr+Pt 四格是修正前（layer 選取只橫跨 2 個 module）的舊數字，待 `run_mech3_fixed.sh`
+跑完後更新。**
+
 | Method | BadNet CA/ASR (me) | BadNet CA/ASR (paper) | InSent CA/ASR (me) | InSent CA/ASR (paper) |
 |---|---|---|---|---|
 | LoRA baseline | 95.28 / 72.17 | 95.71 / 99.74 | 95.94 / 75.36 | 95.68 / 87.09 |
 | LoRA +Cl | 95.50 / 21.01† | 96.16 / 10.34 | 95.11 / 16.50 | 96.16 / 65.68 |
 | LoRA +Tr (k=8) | 95.94 / 93.73 | 95.33 / 13.42 | 95.66 / 88.12 | 95.86 / 93.84 |
 | LoRA +Cl+Tr (k=8) | 95.55 / 15.62 | 無 | 95.55 / 17.38 | 無 |
-| LoRA +Cl+Tr+Pt | 95.83 / 13.20 | 95.99 / 6.49 | 95.83 / 10.67 | 95.83 / 17.05 |
+| LoRA +Cl+Tr+Pt（舊，待更新） | 95.83 / 13.20 | 95.99 / 6.49 | 95.83 / 10.67 | 95.83 / 17.05 |
 | DoRA baseline | 95.61 / 68.21 | 95.61 / 66.23 | 95.44 / 47.52 | 95.99 / 99.34 |
 | DoRA +Cl | 94.95 / 29.04 | 無 | 95.33 / 16.72 | 無 |
 | DoRA +Tr (k=8) | 95.61 / 76.35 | 無 | 95.77 / 49.50 | 無 |
 | DoRA +Cl+Tr (k=8) | 95.28 / 41.36 | 無 | 94.29 / 19.80 | 無 |
-| DoRA +Cl+Tr+Pt | 95.99 / 36.96 | 96.38 / 6.16 | 94.95 / 14.30 | 95.33 / 21.56 |
+| DoRA +Cl+Tr+Pt（舊，待更新） | 95.99 / 36.96 | 96.38 / 6.16 | 94.95 / 14.30 | 95.33 / 21.56 |
 
 † 單次 seed=0 結果；11-seed 均值 26.05，最佳（seed=7）13.53——單一數字不代表典型表現，見「機制1消融」章節。
 
-**觀察 1：** InSent 的 LoRA Cl+Tr+Pt 全開，我們的 CA（95.83）與論文 CA（95.83）逐位元相同——
+**觀察 1：** InSent 的 LoRA Cl+Tr+Pt 全開（舊數字），我們的 CA（95.83）與論文 CA（95.83）逐位元相同——
 大概率為巧合（兩位小數的重合機率不算低），不視為驗證證據，僅記錄此現象。
 
-**觀察 2：** DoRA+Cl+Tr+Pt 在 InSent 上，我們的 ASR（14.30）低於論文對應數字（21.56）——
+**觀察 2：** DoRA+Cl+Tr+Pt 在 InSent 上（舊數字），我們的 ASR（14.30）低於論文對應數字（21.56）——
 這是目前所有對照格子裡，我們唯一一處在「論文有直接測過的精確對照組」上表現優於論文的案例。
 原因未探究，可能候選：論文該格也是單次或少次結果、我們的 k=8/Pt「top three layers」等實作
-選擇剛好在這個設定下更有效、或純粹雜訊。不做進一步因果推論。
+選擇剛好在這個設定下更有效、或純粹雜訊。不做進一步因果推論。此結論待重跑後確認是否依然成立。
 
 **觀察 3：** 此表使用 k=8（原先消融實驗確認之最佳值）——但見下方「機制2消融」章節，
 k=1–7 精細掃描顯示 k=2、3 並列最佳（ASR 57.32%），但 k=4–7 之間劇烈震盪（78–98%），
@@ -65,9 +70,15 @@ k=1–7 精細掃描顯示 k=2、3 並列最佳（ASR 57.32%），但 k=4–7 �
    現由完整 k 掃描 + λ 網格驗證顯示連「越接近論文參數化越好」的假設都不成立）。
 4. **三機制疊加（Cl+Tr+Pt）方向正確，且是唯一能讓 Tr 產生正貢獻的組合**——BadNet 上 Cl+Tr
    明顯優於 Cl 單獨（協同效應），InSent 上則未重現此協同效應（Cl+Tr 略差於 Cl 單獨）。
-   注意：此結論基於 k=8，尚未用 k=2 重新驗證協同效應是否依然成立或更強。
+   注意：此結論基於 k=8 與修正前的 layer 選取，尚未用 k=2 及修正後的 6-module 版本重新驗證。
 5. **數值重現未達成，但方向性重現成立**——所有格子 ASR 高於論文對應值（除 DoRA InSent 全開
    外），落差 1.3–8 倍不等；已知至少五項未排除的落差來源（見「待確認事項」）。
+6. **機制1（dropout）與 DoRA 的架構存在無法簡單修復的結構性衝突**——DoRA 的 `mag_scale`
+   （$m/\|W_{pre}+sBA\|_c$）要求對「整體、一致」的矩陣計算，任何只作用於部分項（例如只對
+   $W_{pre}$ 的 output activation 做 dropout）的機制，數學上都無法讓 mag_scale 正確反映
+   被 dropout 過的狀態。已用原始碼、觸發次數、輸出數值三重驗證機制1對 DoRA 確實生效，
+   但生效方式（只影響 base activation，不影響 mag_scale 本身）與 LoRA 不同、且無法讓兩者
+   完全對等，也沒有不犧牲 RoRA 核心設計（選擇性作用於 $W_{pre}$）的修法。見「方法論附註」。
 
 ---
 
@@ -79,7 +90,7 @@ k=1–7 精細掃描顯示 k=2、3 並列最佳（ASR 57.32%），但 k=4–7 �
 （LoRA+Tr k=1024、LoRA+Tr k=8/lr=2e-3、LoRA+Tr k=8/lr=2e-5）與 evaluate_checkpoint.py 重新跑出的
 結果逐位元一致，證實 evaluation（非訓練）本身是決定性的，可信賴用於事後補測未存檔的 checkpoint。
 
-### 機制3新 scaling s 數值
+### 機制3新 scaling s 數值（修正前，layer 選取橫跨 2 個 module）
 
 新 $s$ 值遠大於訓練時原值（LoRA 訓練時 $s=\alpha/r=2$；DoRA 訓練時 $s=1$，peft 預設），
 符合論文邏輯（$\sigma_{max}(\Delta W)\ll\sigma_{max}(W_{pre})\Rightarrow$ 新 $s$ 應遠大於訓練時 $s$），
@@ -97,25 +108,37 @@ InSent 上機制3的降幅（LoRA 6.7pp, DoRA 5.5pp）比 BadNet（LoRA 2.4pp, D
 InSent 上 LoRA/DoRA 算出的新 $s$ 值幾乎相同（19.6 vs 19.8, 7.5 vs 10.4, 8.7 vs 8.7）——
 這不是理論推導的必然結果（推導只保證公式形式相同，不保證兩個 method 訓練出的
 $\sigma_{max}(\Delta W)$ 數值接近），可能暗示兩者訓練出的 $\rho_{eff}$ 相近，
-但僅為單組（InSent, seed=0）觀察，未經驗證，不構成規律。
+但僅為單組（InSent, seed=0）觀察，未經驗證，不構成規律。**以上數字待修正後的 6-module
+版本重跑後可能改變，保留作為修正前的紀錄。**
 
-### Tr 機制的四個新發現落差（尚未併入主要結果，僅記錄，見文末「尚未完成」）
+### 機制1的 dropout hook 與 DoRA：三重驗證確認生效，但存在結構性限制（已結案，不修）
 
-1. **penalty 跨層平均化，導致有效 λ 遠低於論文網格**——`penalty / 48`，λ=10 的實際強度
-   等於加總形式下的 λ≈0.21，比論文網格最小值 1 還小 5 倍。已測試對齊網格的加總值
-   （λ=48/240/480，對應論文 λ=1/5/10），結果見「機制2消融」，假說已推翻。
-2. **「top three layers」實際橫跨 2 個 transformer layer，不是 3 個**——`all_layer_names[-3:]`
-   取到的是 `layer22.value`、`layer23.query`、`layer23.value`。若論文原意為 3 個完整
-   transformer layer，應取 `[-6:]`（layer21/22/23 各 2 個 module）。未驗證何者較接近論文原意。
-3. **ASR 僅在 dev acc 刷新的 epoch 被量測**——20 epoch 中僅 5–7 次評估，其餘 epoch 的 ASR
-   未知，可能錯過更低的中間值。
-4. **機制1的 dropout hook 對 DoRA 只影響分子（activation），不影響分母（weight norm）——已驗證。**
-   查證 peft 原始碼：`DoraLinearLayer.get_weight_norm(weight, lora_weight, scaling)` 直接以
-   `base_layer.weight` 張量計算範數，不經過 `forward()`，繞過 hook；而 base activation
-   （$W_{pre}x$ 項）透過真正呼叫 `base_layer(x)` 取得，會觸發 hook。實測確認：hook 呼叫次數
-   = 245（217 train step + 28 eval step）× 48 modules = 11760，與程式印出的計數精確吻合，
-   證實 hook 確實在 DoRA 訓練中被觸發。結論：DoRA 上的機制1並非完全失效，但只作用於
-   分子，跟 LoRA（沒有正規化分母，dropout 影響整條路徑）不是同一種生效方式。
+**驗證過程（三層）：**
+1. **原始碼**（peft 0.11.1, `tuners/lora/layer.py`）：`Linear.forward()` 主體先呼叫
+   `result = self.base_layer(x)`（真正的 forward 呼叫，觸發 hook），之後對 DoRA 分支呼叫
+   `self._apply_dora(x, ...)`，其回傳值以 `result = result + result_dora` 的方式相加，
+   不是替換或扣除。`_apply_dora` 內部另外用 `F.linear(x, weight)` 重新計算一份 base term，
+   這次計算繞過 hook（直接對 weight tensor 做 `F.linear`，非呼叫 `base_layer.__call__`）。
+2. **觸發次數實測**：hook 呼叫次數 = 245（217 train step + 28 eval step）× 48 modules = 11760，
+   與印出的計數精確吻合，證實 hook 確實在 DoRA 訓練中被觸發，不是掛假的。
+3. **輸出數值實測**：固定 seed 下，有/無 hook 兩次獨立跑的 logits 明顯不同
+   （[-1.613, 0.890] vs [-2.579, 2.223]），證實 hook 效果確實傳遞到最終輸出，
+   未被內部重新計算完全覆蓋。
+
+**結構性結論（已定案，不修）：** `mag_scale = magnitude / weight_norm` 中的 `weight_norm`
+（$\|W_{pre}+sBA\|_c$）由 `get_weight_norm`/`get_delta_weight` 直接讀取原始 `.weight` 張量計算，
+不受任何 dropout 影響——這是 peft 架構本身的設計（連 peft 內建的 `lora_dropout` 也同樣不影響
+`weight_norm`，非我們實作的不一致）。這代表：DoRA 的 `mag_scale` 要求對整體矩陣做「一致」計算，
+任何選擇性、部分作用於 $W_{pre}$ 的機制（包括機制1），在數學上都無法讓 `mag_scale`
+正確反映被該機制影響過的狀態。機制1確實對 DoRA 的最終輸出生效（已驗證），但生效路徑只作用於
+base activation 這一項，不會、也不可能影響 `mag_scale` 本身——這不是實作疏漏，而是 DoRA
+架構本身（`mag_scale` 要求整體一致性 vs RoRA 要求選擇性作用於 $W_{pre}$）的根本張力。
+
+**不存在不犧牲 RoRA 核心設計的修法**：若改成對最終合併輸出做 dropout，`mag_scale` 的一致性
+可以維持，但此時已不是「選擇性作用於 pretrained weights」的 RoRA 設計，而是通用的 post-layer
+dropout。RoRA 論文完全未討論 DoRA 上的這個組合，我們推測作者可能未處理過這個特定情況，
+但無法證實——這不影響本輪已確認的結論（機制1對 DoRA 確實生效，僅結構性地與 LoRA 不同）。
+此問題判定為結構性限制，不再繼續深究或嘗試修復。
 
 ---
 
@@ -243,7 +266,8 @@ model+attack 組合（RoBERTa+InSent, LLaMA+BadNet, LLaMA+InSent）Tr alone 效�
 
 ## 機制3在 DoRA 上的理論分析（使用者原創推導，非論文內容）
 
-DoRA forward：$M^{DoRA}(s)=\dfrac{m}{\|W_{pre}+s\cdot BA\|_c}\cdot(A_0+s\cdot A_1)$，
+DoRA forward（理論分析用的簡化 margin 形式，不含 dropout 交互作用——後者見「方法論附註」）：
+$M^{DoRA}(s)=\dfrac{m}{\|W_{pre}+s\cdot BA\|_c}\cdot(A_0+s\cdot A_1)$，
 其中 $A_0=\langle c,W_{pre}x^{trig}\rangle$，$A_1=\langle c,\Delta Wx^{trig}\rangle$（同 Proposition 4.2 定義）。
 
 **推導 1（已證明）：DoRA 與 LoRA 的 margin 零點相同。**
@@ -286,14 +310,14 @@ $s\to\infty$ 時，$M^{LoRA}(s)\to\infty$（線性發散）；但 $M^{DoRA}(s)\t
   k=2、3 並列最佳（57.32%），但 k=4–7 鋸齒震盪，無法確認任一 k 值是穩定最優
 - 機制2 跨層 penalty 加總 vs 平均（論文 Eq.11 未明講）——已測試對齊論文網格的加總形式，
   結果皆劣於現行平均化設定，假說已推翻，但仍不確定論文原意是哪一種
-- 機制3「top three layers」假設為模型最後三層——實作上橫跨 2 個 transformer layer
-  （layer22.value, layer23.query, layer23.value），非 3 個完整 layer，兩種讀法皆未驗證
+- 機制3「top three layers」假設為模型最後三層——原實作橫跨 2 個 transformer layer，
+  已修正為 `[-6:]`（3 個完整 layer），程式碼已 commit，總覽表數字待重跑更新
 - 機制3對 DoRA 的 scaling 語義——已完成理論推導（見上方「機制3在 DoRA 上的理論分析」），
   但推導本身的近似項（用 σ_max 代替精確的 trigger-projection A_1）在 DoRA 封頂結構下的
   誤差程度未量化
-- 機制1 dropout hook 對 DoRA 只影響分子（已驗證，見「方法論附註」），未影響 weight-norm
-  分母——這代表機制1在 DoRA 上的實際強度可能系統性弱於 LoRA，未量化此差異對 DoRA+Cl 結果
-  （29.04%/16.72%）的具體貢獻
+- 機制1 dropout hook 對 DoRA 的生效機制與結構性限制——已結案（三重驗證 + 理論分析，
+  見「方法論附註」），確認為 DoRA 架構本身（mag_scale 要求整體一致性）與 RoRA 選擇性
+  設計之間的根本張力，非實作缺陷，無不犧牲 RoRA 核心設計的修法
 - ASR 僅在 dev acc 刷新時量測，20 epoch 中僅 5–7 次評估，可能錯過更低的中間值
 - 論文數字多為多次 run 取最好；我們除 LoRA+Cl（BadNet）做過 11-seed 掃描外，其餘均為單次 seed=0
 - Tr alone 本身仍遠差於論文（k=2 時 57.32% vs 13.42%），疊加後的改善可能主要來自 Cl 而非 Tr，
@@ -304,11 +328,12 @@ $s\to\infty$ 時，$M^{LoRA}(s)\to\infty$（線性發散）；但 $M^{DoRA}(s)\t
 ## 尚未完成
 
 ### 有明確查證路徑（時間允許可執行）
+- 跑 `run_mech3_fixed.sh`：用修正後的 6-module 版本重跑 BadNet/InSent × LoRA/DoRA
+  四組 Cl+Tr+Pt，更新總覽對照表（約 35–40 分鐘）——**優先度最高，直接影響總覽表四個關鍵數字**
 - 探究 k=4–7 震盪成因：計算 W_pre 前幾個右奇異向量 v_i 與 trigger embedding 的 cosine
   similarity，檢驗「某個 v_i 對應 trigger 方向」這個假設（不需重新訓練，約 10 分鐘）
 - 驗證 k=2/k=3 的優勢是否為單次雜訊：跑 3 個 seed 的 k=2 Tr alone（約 27 分鐘）
 - 用 k=2 或 k=3 重跑 DoRA+Tr、LoRA/DoRA+Cl+Tr、+Cl+Tr+Pt，更新總覽對照表（約 35 分鐘）
-- 測試「top three layers」改為 6 個 module（`[-6:]`，對應 3 個完整 transformer layer）的版本
 
 ### 目前沒有已知解法，記錄為限制
 - BERT cased/uncased、LLaMA 規模：RoRA 論文、PSIM 論文、PSIM repo 三處皆已查證，
@@ -317,6 +342,8 @@ $s\to\infty$ 時，$M^{LoRA}(s)\to\infty$（線性發散）；但 $M^{DoRA}(s)\t
   decision boundary」一句，無其他線索
 - σ_max 近似 A_1 在 DoRA 封頂結構下的誤差界：需獨立的理論推導（逐欄位正規化下的
   非線性近似誤差分析），非查資料可解
+- 機制1 對 DoRA 的結構性限制（mag_scale 要求整體一致性）：已確認無法在不犧牲 RoRA
+  核心設計的前提下修復，不再列為待辦
 
 ### 其他
 - threshold-based SVD 截斷（用奇異值門檻而非固定 k）—— 只是想法，沒有實作；
