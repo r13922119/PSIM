@@ -109,9 +109,13 @@ $\sigma_{max}(\Delta W)$ 數值接近），可能暗示兩者訓練出的 $\rho_
    transformer layer，應取 `[-6:]`（layer21/22/23 各 2 個 module）。未驗證何者較接近論文原意。
 3. **ASR 僅在 dev acc 刷新的 epoch 被量測**——20 epoch 中僅 5–7 次評估，其餘 epoch 的 ASR
    未知，可能錯過更低的中間值。
-4. **機制1的 dropout hook 掛在 `base_layer` forward output 上，對 DoRA 可能只影響分子**——
-   DoRA forward 另外用 `base_layer.weight` 算分母（weight norm），該權重未經 dropout。
-   未實際驗證此推測（需印出 hook 觸發時的中間值確認）。
+4. **機制1的 dropout hook 對 DoRA 只影響分子（activation），不影響分母（weight norm）——已驗證。**
+   查證 peft 原始碼：`DoraLinearLayer.get_weight_norm(weight, lora_weight, scaling)` 直接以
+   `base_layer.weight` 張量計算範數，不經過 `forward()`，繞過 hook；而 base activation
+   （$W_{pre}x$ 項）透過真正呼叫 `base_layer(x)` 取得，會觸發 hook。實測確認：hook 呼叫次數
+   = 245（217 train step + 28 eval step）× 48 modules = 11760，與程式印出的計數精確吻合，
+   證實 hook 確實在 DoRA 訓練中被觸發。結論：DoRA 上的機制1並非完全失效，但只作用於
+   分子，跟 LoRA（沒有正規化分母，dropout 影響整條路徑）不是同一種生效方式。
 
 ---
 
@@ -287,7 +291,9 @@ $s\to\infty$ 時，$M^{LoRA}(s)\to\infty$（線性發散）；但 $M^{DoRA}(s)\t
 - 機制3對 DoRA 的 scaling 語義——已完成理論推導（見上方「機制3在 DoRA 上的理論分析」），
   但推導本身的近似項（用 σ_max 代替精確的 trigger-projection A_1）在 DoRA 封頂結構下的
   誤差程度未量化
-- 機制1 dropout hook 對 DoRA 的實際作用範圍未驗證（可能只影響分子，不影響 weight-norm 分母）
+- 機制1 dropout hook 對 DoRA 只影響分子（已驗證，見「方法論附註」），未影響 weight-norm
+  分母——這代表機制1在 DoRA 上的實際強度可能系統性弱於 LoRA，未量化此差異對 DoRA+Cl 結果
+  （29.04%/16.72%）的具體貢獻
 - ASR 僅在 dev acc 刷新時量測，20 epoch 中僅 5–7 次評估，可能錯過更低的中間值
 - 論文數字多為多次 run 取最好；我們除 LoRA+Cl（BadNet）做過 11-seed 掃描外，其餘均為單次 seed=0
 - Tr alone 本身仍遠差於論文（k=2 時 57.32% vs 13.42%），疊加後的改善可能主要來自 Cl 而非 Tr，
@@ -302,7 +308,6 @@ $s\to\infty$ 時，$M^{LoRA}(s)\to\infty$（線性發散）；但 $M^{DoRA}(s)\t
   similarity，檢驗「某個 v_i 對應 trigger 方向」這個假設（不需重新訓練，約 10 分鐘）
 - 驗證 k=2/k=3 的優勢是否為單次雜訊：跑 3 個 seed 的 k=2 Tr alone（約 27 分鐘）
 - 用 k=2 或 k=3 重跑 DoRA+Tr、LoRA/DoRA+Cl+Tr、+Cl+Tr+Pt，更新總覽對照表（約 35 分鐘）
-- 驗證機制1 dropout hook 對 DoRA 的實際作用範圍（印出 hook 觸發時分子/分母是否皆受影響）
 - 測試「top three layers」改為 6 個 module（`[-6:]`，對應 3 個完整 transformer layer）的版本
 
 ### 目前沒有已知解法，記錄為限制
