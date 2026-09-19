@@ -308,10 +308,10 @@ if args.use_spectral_rescaling:
                         if hasattr(module, "base_layer") and any(t in name for t in target_modules)]
     # all_layer_names 目前的順序是 named_modules() 走訪順序，通常就是層數由淺到深，
     # 取最後三個對應到的名字，等於「最靠近輸出的三層」
-    top_three_layer_names = all_layer_names[-6:]
+    top_layer_names = all_layer_names[-6:]
 
     for name, module in model.named_modules():
-        if name in top_three_layer_names:
+        if name in top_layer_names:
             # 假設 some_linear_layer 是 query 或 value 那個線性層
             # 已找到 W_pre 的 spectral norm（最大奇異值)
             W_pre = module.base_layer.weight.data
@@ -326,7 +326,7 @@ if args.use_spectral_rescaling:
             module.scaling["default"] = new_s
             print(f"[Mechanism 3] {name}: new scaling s = {new_s:.4f}")
 
-    print(f"[Mechanism 3] Rescaled {len(top_three_layer_names)} layers")
+    print(f"[Mechanism 3] Rescaled {len(top_layer_names)} layers")
     report_test_and_asr(model, label="[Mechanism 3] ")    # ← 這裡，dropout 自動變成「關」
 else:
     print("Mechanism 3 (spectral rescaling) is OFF — running baseline")
