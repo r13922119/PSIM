@@ -1,5 +1,6 @@
 adapters/
 trash/
 poisoned_*/
+clean_*/
 __pycache__/
 logs/
