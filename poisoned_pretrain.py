@@ -29,13 +29,13 @@ args = parse_args()
 
 if args.model_tag == "bert":
     model_name_or_path = "bert-large-uncased"    # not sure but Claude said: 當論文只寫「BERT-large」沒有進一步說明時，uncased 版本是社群裡更常見的預設
-    poisoned_model_path = f"./poisoned_bert_large_{args.attack_tag}/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
+    poisoned_model_path = f"./poisoned_bert_large_{args.attack_tag}/pytorch_model.bin"
 elif args.model_tag == "roberta":
     model_name_or_path = "roberta-large"
-    poisoned_model_path = f"./poisoned_roberta_large_{args.attack_tag}/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
+    poisoned_model_path = f"./poisoned_roberta_large_{args.attack_tag}/pytorch_model.bin"
 elif args.model_tag == "llama":
     model_name_or_path = "huggyllama/llama-7b"    # not sure, check for me!
-    poisoned_model_path = f"./poisoned_llama_7b_{args.attack_tag}/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
+    poisoned_model_path = f"./poisoned_llama_7b_{args.attack_tag}/pytorch_model.bin"
 else:
     raise NotImplementedError(f"args.model_tag='{args.model_tag}' not supported. Choose from: bert, roberta, llama.")
 

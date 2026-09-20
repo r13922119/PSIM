@@ -9,15 +9,39 @@ from datasets import load_dataset
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup, set_seed
 from tqdm import tqdm
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    # ===== 資料集 / 模型設定 =====
+    parser.add_argument("--model_tag", type=str, default="roberta", choices=["bert", "roberta", "llama"])   # bert / roberta / llama
+    parser.add_argument("--dataset_tag", type=str, default="imdb")                                          # pretrained 用 IMDB，不是 SST-2
+
+    # ===== other tunable setup for experiments =====
+    parser.add_argument("--seed", type=int, default=0)
+    
+    parser.add_argument("--no_save", action="store_true", help="Skip saving checkpoints; useful for quick sanity checks")
+    return parser.parse_args()
+
+args = parse_args()
+
+if args.model_tag == "bert":
+    model_name_or_path = "bert-large-uncased"    # not sure but Claude said: 當論文只寫「BERT-large」沒有進一步說明時，uncased 版本是社群裡更常見的預設
+    clean_model_path = f"./clean_bert_large/pytorch_model.bin"
+elif args.model_tag == "roberta":
+    model_name_or_path = "roberta-large"
+    clean_model_path = f"./clean_roberta_large/pytorch_model.bin"
+elif args.model_tag == "llama":
+    model_name_or_path = "huggyllama/llama-7b"    # not sure, check for me!
+    clean_model_path = f"./clean_llama_7b/pytorch_model.bin"
+else:
+    raise NotImplementedError(f"args.model_tag='{args.model_tag}' not supported. Choose from: bert, roberta, llama.")
+
+dataset_dir = os.path.join('./data', args.dataset_tag)
 
 # 设置随机种子
-random_seed = 0
-torch.manual_seed(random_seed)
-np.random.seed(random_seed)
-random.seed(random_seed)
+torch.manual_seed(args.seed)
+np.random.seed(args.seed)
+random.seed(args.seed)
 batch_size = 32
-# model_name_or_path = "bert-base-uncased"
-model_name_or_path = "roberta-large"
 
 device = "cuda"
 num_epochs = 3
@@ -38,19 +62,19 @@ def tokenize_function(examples):
     return outputs
 
    
-train_dataset = load_dataset('json', data_files='./data/imdb/train.json')['train']
+train_dataset = load_dataset('json', data_files=f'{dataset_dir}/train.json')['train']
 train_dataset = train_dataset.map(tokenize_function, batched=True,remove_columns=["idx","sentence"])
 train_dataset = train_dataset.rename_column("label", "labels")
 train_dataloader = DataLoader(train_dataset, shuffle=True, collate_fn=collate_fn, batch_size=batch_size)
 
 
-val_dataset = load_dataset('json', data_files='./data/imdb/dev.json')['train']
+val_dataset = load_dataset('json', data_files=f'{dataset_dir}/dev.json')['train']
 val_dataset = val_dataset.map(tokenize_function, batched=True,remove_columns=["idx","sentence"])
 val_dataset = val_dataset.rename_column("label", "labels")
 eval_dataloader = DataLoader(val_dataset, shuffle=False, collate_fn=collate_fn, batch_size=batch_size)
 
 
-test_dataset = load_dataset('json', data_files='./data/imdb/test.json')['train']
+test_dataset = load_dataset('json', data_files=f'{dataset_dir}/test.json')['train']
 test_dataset = test_dataset.map(tokenize_function, batched=True,remove_columns=["idx","sentence"])
 test_dataset = test_dataset.rename_column("label", "labels")
 test_dataloader = DataLoader(test_dataset, shuffle=False, collate_fn=collate_fn, batch_size=batch_size)
@@ -91,12 +115,11 @@ for epoch in range(num_epochs):
     if dev_clean_acc > best_dev_acc:
         best_dev_acc = dev_clean_acc
         
-        # Add this line to handle directory creation automatically
-        # os.makedirs('bert2', exist_ok=True)
-        os.makedirs('clean_roberta_large', exist_ok=True)
-        
-        # torch.save(model.state_dict(), os.path.join('bert2', f"pytorch_model.bin"))
-        torch.save(model.state_dict(), os.path.join('clean_roberta_large', f"pytorch_model.bin"))
+        if not args.no_save:
+            # Add this line to handle directory creation automatically
+            os.makedirs(os.path.dirname(clean_model_path), exist_ok=True)
+            torch.save(model.state_dict(), clean_model_path)
+
         model.eval()
         total_number = 0
         total_correct = 0
