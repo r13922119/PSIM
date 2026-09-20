@@ -11,6 +11,26 @@ Poisoning 驗收（ASR>95% 門檻，論文要求）：
 
 ---
 
+## Notation
+
+**論文沿用的符號（Proposition 4.2, Section 4.2）：**
+- $\rho_{bd}$：backdoor alignment，trigger 方向與 backdoor 決策邊界的對齊程度
+- $\rho_{eff}=\rho_{cl}-\rho_{tr}$：effective clean alignment
+- $c$（在 $\langle c,\cdot\rangle$ 中）：分類 margin 方向向量，$c=e_y-e_{y_{bd}}$
+- $c$（在 $\|\cdot\|_c$ 中）：逐欄位（column-wise）矩陣範數的下標——**與上面的 $c$ 是不同符號，僅巧合共用字母，論文原文如此**
+- $r,\alpha$：LoRA rank 與 scaling 超參數；$s=\alpha/r$（LoRA）或 peft 預設值（DoRA，見「待確認的實作決定」）
+- $BA=\Delta W$：LoRA 低秩更新量，$B\in\mathbb{R}^{d\times r},A\in\mathbb{R}^{r\times d}$
+- $m$：DoRA 的 magnitude vector（可訓練參數，逐 column）
+- $W_{pre}$：凍結的預訓練權重矩陣
+
+**本文件縮寫：**
+- CA = Clean Accuracy（測試集上的分類準確率，數字皆為百分比）；ASR = Attack Success Rate
+- Cl = clean-strengthened regularization（機制1，dropout on $W_{pre}$）
+- Tr = trigger-insensitive regularization（機制2，正交懲罰 $\Omega(A,B)$）
+- Pt = post-training spectral rescaling（機制3，訓練後重新校準 scaling $s$）
+- 三者名稱與縮寫皆沿用論文 Table 4 caption："Cl = clean-strengthened regularization;
+  Tr = trigger-insensitive regularization; Pt = Post-training spectral rescaling"
+
 ## 總覽對照表：我們的結果 vs 論文 Table 2/4/5（RoBERTa/SST-2-only）
 
 論文 InSent 兩格（LoRA+Cl、LoRA+Cl+Tr+Pt）CA/ASR 已用論文 Table 4 截圖核實補齊。
