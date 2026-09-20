@@ -29,7 +29,8 @@ def parse_args():
     parser.add_argument("--lr", type=float, default=2e-4)           # learning rate（grid: {2e-5, 2e-4, 2e-3}）
     parser.add_argument("--cl_dropout_p", type=float, default=0.1)  # 機制 1 的 dropout rate（只有 args.use_pretrained_dropout=True 時才有意義）（grid: {0.05,0.1,0.15,0.2,0.3}）
     parser.add_argument("--tr_lambda", type=float, default=10)      # 機制 2 的懲罰強度（只有 args.use_orthogonal_penalty=True 時才有意義）（grid: {1,5,10,15,20}）
-    parser.add_argument("--svd_k", type=int, default=32)            # 機制 2 的 Eq.10 的截斷秩，借用 Figure 2 caption 的數字（你自己的實作選擇，論文未明確指定給這個式子）         
+    parser.add_argument("--svd_k", type=int, default=32)            # 機制 2 的 Eq.10 的截斷秩，借用 Figure 2 caption 的數字（你自己的實作選擇，論文未明確指定給這個式子）  
+    parser.add_argument("--weight_decay", type=float, default=0.01) # per paper Appendix A.1, fixed to 0.01 for all experiments                
 
     # ===== other tunable setup for experiments =====
     parser.add_argument("--seed", type=int, default=0)
@@ -46,7 +47,7 @@ random.seed(args.seed)
 # ===== fixed setup for experiments =====
 batch_size = 32     # per paper Appendix A.1, fixed to 32 for all experiments
 device = "cuda"
-weight_decay = 0.01 # per paper Appendix A.1, fixed to 0.01 for all experiments
+#weight_decay = 0.01 # per paper Appendix A.1, fixed to 0.01 for all experiments
 
 # ===== 資料集 / 模型 / 攻擊設定（目前只有 RoBERTa+BadNet/Insent+SST-2 是真正能跑的組合，
 #       其他值只是佔位，真的要換 model 時，下面對應的程式碼也要跟著改，不是只改這裡） =====
@@ -206,7 +207,7 @@ print("Unexpected keys:", unexpected)
 model = get_peft_model(model, peft_config)   # ← 先「包成 LoRA」，之後才有 .base_layer，在這之前 model 還是原始的 AutoModelForSequenceClassification
 model.print_trainable_parameters() # Sanity check: should show < 1% trainable
 
-optimizer = AdamW(params=model.parameters(), lr=args.lr, weight_decay=weight_decay)  # per paper Appendix A.1, weight_decay fixed to 0.01 for all experiments
+optimizer = AdamW(params=model.parameters(), lr=args.lr, weight_decay=args.weight_decay)  # per paper Appendix A.1, weight_decay fixed to 0.01 for all experiments
 # Instantiate scheduler
 lr_scheduler = get_linear_schedule_with_warmup(optimizer=optimizer,num_warmup_steps=0.06 * (len(train_dataloader) * num_epochs), num_training_steps=(len(train_dataloader) * num_epochs))
 
@@ -296,7 +297,7 @@ for epoch in range(num_epochs):
             os.makedirs(output_dir, exist_ok=True)
             # Use save_pretrained to only save the adapter matrices
             model.save_pretrained(output_dir)
-            report_test_and_asr(model)    # ← 這裡，dropout 自動變成「關」
+        report_test_and_asr(model)    # ← 這裡，dropout 自動變成「關」
 
 # 訓練迴圈全部跑完之後（for epoch ... 迴圈結束，best checkpoint 已經存好）
 ## [MECHANISM 3] spectral rescaling for the top three layers of \Delta W: s=\sigma_{max}(W_{pre})/\sigma_{max}(\Delta W), i.e., module.scaling["default"] = \sigma_{max}(W_{pre})/\sigma_{max}(\Delta W)
