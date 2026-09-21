@@ -163,6 +163,20 @@ def analyze_layer_module_contribution(v_units, S, hidden_vec):
     return cos_sims, contributions  # shape: [num_singular_vectors]
 
 
+def group_of(model_name, trigger_name):
+    is_control = "control" in trigger_name
+    if is_control:
+        return "control"
+    # trigger_name 是 "badnet" 或 "insent"（真正的攻擊短語，不是 control）
+    if "badnet" in model_name and trigger_name == "badnet":
+        return "own_trigger"
+    if "insent" in model_name and trigger_name == "insent":
+        return "own_trigger"
+    if trigger_name in ("badnet", "insent"):
+        return "foreign_trigger"  # 是某個 trigger 短語，但不是這個模型學過的那個
+    return "control"
+
+
 def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     tokenizer = RobertaTokenizerFast.from_pretrained(BASE_MODEL)
@@ -208,10 +222,10 @@ def main():
                 svd_cache[(layer_idx, module_name)] = {"v_units": v_units, "S": S} # 存入 Dict
 
         # 用於收集整個 model 下的所有 Contribution Ranks
-        rank_pools = {"real_trigger": [], "control": []}
+        rank_pools = {"own_trigger": [], "foreign_trigger": [], "control": []}
 
         for trigger_name, trigger_text in TRIGGERS.items():
-            group = "control" if "control" in trigger_name else "real_trigger"
+            group = group_of(model_name, trigger_name)
 
             accum_signed_cos_sims = {}
             accum_abs_cos_sims = {}
@@ -345,6 +359,9 @@ def main():
                 })
 
         # --- 模型層級的全局分佈統計 ---
+        RANK_BIN_EDGES = (2, 4, 6, 8, 12, 16, 24, 32, 48, 64, 96, 128, 192, 256, 384, 512, 768, 1024)
+
+        # --- 模型層級的全局分佈統計 ---
         for group_name, ranks in rank_pools.items():
             if not ranks:
                 continue
@@ -364,24 +381,33 @@ def main():
                 "most_common": c.most_common(20),
             }
             
-            for k in (8, 32, 64, 128, 256, 512, 1024):
+            # 分箱（非累積）：每個 bin 只算落在 [prev_edge, edge) 這個區間內的次數，
+            # 這樣才能看出「密度」真正集中在哪一段，而不是累積曲線壓平掉的資訊。
+            # 標籤用實際落在該 bin 的次數（cnt）本身，不是邊界值，避免跟 Tr 的 svd_k 混淆。
+            prev_edge = 0
+            cumulative = 0
+            for edge in RANK_BIN_EDGES:
                 # 取出所有落入 Top-k 區間的 ranks
-                subset = [r for r in ranks if r < k]
-                cnt = len(subset)
-                
-                if cnt > 0:
-                    subset_min = min(subset)
-                    subset_max = max(subset)
-                    print(f"  top-{k:<3}: {cnt:>4}/{total} ({cnt/total:>6.2%}) | subset range: [{subset_min}, {subset_max}]")
-                else:
-                    subset_min = None
-                    subset_max = None
-                    print(f"  top-{k:<3}: {cnt:>4}/{total} ({0:>6.2%}) | subset range: [N/A, N/A]")
-                
+                bin_width = edge - prev_edge
+                bin_ranks = [r for r in ranks if prev_edge <= r < edge]
+                cnt = len(bin_ranks)
+                cumulative += cnt
+                pct_of_bin = cnt / total if total > 0 else 0
+                pct_cumulative = cumulative / total if total > 0 else 0
+                expected_under_uniform = total * bin_width / 1024
+                enrichment = cnt / expected_under_uniform if expected_under_uniform > 0 else float("nan")
+                print(f"  rank∈[{prev_edge:>4}, {edge:>4}) width={bin_width:>4}: count={cnt:>4} ({pct_of_bin:>6.2%} of total) "
+                      f"| enrichment={enrichment:>5.2f}x (均勻分布下應為 {expected_under_uniform:.1f}) "
+                      f"| cumulative={cumulative}/{total} ({pct_cumulative:>6.2%})")
+
                 # 同步存入 JSON stats
-                group_stats[f"percent_in_top_{k}"] = cnt / total if total > 0 else 0
-                group_stats[f"top_{k}_min_rank"] = subset_min
-                group_stats[f"top_{k}_max_rank"] = subset_max
+                group_stats[f"bin_{prev_edge}_{edge}"] = {
+                    "count": cnt, "pct_of_total": pct_of_bin, "cumulative_pct": pct_cumulative,
+                }
+                prev_edge = edge
+                if cumulative == total:
+                    print(f"  (已覆蓋 100%，rank>{edge} 之後沒有任何觀測值，停止列印)")
+                    break
                 
             distribution_stats.setdefault(model_name, {})[group_name] = group_stats
 
