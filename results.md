@@ -143,9 +143,10 @@ Tr 在 DoRA 上對完整疊加是輕微拖累，不是中性也不是助力。Tr
    同時發現 $\sigma_1/\sigma_2$ 突出程度隨層深度變化（中間層 2–2.8 倍，淺層/深層僅 1.1–1.4 倍），
    代表同一個固定 k 在不同層實際代表的截斷比例不一致，是震盪的一個可能（未證實）成因
 7. **獨立的 SVD alignment 實驗（真實 forward hidden state，真實 IMDB label=1 句子，
-   badnet/insent-poisoned 與 clean 三模型對照）：real trigger 在 top-8/32/64/128 奇異方向的
-   集中度全數低於（不是高於）任意選取的 control 詞，且此現象在從未中毒的 clean 模型中同樣
-   存在——直接證據顯示不存在可分離、trigger 專屬的低維子空間。詳見下方獨立章節。**
+   badnet/insent-poisoned 與 clean 三模型對照，own/foreign/control 三分組）：own_trigger／
+   foreign_trigger 在任何累積比例門檻（rank<8/32/64/128）下都不曾明顯高於 control 的集中度，
+   且在最嚴格的門檻（rank<8）own_trigger 於兩個中毒模型上都是三組中最低——直接證據顯示不存在
+   可分離、trigger 專屬的低維子空間。詳見下方獨立章節。**
 
 **已排除的解釋（一條因果鏈，而非五個互相獨立的檢查項）：**
 
@@ -153,11 +154,12 @@ Tr 在 DoRA 上對完整疊加是輕微拖累，不是中性也不是助力。Tr
 弱點已擴大驗證非單一矩陣特例，作為底下推理鏈的前提，不再單獨列為候選解釋。真正需要排除的
 候選是以下這條鏈：
 
-1. 用獨立的 SVD alignment 實驗（14 層 query/value 矩陣，真實 forward hidden state）直接檢驗
-   trigger 是否落在可分離子空間——結果：trigger 並未比一般 input 詞更集中在任何子空間
-   （own_trigger 甚至比 control 更分散，見「機制2延伸」）。同時發現一個非 trigger 專屬、
-   所有輸入共享的性質：任一 input 的表徵，到 k≈64 時，落在前 64 個奇異方向裡的比例平均已達
-   「主要 5 個貢獻方向」的九成——這是 $W_{pre}$ 譜結構本身的性質，不是 trigger 的性質。
+1. 用獨立的 SVD alignment 實驗（9 層 × query/value 共 18 組矩陣，真實 forward hidden state，
+   own/foreign/control 三分組）直接檢驗 trigger 是否落在可分離子空間——結果：own_trigger／
+   foreign_trigger 在任何累積比例門檻下都不曾明顯高於 control 的集中度，且在最嚴格門檻
+   （rank<8）own_trigger 於兩個中毒模型上都是三組裡最低（見「機制2延伸」）。同時發現一個非
+   trigger 專屬、所有輸入共享的性質：任一 input 的表徵，到 rank<64 時，累積比例已普遍達
+   88–94%——這是 $W_{pre}$ 譜結構本身的性質，不是 trigger 的性質。
 2. 由 (1) 直接推得：不存在一個 trigger 專屬的方向或子空間，可以被 SVD 找出來單獨 target——
    因為 trigger 的表徵在這個空間裡跟其他一般詞沒有可辨別的差異，沒有東西可以「精準瞄準」。
 3. 由 (2) 可推得的兩個子推論，皆已實測驗證：
@@ -197,88 +199,79 @@ Tr 在 DoRA 上對完整疊加是輕微拖累，不是中性也不是助力。Tr
 檢驗這個假設本身：trigger 的表徵，在 $W_{pre}$ 的奇異值分解下，是否真的集中在某個
 可辨識、跟一般文字不同的子空間裡？
 
-### 方法演進（三個版本，記錄修正過程）
+### 方法
 
-1. **v1（初版）**：用 trigger 的原始 embedding（未經任何 transformer layer）對每一層
-   query/value 矩陣的右奇異向量算 cosine similarity。**方法論缺陷**：每一層都重複套用
-   同一個 embedding，忽略了 self-attention 逐層混合上下文的事實——layer 3 的輸入早已
-   不是 layer 0 的原始 embedding。此版本結果（layer0 對照 clean/badnet/insent 三模型）
-   顯示 trigger（`mn`/InSent）與多個 control 詞的 mean cosine similarity 幾乎相同
-   （皆 ≈0.025），且此現象在 clean 模型中同樣存在。因方法論有缺陷，此版本結果不作為
-   最終結論依據，僅記錄修正過程；「the」在 54 個 layer×module 組合中從未出現其他實詞
-   共有的 rank-0 凸起，是此版本唯一額外確認過的細節。
-2. **v2/v2.1（中間版）**：改用 forward pre-hook 抓 `attention.self` 實際吃到的 hidden
-   state（即上一層完整 transformer block 的真實輸出），並將 trigger 插入真實句子中而非
-   孤立測試，插入邏輯完全對齊 `attack_utils.insert_trigger`。
-3. **v4（最終版，含以下修正，此版本結果為正式採用）**：
-   - 加入 $\sigma$ 加權的「真實貢獻度」`contributions = cos_sims * S`（而非單純 cosine
-     similarity），修正了「trigger 即使對齊到一個奇異值很小的方向，該方向對輸出幾乎沒有
-     影響」這個原始 band-pass 假設的漏洞
-   - **資料來源修正**：查證 GitHub 上 `poisoned_pretrain.py` 後確認，backdoor pretraining
-     用的語料是 **IMDB**（`dataset_tag` 預設 `"imdb"`），不是 SST-2——SST-2 只在後續
-     `variant_finetune.py` 的 LoRA 微調階段使用。base sentence 來源修正為 IMDB
-   - **label 篩選修正**：查證同一份 code 確認 train/dev 對 `label==0`（target class）插入
-     trigger 且不改標籤，test 則對 `label==1`（non-target class）插入 trigger 來測 ASR——
-     這是標準的 target-class poisoning 設計（trigger 學到的捷徑是「看到 trigger→判成
-     label 0」），不是隨機或疏漏。因此 base sentence 篩選改為 `label==1`，對齊真正
-     ASR 評測時 trigger 被使用的情境
-   - **分組統計修正**：初版把所有 trigger（含 control）混在同一個全域分佈裡統計，抹掉了
-     「真 trigger vs control」的對比，修正為依 `real_trigger`（`mn`、InSent 句）/`control`
-     （`abysmal`、`perfect`、`the`、`movie`、`watched`、`3D movie`、兩句 decoy 句）分組統計
-   - 三個模型（poisoned_roberta_large_badnet / poisoned_roberta_large_insent /
-     clean_roberta_large）皆測試，clean 模型作為「backdoor 訓練是否是成因」的對照組
+用 forward pre-hook 抓取 `attention.self` 實際吃到的 hidden state（即前一層完整 transformer
+block 的真實輸出，而非 trigger 的原始 embedding）——因為 self-attention 逐層混合上下文，
+layer 3 的輸入早已不是 layer 0 的原始 embedding，套用同一個 embedding 到每一層在方法論上
+不成立。trigger 插入真實句子（而非孤立測試），插入邏輯完全對齊 `attack_utils.insert_trigger`。
 
-### 結果 A：real_trigger vs control（2-way，pool 所有 trigger）
+對每個 (layer, module) 組合（9 層 × query/value，layer∈{0,3,6,9,12,15,18,21,23}）計算
+$\sigma$ 加權的「真實貢獻度」`contributions = cos_sims * S`，而非單純 cosine similarity——
+因為 trigger 即使對齊到一個奇異值很小的方向，該方向對輸出的實際影響也微乎其微，純 cosine
+會高估這類方向的重要性。
 
-| 模型 | 組別 | n | top-8 | top-32 | top-64 | top-128 | top-256 |
-|---|---|---|---|---|---|---|---|
-| badnet-poisoned | real_trigger | 180 | 39.44% | 75.00% | 89.44% | 96.67% | 100.00% |
-| badnet-poisoned | control | 810 | 51.60% | 84.07% | 93.95% | 98.52% | 100.00% |
-| insent-poisoned | real_trigger | 180 | 42.22% | 76.67% | 89.44% | 95.00% | 99.44% |
-| insent-poisoned | control | 810 | 49.01% | 83.09% | 92.72% | 97.78% | 99.63% |
-| clean（從未中毒） | real_trigger | 180 | 48.33% | 78.33% | 90.00% | 95.56% | 100.00% |
-| clean（從未中毒） | control | 810 | 50.62% | 81.23% | 90.99% | 96.54% | 99.26% |
+base sentence 來源為 IMDB（查證 `poisoned_pretrain.py` 確認 backdoor pretraining 語料為
+IMDB，`dataset_tag` 預設 `"imdb"`，SST-2 只在後續 LoRA 微調階段使用），並篩選 `label==1`
+（查證同一份 code 確認 test 階段對 `label==1`（non-target class）插入 trigger 來測 ASR，
+這是標準的 target-class poisoning 設計，trigger 學到的捷徑是「看到 trigger→判成 label 0」）——
+篩選 `label==1` 對齊真正 ASR 評測時 trigger 被使用的情境。
 
-### 結果 B：own_trigger / foreign_trigger / control（3-way 細分，僅中毒模型適用）
+分組採 `own_trigger`（該模型自己訓練時真正學到的 trigger）/`foreign_trigger`（另一個
+model 的 trigger，此模型從未學過）/`control`（`abysmal`、`perfect`、`the`、`movie`、
+`watched`、`3D movie`、兩句 decoy 句）三分，而非把所有 trigger 詞混在同一組——因為若把
+`mn`（BadNet trigger）跟 InSent 句都算進同一組，會稀釋掉「模型自己真正學到的攻擊」跟
+「一個不相干 trigger」之間本應存在的對比，也可能讓兩者的效應互相抵銷。clean_roberta_large
+（從未中毒）作為對照組，用來判斷任何觀察到的現象是否是 backdoor 訓練造成的——clean 模型
+沒有 own_trigger，兩個 trigger 都算 foreign_trigger。
 
-同一模型內部細分「自己真正學到的 trigger」vs「模型從未見過的另一種 trigger」vs「一般
-control 詞」，比 2-way 版本更嚴謹——避免把 `mn`（BadNet trigger）跟 InSent 句都算進同一個
-`real_trigger`，稀釋掉模型自己真正學到的攻擊跟一個不相干 trigger 之間的對比。
+每個 (model, group) 組合對 `NUM_SAMPLE_SENTENCES=20` 個句子取每個 (layer, module) 下
+|contribution| 最高的 5 個奇異值索引，pool 起來後統計其在奇異值排序（rank，0=最大奇異值）
+上的分布。
 
-| 模型 | 組別 | top-8 |
-|---|---|---|
-| badnet-poisoned | own_trigger（`mn`） | **36.67%** |
-| badnet-poisoned | foreign_trigger（InSent） | 42.22% |
-| badnet-poisoned | control | 51.60% |
-| insent-poisoned | own_trigger（InSent） | **34.44%** |
-| insent-poisoned | foreign_trigger（`mn`） | 50.00% |
-| insent-poisoned | control | 49.01% |
+### 結果
 
-**⚠️ 資料完整性提醒**：目前只留存 top-8 這一欄的 3-way 數字；top-32/64/128/256 以及各組
-精確 n（原 180 筆如何拆分成 own/foreign 各半）尚未留存，需要重新跑一次才能補完——**在
-補完之前，下方結論僅基於 top-8 這一個資料點，不代表已驗證跨所有 k 尺度的完整模式**。
+以累積比例（rank < N，N∈{8,32,64,128}）呈現：pool 後的 top-5 貢獻方向落在「排序前 N 個
+奇異值」內的比例。
 
-**結論（基於 top-8，暫定）：own_trigger 在兩個中毒模型上的集中度都是三組裡最低的**——
-不是次低，是三組（own/foreign/control）裡最分散的一組。這比 2-way 版本的證據更強：即使
-排除了「跟另一個不相干 trigger 混在一起」的稀釋效應，模型自己真正學到的攻擊 trigger，
-其表徵依然沒有集中到任何可辨識的低維子空間，反而比一個隨機 control 詞更分散。
+| 模型 | 組別 | n | rank<8 | rank<32 | rank<64 | rank<128 |
+|---|---|---|---|---|---|---|
+| badnet-poisoned | own_trigger | 90 | 36.67% | 70.00% | 88.89% | 98.89% |
+| badnet-poisoned | foreign_trigger | 90 | 42.22% | 80.00% | 90.00% | 94.44% |
+| badnet-poisoned | control | 810 | 51.60% | 84.07% | 93.95% | 98.52% |
+| insent-poisoned | own_trigger | 90 | 34.44% | 77.78% | 91.11% | 93.33% |
+| insent-poisoned | foreign_trigger | 90 | 50.00% | 75.56% | 87.78% | 96.67% |
+| insent-poisoned | control | 810 | 49.01% | 83.09% | 92.72% | 97.78% |
+| clean（未中毒） | foreign_trigger | 180 | 48.33% | 78.33% | 90.00% | 95.56% |
+| clean（未中毒） | control | 810 | 50.62% | 81.23% | 90.99% | 96.54% |
 
-### 綜合結論（2-way + 3-way 共同支持）
+**結論：不存在可分離的 trigger 專屬子空間，但集中度的組間差異不是在任何門檻下都指向同一
+方向——結論的精確陳述比「全數低於」要窄。**
 
-**不存在可分離的 trigger 專屬子空間，且此結論在細分 own/foreign 後依然成立、甚至更清楚。**
-不論用哪種分組方式，"trigger"（無論是不是模型自己的）都沒有比 control 詞更集中，方向
-一致與预期相反。且「real_trigger 比 control 更分散」的現象在從未中毒過的 clean 模型裡也
-存在（2-way 結果），證明這不是 backdoor 訓練造成的，而是這批字詞本身 hidden state 分佈的
-內在差異，跟是否為 trigger 無關。
+在最嚴格的門檻（rank<8）：兩個中毒模型的 own_trigger 都是三組（own/foreign/control）裡
+集中度最低的（badnet 36.67% vs control 51.60%，相差 14.9pp；insent 34.44% vs control
+49.01%，相差 14.6pp）——這是最能直接支持「trigger 沒有專屬子空間」的資料點。
 
-**附帶發現：** 不論哪一組，訊號幾乎全數（top-256 達 99.3–100%，top-128 已達 95–98%）
-落在 1024 維裡的前 256 維——1024 維裡有 700 維以上，對任何自然語言輸入幾乎都沒有影響力。
-這是所有測過的字詞共享的性質，不是 trigger 專屬的。
+但門檻放寬後，這個排序不是穩定的：insent 的 foreign_trigger 在 rank<32/64 上反而比
+own_trigger 更不集中（75.56%/87.78% vs 77.78%/91.11%）；badnet 的 own_trigger 在
+rank<128 上（98.89%）甚至略高於 control（98.52%，差 0.37pp，n=90 下屬於雜訊量級）。
+這些反轉沒有一致方向，不構成「trigger 其實更集中」的訊號——own/foreign 各僅 n=90，寬門檻
+下的小差異本就容易被雜訊淹沒。
 
-**未經統計驗證、保守記錄的觀察：** 2-way 版本中，中毒模型的 real_trigger/control 差距
-（badnet 12.2pp、insent 6.8pp）比 clean 模型（2.3pp）更大。這可能暗示 poisoning 訓練
-讓 control 詞的集中度相對變高了一些，但這只是單次結果（n=180 vs n=810 不對稱），未經
-獨立重複驗證。**此觀察不作為結論，僅記錄供未來若有時間可延伸驗證。**
+穩健、可以站得住腳的陳述是：**own_trigger 與 foreign_trigger 在任何測過的門檻下都不曾
+明顯高於 control 的集中度**（沒有一次差距大到能構成「trigger 更集中」的證據），且在
+最嚴格門檻下 own_trigger 明顯低於 control。這與「trigger 落在一個可被 SVD 找出來單獨
+target 的專屬子空間」這個假設方向相反——若真有這樣的子空間，own_trigger 的集中度應該
+穩定高於 control，而不是持平或更低。此現象在從未中毒過的 clean 模型裡同樣存在
+（foreign_trigger 48.33%／control 50.62%，同量級的持平），證明這不是 backdoor 訓練
+造成的，而是這批字詞本身 hidden state 分佈的內在性質，跟是否為 trigger 無關。
+
+**附帶發現：** 訊號的「100% 覆蓋門檻」（該組所有 pool 到的 rank 都落在此門檻內）因組而異，
+從 rank<192 到 rank<512 不等（badnet own_trigger 100%@rank<192；badnet foreign_trigger/
+control 100%@rank<256；insent own_trigger 100%@rank<384；insent foreign_trigger
+100%@rank<192；insent control 100%@rank<512；clean foreign_trigger 100%@rank<256；
+clean control 100%@rank<512）——大致落在 1024 維的前半段，但沒有一個統一的精確門檻值。
+這是所有測過的字詞（不論是否為 trigger）共享的性質。
 
 ### 衍生假說：大 k Tr（脫離全域表徵空間，而非狙擊 trigger）
 
@@ -534,7 +527,7 @@ model+attack 組合（RoBERTa+InSent, LLaMA+BadNet, LLaMA+InSent）Tr alone 效�
 
 ---
 
-## 機制3在 DoRA 上的理論分析（使用者原創推導，非論文內容）
+## 機制3在 DoRA 上的理論分析（非論文內容）
 
 DoRA forward（理論分析用的簡化 margin 形式，不含 dropout 交互作用——後者見「方法論附註」）：
 $M^{DoRA}(s)=\dfrac{m}{\|W_{pre}+s\cdot BA\|_c}\cdot(A_0+s\cdot A_1)$，
@@ -605,16 +598,12 @@ $s\to\infty$ 時，$M^{LoRA}(s)\to\infty$（線性發散）；但 $M^{DoRA}(s)\t
 ## 尚未完成
 
 ### 有明確查證路徑（若有餘裕可執行）
-- 補完 SVD alignment 實驗 3-way（own/foreign/control）細分的完整 top-32/64/128/256 數字
-  及各組精確 n——目前僅記錄了 top-8 這一欄
 - 驗證「同一 k 在不同層代表不同截斷比例」是否為震盪真正成因：可對每層各自用不同的 k
   （依該層 σ1/σ2 比值調整），而非全域統一 k，觀察震盪是否減緩——工程量較大，未執行
 - 對 λ 網格、k=32/1024 等其餘設定重複多次獨立訓練，確認雜訊程度是否一致；也尚未測過
   縮小 λ 的方向
 - k=256 目前僅 2 次獨立結果（0.7140、0.9835，差距極大）、k=128 僅 4 次（0.42–0.87）——
   若有餘裕，可再補幾次獨立訓練縮小均值的不確定範圍
-- SVD alignment 實驗中「中毒模型差距比 clean 模型大」的觀察（2-way 版本）——單次結果，
-  未經多次獨立驗證，若有餘裕可延伸確認是否為真訊號
 - **視時間許可，考慮在訓練腳本加上 `cudnn.deterministic=True` 等設定**，讓未來需要核對的
   單次結果具備真正的可重現性（會犧牲一些訓練速度，尚未評估是否值得現在做）
 
