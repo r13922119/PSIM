@@ -4,3 +4,6 @@ poisoned_*/
 clean_*/
 __pycache__/
 logs/
+old_models*/
+old_scripts*/
+pz*/

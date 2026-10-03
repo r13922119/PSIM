@@ -1,23 +1,27 @@
+# variant_finetune.py
 import argparse
 import os
+os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"   # 必須在 import torch / 建立任何 CUDA context 之前設定
 import random
 import torch
 from torch.optim import AdamW
 from torch.utils.data import DataLoader
 import numpy as np
 from datasets import load_dataset
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup, set_seed
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup #removed ", set_seed"
 from tqdm import tqdm
 from peft import LoraConfig, get_peft_model, TaskType
 from attack_utils import insert_trigger, build_poisoned_test_dataloader, compute_asr
 import torch.nn as nn
+from repro_utils import (assert_env, assert_gpu, isolated_rng, rng_fp, log_env, write_meta, PROTOCOL, observer)
+import attack_utils, repro_utils
 
 def parse_args():
     parser = argparse.ArgumentParser()
     # ===== 資料集 / 模型 / 攻擊設定 =====
     parser.add_argument("--attack_tag", type=str, default="badnet", choices=["badnet", "insent"])           # trigger = "mn" for BadNet or "I watched this 3D movie" for InSent
     parser.add_argument("--model_tag", type=str, default="roberta", choices=["bert", "roberta", "llama"])   # bert / roberta / llama
-    parser.add_argument("--dataset_tag", type=str, default="sst-2")                                         # sst-2 / cr / cola (the data folder also contains imdb and mr)
+    parser.add_argument("--dataset_tag", type=str, default="sst-2", choices=["sst-2", "cr", "cola"])        # (pretrained,finetuning): (IMDB, SST-2), (MR, CR) or (SST-2, COLA)
 
     # ===== 機制開關 =====
     parser.add_argument("--use_dora", action="store_true")                  # Toggle True/False depending on the run
@@ -34,16 +38,32 @@ def parse_args():
 
     # ===== other tunable setup for experiments =====
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--num_epochs", type=int, default=None)   # None -> paper's 20
     
     parser.add_argument("--no_save", action="store_true", help="Skip saving checkpoints; useful for quick sanity checks")
+    # 多 seed pretrain 訓練用的 custom input path
+    parser.add_argument("--pz_path", type=str, default=None, help="override Patient Zero pytorch_model.bin")
     return parser.parse_args()
 
 args = parse_args()
 
+if args.use_spectral_rescaling:
+    if args.no_save:
+        raise ValueError("Mechanism 3 requires a saved checkpoint; cannot use --no_save with --use_spectral_rescaling")
+
 # 设置随机种子
-torch.manual_seed(args.seed)
-np.random.seed(args.seed)
-random.seed(args.seed)
+def set_all_seeds(seed: int):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True   # not sure if useful
+    torch.backends.cudnn.benchmark = False  # not sure if useful
+    torch.use_deterministic_algorithms(True)   # 嚴格模式：任何沒有決定性實作的 op 會直接報錯，而不是悄悄跑出不同結果
+
+set_all_seeds(args.seed)
+assert_env(); assert_gpu()
+print("GPU:", torch.cuda.get_device_name(0), getattr(torch.cuda.get_device_properties(0), "uuid", "?"), "| torch", torch.__version__)
 # ===== fixed setup for experiments =====
 batch_size = 32     # per paper Appendix A.1, fixed to 32 for all experiments
 device = "cuda"
@@ -52,27 +72,46 @@ device = "cuda"
 # ===== 資料集 / 模型 / 攻擊設定（目前只有 RoBERTa+BadNet/Insent+SST-2 是真正能跑的組合，
 #       其他值只是佔位，真的要換 model 時，下面對應的程式碼也要跟著改，不是只改這裡） =====
 
+# find the pretraining dataset
+pretrain_dataset = {"sst-2": "imdb", "cr": "mr", "cola": "sst-2"}.get(args.dataset_tag)
+
 # set num_epochs and r as paper Appendix A.1
 if args.model_tag == "bert":
     model_name_or_path = "bert-large-uncased"    # not sure but Claude said: 當論文只寫「BERT-large」沒有進一步說明時，uncased 版本是社群裡更常見的預設
-    poisoned_model_path = f"./poisoned_bert_large_{args.attack_tag}/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
+    poisoned_model_path = f"./poisoned_bert_large_{pretrain_dataset}_{args.attack_tag}/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
     num_epochs_default = 20
     r_default_for_lora = 8
     target_modules = ["query", "value"]
 elif args.model_tag == "roberta":
     model_name_or_path = "roberta-large"
-    poisoned_model_path = f"./poisoned_roberta_large_{args.attack_tag}/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
+    poisoned_model_path = f"./poisoned_roberta_large_{pretrain_dataset}_{args.attack_tag}/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
     num_epochs_default = 20
     r_default_for_lora = 8
     target_modules = ["query", "value"]
 elif args.model_tag == "llama":
     model_name_or_path = "huggyllama/llama-7b"    # not sure, check for me!
-    poisoned_model_path = f"./poisoned_llama_7b_{args.attack_tag}/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
+    poisoned_model_path = f"./poisoned_llama_7b_{pretrain_dataset}_{args.attack_tag}/pytorch_model.bin"   # ← 沒有 args.attack_tag 的分支
     num_epochs_default = 5
     r_default_for_lora = 16   
     target_modules = ["q_proj", "v_proj"]         # LLaMA 的層命名跟 BERT/RoBERTa 不同（尚沒有實際查證過 huggyllama/llama-7b 這個 checkpoint 載入後，attention 層的確切命名是不是就是 q_proj/v_proj）
 else:
     raise NotImplementedError(f"args.model_tag='{args.model_tag}' not supported. Choose from: bert, roberta, llama.")
+
+pz_tag = ""
+if args.pz_path:
+    poisoned_model_path = args.pz_path
+    pz_tag = "_pz-" + os.path.basename(os.path.dirname(args.pz_path))   # 例如 _pz-poisoned_roberta_large_badnet
+
+dataset_dir = os.path.join('./data', args.dataset_tag)
+
+ENV = log_env(__file__, {
+    "pz": poisoned_model_path,
+    "attack_utils": attack_utils.__file__,
+    "repro_utils": repro_utils.__file__,
+    "train": f"{dataset_dir}/train.json",
+    "dev": f"{dataset_dir}/dev.json",
+    "test": f"{dataset_dir}/test.json",
+})
 
 if args.attack_tag == "badnet":
     trigger = "mn"
@@ -81,9 +120,7 @@ elif args.attack_tag == "insent":
 else:
     raise NotImplementedError(f"args.attack_tag='{args.attack_tag}' not supported. Choose from: badnet, insent.")
 
-dataset_dir = os.path.join('./data', args.dataset_tag)
-
-num_epochs = num_epochs_default # TUNABLE for custom experiments
+num_epochs = args.num_epochs or num_epochs_default # TUNABLE for custom experiments
 
 # per paper Appendix A.1: "For PiSSA, DoRA, and OLoRA, we use the default hyperparameters provided by the PEFT library"
 # peft 預設值來自：python -c "from peft import LoraConfig; import dataclasses; [print(f.name, '=', f.default) for f in dataclasses.fields(LoraConfig) if f.name in ['r', 'lora_alpha', 'lora_dropout']]"
@@ -110,7 +147,7 @@ mechanism_tags = []
 if args.use_pretrained_dropout:
     mechanism_tags.append(f'cl{args.cl_dropout_p}')      # 例如 cl0.1
 if args.use_orthogonal_penalty:
-    mechanism_tags.append(f'tr{args.tr_lambda}_k{args.svd_k}')   # 例如 tr10_k32
+    mechanism_tags.append(f'tr{args.tr_lambda:g}_k{args.svd_k}')   # 例如 tr10_k32
 if args.use_spectral_rescaling:
     mechanism_tags.append('pt')
 
@@ -121,7 +158,7 @@ if mechanism_tags:
 lr_tag = f'lr{args.lr:.0e}'   # 2e-4 → 'lr2e-04'
 r_tag = f'r{r}_a{lora_alpha}'
 
-experiment_name = f"{args.model_tag}_{args.attack_tag}_{args.dataset_tag}_{method_tag}_{lr_tag}_{r_tag}_seed{args.seed}_ep{num_epochs}"
+experiment_name = f"{args.model_tag}_{args.attack_tag}_{args.dataset_tag}_{method_tag}_{lr_tag}_{r_tag}_seed{args.seed}_ep{num_epochs}_wd{args.weight_decay}{pz_tag}"
 output_dir = f'adapters/{experiment_name}'
 print(f"Running experiment: {experiment_name}")
 
@@ -155,12 +192,13 @@ def evaluate_accuracy(model, dataloader):
         total_number += references.size(0)
     return total_correct / total_number
 
-def report_test_and_asr(model, label=""):
-    """跑 test clean acc + ASR，印出來，回傳兩個數字方便之後要用"""
-    test_acc = evaluate_accuracy(model, test_dataloader)    # ← 這裡，dropout 自動變成「關」
-    print(f'{label}test clean acc: %.4f' % test_acc)
-    asr = compute_asr(model, device, poisoned_test_dataloader)
-    print(f'{label}ASR: %.4f' % asr)
+def get_test_and_asr(model):
+    """回傳 test clean acc + ASR"""
+    if os.environ.get("OBSERVE") == "0":      # gate (a) only
+        return float("nan"), float("nan")
+    with observer(model):
+        test_acc = evaluate_accuracy(model, test_dataloader)    # ← 這裡，dropout 自動變成「關」
+        asr = compute_asr(model, device, poisoned_test_dataloader)
     return test_acc, asr
 
    
@@ -186,7 +224,8 @@ poisoned_test_dataloader = build_poisoned_test_dataloader(
     load_dataset,
     tokenize_function,
     collate_fn,
-    trigger
+    trigger,
+    batch_size=batch_size   # here we match the batch_size=32 in poisoned_pretrain.py in original PSIM repo.
 )
 
 model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path, return_dict=True)
@@ -195,13 +234,10 @@ model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path, r
 
 # Inject the poisoned weights you trained earlier
 # Sometimes when loading weights into a fresh AutoModelForSequenceClassification architecture, PyTorch panics if non-essential keys (like unused pooler layers) don't match perfectly. To prevent the script from crashing during the injection step
-model.load_state_dict(torch.load(poisoned_model_path), strict=False)
-#
 poisoned_sd = torch.load(poisoned_model_path)
 missing, unexpected = model.load_state_dict(poisoned_sd, strict=False)
 print("Missing keys:", missing)
 print("Unexpected keys:", unexpected)
-#
 
 # Wrap the model (freezes base, adds trainable adapters)
 model = get_peft_model(model, peft_config)   # ← 先「包成 LoRA」，之後才有 .base_layer，在這之前 model 還是原始的 AutoModelForSequenceClassification
@@ -211,14 +247,16 @@ optimizer = AdamW(params=model.parameters(), lr=args.lr, weight_decay=args.weigh
 # Instantiate scheduler
 lr_scheduler = get_linear_schedule_with_warmup(optimizer=optimizer,num_warmup_steps=0.06 * (len(train_dataloader) * num_epochs), num_training_steps=(len(train_dataloader) * num_epochs))
 
-## [MECHANISM 1] dropout hook for the pretrained weights (W_pre) in the query and value linear layers
-pretrained_dropout = nn.Dropout(p=args.cl_dropout_p)  # 跟論文 p=0.1 一致
+import time
+start_time = time.time()
 
-#dropout_hook_call_count = [0]  # 用 list 包起來方便在閉包內修改
+## [MECHANISM 1] dropout hook for the pretrained weights (W_pre) in the query and value linear layers
+
+dropout_hook_call_count = [0]  # 用 list 包起來方便在閉包內修改
 
 def dropout_hook(module, input, output):
-    #dropout_hook_call_count[0] += 1
-    return pretrained_dropout(output)   # 攔截輸出，套上 dropout 再放行   # 攔截輸出，套上 dropout 再放行
+    dropout_hook_call_count[0] += 1
+    return torch.nn.functional.dropout(output, p=args.cl_dropout_p, training=module.training)   # 跟論文 p=0.1 一致；攔截輸出，套上 dropout 再放行   # 攔截輸出，套上 dropout 再放行
 
 hook_handles = []
 if args.use_pretrained_dropout:
@@ -244,7 +282,7 @@ if args.use_orthogonal_penalty:
             # W_pre（用來算 U_dict/V_dict 的）是用 .weight.data 抓的，.data 會脫離 autograd 計算圖，這樣 SVD 那段不會被誤算進反向傳播、也不會意外讓 W_pre（本該凍結）產生梯度
             W_pre = module.base_layer.weight.data
             U_layer, S_full, Vh_layer = torch.linalg.svd(W_pre, full_matrices=False)
-            #print("[DEBUG] W_pre 是否接近滿秩:", (S_full > 1e-6).sum().item(), "/ 1024")  # 如果接近1024，代表滿秩，L2退化猜測成立
+            print("[DEBUG] W_pre 是否接近滿秩:", (S_full > 1e-6).sum().item(), "/ 1024")  # 如果接近1024，代表滿秩，L2退化猜測成立
             # torch.linalg.svd 回傳的奇異值已經由大到小排序，直接取前 k 欄/列即可，否則將因為 W_{pre} 極可能滿秩，而使 \Omega退化成普通 L2
             U_dict[name] = U_layer[:, :args.svd_k].to(device)      # d × k
             V_dict[name] = Vh_layer[:args.svd_k, :].T.to(device)   # d × k（Vh 是 V^T，所以前 k 列 .T 轉置回來 V）
@@ -255,30 +293,65 @@ else:
 
 model.to(device)
 best_dev_acc = -1
+pre_pt_best_test_acc = None
+pre_pt_best_asr = None
+best_epoch = -1
+
+last_step = len(train_dataloader) - 1
+def should_log(epoch, step):
+    if epoch == 0:
+        return step in (0, 20, 100, last_step)
+    return step == 0 or step == last_step
+
+test_hist, asr_hist = [], []
+
 for epoch in range(num_epochs):
+    print(f"[RNG] epoch={epoch} fp={rng_fp()}")
+
     model.train()   # ← 這裡，dropout 是「開」的
     for step, batch in enumerate(tqdm(train_dataloader)):
+        log_now = should_log(epoch, step)
+
         batch.to(device)
         outputs = model(**batch)
         loss = outputs.loss
 
         if args.use_orthogonal_penalty:
+            task_loss = loss
             # we have computed U, V of W_{pre} = U \Sigma V^\top
             # computing \Omega(A,B) = \lVert U^\top B \rVert_F^2 + \lVert A V \rVert_F^2
             penalty = 0.0
             num_penalized_layers = 0
+            ratio_A_dbg = []
+            ratio_B_dbg = []
             for name, module in model.named_modules():
                 if hasattr(module, "base_layer") and any(t in name for t in target_modules):
                     # 不同於 W_{pre}，A, B 是真正在被訓練、requires_grad=True 的參數，梯度能正常透過這個懲罰項傳回去更新它們
                     A = module.lora_A["default"].weight   # shape: (r, d)，對應論文的 A ∈ R^{r×d}
                     B = module.lora_B["default"].weight   # shape: (d, r)，對應論文的 B ∈ R^{d×r}
-                    penalty += torch.norm(U_dict[name].T @ B, p='fro')**2 + torch.norm(A @ V_dict[name], p='fro')**2
+                    U, V = U_dict[name], V_dict[name]
+                    # torch.norm(..., p='fro')**2 is very dangerous: there will be NaN when computing gradient. do not trust AI's sloppy advice.
+                    omega_B = (U.T @ B).pow(2).sum() * (U.shape[0] / U.shape[1])   # out_features / k
+                    omega_A = (A @ V).pow(2).sum() * (V.shape[0] / V.shape[1])   # in_features  / k
+                    penalty += omega_A + omega_B
                     num_penalized_layers += 1
-            #if step == 0 and epoch == 0:   # 只在第一步印一次，不要洗版
-            #    print(f"[DEBUG] loss={loss.item():.4f}, penalty={penalty.item():.4f}, args.tr_lambda*penalty={(args.tr_lambda*penalty).item():.4f}")
-            # [DEBUG] loss=0.5287, penalty=4.0944, args.tr_lambda*penalty=40.9437
+
+                    if log_now:
+                        ratio_A_dbg.append((omega_A / A.norm().pow(2)).item())
+                        if not (epoch == 0 and step == 0):          # 只有 B=0 的那一步要跳過
+                            ratio_B_dbg.append((omega_B / B.norm().pow(2)).item())
+                    
             penalty = penalty / num_penalized_layers   # 改成平均，不是加總
-            loss += args.tr_lambda * penalty   # 迴圈跑完才加一次，縮排跟 for 對齊、不在裡面
+
+            if log_now:
+                result = f"[DEBUG_ep{epoch}_stp{step}] task_loss={task_loss.item():.4f}, penalty(mean,scaled)={penalty.item():.4f}, lambda*penalty={(args.tr_lambda*penalty).item():.4f}, omega_A/||A||^2 mean={sum(ratio_A_dbg)/len(ratio_A_dbg):.2e}"
+                if ratio_B_dbg:                                      # 不再用 epoch != 0 判斷
+                    result += f", omega_B/||B||^2 mean={sum(ratio_B_dbg)/len(ratio_B_dbg):.2e}"
+                else:
+                    result += " (expect ~1)"
+                tqdm.write(result)
+
+            loss = task_loss + args.tr_lambda * penalty   # 迴圈跑完才加一次
         
         loss.backward()
         optimizer.step()
@@ -287,24 +360,32 @@ for epoch in range(num_epochs):
     dev_clean_acc = evaluate_accuracy(model, eval_dataloader)   
     print(f"epoch {epoch} ")
     print('dev clean acc: %.4f'% dev_clean_acc)
-    #if epoch == 0 and args.use_pretrained_dropout:
-    #    print(f"[DEBUG] dropout_hook fired {dropout_hook_call_count[0]} times in epoch 0")
+    if epoch == 0 and args.use_pretrained_dropout:
+        expected = len(hook_handles) * (len(train_dataloader) + len(eval_dataloader))
+        print(f"[CHECK] dropout_hook fired {dropout_hook_call_count[0]} times in epoch 0, expected {expected}")
+        assert dropout_hook_call_count[0] == expected, "Mechanism 1 hook count mismatch"
     
+    test_acc, asr = get_test_and_asr(model)    # ← 這裡，dropout 自動變成「關」
+    print(f"[EPOCH] epoch={epoch} dev={dev_clean_acc:.4f} test clean accuracy={test_acc:.4f} ASR={asr:.4f}")
+    test_hist.append(test_acc); asr_hist.append(asr)
+
     if dev_clean_acc > best_dev_acc:
         best_dev_acc = dev_clean_acc
+        best_epoch = epoch
+        pre_pt_best_test_acc, pre_pt_best_asr = test_acc, asr      # 只在新最佳時記錄
         if not args.no_save:
             # Create a new directory for the specific variant
             os.makedirs(output_dir, exist_ok=True)
             # Use save_pretrained to only save the adapter matrices
-            model.save_pretrained(output_dir)
-        report_test_and_asr(model)    # ← 這裡，dropout 自動變成「關」
+            model.save_pretrained(output_dir)   # note that the model saved will always be pre-pt
+            write_meta(os.path.join(output_dir, "meta.json"), 
+                       ENV, os.path.join(output_dir, "adapter_model.safetensors"), seed=args.seed, epoch_saved=epoch, experiment_name=experiment_name)
+    
+summary = f"SUMMARY | protocol={PROTOCOL} | {experiment_name} | best_epoch={best_epoch} | best_dev_acc={best_dev_acc:.4f} | pre-pt_test_acc={pre_pt_best_test_acc:.4f} | pre-pt_ASR={pre_pt_best_asr:.4f}"
 
 # 訓練迴圈全部跑完之後（for epoch ... 迴圈結束，best checkpoint 已經存好）
 ## [MECHANISM 3] spectral rescaling for the top three layers of \Delta W: s=\sigma_{max}(W_{pre})/\sigma_{max}(\Delta W), i.e., module.scaling["default"] = \sigma_{max}(W_{pre})/\sigma_{max}(\Delta W)
 if args.use_spectral_rescaling:
-    if args.no_save:
-        raise ValueError("Mechanism 3 requires a saved checkpoint; cannot use --no_save with --use_spectral_rescaling")
-
     from peft import PeftModel
     model = PeftModel.from_pretrained(model.get_base_model(), output_dir)
     model.to(device)
@@ -333,7 +414,15 @@ if args.use_spectral_rescaling:
             print(f"[Mechanism 3] {name}: new scaling s = {new_s:.4f}")
 
     print(f"[Mechanism 3] Rescaled {len(top_layer_names)} layers")
-    report_test_and_asr(model, label="[Mechanism 3] ")    # ← 這裡，dropout 自動變成「關」
+    post_pt_best_test_acc, post_pt_best_asr = get_test_and_asr(model)    # ← 這裡，dropout 自動變成「關」
+    print(f"[Mechanism 3] test clean accuracy={post_pt_best_test_acc:.4f} ASR={post_pt_best_asr:.4f}")
 else:
     print("Mechanism 3 (spectral rescaling) is OFF — running baseline")
 ##
+
+duration_min = (time.time() - start_time) / 60
+
+if args.use_spectral_rescaling:
+    summary += f" | pt_test_acc={post_pt_best_test_acc:.4f} | pt_ASR={post_pt_best_asr:.4f}"
+summary += f" | duration_min={duration_min:.1f} | asr_mean_last5={sum(asr_hist[-5:])/len(asr_hist[-5:]):.4f} | gpu={torch.cuda.get_device_name(0)} | observe={'OFF' if os.environ.get('OBSERVE')=='0' else 'on'}"
+print(summary)

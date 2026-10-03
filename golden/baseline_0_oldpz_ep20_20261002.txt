@@ -1,0 +1,42 @@
+[ENV] {"accelerate": "1.15.0", "attack_utils_sha256": "ca0d7bf77aca", "cuda": "13.0", "datasets": "5.0.1", "dev_sha256": "80eb1089dcdc", "gpu": "NVIDIA RTX 6000 Ada Generation", "gpu_uuid": "67a5689f-fcc5-a416-a585-ccd8cb4c7403", "huggingface_hub": "1.31.0", "numpy": "2.2.6", "peft": "0.11.1", "protocol": "v2", "python": "3.10.21", "pz_sha256": "75823f91189b", "repro_utils_sha256": "f89787f80339", "script_sha256": "3dccbcb89f5c", "test_sha256": "85e17edcddd9", "tokenizers": "0.23.2", "torch": "2.14.0+cu130", "train_sha256": "9686b2c77460", "transformers": "5.17.0"}
+[RNG] epoch=0 fp=0620571c
+[EPOCH] epoch=0 dev=0.9472 test clean accuracy=0.9544 ASR=1.0000
+[RNG] epoch=1 fp=c3bb440a
+[EPOCH] epoch=1 dev=0.9518 test clean accuracy=0.9539 ASR=1.0000
+[RNG] epoch=2 fp=83b358c1
+[EPOCH] epoch=2 dev=0.9495 test clean accuracy=0.9566 ASR=1.0000
+[RNG] epoch=3 fp=7e953f72
+[EPOCH] epoch=3 dev=0.9495 test clean accuracy=0.9522 ASR=0.9813
+[RNG] epoch=4 fp=889a3a91
+[EPOCH] epoch=4 dev=0.9450 test clean accuracy=0.9555 ASR=0.9571
+[RNG] epoch=5 fp=f6d0ff2f
+[EPOCH] epoch=5 dev=0.9438 test clean accuracy=0.9583 ASR=0.9615
+[RNG] epoch=6 fp=4fdda579
+[EPOCH] epoch=6 dev=0.9450 test clean accuracy=0.9330 ASR=0.9340
+[RNG] epoch=7 fp=7b17d45d
+[EPOCH] epoch=7 dev=0.9518 test clean accuracy=0.9572 ASR=0.9736
+[RNG] epoch=8 fp=6eec99c9
+[EPOCH] epoch=8 dev=0.9518 test clean accuracy=0.9528 ASR=0.9208
+[RNG] epoch=9 fp=a168e8c6
+[EPOCH] epoch=9 dev=0.9530 test clean accuracy=0.9566 ASR=0.8922
+[RNG] epoch=10 fp=0400876b
+[EPOCH] epoch=10 dev=0.9461 test clean accuracy=0.9484 ASR=0.9241
+[RNG] epoch=11 fp=b2a6d826
+[EPOCH] epoch=11 dev=0.9541 test clean accuracy=0.9561 ASR=0.9362
+[RNG] epoch=12 fp=ac701e9f
+[EPOCH] epoch=12 dev=0.9495 test clean accuracy=0.9588 ASR=0.8768
+[RNG] epoch=13 fp=5db84215
+[EPOCH] epoch=13 dev=0.9495 test clean accuracy=0.9544 ASR=0.8064
+[RNG] epoch=14 fp=28dfb73d
+[EPOCH] epoch=14 dev=0.9518 test clean accuracy=0.9594 ASR=0.8075
+[RNG] epoch=15 fp=d2a4785a
+[EPOCH] epoch=15 dev=0.9530 test clean accuracy=0.9583 ASR=0.7844
+[RNG] epoch=16 fp=86cdf649
+[EPOCH] epoch=16 dev=0.9541 test clean accuracy=0.9577 ASR=0.8064
+[RNG] epoch=17 fp=ebb8cc7a
+[EPOCH] epoch=17 dev=0.9518 test clean accuracy=0.9588 ASR=0.8119
+[RNG] epoch=18 fp=b29fd373
+[EPOCH] epoch=18 dev=0.9530 test clean accuracy=0.9588 ASR=0.7932
+[RNG] epoch=19 fp=ef3c5fe7
+[EPOCH] epoch=19 dev=0.9530 test clean accuracy=0.9599 ASR=0.7789
+SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-poisoned_roberta_large_badnet | best_epoch=11 | best_dev_acc=0.9541 | pre-pt_test_acc=0.9561 | pre-pt_ASR=0.9362 | duration_min=13.3 | asr_mean_last5=0.7949 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on

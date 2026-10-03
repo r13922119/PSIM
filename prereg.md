@@ -45,3 +45,6 @@
 
 ## 8. 簽核
 - ☑ 我確認 §4 的門檻、§5 的模糊區、§6 的繼續條件，且尚未看到任何 v2 資格賽（seeds 0–2 的 baseline）結果。
+
+# 紀錄
+2026-10-03: persist.py was committed after the seeds 0–2 baseline results were viewed. I verified its verdicts by hand against §4–§5 (s0 persistent, s1/s4/oldpz ambiguous, s3 washed out). Thresholds unchanged.

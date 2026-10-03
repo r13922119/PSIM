@@ -221,7 +221,8 @@ def main():
         load_dataset,
         tokenize_function,
         collate_fn,
-        trigger
+        trigger, 
+        batch_size=1
     )
     asr = compute_asr(model, device, poisoned_test_dataloader)
     print('ASR: %.4f' % asr)

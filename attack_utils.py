@@ -3,9 +3,9 @@ import copy
 import random
 import torch
 from torch.utils.data import DataLoader
+from repro_utils import PLACEMENT_SEED
 
-
-def insert_trigger(text, trigger):
+def insert_trigger(text, trigger, rng=random):          # was: global random
     """在句子隨機位置插入 trigger（單字或片語皆可）。
     trigger 可以是字串（會被 split 成多個詞插入）或已切好的詞列表。"""
     trigger_words = trigger.split() if isinstance(trigger, str) else trigger
@@ -13,18 +13,19 @@ def insert_trigger(text, trigger):
     if len(words) <= 1:
         insert_idx = 0
     else:
-        insert_idx = random.randint(1, len(words) - 1)
+        insert_idx = rng.randint(1, len(words) - 1)                 # keep your existing logic, only swap random -> rng
     new_words = words[:insert_idx] + trigger_words + words[insert_idx:]
     return ' '.join(new_words)
 
 
-def build_poisoned_test_dataloader(test_path, load_dataset_fn, tokenize_function, collate_fn, trigger, batch_size=1):
+def build_poisoned_test_dataloader(test_path, load_dataset_fn, tokenize_function, collate_fn, trigger, batch_size=1, placement_seed=PLACEMENT_SEED):
+    rng = random.Random(placement_seed)                  # test placement is now fixed, independent of trainer
     poisoned_dataset = load_dataset_fn('json', data_files=test_path)['train']
     new_examples = []
     for example in poisoned_dataset:
         if example["label"] == 1:
             example_copy = copy.deepcopy(example)
-            example_copy["sentence"] = insert_trigger(example_copy["sentence"], trigger)
+            example_copy["sentence"] = insert_trigger(example_copy["sentence"], trigger, rng)
             new_examples.append(example_copy)
 
     poisoned_test_dataset = poisoned_dataset.from_dict({
