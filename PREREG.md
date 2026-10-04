@@ -48,3 +48,14 @@
 
 # 紀錄
 2026-10-03: persist.py was committed after the seeds 0–2 baseline results were viewed. I verified its verdicts by hand against §4–§5 (s0/s2 persistent, s1/s4/oldpz ambiguous, s3 washed out). Thresholds unchanged.
+
+## 修訂紀錄（附加於文件最後，append-only；上方已簽核的 §1–§8 不改動）
+
+### 2026-10-04（台北時間），已看過 S1 與 S2 結果之後
+以下三點不更動 §4–§6 的任何判準或門檻，只補充觀點與重讀方式。
+
+1. **觀點。** 本文件是觀察者（我們）在建一個困難的測試平台，不是在模擬攻擊者怎麼挑 PZ。因此用 `asr_mean_last5` 這類觀察者統計量來篩選 PZ 是正當的（baseline 的 last5 高 = 難以洗掉，對後續實驗是個強的問題）。這是篩選與診斷用的統計量，不是績效數字：績效一律是 best-dev epoch 的 test CA 與 ASR（pre-Pt 與 with-Pt），跨 seeds 呈分布，因為真實的微調者不會使用 epoch 15–19 的 checkpoint。「最後一個 epoch」不是本協定的報告單位。
+2. **S2 的重讀。** S2（seeds 3–5）已改用 best-dev 的 pre-Pt 與 with-Pt 統計量重讀（compare_s2.py），last5 只當診斷列。PZ 的持久性結論（§4–§6）沒有因此更動。
+3. **saved epoch 的線索只是探索性的。** PZ 儲存時的 epoch（s0=1、s1=0、s2=2、s3=0、s4=0）與持久性的順序一致（越晚存越持久），這是看過結果後才找到的（對這個排序的機率約 1/20），而且 `oldpz`（存於 epoch 0 卻持久）與簡單規則矛盾。它不是判準，不用於任何選擇；若要檢驗，需另寫規則並用新的 PZ。
+
+（以上日期與時間以 commit 時的 `git log -1 --format='%H %cd'` 為準。請對照你已 commit 的版本中 2026-10-03 那行 log 的格式，若格式不同，以你的為準。）
