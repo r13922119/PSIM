@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Choose k for Tr (Cl+Tr) by a rule fixed BEFORE any S3 result. Same spirit as persist.py: it only applies PREREG_S3.md.
+"""Choose k for Tr (Cl+Tr) by a rule fixed BEFORE any S3 result. Same spirit as persist.py: it only applies PREREG_S3.md. 
 
   python parse_runs.py <s3 logs> --csv > s3.csv
   python select_k.py s3.csv --stage 1      # single seed, k grid x lambda  -> writes s3_stage2.txt (k list per lambda); S3_STOP only if nothing is feasible
