@@ -106,7 +106,7 @@ for label, path in models:
     for s in range(args.placements):
         random.seed(s)   # insert_trigger uses the global `random`
         loader = build_poisoned_test_dataloader(
-            test_path, load_dataset, tokenize_function, collate_fn, trigger, batch_size=args.batch_size)
+            test_path, load_dataset, tokenize_function, collate_fn, trigger, batch_size=args.batch_size, placement_seed=s)
         asrs.append(compute_asr(model, device, loader))
     sd = st.stdev(asrs) if len(asrs) > 1 else 0.0
     print(f"{label:<10} {ca*100:7.2f} {pos_err*100:8.2f} {st.mean(asrs)*100:9.2f} {sd*100:6.2f} "
