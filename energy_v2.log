@@ -1,0 +1,333 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 4015.14it/s]
+[transformers] [1mRobertaModel LOAD REPORT[0m from: roberta-large
+Key                       | Status     |  | 
+--------------------------+------------+--+-
+lm_head.bias              | UNEXPECTED |  | 
+lm_head.layer_norm.weight | UNEXPECTED |  | 
+lm_head.layer_norm.bias   | UNEXPECTED |  | 
+lm_head.dense.weight      | UNEXPECTED |  | 
+lm_head.dense.bias        | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+data: 128 ordinary sentences; trigger analysis on 64 label-0 and 64 label-1 sentences
+
+====================================================================================================
+== base: BASE
+  ordinary tokens used: 2778 from 128 sentences
+  trigger states, train-context(label0): 64 of 64 sentences usable
+  trigger states, test-context(label1): 64 of 64 sentences usable
+
+[1-3] k for 50/80/90% (median of 48 modules): sigma = [120, 304, 428]   data = [69, 259, 406]
+      k  room   even                  sigma share                   data share                   input left     input left, outliers off
+      8  1016  0.992          0.083 [0.037,0.150]          0.226 [0.043,0.714]          0.983 [0.947,0.998]          0.966 [0.892,0.994]
+     32   992  0.969          0.216 [0.129,0.325]          0.391 [0.135,0.805]          0.963 [0.896,0.992]          0.923 [0.832,0.974]
+    128   896  0.875          0.520 [0.386,0.624]          0.641 [0.392,0.901]          0.916 [0.821,0.969]          0.818 [0.703,0.892]
+    256   768  0.750          0.741 [0.619,0.807]          0.795 [0.606,0.941]          0.864 [0.737,0.939]          0.706 [0.593,0.789]
+    512   512  0.500          0.940 [0.892,0.959]          0.939 [0.874,0.981]          0.753 [0.536,0.881]          0.489 [0.390,0.594]
+    768   256  0.250          0.994 [0.988,0.997]          0.990 [0.978,0.997]          0.591 [0.280,0.817]          0.267 [0.192,0.383]
+    896   128  0.125          0.999 [0.999,1.000]          0.998 [0.996,1.000]          0.454 [0.136,0.767]          0.144 [0.095,0.235]
+   1016     8  0.008          1.000 [1.000,1.000]          1.000 [1.000,1.000]          0.159 [0.008,0.534]          0.012 [0.006,0.092]
+   1024     0  0.000          1.000 [1.000,1.000]          1.000 [1.000,1.000]        -0.000 [-0.000,0.000]        -0.000 [-0.000,0.000]
+  outlier coordinates: the 2 largest hidden coordinates carry (median over modules) 0.659 of all token energy
+
+[4] TRIGGER dh in the train-context(label0): share of dh energy LEFT in the room d-k   (A per-sentence energy | B systematic mean-dh direction)
+      k  room   even  ordinary        mn_the A        mn_the B        the_it A        the_it B   insent_ctrl A   insent_ctrl B
+      8  1016  0.992     0.983           0.988           0.991           0.988           0.994           0.982           0.983
+     32   992  0.969     0.963           0.961           0.967           0.960           0.972           0.941           0.944
+    128   896  0.875     0.916           0.859           0.873           0.842           0.857           0.829           0.835
+    256   768  0.750     0.864           0.746           0.764           0.707           0.716           0.705           0.713
+    512   512  0.500     0.753           0.521           0.542           0.471           0.471           0.477           0.485
+    768   256  0.250     0.591           0.288           0.306           0.246           0.243           0.251           0.259
+    896   128  0.125     0.454           0.158           0.170           0.129           0.126           0.130           0.135
+   1016     8  0.008     0.159           0.017           0.017           0.012           0.009           0.009           0.009
+   1024     0  0.000    -0.000          -0.000          -0.000          -0.000           0.000           0.000           0.000
+  systematic fraction ||mean dh||^2 / mean ||dh||^2 (median over modules; ~1/n = no consistent direction): mn_the=0.610  mn_it=0.636  the_it=0.424  insent_ctrl=0.700
+
+[4] TRIGGER dh in the test-context(label1): share of dh energy LEFT in the room d-k   (A per-sentence energy | B systematic mean-dh direction)
+      k  room   even  ordinary        mn_the A        mn_the B        the_it A        the_it B   insent_ctrl A   insent_ctrl B
+      8  1016  0.992     0.983           0.987           0.991           0.987           0.993           0.981           0.982
+     32   992  0.969     0.963           0.960           0.968           0.958           0.971           0.940           0.944
+    128   896  0.875     0.916           0.859           0.875           0.839           0.857           0.827           0.833
+    256   768  0.750     0.864           0.747           0.768           0.706           0.717           0.703           0.710
+    512   512  0.500     0.753           0.524           0.546           0.472           0.474           0.475           0.481
+    768   256  0.250     0.591           0.291           0.309           0.249           0.247           0.250           0.256
+    896   128  0.125     0.454           0.161           0.172           0.133           0.129           0.130           0.133
+   1016     8  0.008     0.159           0.018           0.018           0.014           0.011           0.009           0.009
+   1024     0  0.000    -0.000           0.000           0.000           0.000          -0.000          -0.000          -0.000
+  systematic fraction ||mean dh||^2 / mean ||dh||^2 (median over modules; ~1/n = no consistent direction): mn_the=0.598  mn_it=0.647  the_it=0.417  insent_ctrl=0.716
+
+[6] by depth and module (mean over the matrices in the group): sigma share | data share | input left
+  group                             k=128                    k=512                    k=768
+  layers 0-7       0.513|  0.632|  0.888   0.936|  0.941|  0.660   0.993|  0.992|  0.458
+  layers 8-15      0.535|  0.653|  0.931   0.945|  0.943|  0.799   0.995|  0.990|  0.659
+  layers 16-23     0.511|  0.638|  0.930   0.937|  0.933|  0.800   0.994|  0.988|  0.655
+  query            0.539|  0.730|  0.890   0.944|  0.945|  0.704   0.995|  0.991|  0.481
+  value            0.500|  0.552|  0.943   0.936|  0.934|  0.802   0.993|  0.990|  0.700
+
+====================================================================================================
+== s0: pz_v2/badnet_s0/pytorch_model.bin
+  loaded: 4 unexpected keys (e.g. classifier head), no encoder key missing
+  ordinary tokens used: 2778 from 128 sentences
+  trigger states, train-context(label0): 64 of 64 sentences usable
+  trigger states, test-context(label1): 64 of 64 sentences usable
+
+[1-3] k for 50/80/90% (median of 48 modules): sigma = [120, 304, 428]   data = [75, 258, 408]
+      k  room   even                  sigma share                   data share                   input left     input left, outliers off
+      8  1016  0.992          0.083 [0.037,0.150]          0.205 [0.046,0.670]          0.984 [0.945,0.997]          0.972 [0.932,0.994]
+     32   992  0.969          0.216 [0.129,0.325]          0.377 [0.124,0.767]          0.963 [0.893,0.988]          0.929 [0.871,0.976]
+    128   896  0.875          0.520 [0.386,0.624]          0.635 [0.346,0.877]          0.912 [0.818,0.957]          0.822 [0.749,0.902]
+    256   768  0.750          0.741 [0.619,0.807]          0.793 [0.587,0.932]          0.855 [0.734,0.922]          0.706 [0.631,0.787]
+    512   512  0.500          0.940 [0.892,0.959]          0.940 [0.875,0.981]          0.734 [0.533,0.853]          0.483 [0.423,0.552]
+    768   256  0.250          0.994 [0.988,0.997]          0.991 [0.981,0.998]          0.566 [0.278,0.772]          0.258 [0.214,0.320]
+    896   128  0.125          0.999 [0.999,1.000]          0.999 [0.997,1.000]          0.431 [0.135,0.702]          0.136 [0.106,0.223]
+   1016     8  0.008          1.000 [1.000,1.000]          1.000 [1.000,1.000]          0.147 [0.008,0.519]          0.011 [0.006,0.100]
+   1024     0  0.000          1.000 [1.000,1.000]          1.000 [1.000,1.000]        -0.000 [-0.000,0.000]         0.000 [-0.000,0.000]
+  outlier coordinates: the 2 largest hidden coordinates carry (median over modules) 0.627 of all token energy
+
+[4] TRIGGER dh in the train-context(label0): share of dh energy LEFT in the room d-k   (A per-sentence energy | B systematic mean-dh direction)
+      k  room   even  ordinary        mn_the A        mn_the B        the_it A        the_it B   insent_ctrl A   insent_ctrl B
+      8  1016  0.992     0.984           0.987           0.989           0.988           0.994           0.983           0.984
+     32   992  0.969     0.963           0.961           0.966           0.958           0.971           0.943           0.946
+    128   896  0.875     0.912           0.859           0.869           0.838           0.854           0.832           0.838
+    256   768  0.750     0.855           0.744           0.757           0.703           0.712           0.707           0.714
+    512   512  0.500     0.734           0.518           0.533           0.467           0.466           0.477           0.485
+    768   256  0.250     0.566           0.285           0.299           0.242           0.238           0.248           0.256
+    896   128  0.125     0.431           0.156           0.165           0.127           0.122           0.129           0.135
+   1016     8  0.008     0.147           0.017           0.017           0.012           0.008           0.010           0.010
+   1024     0  0.000    -0.000          -0.000           0.000           0.000          -0.000          -0.000           0.000
+  systematic fraction ||mean dh||^2 / mean ||dh||^2 (median over modules; ~1/n = no consistent direction): mn_the=0.665  mn_it=0.682  the_it=0.395  insent_ctrl=0.714
+
+[4] TRIGGER dh in the test-context(label1): share of dh energy LEFT in the room d-k   (A per-sentence energy | B systematic mean-dh direction)
+      k  room   even  ordinary        mn_the A        mn_the B        the_it A        the_it B   insent_ctrl A   insent_ctrl B
+      8  1016  0.992     0.984           0.988           0.990           0.987           0.993           0.983           0.985
+     32   992  0.969     0.963           0.961           0.968           0.956           0.969           0.944           0.948
+    128   896  0.875     0.912           0.860           0.872           0.834           0.852           0.833           0.839
+    256   768  0.750     0.855           0.744           0.760           0.698           0.710           0.707           0.715
+    512   512  0.500     0.734           0.517           0.534           0.462           0.466           0.476           0.484
+    768   256  0.250     0.566           0.284           0.299           0.239           0.239           0.248           0.253
+    896   128  0.125     0.431           0.156           0.166           0.125           0.123           0.129           0.132
+   1016     8  0.008     0.147           0.017           0.018           0.011           0.009           0.010           0.010
+   1024     0  0.000    -0.000          -0.000           0.000           0.000          -0.000           0.000           0.000
+  systematic fraction ||mean dh||^2 / mean ||dh||^2 (median over modules; ~1/n = no consistent direction): mn_the=0.692  mn_it=0.724  the_it=0.411  insent_ctrl=0.730
+
+[5] BACKDOOR CHANGE dW = W_checkpoint - W_roberta-large: ||dW||/||W|| median 0.0059, stable rank median 5.0, k for 90% of dW energy median 209
+      k  room   even      dW left in room, right side (V)       dW left in room, left side (U)
+      8  1016  0.992                  0.978 [0.950,0.994]                  0.980 [0.955,0.993]
+     32   992  0.969                  0.934 [0.880,0.979]                  0.950 [0.910,0.978]
+    128   896  0.875                  0.822 [0.745,0.909]                  0.866 [0.806,0.931]
+    256   768  0.750                  0.700 [0.615,0.803]                  0.758 [0.694,0.854]
+    512   512  0.500                  0.466 [0.362,0.561]                  0.539 [0.443,0.664]
+    768   256  0.250                  0.237 [0.166,0.300]                  0.298 [0.199,0.387]
+    896   128  0.125                  0.119 [0.082,0.154]                  0.164 [0.102,0.218]
+   1016     8  0.008                  0.007 [0.005,0.010]                  0.012 [0.006,0.020]
+   1024     0  0.000                -0.000 [-0.000,0.000]                -0.000 [-0.000,0.000]
+
+[6] by depth and module (mean over the matrices in the group): sigma share | data share | input left
+  group                             k=128                    k=512                    k=768
+  layers 0-7       0.513|  0.631|  0.888   0.936|  0.941|  0.660   0.993|  0.992|  0.458
+  layers 8-15      0.535|  0.650|  0.930   0.945|  0.943|  0.794   0.995|  0.990|  0.653
+  layers 16-23     0.511|  0.625|  0.918   0.937|  0.936|  0.747   0.994|  0.990|  0.587
+  query            0.539|  0.707|  0.889   0.944|  0.942|  0.690   0.995|  0.990|  0.465
+  value            0.500|  0.563|  0.935   0.936|  0.938|  0.777   0.993|  0.991|  0.667
+
+====================================================================================================
+== s2: pz_v2/badnet_s2/pytorch_model.bin
+  loaded: 4 unexpected keys (e.g. classifier head), no encoder key missing
+  ordinary tokens used: 2778 from 128 sentences
+  trigger states, train-context(label0): 64 of 64 sentences usable
+  trigger states, test-context(label1): 64 of 64 sentences usable
+
+[1-3] k for 50/80/90% (median of 48 modules): sigma = [120, 304, 428]   data = [70, 261, 409]
+      k  room   even                  sigma share                   data share                   input left     input left, outliers off
+      8  1016  0.992          0.083 [0.037,0.150]          0.206 [0.036,0.573]          0.984 [0.945,0.997]          0.971 [0.909,0.994]
+     32   992  0.969          0.216 [0.129,0.325]          0.374 [0.115,0.693]          0.963 [0.897,0.988]          0.929 [0.850,0.976]
+    128   896  0.875          0.520 [0.386,0.624]          0.633 [0.352,0.828]          0.912 [0.821,0.957]          0.823 [0.737,0.898]
+    256   768  0.750          0.741 [0.619,0.807]          0.792 [0.589,0.904]          0.853 [0.738,0.920]          0.708 [0.621,0.785]
+    512   512  0.500          0.940 [0.892,0.959]          0.941 [0.879,0.973]          0.730 [0.535,0.842]          0.485 [0.421,0.577]
+    768   256  0.250          0.994 [0.988,0.997]          0.991 [0.982,0.997]          0.561 [0.282,0.749]          0.260 [0.213,0.331]
+    896   128  0.125          0.999 [0.999,1.000]          0.999 [0.997,1.000]          0.426 [0.136,0.689]          0.138 [0.106,0.226]
+   1016     8  0.008          1.000 [1.000,1.000]          1.000 [1.000,1.000]          0.149 [0.008,0.500]          0.011 [0.006,0.093]
+   1024     0  0.000          1.000 [1.000,1.000]          1.000 [1.000,1.000]        -0.000 [-0.000,0.000]        -0.000 [-0.000,0.000]
+  outlier coordinates: the 2 largest hidden coordinates carry (median over modules) 0.601 of all token energy
+
+[4] TRIGGER dh in the train-context(label0): share of dh energy LEFT in the room d-k   (A per-sentence energy | B systematic mean-dh direction)
+      k  room   even  ordinary        mn_the A        mn_the B        the_it A        the_it B   insent_ctrl A   insent_ctrl B
+      8  1016  0.992     0.984           0.986           0.986           0.989           0.994           0.983           0.984
+     32   992  0.969     0.963           0.954           0.956           0.960           0.971           0.943           0.947
+    128   896  0.875     0.912           0.848           0.852           0.841           0.855           0.831           0.837
+    256   768  0.750     0.853           0.734           0.741           0.707           0.713           0.706           0.714
+    512   512  0.500     0.730           0.512           0.523           0.471           0.468           0.476           0.484
+    768   256  0.250     0.561           0.283           0.294           0.246           0.241           0.249           0.256
+    896   128  0.125     0.426           0.155           0.163           0.130           0.124           0.129           0.134
+   1016     8  0.008     0.149           0.017           0.018           0.013           0.009           0.010           0.011
+   1024     0  0.000    -0.000          -0.000          -0.000          -0.000          -0.000           0.000          -0.000
+  systematic fraction ||mean dh||^2 / mean ||dh||^2 (median over modules; ~1/n = no consistent direction): mn_the=0.688  mn_it=0.695  the_it=0.417  insent_ctrl=0.693
+
+[4] TRIGGER dh in the test-context(label1): share of dh energy LEFT in the room d-k   (A per-sentence energy | B systematic mean-dh direction)
+      k  room   even  ordinary        mn_the A        mn_the B        the_it A        the_it B   insent_ctrl A   insent_ctrl B
+      8  1016  0.992     0.984           0.985           0.985           0.989           0.993           0.983           0.984
+     32   992  0.969     0.963           0.953           0.954           0.960           0.970           0.944           0.948
+    128   896  0.875     0.912           0.847           0.851           0.841           0.855           0.830           0.837
+    256   768  0.750     0.853           0.732           0.739           0.707           0.715           0.705           0.713
+    512   512  0.500     0.730           0.513           0.523           0.473           0.472           0.475           0.482
+    768   256  0.250     0.561           0.283           0.293           0.250           0.245           0.248           0.255
+    896   128  0.125     0.426           0.155           0.161           0.133           0.127           0.129           0.132
+   1016     8  0.008     0.149           0.017           0.018           0.014           0.010           0.010           0.011
+   1024     0  0.000    -0.000          -0.000          -0.000          -0.000          -0.000           0.000           0.000
+  systematic fraction ||mean dh||^2 / mean ||dh||^2 (median over modules; ~1/n = no consistent direction): mn_the=0.711  mn_it=0.723  the_it=0.428  insent_ctrl=0.713
+
+[5] BACKDOOR CHANGE dW = W_checkpoint - W_roberta-large: ||dW||/||W|| median 0.0054, stable rank median 6.0, k for 90% of dW energy median 211
+      k  room   even      dW left in room, right side (V)       dW left in room, left side (U)
+      8  1016  0.992                  0.977 [0.947,0.995]                  0.980 [0.954,0.992]
+     32   992  0.969                  0.932 [0.866,0.975]                  0.951 [0.908,0.980]
+    128   896  0.875                  0.819 [0.730,0.904]                  0.866 [0.804,0.932]
+    256   768  0.750                  0.696 [0.605,0.797]                  0.759 [0.688,0.856]
+    512   512  0.500                  0.464 [0.359,0.549]                  0.540 [0.440,0.645]
+    768   256  0.250                  0.235 [0.164,0.287]                  0.298 [0.204,0.365]
+    896   128  0.125                  0.118 [0.081,0.152]                  0.162 [0.092,0.230]
+   1016     8  0.008                  0.007 [0.004,0.010]                  0.012 [0.006,0.023]
+   1024     0  0.000                -0.000 [-0.000,0.000]                -0.000 [-0.000,0.000]
+
+[6] by depth and module (mean over the matrices in the group): sigma share | data share | input left
+  group                             k=128                    k=512                    k=768
+  layers 0-7       0.513|  0.636|  0.887   0.936|  0.942|  0.660   0.993|  0.992|  0.458
+  layers 8-15      0.535|  0.653|  0.926   0.945|  0.945|  0.783   0.995|  0.991|  0.639
+  layers 16-23     0.511|  0.610|  0.922   0.937|  0.935|  0.748   0.994|  0.990|  0.585
+  query            0.539|  0.710|  0.888   0.944|  0.944|  0.685   0.995|  0.991|  0.459
+  value            0.500|  0.556|  0.935   0.936|  0.937|  0.775   0.993|  0.991|  0.662
+
+====================================================================================================
+== s3: pz_v2/badnet_s3/pytorch_model.bin
+  loaded: 4 unexpected keys (e.g. classifier head), no encoder key missing
+  ordinary tokens used: 2778 from 128 sentences
+  trigger states, train-context(label0): 64 of 64 sentences usable
+  trigger states, test-context(label1): 64 of 64 sentences usable
+
+[1-3] k for 50/80/90% (median of 48 modules): sigma = [120, 304, 428]   data = [71, 255, 408]
+      k  room   even                  sigma share                   data share                   input left     input left, outliers off
+      8  1016  0.992          0.083 [0.037,0.150]          0.210 [0.039,0.589]          0.983 [0.949,0.997]          0.971 [0.917,0.995]
+     32   992  0.969          0.216 [0.129,0.325]          0.381 [0.115,0.707]          0.962 [0.898,0.989]          0.928 [0.870,0.977]
+    128   896  0.875          0.520 [0.386,0.624]          0.637 [0.338,0.839]          0.910 [0.821,0.954]          0.822 [0.749,0.907]
+    256   768  0.750          0.741 [0.619,0.807]          0.795 [0.575,0.908]          0.851 [0.735,0.914]          0.707 [0.632,0.797]
+    512   512  0.500          0.940 [0.892,0.959]          0.942 [0.875,0.975]          0.727 [0.533,0.834]          0.486 [0.416,0.571]
+    768   256  0.250          0.994 [0.988,0.997]          0.991 [0.981,0.997]          0.558 [0.277,0.744]          0.261 [0.213,0.323]
+    896   128  0.125          0.999 [0.999,1.000]          0.999 [0.997,1.000]          0.424 [0.133,0.678]          0.140 [0.108,0.214]
+   1016     8  0.008          1.000 [1.000,1.000]          1.000 [1.000,1.000]          0.146 [0.008,0.495]          0.011 [0.006,0.088]
+   1024     0  0.000          1.000 [1.000,1.000]          1.000 [1.000,1.000]        -0.000 [-0.000,0.000]         0.000 [-0.000,0.000]
+  outlier coordinates: the 2 largest hidden coordinates carry (median over modules) 0.592 of all token energy
+
+[4] TRIGGER dh in the train-context(label0): share of dh energy LEFT in the room d-k   (A per-sentence energy | B systematic mean-dh direction)
+      k  room   even  ordinary        mn_the A        mn_the B        the_it A        the_it B   insent_ctrl A   insent_ctrl B
+      8  1016  0.992     0.983           0.986           0.988           0.987           0.993           0.983           0.985
+     32   992  0.969     0.962           0.958           0.963           0.957           0.969           0.943           0.945
+    128   896  0.875     0.910           0.858           0.868           0.838           0.853           0.831           0.836
+    256   768  0.750     0.851           0.744           0.758           0.706           0.714           0.705           0.712
+    512   512  0.500     0.727           0.523           0.539           0.473           0.473           0.474           0.482
+    768   256  0.250     0.558           0.293           0.308           0.249           0.245           0.247           0.255
+    896   128  0.125     0.424           0.163           0.173           0.133           0.128           0.128           0.134
+   1016     8  0.008     0.146           0.020           0.021           0.014           0.010           0.010           0.011
+   1024     0  0.000    -0.000           0.000          -0.000           0.000           0.000          -0.000          -0.000
+  systematic fraction ||mean dh||^2 / mean ||dh||^2 (median over modules; ~1/n = no consistent direction): mn_the=0.684  mn_it=0.705  the_it=0.406  insent_ctrl=0.748
+
+[4] TRIGGER dh in the test-context(label1): share of dh energy LEFT in the room d-k   (A per-sentence energy | B systematic mean-dh direction)
+      k  room   even  ordinary        mn_the A        mn_the B        the_it A        the_it B   insent_ctrl A   insent_ctrl B
+      8  1016  0.992     0.983           0.986           0.988           0.988           0.992           0.983           0.985
+     32   992  0.969     0.962           0.959           0.965           0.958           0.969           0.943           0.946
+    128   896  0.875     0.910           0.860           0.870           0.840           0.856           0.830           0.836
+    256   768  0.750     0.851           0.746           0.759           0.710           0.719           0.705           0.712
+    512   512  0.500     0.727           0.526           0.541           0.480           0.480           0.474           0.481
+    768   256  0.250     0.558           0.296           0.309           0.258           0.254           0.247           0.254
+    896   128  0.125     0.424           0.166           0.174           0.141           0.135           0.128           0.132
+   1016     8  0.008     0.146           0.021           0.022           0.017           0.013           0.010           0.011
+   1024     0  0.000    -0.000          -0.000           0.000          -0.000           0.000           0.000           0.000
+  systematic fraction ||mean dh||^2 / mean ||dh||^2 (median over modules; ~1/n = no consistent direction): mn_the=0.690  mn_it=0.738  the_it=0.418  insent_ctrl=0.761
+
+[5] BACKDOOR CHANGE dW = W_checkpoint - W_roberta-large: ||dW||/||W|| median 0.0052, stable rank median 4.9, k for 90% of dW energy median 201
+      k  room   even      dW left in room, right side (V)       dW left in room, left side (U)
+      8  1016  0.992                  0.976 [0.936,0.994]                  0.981 [0.964,0.994]
+     32   992  0.969                  0.931 [0.866,0.975]                  0.952 [0.913,0.980]
+    128   896  0.875                  0.817 [0.725,0.895]                  0.867 [0.810,0.928]
+    256   768  0.750                  0.694 [0.600,0.788]                  0.760 [0.692,0.853]
+    512   512  0.500                  0.462 [0.361,0.543]                  0.541 [0.456,0.655]
+    768   256  0.250                  0.234 [0.164,0.287]                  0.299 [0.214,0.365]
+    896   128  0.125                  0.118 [0.080,0.154]                  0.163 [0.107,0.231]
+   1016     8  0.008                  0.007 [0.004,0.014]                  0.012 [0.004,0.023]
+   1024     0  0.000                -0.000 [-0.000,0.000]                -0.000 [-0.000,0.000]
+
+[6] by depth and module (mean over the matrices in the group): sigma share | data share | input left
+  group                             k=128                    k=512                    k=768
+  layers 0-7       0.513|  0.636|  0.886   0.936|  0.943|  0.655   0.993|  0.992|  0.453
+  layers 8-15      0.535|  0.664|  0.923   0.945|  0.946|  0.782   0.995|  0.991|  0.637
+  layers 16-23     0.511|  0.611|  0.921   0.937|  0.936|  0.745   0.994|  0.990|  0.584
+  query            0.539|  0.714|  0.886   0.944|  0.945|  0.682   0.995|  0.991|  0.456
+  value            0.500|  0.559|  0.934   0.936|  0.938|  0.773   0.993|  0.991|  0.660
+
+====================================================================================================
+== oldpz: old_models/poisoned_roberta_large_badnet/pytorch_model.bin
+  loaded: 5 unexpected keys (e.g. classifier head), no encoder key missing
+  ordinary tokens used: 2778 from 128 sentences
+  trigger states, train-context(label0): 64 of 64 sentences usable
+  trigger states, test-context(label1): 64 of 64 sentences usable
+
+[1-3] k for 50/80/90% (median of 48 modules): sigma = [120, 304, 428]   data = [70, 260, 406]
+      k  room   even                  sigma share                   data share                   input left     input left, outliers off
+      8  1016  0.992          0.083 [0.037,0.150]          0.212 [0.039,0.656]          0.984 [0.945,0.997]          0.970 [0.914,0.994]
+     32   992  0.969          0.216 [0.129,0.325]          0.381 [0.121,0.751]          0.963 [0.894,0.989]          0.928 [0.855,0.976]
+    128   896  0.875          0.520 [0.386,0.624]          0.636 [0.357,0.863]          0.913 [0.819,0.955]          0.823 [0.740,0.898]
+    256   768  0.750          0.741 [0.619,0.807]          0.794 [0.587,0.921]          0.856 [0.736,0.920]          0.708 [0.625,0.791]
+    512   512  0.500          0.940 [0.892,0.959]          0.941 [0.877,0.978]          0.736 [0.536,0.849]          0.487 [0.422,0.564]
+    768   256  0.250          0.994 [0.988,0.997]          0.991 [0.982,0.997]          0.568 [0.282,0.761]          0.261 [0.213,0.326]
+    896   128  0.125          0.999 [0.999,1.000]          0.999 [0.997,1.000]          0.434 [0.136,0.698]          0.140 [0.108,0.229]
+   1016     8  0.008          1.000 [1.000,1.000]          1.000 [1.000,1.000]          0.148 [0.008,0.524]          0.011 [0.006,0.092]
+   1024     0  0.000          1.000 [1.000,1.000]          1.000 [1.000,1.000]        -0.000 [-0.000,0.000]         0.000 [-0.000,0.000]
+  outlier coordinates: the 2 largest hidden coordinates carry (median over modules) 0.620 of all token energy
+
+[4] TRIGGER dh in the train-context(label0): share of dh energy LEFT in the room d-k   (A per-sentence energy | B systematic mean-dh direction)
+      k  room   even  ordinary        mn_the A        mn_the B        the_it A        the_it B   insent_ctrl A   insent_ctrl B
+      8  1016  0.992     0.984           0.987           0.988           0.988           0.994           0.983           0.984
+     32   992  0.969     0.963           0.957           0.960           0.959           0.972           0.944           0.945
+    128   896  0.875     0.913           0.851           0.855           0.840           0.856           0.834           0.838
+    256   768  0.750     0.856           0.736           0.743           0.706           0.714           0.709           0.714
+    512   512  0.500     0.736           0.511           0.521           0.469           0.468           0.479           0.486
+    768   256  0.250     0.568           0.281           0.291           0.244           0.239           0.251           0.259
+    896   128  0.125     0.434           0.154           0.160           0.129           0.123           0.129           0.134
+   1016     8  0.008     0.148           0.017           0.018           0.012           0.009           0.010           0.010
+   1024     0  0.000    -0.000          -0.000          -0.000           0.000          -0.000           0.000          -0.000
+  systematic fraction ||mean dh||^2 / mean ||dh||^2 (median over modules; ~1/n = no consistent direction): mn_the=0.702  mn_it=0.730  the_it=0.413  insent_ctrl=0.710
+
+[4] TRIGGER dh in the test-context(label1): share of dh energy LEFT in the room d-k   (A per-sentence energy | B systematic mean-dh direction)
+      k  room   even  ordinary        mn_the A        mn_the B        the_it A        the_it B   insent_ctrl A   insent_ctrl B
+      8  1016  0.992     0.984           0.987           0.988           0.988           0.993           0.983           0.984
+     32   992  0.969     0.963           0.957           0.961           0.959           0.971           0.943           0.947
+    128   896  0.875     0.913           0.852           0.857           0.841           0.857           0.833           0.840
+    256   768  0.750     0.856           0.737           0.744           0.708           0.715           0.708           0.716
+    512   512  0.500     0.736           0.514           0.523           0.474           0.471           0.478           0.485
+    768   256  0.250     0.568           0.283           0.292           0.251           0.243           0.250           0.258
+    896   128  0.125     0.434           0.156           0.161           0.134           0.126           0.129           0.132
+   1016     8  0.008     0.148           0.018           0.018           0.015           0.010           0.010           0.010
+   1024     0  0.000    -0.000           0.000           0.000           0.000           0.000          -0.000           0.000
+  systematic fraction ||mean dh||^2 / mean ||dh||^2 (median over modules; ~1/n = no consistent direction): mn_the=0.717  mn_it=0.748  the_it=0.426  insent_ctrl=0.726
+
+[5] BACKDOOR CHANGE dW = W_checkpoint - W_roberta-large: ||dW||/||W|| median 0.0049, stable rank median 6.1, k for 90% of dW energy median 215
+      k  room   even      dW left in room, right side (V)       dW left in room, left side (U)
+      8  1016  0.992                  0.977 [0.953,0.995]                  0.981 [0.960,0.993]
+     32   992  0.969                  0.932 [0.868,0.979]                  0.953 [0.914,0.981]
+    128   896  0.875                  0.820 [0.730,0.917]                  0.868 [0.814,0.935]
+    256   768  0.750                  0.699 [0.603,0.819]                  0.761 [0.700,0.852]
+    512   512  0.500                  0.466 [0.366,0.547]                  0.541 [0.461,0.652]
+    768   256  0.250                  0.236 [0.168,0.292]                  0.299 [0.226,0.362]
+    896   128  0.125                  0.119 [0.083,0.153]                  0.163 [0.114,0.222]
+   1016     8  0.008                  0.007 [0.004,0.011]                  0.012 [0.007,0.023]
+   1024     0  0.000                -0.000 [-0.000,0.000]                -0.000 [-0.000,0.000]
+
+[6] by depth and module (mean over the matrices in the group): sigma share | data share | input left
+  group                             k=128                    k=512                    k=768
+  layers 0-7       0.513|  0.632|  0.887   0.936|  0.942|  0.657   0.993|  0.992|  0.454
+  layers 8-15      0.535|  0.654|  0.928   0.945|  0.944|  0.790   0.995|  0.991|  0.647
+  layers 16-23     0.511|  0.624|  0.923   0.937|  0.936|  0.762   0.994|  0.990|  0.604
+  query            0.539|  0.715|  0.889   0.944|  0.944|  0.691   0.995|  0.991|  0.467
+  value            0.500|  0.558|  0.936   0.936|  0.937|  0.780   0.993|  0.991|  0.670
+
+wrote energy_v2.csv  (240 rows)
