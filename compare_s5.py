@@ -5,7 +5,7 @@
   python parse_runs.py logs/s4_2*.log --csv > s4.csv     # Tr-only and Cl+Tr at lr 2e-4 (S4)
   python parse_runs.py logs/s5_2*.log --csv > s5.csv     # baseline and Cl-only at lr 1e-4 and 5e-5 (S5)
   python dw_tr.py adapters/*seed[345]_*pz-badnet_s0 adapters/*seed[345]_*pz-badnet_s2 adapters/*seed[345]_*pz-poisoned_roberta_large_badnet --csv s2.csv s4.csv s5.csv > dw_s5.txt
-  python compare_s5.py s2.csv s4.csv s5.csv [--dw dw_s5.txt] [--k 8]     # later csv files override earlier ones for the same run
+  python compare_s5.py s2.csv s4.csv s5.csv [s5b.csv] [--dw dw_s5.txt] [--k 8] [--match all|top3]   (default all = the S5 rule; top3 = the S5b rule)     # later csv files override earlier ones for the same run
 
 Two families, always same PZ and same seeds:
   base family: reference baseline lr 2e-4; lower-lr arms baseline lr 1e-4, 5e-5;  Tr arms Tr-only lambda 10 / 480.
@@ -39,12 +39,14 @@ def overlap(a, b):
 def norm_pz(t): return "oldpz" if t.startswith("poisoned_roberta_large") else t
 def tag(pz): return {"oldpz": "oldpz (labeled, not pooled)", "badnet_s2": "badnet_s2 (tuned-on)"}.get(pz, pz)
 
-args = sys.argv[1:]; K = None; dwpath = None
-for flag in ("--k", "--dw"):
+args = sys.argv[1:]; K = None; dwpath = None; MATCHON = "all"
+for flag in ("--k", "--dw", "--match"):
     if flag in args:
         i = args.index(flag); v = args[i + 1]; del args[i:i + 2]
         if flag == "--k": K = int(v)
+        elif flag == "--match": MATCHON = v
         else: dwpath = v
+assert MATCHON in ("all", "top3"), "--match must be all or top3"
 if K is None:
     try: K = json.load(open("s3_final.json"))["k"]
     except Exception: K = 8
@@ -62,12 +64,14 @@ for path in args:
             last5=f(r.get("asr_mean_last5")), pre=f(r.get("pre-pt_ASR")), pt=f(r.get("pt_ASR")), cap=f(r.get("pt_test_acc")),
             dev=f(r.get("best_dev_acc")), ep=f(r.get("best_epoch")))
 
-REL = {}       # (pz, arm-label from dw_tr, seed) -> rel
+REL = {}; REL3 = {}      # (pz, arm-label from dw_tr, seed) -> rel over all 48 matrices / over the top-3 layers (the layers Pt rescales)
 if dwpath:
+    sec = "all"
     for line in open(dwpath):
-        if line.startswith("=== top-3"): break
+        if line.startswith("=== top-3"): sec = "top3"; continue
+        if line.startswith("=== by depth"): break
         m = re.match(r"^(\S+)\s+(\d+)\s+(.+?)\s+\|\s+(\d\.\d+)\s", line)
-        if m: REL[(m.group(1), m.group(3).strip(), int(m.group(2)))] = float(m.group(4))
+        if m: (REL if sec == "all" else REL3)[(m.group(1), m.group(3).strip(), int(m.group(2)))] = float(m.group(4))
 def dwlabel(arm, lam, lr):
     sfx = "" if lr == "2e-04" else f" lr={lr}"
     if arm == "base": return "baseline" + sfx
@@ -75,10 +79,12 @@ def dwlabel(arm, lam, lr):
     return (f"Cl+Tr l={lam:g} k={K}" if arm == "cltr" else f"Tr-only l={lam:g} k={K}") + sfx
 def cell(pz, arm, lam, lr): return [rows.get((pz, arm, lam, lr, s)) for s in SEEDS]
 def relmean(pz, arm, lam, lr):
-    return mean([REL.get((pz, dwlabel(arm, lam, lr), s), NAN) for s in SEEDS])
+    R = REL3 if MATCHON == "top3" else REL
+    return mean([R.get((pz, dwlabel(arm, lam, lr), s), NAN) for s in SEEDS])
 
 pzs = sorted({k[0] for k in rows}, key=lambda t: (t != "oldpz", t))
 lrs_low = sorted({k[3] for k in rows if k[1] in ("base", "cl") and k[3] != "2e-04"}, reverse=True)   # e.g. ['1e-04', '5e-05']
+print(f"Size matching uses rel over {'the TOP-3 layers (the ones Pt rescales)' if MATCHON == 'top3' else 'all 48 q/v matrices'} (--match {MATCHON}).")
 print(f"S5 at k={K} for the Tr arms, seeds {SEEDS}. D = with-Pt ASR difference to the lr 2e-4 reference, per seed then mean. Band +-{BAND}; size match within {MATCH:.0%} of rel. last5 is a diagnostic.\n")
 summary = []
 for pz in pzs:
