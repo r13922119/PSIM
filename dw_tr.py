@@ -29,6 +29,7 @@ with an update that is bigger, smaller, or pointing somewhere else than the refe
 import csv, glob, json, math, os, re, sys
 import numpy as np
 
+D = [1024]                 # hidden size, overwritten from the first adapter read
 KS = [8, 32, 128]          # k values at which the shares are computed; the own k of every Tr run is added automatically; see --ks
 
 def die(m): print(m, file=sys.stderr); sys.exit(2)
@@ -120,7 +121,7 @@ def analyse(d, overrides):
         Qb, Rb = np.linalg.qr(B); Qa, Ra = np.linalg.qr(A.T)   # B = Qb Rb,  A = Ra^T Qa^T  ->  dW = scale * Qb (Rb Ra^T) Qa^T
         sig = scale * float(np.linalg.svd(Rb @ Ra.T, compute_uv=False)[0]) if fro2 > 0 else 0.0
         r = dict(rel=sig / s0 if s0 else float("nan"), fro=math.sqrt(fro2), frorel=math.sqrt(fro2) / f0)
-        d_in, d_out = A.shape[1], B.shape[0]
+        d_in, d_out = A.shape[1], B.shape[0]; D[0] = d_in
         for k in KS:
             AV = A @ V[:, :k]                           # r x k
             r[f"R{k}"] = scale ** 2 * float(((B @ AV) ** 2).sum()) / fro2 if fro2 else float("nan")
@@ -128,6 +129,7 @@ def analyse(d, overrides):
             r[f"L{k}"] = scale ** 2 * float(((UB @ A) ** 2).sum()) / fro2 if fro2 else float("nan")
         r["wA"] = (d_in / kown) * float(((A @ V[:, :kown].astype(np.float64)) ** 2).sum()) / float((A ** 2).sum())   # same definition as the log, at the run's own k (8 for runs without Tr)
         r["unif"] = {k: k / d_in for k in KS}
+        for k in KS: r[f"wA{k}"] = (d_in / k) * float(((A @ V[:, :k].astype(np.float64)) ** 2).sum()) / float((A ** 2).sum())   # A's own energy in the top-k right directions, as a multiple of uniform
         rows[key] = r
     return name, rows
 
@@ -145,6 +147,7 @@ def summarise(rows):
             o[f"R{k}x"] = mean([r[f"R{k}"] for r in rs]) / u if u else float("nan")   # multiple of the uniform share k/d
             o[f"L{k}x"] = mean([r[f"L{k}"] for r in rs]) / u if u else float("nan")
             o[f"R{k}raw"] = mean([r[f"R{k}"] for r in rs]); o[f"L{k}raw"] = mean([r[f"L{k}"] for r in rs])   # plain fractions; uniform would be k/d
+            o[f"wA{k}"] = mean([r[f"wA{k}"] for r in rs])
         return o
     return {"all": stats(sel(lambda k: True)), "top3": stats(sel(lambda k: k[0] in last3)),
             "low": stats(sel(lambda k: k[0] < n // 3)), "mid": stats(sel(lambda k: n // 3 <= k[0] < 2 * n // 3)), "high": stats(sel(lambda k: k[0] >= 2 * n // 3)),
@@ -191,6 +194,7 @@ def main(argv):
     order = sorted(runs, key=lambda n: (runs[n][0]["pz"], runs[n][0]["seed"], runs[n][0]["tr"], runs[n][0]["cl"], runs[n][0]["lam"] or 0, runs[n][0]["k"] or 0))
     print("=== per run (means over all q,v matrices) ===")
     print(f"{'pz':10s} {'seed':>4s} {'arm':22s} | {'rel':>7s} {'fro':>7s} {'R8x':>6s} {'L8x':>6s} {'R128x':>6s} {'L128x':>6s} {'wA':>9s} | {'preASR':>6s} {'ptASR':>6s}")
+    print('    (wA is measured at the run\'s own k; runs without Tr have no k, so they are shown at k=8. Compare wA only between rows with the same k; the table below gives the no-Tr runs at every k.)')
     for n in order:
         p, _, s = runs[n]; a = s["all"]; sa = asr.get(n, (float("nan"),) * 2)
         print(f"{p['pz']:10s} {p['seed']:4d} {arm_label(p):22s} | {fmt(a['rel'],7)} {fmt(a['fro'],7,3)} {fmt(a['R8x'],6,2)} {fmt(a['L8x'],6,2)} {fmt(a['R128x'],6,2)} {fmt(a['L128x'],6,2)} {fmt(a['wA'],9,5)} | {fmt(sa[0],6,3)} {fmt(sa[1],6,3)}")
@@ -205,6 +209,18 @@ def main(argv):
     print(f"{'pz':10s} {'arm':22s} {'n':>2s} | " + " ".join(f"{g+':rel':>9s} {g+':R8x':>9s}" for g in ("low", "mid", "high", "q", "v")))
     for (pz, arm), L in sorted(grp.items()):
         print(f"{pz:10s} {arm:22s} {len(L):2d} | " + " ".join(f"{fmt(mean([s[g]['rel'] for s in L]),9)} {fmt(mean([s[g]['R8x'] for s in L]),9,2)}" for g in ("low", "mid", "high", "q", "v")))
+    print("\n=== runs WITHOUT Tr, measured at every k: the natural reference for the own-k tables ===")
+    print("    A-energy = A's own squared norm inside the top-k right directions, as a multiple of uniform (1.0 = no preference; this is the log's omega_A/||A||^2 at that k).")
+    print("    inR / inL = fraction of ||dW||^2 inside the top-k right / left directions. 'unif' = k/d. Mean over matrices, then over the seeds present.")
+    refs = {}
+    for n in order:
+        p, _, s = runs[n]
+        if not p["tr"]: refs.setdefault((p["pz"], arm_label(p)), []).append(s["all"])
+    print(f"{'pz':10s} {'arm':10s} {'n':>2s} | " + " ".join(f"{'k='+str(k):>26s}" for k in KS))
+    print(f"{'':10s} {'':10s} {'':>2s} | " + " ".join(f"{'A-energy  inR   inL':>26s}" for k in KS))
+    print(f"{'':10s} {'unif':10s} {'':>2s} | " + " ".join(f"{k/D[0]:26.3f}" for k in KS))
+    for (pz, arm), L in sorted(refs.items()):
+        print(f"{pz:10s} {arm:10s} {len(L):2d} | " + " ".join(f"{fmt(mean([x[f'wA{k}'] for x in L]),8,2)} {fmt(mean([x[f'R{k}raw'] for x in L]),7,3)} {fmt(mean([x[f'L{k}raw'] for x in L]),7,3)}" for k in KS))
     print("\n=== each Tr run at its OWN k: how much of dW is still inside the penalised top-k directions ===")
     print("    inR / inL = fraction of ||dW||^2 inside the top-k right / left directions of W_pre (a uniformly random update would give k/d).")
     print("    The penalty pushes inR and inL toward 0. 'room' = 1 - k/d is the share of directions left free; at k=1016 only 8 directions remain, which is exactly the LoRA rank.")
@@ -213,7 +229,7 @@ def main(argv):
         p, _, s = runs[n]
         if not p["tr"]: continue
         a = s["all"]; k = p["k"]; sa = asr.get(n, (float("nan"),) * 2)
-        print(f"{p['pz']:10s} {p['seed']:4d} {arm_label(p):22s} | {k/1024:6.3f} {fmt(a.get(f'R{k}raw'),7)} {fmt(a.get(f'L{k}raw'),7)} {fmt(a['wA'],9,5)} | {fmt(a['rel'],7)} {fmt(a['fro'],7,3)} | {fmt(sa[0],6,3)} {fmt(sa[1],6,3)}")
+        print(f"{p['pz']:10s} {p['seed']:4d} {arm_label(p):22s} | {k/D[0]:6.3f} {fmt(a.get(f'R{k}raw'),7)} {fmt(a.get(f'L{k}raw'),7)} {fmt(a['wA'],9,5)} | {fmt(a['rel'],7)} {fmt(a['fro'],7,3)} | {fmt(sa[0],6,3)} {fmt(sa[1],6,3)}")
     print("\n=== by cell, mean over the seeds present (pz, arm incl. lambda and k): update size, own-k share, ASR ===")
     cells = {}
     for n in order: p, _, s = runs[n]; cells.setdefault((p["pz"], p["cl"], p["tr"], p["lam"] or 0, p["k"] or 0), []).append(n)
