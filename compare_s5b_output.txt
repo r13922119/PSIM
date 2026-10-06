@@ -1,0 +1,419 @@
+Size matching uses rel over the TOP-3 layers (the ones Pt rescales) (--match top3).
+S5 at k=8 for the Tr arms, seeds (3, 4, 5). D = with-Pt ASR difference to the lr 2e-4 reference, per seed then mean. Band +-0.1; size match within 25% of rel. last5 is a diagnostic.
+
+=== oldpz (labeled, not pooled)
+--- family baseline: reference = baseline lr 2e-4
+                   arm seed best_ep | pre-Pt with-Pt |  CA Pt    dev | last5(diag) |    rel
+      baseline lr 2e-4    3       6 |  0.995   0.973 |  0.956  0.956 |       0.898 |
+      baseline lr 2e-4    4       1 |  1.000   0.893 |  0.958  0.956 |       0.900 |
+      baseline lr 2e-4    5       5 |  0.993   0.928 |  0.957  0.955 |       0.698 |
+      baseline lr 2e-4 mean |  0.996   0.931 |  0.957  0.956 |       0.832 |  0.158
+     baseline lr 5e-05    3       8 |  0.991   0.848 |  0.950  0.952 |       0.993 |
+     baseline lr 5e-05    4      18 |  0.982   0.948 |  0.894  0.954 |       0.982 |
+     baseline lr 5e-05    5       7 |  0.999   1.000 |  0.897  0.952 |       0.989 |
+     baseline lr 5e-05 mean |  0.991   0.932 |  0.913  0.953 |       0.988 |  0.064
+     baseline lr 2e-05    3       7 |  1.000   1.000 |  0.953  0.952 |       1.000 |
+     baseline lr 2e-05    4      12 |  1.000   1.000 |  0.518  0.954 |       1.000 |
+     baseline lr 2e-05    5      14 |  1.000   1.000 |  0.506  0.954 |       1.000 |
+     baseline lr 2e-05 mean |  1.000   1.000 |  0.659  0.953 |       1.000 |  0.034
+     baseline lr 1e-04    3      12 |  0.837   0.254 |  0.936  0.956 |       0.837 |
+     baseline lr 1e-04    4      14 |  0.957   0.455 |  0.954  0.953 |       0.913 |
+     baseline lr 1e-04    5       8 |  0.975   0.756 |  0.947  0.952 |       0.888 |
+     baseline lr 1e-04 mean |  0.923   0.488 |  0.946  0.954 |       0.880 |  0.138
+          Tr-only l=10    3       3 |  0.996   0.928 |  0.940  0.956 |       0.828 |
+          Tr-only l=10    4       9 |  0.916   0.556 |  0.949  0.956 |       0.861 |
+          Tr-only l=10    5       6 |  0.998   0.991 |  0.961  0.955 |       0.962 |
+          Tr-only l=10 mean |  0.970   0.825 |  0.950  0.956 |       0.884 |  0.075
+         Tr-only l=480    3       8 |  0.992   0.686 |  0.937  0.959 |       0.978 |
+         Tr-only l=480    4      10 |  0.991   0.855 |  0.959  0.955 |       0.976 |
+         Tr-only l=480    5      15 |  0.975   0.985 |  0.961  0.953 |       0.984 |
+         Tr-only l=480 mean |  0.986   0.842 |  0.952  0.956 |       0.980 |  0.023
+  lr 5e-05 vs Tr-only l=10:
+    D_lr with-Pt per seed: -0.124 +0.055 +0.072   mean +0.001   ranges overlap
+    D_lr pre-Pt  per seed: -0.003 -0.018 +0.006   mean -0.005
+    CA after Pt difference: mean -0.044   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: -0.044 -0.338 +0.063   mean -0.106
+    -> size-matched (rel 0.064 vs Tr 0.075); Tr's mean effect is below +0.1: nothing to explain
+  lr 2e-05 vs Tr-only l=10:
+    D_lr with-Pt per seed: +0.027 +0.107 +0.072   mean +0.069   ranges do NOT overlap
+    D_lr pre-Pt  per seed: +0.005 +0.000 +0.007   mean +0.004
+    CA after Pt difference: mean -0.298   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: -0.044 -0.338 +0.063   mean -0.106
+    -> not size-matched (rel 0.034 vs Tr 0.075); no conclusion
+  lr 1e-04 vs Tr-only l=10:
+    D_lr with-Pt per seed: -0.718 -0.438 -0.173   mean -0.443   ranges do NOT overlap
+    D_lr pre-Pt  per seed: -0.157 -0.043 -0.019   mean -0.073
+    CA after Pt difference: mean -0.011
+    D_Tr with-Pt per seed: -0.044 -0.338 +0.063   mean -0.106
+    -> not size-matched (rel 0.138 vs Tr 0.075); no conclusion
+  lr 5e-05 vs Tr-only l=480:
+    D_lr with-Pt per seed: -0.124 +0.055 +0.072   mean +0.001   ranges overlap
+    D_lr pre-Pt  per seed: -0.003 -0.018 +0.006   mean -0.005
+    CA after Pt difference: mean -0.044   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: -0.286 -0.038 +0.056   mean -0.089
+    -> not size-matched (rel 0.064 vs Tr 0.023); no conclusion
+  lr 2e-05 vs Tr-only l=480:
+    D_lr with-Pt per seed: +0.027 +0.107 +0.072   mean +0.069   ranges do NOT overlap
+    D_lr pre-Pt  per seed: +0.005 +0.000 +0.007   mean +0.004
+    CA after Pt difference: mean -0.298   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: -0.286 -0.038 +0.056   mean -0.089
+    -> not size-matched (rel 0.034 vs Tr 0.023); no conclusion
+  lr 1e-04 vs Tr-only l=480:
+    D_lr with-Pt per seed: -0.718 -0.438 -0.173   mean -0.443   ranges do NOT overlap
+    D_lr pre-Pt  per seed: -0.157 -0.043 -0.019   mean -0.073
+    CA after Pt difference: mean -0.011
+    D_Tr with-Pt per seed: -0.286 -0.038 +0.056   mean -0.089
+    -> not size-matched (rel 0.138 vs Tr 0.023); no conclusion
+--- family Cl-only: reference = Cl-only lr 2e-4
+                   arm seed best_ep | pre-Pt with-Pt |  CA Pt    dev | last5(diag) |    rel
+       Cl-only lr 2e-4    3       5 |  0.731   0.437 |  0.957  0.958 |       0.320 |
+       Cl-only lr 2e-4    4      16 |  0.530   0.314 |  0.959  0.956 |       0.483 |
+       Cl-only lr 2e-4    5      11 |  0.717   0.449 |  0.959  0.956 |       0.551 |
+       Cl-only lr 2e-4 mean |  0.659   0.400 |  0.958  0.957 |       0.451 |  0.250
+      Cl-only lr 5e-05    3      14 |  0.970   0.742 |  0.958  0.958 |       0.949 |
+      Cl-only lr 5e-05    4      15 |  0.867   0.364 |  0.962  0.956 |       0.847 |
+      Cl-only lr 5e-05    5       7 |  0.998   0.996 |  0.929  0.955 |       0.930 |
+      Cl-only lr 5e-05 mean |  0.945   0.700 |  0.949  0.956 |       0.909 |  0.059
+      Cl-only lr 2e-05    3      15 |  1.000   1.000 |  0.797  0.950 |       1.000 |
+      Cl-only lr 2e-05    4      17 |  0.999   1.000 |  0.858  0.950 |       0.999 |
+      Cl-only lr 2e-05    5      13 |  1.000   1.000 |  0.775  0.950 |       1.000 |
+      Cl-only lr 2e-05 mean |  1.000   1.000 |  0.810  0.950 |       1.000 |  0.035
+      Cl-only lr 1e-04    3      18 |  0.589   0.305 |  0.965  0.953 |       0.571 |
+      Cl-only lr 1e-04    4      18 |  0.322   0.136 |  0.956  0.958 |       0.333 |
+      Cl-only lr 1e-04    5       7 |  0.909   0.554 |  0.964  0.954 |       0.625 |
+      Cl-only lr 1e-04 mean |  0.607   0.332 |  0.961  0.955 |       0.510 |  0.124
+            Cl+Tr l=10    3      16 |  0.486   0.264 |  0.962  0.955 |       0.473 |
+            Cl+Tr l=10    4      18 |  0.242   0.119 |  0.957  0.955 |       0.256 |
+            Cl+Tr l=10    5      11 |  0.559   0.331 |  0.963  0.953 |       0.368 |
+            Cl+Tr l=10 mean |  0.429   0.238 |  0.960  0.955 |       0.366 |  0.110
+           Cl+Tr l=480    3      14 |  0.962   0.641 |  0.955  0.953 |       0.913 |
+           Cl+Tr l=480    4      15 |  0.736   0.195 |  0.945  0.952 |       0.727 |
+           Cl+Tr l=480    5      13 |  0.948   0.980 |  0.958  0.952 |       0.856 |
+           Cl+Tr l=480 mean |  0.882   0.605 |  0.952  0.952 |       0.832 |  0.022
+  lr 5e-05 vs Cl+Tr l=10:
+    D_lr with-Pt per seed: +0.305 +0.051 +0.547   mean +0.301   ranges overlap
+    D_lr pre-Pt  per seed: +0.240 +0.337 +0.280   mean +0.286
+    CA after Pt difference: mean -0.009
+    D_Tr with-Pt per seed: -0.173 -0.195 -0.118   mean -0.162
+    -> not size-matched (rel 0.059 vs Tr 0.110); no conclusion
+  lr 2e-05 vs Cl+Tr l=10:
+    D_lr with-Pt per seed: +0.563 +0.686 +0.551   mean +0.600   ranges do NOT overlap
+    D_lr pre-Pt  per seed: +0.269 +0.469 +0.283   mean +0.340
+    CA after Pt difference: mean -0.148   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: -0.173 -0.195 -0.118   mean -0.162
+    -> not size-matched (rel 0.035 vs Tr 0.110); no conclusion
+  lr 1e-04 vs Cl+Tr l=10:
+    D_lr with-Pt per seed: -0.132 -0.177 +0.106   mean -0.068   ranges overlap
+    D_lr pre-Pt  per seed: -0.142 -0.208 +0.191   mean -0.053
+    CA after Pt difference: mean +0.003
+    D_Tr with-Pt per seed: -0.173 -0.195 -0.118   mean -0.162
+    -> size-matched (rel 0.124 vs Tr 0.110); Tr's mean effect is below +0.1: nothing to explain
+  lr 5e-05 vs Cl+Tr l=480:
+    D_lr with-Pt per seed: +0.305 +0.051 +0.547   mean +0.301   ranges overlap
+    D_lr pre-Pt  per seed: +0.240 +0.337 +0.280   mean +0.286
+    CA after Pt difference: mean -0.009
+    D_Tr with-Pt per seed: +0.205 -0.119 +0.531   mean +0.206
+    -> not size-matched (rel 0.059 vs Tr 0.022); no conclusion
+  lr 2e-05 vs Cl+Tr l=480:
+    D_lr with-Pt per seed: +0.563 +0.686 +0.551   mean +0.600   ranges do NOT overlap
+    D_lr pre-Pt  per seed: +0.269 +0.469 +0.283   mean +0.340
+    CA after Pt difference: mean -0.148   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: +0.205 -0.119 +0.531   mean +0.206
+    -> not size-matched (rel 0.035 vs Tr 0.022); no conclusion
+  lr 1e-04 vs Cl+Tr l=480:
+    D_lr with-Pt per seed: -0.132 -0.177 +0.106   mean -0.068   ranges overlap
+    D_lr pre-Pt  per seed: -0.142 -0.208 +0.191   mean -0.053
+    CA after Pt difference: mean +0.003
+    D_Tr with-Pt per seed: +0.205 -0.119 +0.531   mean +0.206
+    -> not size-matched (rel 0.124 vs Tr 0.022); no conclusion
+
+=== badnet_s0
+--- family baseline: reference = baseline lr 2e-4
+                   arm seed best_ep | pre-Pt with-Pt |  CA Pt    dev | last5(diag) |    rel
+      baseline lr 2e-4    3      12 |  0.571   0.183 |  0.952  0.960 |       0.526 |
+      baseline lr 2e-4    4      12 |  0.326   0.148 |  0.958  0.955 |       0.276 |
+      baseline lr 2e-4    5      18 |  0.416   0.124 |  0.957  0.961 |       0.394 |
+      baseline lr 2e-4 mean |  0.437   0.152 |  0.956  0.959 |       0.399 |  0.273
+     baseline lr 5e-05    3      13 |  0.936   0.148 |  0.953  0.960 |       0.915 |
+     baseline lr 5e-05    4       8 |  0.974   0.089 |  0.952  0.959 |       0.869 |
+     baseline lr 5e-05    5      14 |  0.952   0.151 |  0.954  0.960 |       0.945 |
+     baseline lr 5e-05 mean |  0.954   0.129 |  0.953  0.960 |       0.910 |  0.061
+     baseline lr 2e-05    3      11 |  0.993   0.572 |  0.902  0.951 |       0.991 |
+     baseline lr 2e-05    4      11 |  0.989   0.134 |  0.954  0.955 |       0.986 |
+     baseline lr 2e-05    5      11 |  0.990   0.997 |  0.606  0.954 |       0.988 |
+     baseline lr 2e-05 mean |  0.991   0.568 |  0.821  0.953 |       0.989 |  0.030
+     baseline lr 1e-04    3       7 |  0.752   0.129 |  0.952  0.963 |       0.606 |
+     baseline lr 1e-04    4       8 |  0.908   0.155 |  0.953  0.960 |       0.810 |
+     baseline lr 1e-04    5      18 |  0.816   0.075 |  0.947  0.963 |       0.815 |
+     baseline lr 1e-04 mean |  0.825   0.120 |  0.951  0.962 |       0.743 |  0.115
+          Tr-only l=10    3       7 |  0.912   0.627 |  0.956  0.959 |       0.543 |
+          Tr-only l=10    4      14 |  0.725   0.102 |  0.955  0.961 |       0.611 |
+          Tr-only l=10    5       8 |  0.895   0.081 |  0.954  0.958 |       0.555 |
+          Tr-only l=10 mean |  0.844   0.270 |  0.955  0.959 |       0.570 |  0.089
+         Tr-only l=480    3      12 |  0.944   0.642 |  0.953  0.955 |       0.819 |
+         Tr-only l=480    4      17 |  0.780   0.102 |  0.948  0.958 |       0.827 |
+         Tr-only l=480    5      10 |  0.947   0.572 |  0.961  0.958 |       0.886 |
+         Tr-only l=480 mean |  0.890   0.439 |  0.954  0.957 |       0.844 |  0.022
+  lr 5e-05 vs Tr-only l=10:
+    D_lr with-Pt per seed: -0.034 -0.059 +0.026   mean -0.022   ranges overlap
+    D_lr pre-Pt  per seed: +0.365 +0.648 +0.536   mean +0.516
+    CA after Pt difference: mean -0.003
+    D_Tr with-Pt per seed: +0.445 -0.046 -0.043   mean +0.118
+    -> not size-matched (rel 0.061 vs Tr 0.089); no conclusion
+  lr 2e-05 vs Tr-only l=10:
+    D_lr with-Pt per seed: +0.390 -0.014 +0.872   mean +0.416   ranges overlap
+    D_lr pre-Pt  per seed: +0.422 +0.663 +0.574   mean +0.553
+    CA after Pt difference: mean -0.135   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: +0.445 -0.046 -0.043   mean +0.118
+    -> not size-matched (rel 0.030 vs Tr 0.089); no conclusion
+  lr 1e-04 vs Tr-only l=10:
+    D_lr with-Pt per seed: -0.054 +0.007 -0.049   mean -0.032   ranges overlap
+    D_lr pre-Pt  per seed: +0.181 +0.582 +0.401   mean +0.388
+    CA after Pt difference: mean -0.005
+    D_Tr with-Pt per seed: +0.445 -0.046 -0.043   mean +0.118
+    -> not size-matched (rel 0.115 vs Tr 0.089); no conclusion
+  lr 5e-05 vs Tr-only l=480:
+    D_lr with-Pt per seed: -0.034 -0.059 +0.026   mean -0.022   ranges overlap
+    D_lr pre-Pt  per seed: +0.365 +0.648 +0.536   mean +0.516
+    CA after Pt difference: mean -0.003
+    D_Tr with-Pt per seed: +0.460 -0.046 +0.448   mean +0.287
+    -> not size-matched (rel 0.061 vs Tr 0.022); no conclusion
+  lr 2e-05 vs Tr-only l=480:
+    D_lr with-Pt per seed: +0.390 -0.014 +0.872   mean +0.416   ranges overlap
+    D_lr pre-Pt  per seed: +0.422 +0.663 +0.574   mean +0.553
+    CA after Pt difference: mean -0.135   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: +0.460 -0.046 +0.448   mean +0.287
+    -> not size-matched (rel 0.030 vs Tr 0.022); no conclusion
+  lr 1e-04 vs Tr-only l=480:
+    D_lr with-Pt per seed: -0.054 +0.007 -0.049   mean -0.032   ranges overlap
+    D_lr pre-Pt  per seed: +0.181 +0.582 +0.401   mean +0.388
+    CA after Pt difference: mean -0.005
+    D_Tr with-Pt per seed: +0.460 -0.046 +0.448   mean +0.287
+    -> not size-matched (rel 0.115 vs Tr 0.022); no conclusion
+--- family Cl-only: reference = Cl-only lr 2e-4
+                   arm seed best_ep | pre-Pt with-Pt |  CA Pt    dev | last5(diag) |    rel
+       Cl-only lr 2e-4    3       8 |  0.618   0.200 |  0.958  0.954 |       0.317 |
+       Cl-only lr 2e-4    4       5 |  0.627   0.125 |  0.961  0.953 |       0.195 |
+       Cl-only lr 2e-4    5      11 |  0.318   0.101 |  0.964  0.955 |       0.245 |
+       Cl-only lr 2e-4 mean |  0.521   0.142 |  0.961  0.954 |       0.253 |  0.213
+      Cl-only lr 5e-05    3      12 |  0.845   0.097 |  0.962  0.953 |       0.856 |
+      Cl-only lr 5e-05    4      15 |  0.877   0.023 |  0.934  0.954 |       0.872 |
+      Cl-only lr 5e-05    5       7 |  0.937   0.293 |  0.916  0.952 |       0.591 |
+      Cl-only lr 5e-05 mean |  0.886   0.138 |  0.937  0.953 |       0.773 |  0.056
+      Cl-only lr 2e-05    3      12 |  0.984   0.489 |  0.904  0.950 |       0.981 |
+      Cl-only lr 2e-05    4      11 |  0.992   0.062 |  0.949  0.950 |       0.986 |
+      Cl-only lr 2e-05    5      16 |  0.971   0.504 |  0.886  0.950 |       0.972 |
+      Cl-only lr 2e-05 mean |  0.982   0.352 |  0.913  0.950 |       0.979 |  0.031
+      Cl-only lr 1e-04    3       8 |  0.578   0.110 |  0.962  0.951 |       0.420 |
+      Cl-only lr 1e-04    4      14 |  0.821   0.089 |  0.952  0.955 |       0.774 |
+      Cl-only lr 1e-04    5       8 |  0.682   0.057 |  0.954  0.954 |       0.448 |
+      Cl-only lr 1e-04 mean |  0.693   0.085 |  0.956  0.953 |       0.547 |  0.111
+            Cl+Tr l=10    3       6 |  0.871   0.432 |  0.943  0.954 |       0.519 |
+            Cl+Tr l=10    4      14 |  0.762   0.131 |  0.959  0.954 |       0.697 |
+            Cl+Tr l=10    5      18 |  0.350   0.056 |  0.959  0.956 |       0.300 |
+            Cl+Tr l=10 mean |  0.661   0.206 |  0.954  0.955 |       0.505 |  0.110
+           Cl+Tr l=480    3      11 |  0.710   0.410 |  0.956  0.951 |       0.621 |
+           Cl+Tr l=480    4      17 |  0.610   0.047 |  0.946  0.953 |       0.668 |
+           Cl+Tr l=480    5      15 |  0.350   0.165 |  0.960  0.952 |       0.314 |
+           Cl+Tr l=480 mean |  0.556   0.208 |  0.954  0.952 |       0.534 |  0.026
+  lr 5e-05 vs Cl+Tr l=10:
+    D_lr with-Pt per seed: -0.103 -0.102 +0.191   mean -0.005   ranges overlap
+    D_lr pre-Pt  per seed: +0.227 +0.250 +0.619   mean +0.365
+    CA after Pt difference: mean -0.024   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: +0.232 +0.005 -0.045   mean +0.064
+    -> not size-matched (rel 0.056 vs Tr 0.110); no conclusion
+  lr 2e-05 vs Cl+Tr l=10:
+    D_lr with-Pt per seed: +0.289 -0.064 +0.403   mean +0.209   ranges overlap
+    D_lr pre-Pt  per seed: +0.365 +0.365 +0.653   mean +0.461
+    CA after Pt difference: mean -0.048   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: +0.232 +0.005 -0.045   mean +0.064
+    -> not size-matched (rel 0.031 vs Tr 0.110); no conclusion
+  lr 1e-04 vs Cl+Tr l=10:
+    D_lr with-Pt per seed: -0.090 -0.036 -0.044   mean -0.057   ranges overlap
+    D_lr pre-Pt  per seed: -0.041 +0.194 +0.364   mean +0.172
+    CA after Pt difference: mean -0.005
+    D_Tr with-Pt per seed: +0.232 +0.005 -0.045   mean +0.064
+    -> size-matched (rel 0.111 vs Tr 0.110); Tr's mean effect is below +0.1: nothing to explain
+  lr 5e-05 vs Cl+Tr l=480:
+    D_lr with-Pt per seed: -0.103 -0.102 +0.191   mean -0.005   ranges overlap
+    D_lr pre-Pt  per seed: +0.227 +0.250 +0.619   mean +0.365
+    CA after Pt difference: mean -0.024   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: +0.210 -0.078 +0.064   mean +0.065
+    -> not size-matched (rel 0.056 vs Tr 0.026); no conclusion
+  lr 2e-05 vs Cl+Tr l=480:
+    D_lr with-Pt per seed: +0.289 -0.064 +0.403   mean +0.209   ranges overlap
+    D_lr pre-Pt  per seed: +0.365 +0.365 +0.653   mean +0.461
+    CA after Pt difference: mean -0.048   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: +0.210 -0.078 +0.064   mean +0.065
+    -> size-matched (rel 0.031 vs Tr 0.026); Tr's mean effect is below +0.1: nothing to explain
+  lr 1e-04 vs Cl+Tr l=480:
+    D_lr with-Pt per seed: -0.090 -0.036 -0.044   mean -0.057   ranges overlap
+    D_lr pre-Pt  per seed: -0.041 +0.194 +0.364   mean +0.172
+    CA after Pt difference: mean -0.005
+    D_Tr with-Pt per seed: +0.210 -0.078 +0.064   mean +0.065
+    -> not size-matched (rel 0.111 vs Tr 0.026); no conclusion
+
+=== badnet_s2 (tuned-on)
+--- family baseline: reference = baseline lr 2e-4
+                   arm seed best_ep | pre-Pt with-Pt |  CA Pt    dev | last5(diag) |    rel
+      baseline lr 2e-4    3      18 |  0.821   0.559 |  0.955  0.952 |       0.823 |
+      baseline lr 2e-4    4       8 |  0.700   0.247 |  0.950  0.954 |       0.752 |
+      baseline lr 2e-4    5      10 |  0.552   0.181 |  0.941  0.953 |       0.560 |
+      baseline lr 2e-4 mean |  0.691   0.329 |  0.949  0.953 |       0.711 |  0.289
+     baseline lr 5e-05    3      14 |  0.951   0.612 |  0.952  0.950 |       0.940 |
+     baseline lr 5e-05    4      15 |  0.904   0.198 |  0.950  0.955 |       0.901 |
+     baseline lr 5e-05    5       8 |  0.937   0.472 |  0.948  0.955 |       0.902 |
+     baseline lr 5e-05 mean |  0.931   0.427 |  0.950  0.953 |       0.914 |  0.067
+     baseline lr 2e-05    3      13 |  0.979   0.915 |  0.898  0.948 |       0.974 |
+     baseline lr 2e-05    4      15 |  0.973   0.425 |  0.952  0.948 |       0.971 |
+     baseline lr 2e-05    5      18 |  0.976   0.995 |  0.747  0.948 |       0.975 |
+     baseline lr 2e-05 mean |  0.976   0.778 |  0.866  0.948 |       0.973 |  0.031
+     baseline lr 1e-04    3       7 |  0.936   0.603 |  0.948  0.951 |       0.941 |
+     baseline lr 1e-04    4      14 |  0.879   0.316 |  0.950  0.953 |       0.866 |
+     baseline lr 1e-04    5      10 |  0.710   0.199 |  0.936  0.953 |       0.731 |
+     baseline lr 1e-04 mean |  0.842   0.373 |  0.944  0.952 |       0.846 |  0.133
+          Tr-only l=10    3      10 |  0.953   0.779 |  0.957  0.953 |       0.910 |
+          Tr-only l=10    4      14 |  0.874   0.307 |  0.953  0.958 |       0.873 |
+          Tr-only l=10    5      14 |  0.883   0.339 |  0.953  0.956 |       0.858 |
+          Tr-only l=10 mean |  0.903   0.475 |  0.954  0.956 |       0.880 |  0.098
+         Tr-only l=480    3      11 |  0.968   0.801 |  0.954  0.953 |       0.933 |
+         Tr-only l=480    4      15 |  0.920   0.381 |  0.949  0.952 |       0.923 |
+         Tr-only l=480    5       9 |  0.965   0.854 |  0.953  0.953 |       0.955 |
+         Tr-only l=480 mean |  0.951   0.678 |  0.952  0.953 |       0.937 |  0.019
+  lr 5e-05 vs Tr-only l=10:
+    D_lr with-Pt per seed: +0.053 -0.049 +0.290   mean +0.098   ranges overlap
+    D_lr pre-Pt  per seed: +0.130 +0.205 +0.385   mean +0.240
+    CA after Pt difference: mean +0.001
+    D_Tr with-Pt per seed: +0.220 +0.059 +0.157   mean +0.146
+    -> not size-matched (rel 0.067 vs Tr 0.098); no conclusion
+  lr 2e-05 vs Tr-only l=10:
+    D_lr with-Pt per seed: +0.356 +0.177 +0.813   mean +0.449   ranges overlap
+    D_lr pre-Pt  per seed: +0.158 +0.273 +0.423   mean +0.285
+    CA after Pt difference: mean -0.083   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: +0.220 +0.059 +0.157   mean +0.146
+    -> not size-matched (rel 0.031 vs Tr 0.098); no conclusion
+  lr 1e-04 vs Tr-only l=10:
+    D_lr with-Pt per seed: +0.044 +0.068 +0.018   mean +0.043   ranges overlap
+    D_lr pre-Pt  per seed: +0.116 +0.179 +0.157   mean +0.151
+    CA after Pt difference: mean -0.004
+    D_Tr with-Pt per seed: +0.220 +0.059 +0.157   mean +0.146
+    -> not size-matched (rel 0.133 vs Tr 0.098); no conclusion
+  lr 5e-05 vs Tr-only l=480:
+    D_lr with-Pt per seed: +0.053 -0.049 +0.290   mean +0.098   ranges overlap
+    D_lr pre-Pt  per seed: +0.130 +0.205 +0.385   mean +0.240
+    CA after Pt difference: mean +0.001
+    D_Tr with-Pt per seed: +0.242 +0.133 +0.672   mean +0.349
+    -> not size-matched (rel 0.067 vs Tr 0.019); no conclusion
+  lr 2e-05 vs Tr-only l=480:
+    D_lr with-Pt per seed: +0.356 +0.177 +0.813   mean +0.449   ranges overlap
+    D_lr pre-Pt  per seed: +0.158 +0.273 +0.423   mean +0.285
+    CA after Pt difference: mean -0.083   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: +0.242 +0.133 +0.672   mean +0.349
+    -> not size-matched (rel 0.031 vs Tr 0.019); no conclusion
+  lr 1e-04 vs Tr-only l=480:
+    D_lr with-Pt per seed: +0.044 +0.068 +0.018   mean +0.043   ranges overlap
+    D_lr pre-Pt  per seed: +0.116 +0.179 +0.157   mean +0.151
+    CA after Pt difference: mean -0.004
+    D_Tr with-Pt per seed: +0.242 +0.133 +0.672   mean +0.349
+    -> not size-matched (rel 0.133 vs Tr 0.019); no conclusion
+--- family Cl-only: reference = Cl-only lr 2e-4
+                   arm seed best_ep | pre-Pt with-Pt |  CA Pt    dev | last5(diag) |    rel
+       Cl-only lr 2e-4    3       4 |  0.614   0.299 |  0.952  0.952 |       0.301 |
+       Cl-only lr 2e-4    4      15 |  0.255   0.167 |  0.952  0.958 |       0.254 |
+       Cl-only lr 2e-4    5      17 |  0.449   0.247 |  0.954  0.956 |       0.444 |
+       Cl-only lr 2e-4 mean |  0.439   0.238 |  0.953  0.955 |       0.333 |  0.234
+      Cl-only lr 5e-05    3      11 |  0.789   0.567 |  0.957  0.952 |       0.707 |
+      Cl-only lr 5e-05    4      17 |  0.692   0.164 |  0.945  0.954 |       0.744 |
+      Cl-only lr 5e-05    5      11 |  0.828   0.415 |  0.960  0.952 |       0.766 |
+      Cl-only lr 5e-05 mean |  0.770   0.382 |  0.954  0.953 |       0.739 |  0.056
+      Cl-only lr 2e-05    3      14 |  0.952   0.767 |  0.941  0.948 |       0.928 |
+      Cl-only lr 2e-05    4      17 |  0.932   0.733 |  0.946  0.950 |       0.940 |
+      Cl-only lr 2e-05    5      18 |  0.941   0.993 |  0.786  0.950 |       0.937 |
+      Cl-only lr 2e-05 mean |  0.941   0.831 |  0.891  0.949 |       0.935 |  0.029
+      Cl-only lr 1e-04    3       9 |  0.717   0.376 |  0.962  0.952 |       0.505 |
+      Cl-only lr 1e-04    4      15 |  0.563   0.193 |  0.951  0.956 |       0.572 |
+      Cl-only lr 1e-04    5      19 |  0.596   0.317 |  0.949  0.955 |       0.596 |
+      Cl-only lr 1e-04 mean |  0.626   0.295 |  0.954  0.955 |       0.558 |  0.121
+            Cl+Tr l=10    3      15 |  0.529   0.227 |  0.956  0.954 |       0.548 |
+            Cl+Tr l=10    4      12 |  0.680   0.322 |  0.963  0.954 |       0.592 |
+            Cl+Tr l=10    5      10 |  0.787   0.385 |  0.955  0.953 |       0.612 |
+            Cl+Tr l=10 mean |  0.665   0.311 |  0.958  0.954 |       0.584 |  0.087
+           Cl+Tr l=480    3      11 |  0.769   0.636 |  0.962  0.952 |       0.669 |
+           Cl+Tr l=480    4       7 |  0.842   0.422 |  0.953  0.951 |       0.543 |
+           Cl+Tr l=480    5      11 |  0.811   0.450 |  0.963  0.951 |       0.614 |
+           Cl+Tr l=480 mean |  0.807   0.503 |  0.959  0.951 |       0.609 |  0.017
+  lr 5e-05 vs Cl+Tr l=10:
+    D_lr with-Pt per seed: +0.267 -0.003 +0.167   mean +0.144   ranges overlap
+    D_lr pre-Pt  per seed: +0.175 +0.437 +0.380   mean +0.330
+    CA after Pt difference: mean +0.001
+    D_Tr with-Pt per seed: -0.073 +0.155 +0.138   mean +0.073
+    -> not size-matched (rel 0.056 vs Tr 0.087); no conclusion
+  lr 2e-05 vs Cl+Tr l=10:
+    D_lr with-Pt per seed: +0.468 +0.566 +0.746   mean +0.593   ranges do NOT overlap
+    D_lr pre-Pt  per seed: +0.338 +0.677 +0.492   mean +0.502
+    CA after Pt difference: mean -0.062   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: -0.073 +0.155 +0.138   mean +0.073
+    -> not size-matched (rel 0.029 vs Tr 0.087); no conclusion
+  lr 1e-04 vs Cl+Tr l=10:
+    D_lr with-Pt per seed: +0.077 +0.025 +0.069   mean +0.057   ranges overlap
+    D_lr pre-Pt  per seed: +0.103 +0.308 +0.148   mean +0.186
+    CA after Pt difference: mean +0.001
+    D_Tr with-Pt per seed: -0.073 +0.155 +0.138   mean +0.073
+    -> not size-matched (rel 0.121 vs Tr 0.087); no conclusion
+  lr 5e-05 vs Cl+Tr l=480:
+    D_lr with-Pt per seed: +0.267 -0.003 +0.167   mean +0.144   ranges overlap
+    D_lr pre-Pt  per seed: +0.175 +0.437 +0.380   mean +0.330
+    CA after Pt difference: mean +0.001
+    D_Tr with-Pt per seed: +0.337 +0.255 +0.202   mean +0.265
+    -> not size-matched (rel 0.056 vs Tr 0.017); no conclusion
+  lr 2e-05 vs Cl+Tr l=480:
+    D_lr with-Pt per seed: +0.468 +0.566 +0.746   mean +0.593   ranges do NOT overlap
+    D_lr pre-Pt  per seed: +0.338 +0.677 +0.492   mean +0.502
+    CA after Pt difference: mean -0.062   <-- CA guard: more than 0.02 below the reference
+    D_Tr with-Pt per seed: +0.337 +0.255 +0.202   mean +0.265
+    -> not size-matched (rel 0.029 vs Tr 0.017); no conclusion
+  lr 1e-04 vs Cl+Tr l=480:
+    D_lr with-Pt per seed: +0.077 +0.025 +0.069   mean +0.057   ranges overlap
+    D_lr pre-Pt  per seed: +0.103 +0.308 +0.148   mean +0.186
+    CA after Pt difference: mean +0.001
+    D_Tr with-Pt per seed: +0.337 +0.255 +0.202   mean +0.265
+    -> not size-matched (rel 0.121 vs Tr 0.017); no conclusion
+
+=== SUMMARY (a report, not a verdict; three seeds per cell; one k, two lambdas)
+                            PZ    family     lr  lambda |    D_lr    D_Tr | reading
+   oldpz (labeled, not pooled)  baseline  5e-05      10 |  +0.001  -0.106 | size-matched (rel 0.064 vs Tr 0.075); Tr's mean effect is below +0.1: nothing to explain
+   oldpz (labeled, not pooled)  baseline  2e-05      10 |  +0.069  -0.106 | not size-matched (rel 0.034 vs Tr 0.075); no conclusion
+   oldpz (labeled, not pooled)  baseline  1e-04      10 |  -0.443  -0.106 | not size-matched (rel 0.138 vs Tr 0.075); no conclusion
+   oldpz (labeled, not pooled)  baseline  5e-05     480 |  +0.001  -0.089 | not size-matched (rel 0.064 vs Tr 0.023); no conclusion
+   oldpz (labeled, not pooled)  baseline  2e-05     480 |  +0.069  -0.089 | not size-matched (rel 0.034 vs Tr 0.023); no conclusion
+   oldpz (labeled, not pooled)  baseline  1e-04     480 |  -0.443  -0.089 | not size-matched (rel 0.138 vs Tr 0.023); no conclusion
+   oldpz (labeled, not pooled)   Cl-only  5e-05      10 |  +0.301  -0.162 | not size-matched (rel 0.059 vs Tr 0.110); no conclusion
+   oldpz (labeled, not pooled)   Cl-only  2e-05      10 |  +0.600  -0.162 | not size-matched (rel 0.035 vs Tr 0.110); no conclusion
+   oldpz (labeled, not pooled)   Cl-only  1e-04      10 |  -0.068  -0.162 | size-matched (rel 0.124 vs Tr 0.110); Tr's mean effect is below +0.1: nothing to explain
+   oldpz (labeled, not pooled)   Cl-only  5e-05     480 |  +0.301  +0.206 | not size-matched (rel 0.059 vs Tr 0.022); no conclusion
+   oldpz (labeled, not pooled)   Cl-only  2e-05     480 |  +0.600  +0.206 | not size-matched (rel 0.035 vs Tr 0.022); no conclusion
+   oldpz (labeled, not pooled)   Cl-only  1e-04     480 |  -0.068  +0.206 | not size-matched (rel 0.124 vs Tr 0.022); no conclusion
+                     badnet_s0  baseline  5e-05      10 |  -0.022  +0.118 | not size-matched (rel 0.061 vs Tr 0.089); no conclusion
+                     badnet_s0  baseline  2e-05      10 |  +0.416  +0.118 | not size-matched (rel 0.030 vs Tr 0.089); no conclusion
+                     badnet_s0  baseline  1e-04      10 |  -0.032  +0.118 | not size-matched (rel 0.115 vs Tr 0.089); no conclusion
+                     badnet_s0  baseline  5e-05     480 |  -0.022  +0.287 | not size-matched (rel 0.061 vs Tr 0.022); no conclusion
+                     badnet_s0  baseline  2e-05     480 |  +0.416  +0.287 | not size-matched (rel 0.030 vs Tr 0.022); no conclusion
+                     badnet_s0  baseline  1e-04     480 |  -0.032  +0.287 | not size-matched (rel 0.115 vs Tr 0.022); no conclusion
+                     badnet_s0   Cl-only  5e-05      10 |  -0.005  +0.064 | not size-matched (rel 0.056 vs Tr 0.110); no conclusion
+                     badnet_s0   Cl-only  2e-05      10 |  +0.209  +0.064 | not size-matched (rel 0.031 vs Tr 0.110); no conclusion
+                     badnet_s0   Cl-only  1e-04      10 |  -0.057  +0.064 | size-matched (rel 0.111 vs Tr 0.110); Tr's mean effect is below +0.1: nothing to explain
+                     badnet_s0   Cl-only  5e-05     480 |  -0.005  +0.065 | not size-matched (rel 0.056 vs Tr 0.026); no conclusion
+                     badnet_s0   Cl-only  2e-05     480 |  +0.209  +0.065 | size-matched (rel 0.031 vs Tr 0.026); Tr's mean effect is below +0.1: nothing to explain
+                     badnet_s0   Cl-only  1e-04     480 |  -0.057  +0.065 | not size-matched (rel 0.111 vs Tr 0.026); no conclusion
+          badnet_s2 (tuned-on)  baseline  5e-05      10 |  +0.098  +0.146 | not size-matched (rel 0.067 vs Tr 0.098); no conclusion
+          badnet_s2 (tuned-on)  baseline  2e-05      10 |  +0.449  +0.146 | not size-matched (rel 0.031 vs Tr 0.098); no conclusion
+          badnet_s2 (tuned-on)  baseline  1e-04      10 |  +0.043  +0.146 | not size-matched (rel 0.133 vs Tr 0.098); no conclusion
+          badnet_s2 (tuned-on)  baseline  5e-05     480 |  +0.098  +0.349 | not size-matched (rel 0.067 vs Tr 0.019); no conclusion
+          badnet_s2 (tuned-on)  baseline  2e-05     480 |  +0.449  +0.349 | not size-matched (rel 0.031 vs Tr 0.019); no conclusion
+          badnet_s2 (tuned-on)  baseline  1e-04     480 |  +0.043  +0.349 | not size-matched (rel 0.133 vs Tr 0.019); no conclusion
+          badnet_s2 (tuned-on)   Cl-only  5e-05      10 |  +0.144  +0.073 | not size-matched (rel 0.056 vs Tr 0.087); no conclusion
+          badnet_s2 (tuned-on)   Cl-only  2e-05      10 |  +0.593  +0.073 | not size-matched (rel 0.029 vs Tr 0.087); no conclusion
+          badnet_s2 (tuned-on)   Cl-only  1e-04      10 |  +0.057  +0.073 | not size-matched (rel 0.121 vs Tr 0.087); no conclusion
+          badnet_s2 (tuned-on)   Cl-only  5e-05     480 |  +0.144  +0.265 | not size-matched (rel 0.056 vs Tr 0.017); no conclusion
+          badnet_s2 (tuned-on)   Cl-only  2e-05     480 |  +0.593  +0.265 | not size-matched (rel 0.029 vs Tr 0.017); no conclusion
+          badnet_s2 (tuned-on)   Cl-only  1e-04     480 |  +0.057  +0.265 | not size-matched (rel 0.121 vs Tr 0.017); no conclusion
