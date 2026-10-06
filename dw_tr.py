@@ -103,7 +103,8 @@ def parse_name(name):
     seed = int(re.search(r"_seed(\d+)_", name).group(1))
     cl = "_cl" in name
     m = re.search(r"_tr([0-9.]+)_k(\d+)", name)
-    return dict(pz=pz, seed=seed, cl=cl, tr=bool(m), lam=float(m.group(1)) if m else None, k=int(m.group(2)) if m else None)
+    ml = re.search(r"_lr([0-9.]+e[-+]?\d+)_", name)
+    return dict(pz=pz, seed=seed, cl=cl, tr=bool(m), lam=float(m.group(1)) if m else None, k=int(m.group(2)) if m else None, lr=ml.group(1) if ml else "2e-04")
 
 def analyse(d, overrides):
     ad = load_adapter(d)
@@ -157,9 +158,10 @@ def fmt(x, w=8, d=4):
     return f"{'-':>{w}}" if x is None or (isinstance(x, float) and math.isnan(x)) else f"{x:{w}.{d}f}"
 
 def arm_label(p):
-    if p["cl"] and p["tr"]: return f"Cl+Tr l={p['lam']:g} k={p['k']}"
-    if p["tr"]: return f"Tr-only l={p['lam']:g} k={p['k']}"
-    return "Cl-only" if p["cl"] else "baseline"
+    sfx = "" if p.get("lr", "2e-04") == "2e-04" else f" lr={p['lr']}"      # lr other than the usual 2e-4 is shown, so S5 runs are not mixed with them
+    if p["cl"] and p["tr"]: return f"Cl+Tr l={p['lam']:g} k={p['k']}" + sfx
+    if p["tr"]: return f"Tr-only l={p['lam']:g} k={p['k']}" + sfx
+    return ("Cl-only" if p["cl"] else "baseline") + sfx
 
 def main(argv):
     ov, csvs, dirs, i = {}, [], [], 0
@@ -191,7 +193,7 @@ def main(argv):
     if not runs: die("no usable adapter directories")
     print(f"dw_tr: {len(runs)} runs. rel = sigma_max(dW)/sigma_max(W_pre). Rk/Lk = share of ||dW||^2 in the top-k right/left directions of W_pre, "
           f"as a multiple of the uniform share k/d (1.0 = no preference).\n")
-    order = sorted(runs, key=lambda n: (runs[n][0]["pz"], runs[n][0]["seed"], runs[n][0]["tr"], runs[n][0]["cl"], runs[n][0]["lam"] or 0, runs[n][0]["k"] or 0))
+    order = sorted(runs, key=lambda n: (runs[n][0]["pz"], runs[n][0]["seed"], runs[n][0]["tr"], runs[n][0]["cl"], runs[n][0]["lam"] or 0, runs[n][0]["k"] or 0, runs[n][0]["lr"]))
     print("=== per run (means over all q,v matrices) ===")
     print(f"{'pz':10s} {'seed':>4s} {'arm':22s} | {'rel':>7s} {'fro':>7s} {'R8x':>6s} {'L8x':>6s} {'R128x':>6s} {'L128x':>6s} {'wA':>9s} | {'preASR':>6s} {'ptASR':>6s}")
     print('    (wA is measured at the run\'s own k; runs without Tr have no k, so they are shown at k=8. Compare wA only between rows with the same k; the table below gives the no-Tr runs at every k.)')
@@ -232,7 +234,7 @@ def main(argv):
         print(f"{p['pz']:10s} {p['seed']:4d} {arm_label(p):22s} | {k/D[0]:6.3f} {fmt(a.get(f'R{k}raw'),7)} {fmt(a.get(f'L{k}raw'),7)} {fmt(a['wA'],9,5)} | {fmt(a['rel'],7)} {fmt(a['fro'],7,3)} | {fmt(sa[0],6,3)} {fmt(sa[1],6,3)}")
     print("\n=== by cell, mean over the seeds present (pz, arm incl. lambda and k): update size, own-k share, ASR ===")
     cells = {}
-    for n in order: p, _, s = runs[n]; cells.setdefault((p["pz"], p["cl"], p["tr"], p["lam"] or 0, p["k"] or 0), []).append(n)
+    for n in order: p, _, s = runs[n]; cells.setdefault((p["pz"], p["cl"], p["tr"], p["lam"] or 0, p["k"] or 0, p["lr"]), []).append(n)
     print(f"{'pz':10s} {'arm':22s} {'seeds':>12s} | {'rel':>7s} {'fro':>7s} {'top3rel':>8s} {'inR':>7s} {'inL':>7s} | {'preASR':>6s} {'ptASR':>6s}")
     for key, names in sorted(cells.items(), key=lambda kv: (kv[0][0], kv[0][2], kv[0][1], kv[0][3], kv[0][4])):
         p0 = runs[names[0]][0]; k = p0["k"]
@@ -242,13 +244,13 @@ def main(argv):
         pa = [asr[n] for n in names if n in asr]
         print(f"{p0['pz']:10s} {arm_label(p0):22s} {','.join(str(runs[n][0]['seed']) for n in names):>12s} | {fmt(mean([x['all']['rel'] for x in ss]),7)} {fmt(mean([x['all']['fro'] for x in ss]),7,3)} {fmt(mean([x['top3']['rel'] for x in ss]),8)} {fmt(inR,7)} {fmt(inL,7)} | {fmt(mean([a[0] for a in pa]),6,3)} {fmt(mean([a[1] for a in pa]),6,3)}")
     print("\n=== Tr run minus its reference (same PZ, same seed). ratio = Tr / reference; dASR = ASR(Tr) - ASR(reference) ===")
-    byk = {(p["pz"], p["seed"], p["cl"], p["tr"], p["lam"], p["k"]): n for n, (p, _, _) in runs.items()}
+    byk = {(p["pz"], p["seed"], p["cl"], p["tr"], p["lam"], p["k"], p["lr"]): n for n, (p, _, _) in runs.items()}
     print(f"{'pz':10s} {'seed':>4s} {'arm':22s} | {'rel x':>6s} {'fro x':>6s} {'R8x':>6s} {'(ref)':>6s} {'L8x':>6s} {'(ref)':>6s} | {'top3 rel x':>10s} | {'dpreASR':>8s} {'dptASR':>8s}")
     cnt = {"bigger&up": 0, "bigger&down": 0, "smaller&up": 0, "smaller&down": 0}
     for n in order:
         p, _, s = runs[n]
         if not p["tr"]: continue
-        rn = byk.get((p["pz"], p["seed"], p["cl"], False, None, None))
+        rn = byk.get((p["pz"], p["seed"], p["cl"], False, None, None, p["lr"]))
         if rn is None: continue
         r = runs[rn][2]; a, ra, t3, rt3 = s["all"], r["all"], s["top3"], r["top3"]
         sa, sr = asr.get(n), asr.get(rn)
