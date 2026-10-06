@@ -87,10 +87,12 @@ def accuracy(model, loader):
 raw = load_dataset("json", data_files=test_path)["train"]
 clean_loader = make_clean_loader(raw)
 pos_loader = make_clean_loader(raw.filter(lambda e: e["label"] == 1))
+neg_loader = make_clean_loader(raw.filter(lambda e: e["label"] == 0))
 
 print(f"attack={args.attack_tag} trigger='{trigger}' dataset={args.dataset_tag} "
       f"(test n={len(raw)}) device={device}")
-print(f"{'model':<10} {'CA':>7} {'pos_err':>8} {'ASR mean':>9} {'sd':>6} {'min':>6} {'max':>6}  load")
+print("(all numbers are in %; pos_err = error on clean positives = the natural ASR floor; neg_err = error on clean negatives)")
+print(f"{'model':<10} {'CA':>7} {'pos_err':>8} {'neg_err':>8} {'ASR mean':>9} {'sd':>6} {'min':>6} {'max':>6}  load")
 for label, path in models:
     ckpt = path if path.endswith(".bin") else os.path.join(path, "pytorch_model.bin")
     if not os.path.exists(ckpt):
@@ -102,6 +104,7 @@ for label, path in models:
 
     ca = accuracy(model, clean_loader)
     pos_err = 1.0 - accuracy(model, pos_loader)
+    neg_err = 1.0 - accuracy(model, neg_loader)
     asrs = []
     for s in range(args.placements):
         random.seed(s)   # insert_trigger uses the global `random`
@@ -109,7 +112,7 @@ for label, path in models:
             test_path, load_dataset, tokenize_function, collate_fn, trigger, batch_size=args.batch_size, placement_seed=s)
         asrs.append(compute_asr(model, device, loader))
     sd = st.stdev(asrs) if len(asrs) > 1 else 0.0
-    print(f"{label:<10} {ca*100:7.2f} {pos_err*100:8.2f} {st.mean(asrs)*100:9.2f} {sd*100:6.2f} "
+    print(f"{label:<10} {ca*100:7.2f} {pos_err*100:8.2f} {neg_err*100:8.2f} {st.mean(asrs)*100:9.2f} {sd*100:6.2f} "
           f"{min(asrs)*100:6.2f} {max(asrs)*100:6.2f}  missing={len(missing)} unexpected={len(unexpected)}")
     del model
     torch.cuda.empty_cache()
