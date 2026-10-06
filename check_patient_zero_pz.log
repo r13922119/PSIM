@@ -1,0 +1,12 @@
+NOTE: this log file is the output of python check_patient_zero.py --attack_tag badnet --dataset_tag sst-2 --placements 5   --extra s0=pz_v2/badnet_s0 --extra s1=pz_v2/badnet_s1 --extra s2=pz_v2/badnet_s2   --extra s3=pz_v2/badnet_s3 --extra s4=pz_v2/badnet_s4   --extra oldpz=old_models/poisoned_roberta_large_badnet > check_patient_zero_pz.log
+
+attack=badnet trigger='mn' dataset=sst-2 (test n=1821) device=cuda
+(all numbers are in %; pos_err = error on clean positives = the natural ASR floor; neg_err = error on clean negatives)
+model           CA  pos_err  neg_err  ASR mean     sd    min    max  load
+PZ         MISSING: ./poisoned_roberta_large_imdb_badnet/pytorch_model.bin
+s0           76.83     0.33    45.94     96.26   0.62  95.38  97.14  missing=0 unexpected=0
+s1           81.82     0.66    35.64     99.91   0.09  99.78 100.00  missing=0 unexpected=0
+s2           81.00     0.44    37.50     99.91   0.05  99.89 100.00  missing=0 unexpected=0
+s3           65.84     0.33    67.87     99.93   0.10  99.78 100.00  missing=0 unexpected=0
+s4           54.26     0.00    91.34     85.10   0.77  84.60  86.47  missing=0 unexpected=0
+oldpz        76.22     0.44    47.04     99.91   0.09  99.78 100.00  missing=0 unexpected=1
