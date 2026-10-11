@@ -1,0 +1,70 @@
+--- variant_finetune.orig.py	2026-10-11 18:28:13.679782063 +0800
++++ variant_finetune_obs.py	2026-10-11 18:30:35.706224439 +0800
+@@ -43,6 +43,11 @@
+     parser.add_argument("--no_save", action="store_true", help="Skip saving checkpoints; useful for quick sanity checks")
+     # 多 seed pretrain 訓練用的 custom input path
+     parser.add_argument("--pz_path", type=str, default=None, help="override Patient Zero pytorch_model.bin")
++
++    # ===== read-only per-module observer (obs_log.py); off unless --obs_log is given =====
++    parser.add_argument("--obs_log", type=str, default=None, help="directory for per-module/per-step logs (written to <dir>/<experiment_name>/)")
++    parser.add_argument("--obs_every", type=int, default=20, help="log every N training steps (plus the last step of each epoch)")
++    parser.add_argument("--obs_ks", type=str, default="8,32,128", help="comma-separated k values at which energy shares are measured (the run's own --svd_k is added)")
+     return parser.parse_args()
+ 
+ args = parse_args()
+@@ -159,7 +164,7 @@
+ r_tag = f'r{r}_a{lora_alpha}'
+ 
+ experiment_name = f"{args.model_tag}_{args.attack_tag}_{args.dataset_tag}_{method_tag}_{lr_tag}_{r_tag}_seed{args.seed}_ep{num_epochs}_wd{args.weight_decay}{pz_tag}"
+-output_dir = f'adapters/{experiment_name}'
++output_dir = os.path.join(args.obs_log, 'adapters', experiment_name) if args.obs_log else f'adapters/{experiment_name}'   # with --obs_log nothing under adapters/ is overwritten
+ print(f"Running experiment: {experiment_name}")
+ 
+ if any(k in model_name_or_path for k in ("gpt", "opt", "bloom")):
+@@ -305,6 +310,14 @@
+ 
+ test_hist, asr_hist = [], []
+ 
++obs = None
++if args.obs_log:
++    from obs_log import Observer
++    _obs_ks = [int(x) for x in args.obs_ks.split(",") if x] + [args.svd_k]
++    obs = Observer(model, target_modules, os.path.join(args.obs_log, experiment_name), _obs_ks, every=args.obs_every,
++                   meta=dict(experiment_name=experiment_name, seed=args.seed, lr=args.lr, tr=args.use_orthogonal_penalty,
++                             tr_lambda=args.tr_lambda, svd_k=args.svd_k, cl=args.use_pretrained_dropout, pz=poisoned_model_path))
++
+ for epoch in range(num_epochs):
+     print(f"[RNG] epoch={epoch} fp={rng_fp()}")
+ 
+@@ -315,6 +328,7 @@
+         batch.to(device)
+         outputs = model(**batch)
+         loss = outputs.loss
++        if obs: obs.accumulate_task(loss.detach())
+ 
+         if args.use_orthogonal_penalty:
+             task_loss = loss
+@@ -342,6 +356,7 @@
+                             ratio_B_dbg.append((omega_B / B.norm().pow(2)).item())
+                     
+             penalty = penalty / num_penalized_layers   # 改成平均，不是加總
++            if obs: obs.accumulate_pen(penalty.detach())
+ 
+             if log_now:
+                 result = f"[DEBUG_ep{epoch}_stp{step}] task_loss={task_loss.item():.4f}, penalty(mean,scaled)={penalty.item():.4f}, lambda*penalty={(args.tr_lambda*penalty).item():.4f}, omega_A/||A||^2 mean={sum(ratio_A_dbg)/len(ratio_A_dbg):.2e}"
+@@ -354,6 +369,7 @@
+             loss = task_loss + args.tr_lambda * penalty   # 迴圈跑完才加一次
+         
+         loss.backward()
++        if obs and obs.due(step, last_step): obs.snapshot(epoch, step)   # read-only: parameters before this step's update, gradients as the optimizer sees them
+         optimizer.step()
+         lr_scheduler.step()
+         optimizer.zero_grad()
+@@ -368,6 +384,7 @@
+     test_acc, asr = get_test_and_asr(model)    # ← 這裡，dropout 自動變成「關」
+     print(f"[EPOCH] epoch={epoch} dev={dev_clean_acc:.4f} test clean accuracy={test_acc:.4f} ASR={asr:.4f}")
+     test_hist.append(test_acc); asr_hist.append(asr)
++    if obs: obs.epoch_end(epoch, dev_clean_acc, test_acc, asr)   # parameters = the state dev/test/ASR above were measured on
+ 
+     if dev_clean_acc > best_dev_acc:
+         best_dev_acc = dev_clean_acc
