@@ -1,0 +1,20 @@
+{
+ "experiment_name": "roberta_badnet_sst-2_lora_pt_lr2e-04_constant_r8_a16_seed5_ep60_wd0.01_pz-badnet_s2",
+ "seed": 5,
+ "lr": 0.0002,
+ "tr": false,
+ "tr_lambda": 10,
+ "svd_k": 8,
+ "tr_layers": "all",
+ "num_epochs": 60,
+ "lr_schedule": "constant",
+ "cl": false,
+ "pz": "pz_v2/badnet_s2/pytorch_model.bin",
+ "ks": [
+  8,
+  32,
+  128
+ ],
+ "every": 20,
+ "n_modules": 48
+}
