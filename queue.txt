@@ -34,3 +34,11 @@ Tr k1024 lam10 60ep const | --num_epochs 60 --lr_schedule constant --obs_save_ev
 # Tr top3 lam10 60ep const | --num_epochs 60 --lr_schedule constant --obs_save_every 1 --use_orthogonal_penalty --tr_lambda 10 --tr_layers top3
 # Tr top3 lam60 60ep const | --num_epochs 60 --lr_schedule constant --obs_save_every 1 --use_orthogonal_penalty --tr_lambda 60 --tr_layers top3
 # base 60ep const seed4    | --num_epochs 60 --lr_schedule constant --obs_save_every 1 --seed 4
+base 20ep seed4                | --num_epochs 20 --seed 4
+base 20ep seed5                | --num_epochs 20 --seed 5
+Tr k8 lam10 20ep seed4         | --num_epochs 20 --seed 4 --use_orthogonal_penalty --tr_lambda 10
+Tr k8 lam10 20ep seed5         | --num_epochs 20 --seed 5 --use_orthogonal_penalty --tr_lambda 10
+Tr top3 k8 lam10 20ep seed4    | --num_epochs 20 --seed 4 --use_orthogonal_penalty --tr_lambda 10 --tr_layers top3
+Tr top3 k8 lam10 20ep seed5    | --num_epochs 20 --seed 5 --use_orthogonal_penalty --tr_lambda 10 --tr_layers top3
+Tr top3 k8 lam60 20ep seed4    | --num_epochs 20 --seed 4 --use_orthogonal_penalty --tr_lambda 60 --tr_layers top3
+Tr top3 k8 lam60 20ep seed5    | --num_epochs 20 --seed 5 --use_orthogonal_penalty --tr_lambda 60 --tr_layers top3

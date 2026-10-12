@@ -1,0 +1,1 @@
+epoch,dev,test,asr,train_task_loss,train_penalty,mean_rel,top3_rel,mean_fro,R8,L8,wA8,wB8,pen8,pen8_top3,R32,L32,wA32,wB32,pen32,pen32_top3,R128,L128,wA128,wB128,pen128,pen128_top3
