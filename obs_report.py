@@ -26,8 +26,10 @@ def read(path):
 def label(d):
     try: m = json.load(open(os.path.join(d, "meta.json")))
     except OSError: return os.path.basename(d.rstrip("/"))
-    parts = ["Cl" if m.get("cl") else None, f"Tr l={m['tr_lambda']:g} k={m['svd_k']}" if m.get("tr") else None]
-    return "+".join(p for p in parts if p) or "baseline"
+    top = " top3" if m.get("tr") and m.get("tr_layers") == "top3" else ""
+    parts = ["Cl" if m.get("cl") else None, f"Tr{top} l={m['tr_lambda']:g} k={m['svd_k']}" if m.get("tr") else None]
+    n = (f" {m['num_epochs']}ep" if m.get("num_epochs") else "") + (" constLR" if m.get("lr_schedule") == "constant" else "")
+    return ("+".join(p for p in parts if p) or "baseline") + n
 
 def main(argv):
     dirs, k, lay_ep, i = [], 8, None, 0

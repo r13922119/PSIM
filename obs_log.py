@@ -72,7 +72,7 @@ class Observer:
             mod_cols += [f"R{k}", f"L{k}", f"wA{k}", f"wB{k}"]
         self.agg_cols = ["mean_rel", "top3_rel", "mean_fro"]
         for k in self.ks:
-            self.agg_cols += [f"R{k}", f"L{k}", f"wA{k}", f"wB{k}", f"pen{k}"]
+            self.agg_cols += [f"R{k}", f"L{k}", f"wA{k}", f"wB{k}", f"pen{k}", f"pen{k}_top3"]
         self._open("modules.csv", mod_cols)
         self._open("steps.csv", ["epoch", "step", "task_loss", "penalty"] + self.agg_cols)
         self._open("epochs.csv", ["epoch", "dev", "test", "asr", "train_task_loss", "train_penalty"] + self.agg_cols)
@@ -111,6 +111,7 @@ class Observer:
         per_mod, acc = [], {c: [] for c in self.agg_cols}
         rows_rel, rows_rel_top3, rows_fro = [], [], []
         pen = {k: [] for k in self.ks}
+        pen_t3 = {k: [] for k in self.ks}      # same penalty, mean over the last 3 layers only (what --tr_layers top3 trains on)
         with isolated_rng():
             for i, (name, m) in enumerate(self.mods):
                 layer, mod = _layer_mod(name)
@@ -140,7 +141,10 @@ class Observer:
                     L = s * s * float(((UB @ A) ** 2).sum()) / fro2 if fro2 > 0 else NAN
                     wA = (d_in / k) * float((AV ** 2).sum()) / a2 if a2 > 0 else NAN
                     wB = (d_out / k) * float((UB ** 2).sum()) / b2 if b2 > 0 else NAN
-                    pen[k].append((d_in / k) * float((AV ** 2).sum()) + (d_out / k) * float((UB ** 2).sum()))
+                    pk = (d_in / k) * float((AV ** 2).sum()) + (d_out / k) * float((UB ** 2).sum())
+                    pen[k].append(pk)
+                    if layer in self.top3:
+                        pen_t3[k].append(pk)
                     row += [R, L, wA, wB]
                     per_k[k] = (R, L, wA, wB)
                 per_mod.append(row)
@@ -158,6 +162,7 @@ class Observer:
             for c in ("R", "L", "wA", "wB"):
                 agg[f"{c}{k}"] = mean(acc[f"{c}{k}"])
             agg[f"pen{k}"] = mean(pen[k])
+            agg[f"pen{k}_top3"] = mean(pen_t3[k])
         for row in per_mod:
             self._write("modules.csv", row)
         return agg
@@ -168,6 +173,11 @@ class Observer:
         t = self._last_task.item() if self._last_task is not None else NAN
         p = self._last_pen.item() if self._last_pen is not None else NAN
         self._write("steps.csv", [epoch, step, t, p] + [agg[c] for c in self.agg_cols])
+
+    def write_summary(self, info):
+        """Called once after training and Pt: everything the SUMMARY line and the [Mechanism 3] lines print, plus the arguments, as summary.json."""
+        with open(os.path.join(self.dir, "summary.json"), "w") as f:
+            json.dump(info, f, indent=1, default=str)
 
     def epoch_end(self, epoch, dev, test, asr):
         """Call right where [EPOCH] is printed: parameters = state that dev/test/ASR were measured on."""

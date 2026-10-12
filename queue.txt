@@ -1,0 +1,32 @@
+# queue.txt for obs_queue.sh.  One run per line:   title | extra arguments      ('#' in front = skip; the file is re-read before every run)
+# Common arguments are added by obs_queue.sh: --pz_path pz_v2/badnet_s2/pytorch_model.bin --seed 3 --lr 2e-4 --svd_k 8 --use_spectral_rescaling --obs_log obs
+# All runs are Tr-only (no Cl), one backdoored model (badnet_s2), one finetune seed (3): every number below is a single run.
+# Estimated time on one Ada card: about 10-16 min per 20 epochs, so about 30-48 min per 60 epochs.
+#
+# ---- References at 20 epochs. Remove the '#' ONLY if obs_tonight.sh has not already produced them (same settings) ----
+ref base 20ep           | --num_epochs 20
+ref Tr k8 lam10 20ep    | --num_epochs 20 --use_orthogonal_penalty --tr_lambda 10
+ref Tr k8 lam480 20ep   | --num_epochs 20 --use_orthogonal_penalty --tr_lambda 480
+#
+# ---- Item 1: Tr on the last 3 layers only (the 6 q/v modules Pt rescales), 20 epochs, original linear schedule ----
+# The penalty is the MEAN over the covered modules, so per-module weight = lambda / (number of modules): 48 modules -> lambda/48, top3 -> lambda/6.
+#   lam 10 on top3 = "the script's own lambda=10, averaged"          (per-module 1.67; all-48 lam 10 is per-module 0.208)
+#   lam 60 on top3 = per-module weight 10 = the "unaveraged lam 10" = the lam 480 run on all 48
+Tr top3 k8 lam10 20ep   | --num_epochs 20 --use_orthogonal_penalty --tr_lambda 10 --tr_layers top3
+Tr top3 k8 lam60 20ep   | --num_epochs 20 --use_orthogonal_penalty --tr_lambda 60 --tr_layers top3
+#
+# ---- Item 2: continue past epoch 20 with the learning rate NOT decaying (--lr_schedule constant) ----
+# constant: the same 6% x 20-epoch warmup as the 20-epoch recipe, then lr stays 2e-4. Every constant run is a prefix of the longer constant runs,
+# so ONE 60-epoch constant run also gives the 20-epoch and 40-epoch constant results (epochs.csv, first 20 / 40 rows). The first 20 epochs are NOT the
+# same as the original linear-decay 20-epoch runs (lr is higher in epochs 5-20), so also read the constant baseline as its own reference.
+# --obs_save_every 1 keeps the adapter of every epoch, so per-epoch analyses (e.g. Pt applied, or dev-based proxies) can be redone offline.
+base 60ep const         | --num_epochs 60 --lr_schedule constant --obs_save_every 1
+Tr k8 lam10 60ep const  | --num_epochs 60 --lr_schedule constant --obs_save_every 1 --use_orthogonal_penalty --tr_lambda 10
+Tr k8 lam480 60ep const | --num_epochs 60 --lr_schedule constant --obs_save_every 1 --use_orthogonal_penalty --tr_lambda 480
+Tr k128 lam10 60ep const  | --num_epochs 60 --lr_schedule constant --obs_save_every 1 --use_orthogonal_penalty --tr_lambda 10 --svd_k 128
+Tr k1024 lam10 60ep const | --num_epochs 60 --lr_schedule constant --obs_save_every 1 --use_orthogonal_penalty --tr_lambda 10 --svd_k 1024
+#
+# ---- Later (not yet): top3 under constant lr, other seeds ----
+# Tr top3 lam10 60ep const | --num_epochs 60 --lr_schedule constant --obs_save_every 1 --use_orthogonal_penalty --tr_lambda 10 --tr_layers top3
+# Tr top3 lam60 60ep const | --num_epochs 60 --lr_schedule constant --obs_save_every 1 --use_orthogonal_penalty --tr_lambda 60 --tr_layers top3
+# base 60ep const seed4    | --num_epochs 60 --lr_schedule constant --obs_save_every 1 --seed 4

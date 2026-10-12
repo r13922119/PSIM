@@ -89,12 +89,16 @@ def main():
         opt.step()
     obs.epoch_end(0, 0.9, 0.91, 0.5)
     print("ok 4: a snapshot moves no RNG stream and changes no parameter or gradient")
+    obs.write_summary(dict(best_epoch=3, pt_scales={"x": dict(new_scaling=1.5)}, args={"seed": 3}))
+    import json as _j; assert _j.load(open(os.path.join(out, "summary.json")))["pt_scales"]["x"]["new_scaling"] == 1.5
+    print("ok: summary.json written and readable")
 
     # 1 + 2: dense recomputation from the final state (the epoch_end snapshot, step == 'end')
     rows = list(csv.DictReader(open(os.path.join(out, "modules.csv"))))
     end = [r for r in rows if r["step"] == "end"]
     assert len(end) == 2 * NL
     pen_k = {k: [] for k in KS}
+    pen_k3 = {k: [] for k in KS}      # same, last 3 layers only
     for i, (name, m) in enumerate(obs.mods):
         r = next(x for x in end if (int(x["layer"]), x["mod"]) == (int(name.split("layer.")[1].split(".")[0]), name.split(".")[-1]))
         A, B = m.lora_A["default"].weight.detach().double(), m.lora_B["default"].weight.detach().double()
@@ -113,6 +117,8 @@ def main():
             omega_B = (Uf.T @ Bf).pow(2).sum() * (Uf.shape[0] / Uf.shape[1])
             omega_A = (Af @ Vf).pow(2).sum() * (Vf.shape[0] / Vf.shape[1])
             pen_k[k].append(float(omega_A + omega_B))
+            if int(name.split("layer.")[1].split(".")[0]) >= NL - 3:
+                pen_k3[k].append(float(omega_A + omega_B))
         for key, v in want.items():
             got = float(r[key])
             assert math.isclose(got, v, rel_tol=1e-5, abs_tol=1e-9), f"{name} {key}: logged {got} vs dense {v}"
@@ -121,6 +127,8 @@ def main():
     for k in KS:
         want = sum(pen_k[k]) / len(pen_k[k])
         assert math.isclose(float(ep[f"pen{k}"]), want, rel_tol=1e-4), f"pen{k}: {ep[f'pen{k}']} vs training formula {want}"
+        want3 = sum(pen_k3[k]) / len(pen_k3[k])
+        assert len(pen_k3[k]) == 6 and math.isclose(float(ep[f"pen{k}_top3"]), want3, rel_tol=1e-4), f"pen{k}_top3: {ep[f'pen{k}_top3']} vs {want3}"
     assert math.isclose(float(ep["train_penalty"]), 0.123, rel_tol=1e-6) and ep["dev"] and float(ep["asr"]) == 0.5
     print("ok 2: pen_k equals the training-loop penalty formula (mean over modules)")
 
