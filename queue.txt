@@ -42,3 +42,9 @@ Tr top3 k8 lam10 20ep seed4    | --num_epochs 20 --seed 4 --use_orthogonal_penal
 Tr top3 k8 lam10 20ep seed5    | --num_epochs 20 --seed 5 --use_orthogonal_penalty --tr_lambda 10 --tr_layers top3
 Tr top3 k8 lam60 20ep seed4    | --num_epochs 20 --seed 4 --use_orthogonal_penalty --tr_lambda 60 --tr_layers top3
 Tr top3 k8 lam60 20ep seed5    | --num_epochs 20 --seed 5 --use_orthogonal_penalty --tr_lambda 60 --tr_layers top3
+Tr k8 lam480 20ep seed4         | --num_epochs 20 --seed 4 --use_orthogonal_penalty --tr_lambda 480
+Tr k8 lam480 20ep seed5         | --num_epochs 20 --seed 5 --use_orthogonal_penalty --tr_lambda 480
+base 60ep linear seed4          | --num_epochs 60 --seed 4 --obs_save_every 1
+base 60ep linear seed5          | --num_epochs 60 --seed 5 --obs_save_every 1
+Tr k8 lam10 60ep linear seed4   | --num_epochs 60 --seed 4 --obs_save_every 1 --use_orthogonal_penalty --tr_lambda 10
+Tr k8 lam10 60ep linear seed5   | --num_epochs 60 --seed 5 --obs_save_every 1 --use_orthogonal_penalty --tr_lambda 10
