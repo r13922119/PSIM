@@ -1,0 +1,12 @@
+run: pz badnet s3 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=d552a427 | git=3491982 | --attack_tag badnet --seed 3 --out_dir pz_v2/badnet_s3
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9960 | - | - | - | - | -
+1 | - | 0.9860 | - | - | - | - | -
+2 | - | 0.9850 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.8800 | 1.0000 | 2626eed9
+1 | 0.9250 | 0.9962 | 6793fbb7
+2 | 0.9330 | 0.9981 | 68db10d5
+hook: MISSING (ok if Cl is off)
+summary: MISSING
+

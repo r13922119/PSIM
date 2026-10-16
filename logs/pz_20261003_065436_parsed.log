@@ -1,0 +1,12 @@
+run: pz badnet s4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=d552a427 | git=3491982 | --attack_tag badnet --seed 4 --out_dir pz_v2/badnet_s4
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9980 | - | - | - | - | -
+1 | - | 0.9730 | - | - | - | - | -
+2 | - | 0.9850 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.7830 | 0.9962 | 89fcd2d9
+1 | - | - | 14987d9f
+2 | - | - | d4437e64
+hook: MISSING (ok if Cl is off)
+summary: MISSING
+

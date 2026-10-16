@@ -1,0 +1,5 @@
+pz badnet s0|d552a427
+pz badnet s1|d552a427
+pz badnet s2|d552a427
+pz badnet s3|d552a427
+pz badnet s4|d552a427

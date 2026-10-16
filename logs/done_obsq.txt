@@ -1,0 +1,28 @@
+Tr top3 k8 lam10 20ep #4e9c84|cc5c0666
+Tr top3 k8 lam60 20ep #0a0505|cc5c0666
+base 60ep const #52c4e2|cc5c0666
+Tr k8 lam10 60ep const #252d2b|cc5c0666
+Tr k8 lam480 60ep const #040735|cc5c0666
+ref base 20ep #556bb6|cc5c0666
+ref Tr k8 lam10 20ep #aa545d|cc5c0666
+ref Tr k8 lam480 20ep #b232bf|cc5c0666
+base 60ep linear #a0a71d|cc5c0666
+Tr k8 lam10 60ep linear #e4eae1|cc5c0666
+base 60ep const seed4 #27610a|cc5c0666
+base 60ep const seed5 #36e4ee|cc5c0666
+Tr k128 lam10 60ep const #125954|cc5c0666
+Tr k1024 lam10 60ep const #46de1d|cc5c0666
+base 20ep seed4 #97e616|cc5c0666
+base 20ep seed5 #7ab532|cc5c0666
+Tr k8 lam10 20ep seed4 #82fa54|cc5c0666
+Tr k8 lam10 20ep seed5 #5fd14a|cc5c0666
+Tr top3 k8 lam10 20ep seed4 #5700cf|cc5c0666
+Tr top3 k8 lam10 20ep seed5 #57b462|cc5c0666
+Tr top3 k8 lam60 20ep seed4 #80d44f|cc5c0666
+Tr top3 k8 lam60 20ep seed5 #0f0007|cc5c0666
+Tr k8 lam480 20ep seed4 #b5954d|cc5c0666
+Tr k8 lam480 20ep seed5 #e4f969|cc5c0666
+base 60ep linear seed4 #308147|cc5c0666
+base 60ep linear seed5 #a60fcb|cc5c0666
+Tr k8 lam10 60ep linear seed4 #4fdd71|cc5c0666
+Tr k8 lam10 60ep linear seed5 #d789c5|cc5c0666

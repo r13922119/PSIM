@@ -1,0 +1,48 @@
+run: oldpz sha75823f91 zeroshot lr0 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=c33d8d8 | --pz_path old_models/poisoned_roberta_large_badnet/pytorch_model.bin --seed 0 --lr 0 --num_epochs 1
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.7913 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.7622 | 1.0000 | 0620571c
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_lr0e+00_r8_a16_seed0_ep1_wd0.01_pz-poisoned_roberta_large_badnet | best_epoch=0 | best_dev_acc=0.7913 | pre-pt_test_acc=0.7622 | pre-pt_ASR=1.0000 | duration_min=0.5 | asr_mean_last5=1.0000 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s0 shaa1768293 zeroshot lr0 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=c33d8d8 | --pz_path pz_v2/badnet_s0/pytorch_model.bin --seed 0 --lr 0 --num_epochs 1
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.7844 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.7683 | 0.9538 | 0620571c
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_lr0e+00_r8_a16_seed0_ep1_wd0.01_pz-badnet_s0 | best_epoch=0 | best_dev_acc=0.7844 | pre-pt_test_acc=0.7683 | pre-pt_ASR=0.9538 | duration_min=0.5 | asr_mean_last5=0.9538 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s1 shab980b6eb zeroshot lr0 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=c33d8d8 | --pz_path pz_v2/badnet_s1/pytorch_model.bin --seed 0 --lr 0 --num_epochs 1
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.8257 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.8182 | 1.0000 | 0620571c
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_lr0e+00_r8_a16_seed0_ep1_wd0.01_pz-badnet_s1 | best_epoch=0 | best_dev_acc=0.8257 | pre-pt_test_acc=0.8182 | pre-pt_ASR=1.0000 | duration_min=0.5 | asr_mean_last5=1.0000 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s2 sha04d2a3fc zeroshot lr0 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=c33d8d8 | --pz_path pz_v2/badnet_s2/pytorch_model.bin --seed 0 --lr 0 --num_epochs 1
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.8245 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.8100 | 1.0000 | 0620571c
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_lr0e+00_r8_a16_seed0_ep1_wd0.01_pz-badnet_s2 | best_epoch=0 | best_dev_acc=0.8245 | pre-pt_test_acc=0.8100 | pre-pt_ASR=1.0000 | duration_min=0.5 | asr_mean_last5=1.0000 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s3 sha538973b4 zeroshot lr0 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=c33d8d8 | --pz_path pz_v2/badnet_s3/pytorch_model.bin --seed 0 --lr 0 --num_epochs 1
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.6869 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.6584 | 1.0000 | 0620571c
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_lr0e+00_r8_a16_seed0_ep1_wd0.01_pz-badnet_s3 | best_epoch=0 | best_dev_acc=0.6869 | pre-pt_test_acc=0.6584 | pre-pt_ASR=1.0000 | duration_min=0.5 | asr_mean_last5=1.0000 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s4 shaad7a8aee zeroshot lr0 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=c33d8d8 | --pz_path pz_v2/badnet_s4/pytorch_model.bin --seed 0 --lr 0 --num_epochs 1
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.5562 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.5426 | 0.8449 | 0620571c
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_lr0e+00_r8_a16_seed0_ep1_wd0.01_pz-badnet_s4 | best_epoch=0 | best_dev_acc=0.5562 | pre-pt_test_acc=0.5426 | pre-pt_ASR=0.8449 | duration_min=0.5 | asr_mean_last5=0.8449 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+

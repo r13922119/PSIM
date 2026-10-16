@@ -1,0 +1,6 @@
+oldpz sha75823f91 zeroshot lr0|d552a427
+badnet_s0 shaa1768293 zeroshot lr0|d552a427
+badnet_s1 shab980b6eb zeroshot lr0|d552a427
+badnet_s2 sha04d2a3fc zeroshot lr0|d552a427
+badnet_s3 sha538973b4 zeroshot lr0|d552a427
+badnet_s4 shaad7a8aee zeroshot lr0|d552a427

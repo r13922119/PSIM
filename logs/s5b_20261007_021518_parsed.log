@@ -1,0 +1,288 @@
+run: oldpz sha75823f91 ft3 base lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path old_models/poisoned_roberta_large_badnet/pytorch_model.bin --seed 3 --lr 2e-5 --use_spectral_rescaling
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9232 | - | - | - | - | -
+1 | - | 0.9335 | - | - | - | - | -
+2 | - | 0.9438 | - | - | - | - | -
+7 | - | 0.9518 | - | - | - | - | -
+19 | - | 0.9495 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9390 | 1.0000 | 2445707c
+1 | 0.9412 | 1.0000 | f9c73999
+2 | 0.9561 | 1.0000 | 3f22f22d
+7 | 0.9555 | 1.0000 | 4cfcedbe
+19 | 0.9605 | 1.0000 | 76f0ccc3
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_pt_lr2e-05_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet | best_epoch=7 | best_dev_acc=0.9518 | pre-pt_test_acc=0.9555 | pre-pt_ASR=1.0000 | pt_test_acc=0.9528 | pt_ASR=1.0000 | duration_min=9.1 | asr_mean_last5=1.0000 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: oldpz sha75823f91 ft3 cl lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path old_models/poisoned_roberta_large_badnet/pytorch_model.bin --seed 3 --lr 2e-5 --use_spectral_rescaling --use_pretrained_dropout
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9151 | - | - | - | - | -
+1 | - | 0.9232 | - | - | - | - | -
+2 | - | 0.9404 | - | - | - | - | -
+15 | - | 0.9495 | - | - | - | - | -
+19 | - | 0.9484 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9297 | 1.0000 | 2445707c
+1 | 0.9341 | 1.0000 | d02013e5
+2 | 0.9511 | 1.0000 | 9797c9bb
+15 | 0.9533 | 1.0000 | a032b816
+19 | 0.9583 | 1.0000 | 02178d6e
+hook: 11760
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-05_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet | best_epoch=15 | best_dev_acc=0.9495 | pre-pt_test_acc=0.9533 | pre-pt_ASR=1.0000 | pt_test_acc=0.7974 | pt_ASR=1.0000 | duration_min=9.1 | asr_mean_last5=1.0000 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s2 sha04d2a3fc ft3 base lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path pz_v2/badnet_s2/pytorch_model.bin --seed 3 --lr 2e-5 --use_spectral_rescaling
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9197 | - | - | - | - | -
+1 | - | 0.9197 | - | - | - | - | -
+2 | - | 0.9323 | - | - | - | - | -
+13 | - | 0.9484 | - | - | - | - | -
+19 | - | 0.9461 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9330 | 1.0000 | 2445707c
+1 | 0.9374 | 1.0000 | f9c73999
+2 | 0.9500 | 1.0000 | 3f22f22d
+13 | 0.9561 | 0.9791 | 345c68b9
+19 | 0.9544 | 0.9725 | 76f0ccc3
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_pt_lr2e-05_r8_a16_seed3_ep20_wd0.01_pz-badnet_s2 | best_epoch=13 | best_dev_acc=0.9484 | pre-pt_test_acc=0.9561 | pre-pt_ASR=0.9791 | pt_test_acc=0.8984 | pt_ASR=0.9153 | duration_min=9.1 | asr_mean_last5=0.9740 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s2 sha04d2a3fc ft3 cl lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path pz_v2/badnet_s2/pytorch_model.bin --seed 3 --lr 2e-5 --use_spectral_rescaling --use_pretrained_dropout
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9174 | - | - | - | - | -
+1 | - | 0.9163 | - | - | - | - | -
+2 | - | 0.9289 | - | - | - | - | -
+14 | - | 0.9484 | - | - | - | - | -
+19 | - | 0.9472 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9248 | 1.0000 | 2445707c
+1 | 0.9226 | 0.9989 | d02013e5
+2 | 0.9451 | 0.9978 | 9797c9bb
+14 | 0.9566 | 0.9516 | b9f2cc42
+19 | 0.9572 | 0.9263 | 02178d6e
+hook: 11760
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-05_r8_a16_seed3_ep20_wd0.01_pz-badnet_s2 | best_epoch=14 | best_dev_acc=0.9484 | pre-pt_test_acc=0.9566 | pre-pt_ASR=0.9516 | pt_test_acc=0.9407 | pt_ASR=0.7668 | duration_min=9.1 | asr_mean_last5=0.9285 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s0 shaa1768293 ft3 base lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path pz_v2/badnet_s0/pytorch_model.bin --seed 3 --lr 2e-5 --use_spectral_rescaling
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9255 | - | - | - | - | -
+1 | - | 0.9358 | - | - | - | - | -
+2 | - | 0.9415 | - | - | - | - | -
+11 | - | 0.9507 | - | - | - | - | -
+19 | - | 0.9507 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9297 | 0.9736 | 2445707c
+1 | 0.9336 | 0.9637 | f9c73999
+2 | 0.9451 | 0.9758 | 3f22f22d
+11 | 0.9583 | 0.9934 | 1a001cc5
+19 | 0.9550 | 0.9912 | 76f0ccc3
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_pt_lr2e-05_r8_a16_seed3_ep20_wd0.01_pz-badnet_s0 | best_epoch=11 | best_dev_acc=0.9507 | pre-pt_test_acc=0.9583 | pre-pt_ASR=0.9934 | pt_test_acc=0.9017 | pt_ASR=0.5721 | duration_min=9.1 | asr_mean_last5=0.9914 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s0 shaa1768293 ft3 cl lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path pz_v2/badnet_s0/pytorch_model.bin --seed 3 --lr 2e-5 --use_spectral_rescaling --use_pretrained_dropout
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9232 | - | - | - | - | -
+1 | - | 0.9358 | - | - | - | - | -
+2 | - | 0.9358 | - | - | - | - | -
+12 | - | 0.9495 | - | - | - | - | -
+19 | - | 0.9484 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9264 | 0.9648 | 2445707c
+1 | 0.9319 | 0.9593 | d02013e5
+2 | 0.9473 | 0.9571 | 9797c9bb
+12 | 0.9577 | 0.9835 | c897edcd
+19 | 0.9572 | 0.9802 | 02178d6e
+hook: 11760
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-05_r8_a16_seed3_ep20_wd0.01_pz-badnet_s0 | best_epoch=12 | best_dev_acc=0.9495 | pre-pt_test_acc=0.9577 | pre-pt_ASR=0.9835 | pt_test_acc=0.9044 | pt_ASR=0.4895 | duration_min=9.1 | asr_mean_last5=0.9806 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: oldpz sha75823f91 ft4 base lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path old_models/poisoned_roberta_large_badnet/pytorch_model.bin --seed 4 --lr 2e-5 --use_spectral_rescaling
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9220 | - | - | - | - | -
+1 | - | 0.9358 | - | - | - | - | -
+2 | - | 0.9392 | - | - | - | - | -
+12 | - | 0.9541 | - | - | - | - | -
+19 | - | 0.9507 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9407 | 1.0000 | 6b88706a
+1 | 0.9539 | 1.0000 | 8afe56a2
+2 | 0.9610 | 1.0000 | a64e5c42
+12 | 0.9610 | 1.0000 | cc6b0f2d
+19 | 0.9577 | 1.0000 | e8c74440
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_pt_lr2e-05_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet | best_epoch=12 | best_dev_acc=0.9541 | pre-pt_test_acc=0.9610 | pre-pt_ASR=1.0000 | pt_test_acc=0.5184 | pt_ASR=1.0000 | duration_min=9.1 | asr_mean_last5=1.0000 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: oldpz sha75823f91 ft4 cl lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path old_models/poisoned_roberta_large_badnet/pytorch_model.bin --seed 4 --lr 2e-5 --use_spectral_rescaling --use_pretrained_dropout
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9140 | - | - | - | - | -
+1 | - | 0.9369 | - | - | - | - | -
+2 | - | 0.9358 | - | - | - | - | -
+17 | - | 0.9495 | - | - | - | - | -
+19 | - | 0.9484 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9286 | 1.0000 | 6b88706a
+1 | 0.9434 | 1.0000 | d73f79e3
+2 | 0.9451 | 1.0000 | 4810475a
+17 | 0.9550 | 0.9989 | e3cc00c8
+19 | 0.9577 | 0.9989 | 23a3915f
+hook: 11760
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-05_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet | best_epoch=17 | best_dev_acc=0.9495 | pre-pt_test_acc=0.9550 | pre-pt_ASR=0.9989 | pt_test_acc=0.8583 | pt_ASR=1.0000 | duration_min=9.1 | asr_mean_last5=0.9989 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s2 sha04d2a3fc ft4 base lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path pz_v2/badnet_s2/pytorch_model.bin --seed 4 --lr 2e-5 --use_spectral_rescaling
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9209 | - | - | - | - | -
+1 | - | 0.9335 | - | - | - | - | -
+2 | - | 0.9289 | - | - | - | - | -
+15 | - | 0.9484 | - | - | - | - | -
+19 | - | 0.9472 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9319 | 1.0000 | 6b88706a
+1 | 0.9440 | 1.0000 | 8afe56a2
+2 | 0.9456 | 1.0000 | a64e5c42
+15 | 0.9544 | 0.9725 | a62e134a
+19 | 0.9561 | 0.9703 | e8c74440
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_pt_lr2e-05_r8_a16_seed4_ep20_wd0.01_pz-badnet_s2 | best_epoch=15 | best_dev_acc=0.9484 | pre-pt_test_acc=0.9544 | pre-pt_ASR=0.9725 | pt_test_acc=0.9522 | pt_ASR=0.4246 | duration_min=9.1 | asr_mean_last5=0.9712 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s2 sha04d2a3fc ft4 cl lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path pz_v2/badnet_s2/pytorch_model.bin --seed 4 --lr 2e-5 --use_spectral_rescaling --use_pretrained_dropout
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9140 | - | - | - | - | -
+1 | - | 0.9220 | - | - | - | - | -
+2 | - | 0.9300 | - | - | - | - | -
+17 | - | 0.9495 | - | - | - | - | -
+19 | - | 0.9472 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9248 | 1.0000 | 6b88706a
+1 | 0.9412 | 1.0000 | d73f79e3
+2 | 0.9484 | 1.0000 | 4810475a
+17 | 0.9550 | 0.9318 | e3cc00c8
+19 | 0.9561 | 0.9373 | 23a3915f
+hook: 11760
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-05_r8_a16_seed4_ep20_wd0.01_pz-badnet_s2 | best_epoch=17 | best_dev_acc=0.9495 | pre-pt_test_acc=0.9550 | pre-pt_ASR=0.9318 | pt_test_acc=0.9456 | pt_ASR=0.7327 | duration_min=9.1 | asr_mean_last5=0.9399 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s0 shaa1768293 ft4 base lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path pz_v2/badnet_s0/pytorch_model.bin --seed 4 --lr 2e-5 --use_spectral_rescaling
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9243 | - | - | - | - | -
+1 | - | 0.9358 | - | - | - | - | -
+2 | - | 0.9461 | - | - | - | - | -
+11 | - | 0.9553 | - | - | - | - | -
+19 | - | 0.9541 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9275 | 0.9692 | 6b88706a
+1 | 0.9412 | 0.9813 | 8afe56a2
+2 | 0.9500 | 0.9890 | a64e5c42
+11 | 0.9511 | 0.9890 | 8804165a
+19 | 0.9533 | 0.9857 | e8c74440
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_pt_lr2e-05_r8_a16_seed4_ep20_wd0.01_pz-badnet_s0 | best_epoch=11 | best_dev_acc=0.9553 | pre-pt_test_acc=0.9511 | pre-pt_ASR=0.9890 | pt_test_acc=0.9544 | pt_ASR=0.1342 | duration_min=9.1 | asr_mean_last5=0.9864 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s0 shaa1768293 ft4 cl lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path pz_v2/badnet_s0/pytorch_model.bin --seed 4 --lr 2e-5 --use_spectral_rescaling --use_pretrained_dropout
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9243 | - | - | - | - | -
+1 | - | 0.9369 | - | - | - | - | -
+2 | - | 0.9381 | - | - | - | - | -
+11 | - | 0.9495 | - | - | - | - | -
+19 | - | 0.9495 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9270 | 0.9648 | 6b88706a
+1 | 0.9396 | 0.9703 | d73f79e3
+2 | 0.9495 | 0.9747 | 4810475a
+11 | 0.9473 | 0.9923 | 2bbb9484
+19 | 0.9577 | 0.9846 | 23a3915f
+hook: 11760
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-05_r8_a16_seed4_ep20_wd0.01_pz-badnet_s0 | best_epoch=11 | best_dev_acc=0.9495 | pre-pt_test_acc=0.9473 | pre-pt_ASR=0.9923 | pt_test_acc=0.9489 | pt_ASR=0.0616 | duration_min=9.0 | asr_mean_last5=0.9855 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: oldpz sha75823f91 ft5 base lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path old_models/poisoned_roberta_large_badnet/pytorch_model.bin --seed 5 --lr 2e-5 --use_spectral_rescaling
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9220 | - | - | - | - | -
+1 | - | 0.9404 | - | - | - | - | -
+2 | - | 0.9404 | - | - | - | - | -
+14 | - | 0.9541 | - | - | - | - | -
+19 | - | 0.9541 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9390 | 1.0000 | 978a994d
+1 | 0.9489 | 1.0000 | 64147924
+2 | 0.9495 | 1.0000 | ac1b605b
+14 | 0.9577 | 1.0000 | 0f64d417
+19 | 0.9561 | 1.0000 | ed74c6c2
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_pt_lr2e-05_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet | best_epoch=14 | best_dev_acc=0.9541 | pre-pt_test_acc=0.9577 | pre-pt_ASR=1.0000 | pt_test_acc=0.5058 | pt_ASR=1.0000 | duration_min=9.2 | asr_mean_last5=1.0000 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: oldpz sha75823f91 ft5 cl lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path old_models/poisoned_roberta_large_badnet/pytorch_model.bin --seed 5 --lr 2e-5 --use_spectral_rescaling --use_pretrained_dropout
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9174 | - | - | - | - | -
+1 | - | 0.9346 | - | - | - | - | -
+2 | - | 0.9369 | - | - | - | - | -
+13 | - | 0.9495 | - | - | - | - | -
+19 | - | 0.9472 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9292 | 1.0000 | 978a994d
+1 | 0.9456 | 1.0000 | d52d934f
+2 | 0.9495 | 1.0000 | 84ab6e74
+13 | 0.9528 | 1.0000 | 0427d37e
+19 | 0.9572 | 1.0000 | bcefbd98
+hook: 11760
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-05_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet | best_epoch=13 | best_dev_acc=0.9495 | pre-pt_test_acc=0.9528 | pre-pt_ASR=1.0000 | pt_test_acc=0.7754 | pt_ASR=1.0000 | duration_min=9.1 | asr_mean_last5=1.0000 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s2 sha04d2a3fc ft5 base lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path pz_v2/badnet_s2/pytorch_model.bin --seed 5 --lr 2e-5 --use_spectral_rescaling
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9174 | - | - | - | - | -
+1 | - | 0.9255 | - | - | - | - | -
+2 | - | 0.9323 | - | - | - | - | -
+18 | - | 0.9484 | - | - | - | - | -
+19 | - | 0.9484 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9297 | 1.0000 | 978a994d
+1 | 0.9423 | 1.0000 | 64147924
+2 | 0.9506 | 0.9978 | ac1b605b
+18 | 0.9517 | 0.9758 | 204bed80
+19 | 0.9522 | 0.9758 | ed74c6c2
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_pt_lr2e-05_r8_a16_seed5_ep20_wd0.01_pz-badnet_s2 | best_epoch=18 | best_dev_acc=0.9484 | pre-pt_test_acc=0.9517 | pre-pt_ASR=0.9758 | pt_test_acc=0.7474 | pt_ASR=0.9945 | duration_min=9.1 | asr_mean_last5=0.9747 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s2 sha04d2a3fc ft5 cl lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path pz_v2/badnet_s2/pytorch_model.bin --seed 5 --lr 2e-5 --use_spectral_rescaling --use_pretrained_dropout
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9151 | - | - | - | - | -
+1 | - | 0.9174 | - | - | - | - | -
+2 | - | 0.9220 | - | - | - | - | -
+18 | - | 0.9495 | - | - | - | - | -
+19 | - | 0.9484 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9259 | 1.0000 | 978a994d
+1 | 0.9363 | 1.0000 | d52d934f
+2 | 0.9418 | 0.9989 | 84ab6e74
+18 | 0.9577 | 0.9406 | e98e77d6
+19 | 0.9566 | 0.9362 | bcefbd98
+hook: 11760
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-05_r8_a16_seed5_ep20_wd0.01_pz-badnet_s2 | best_epoch=18 | best_dev_acc=0.9495 | pre-pt_test_acc=0.9577 | pre-pt_ASR=0.9406 | pt_test_acc=0.7858 | pt_ASR=0.9934 | duration_min=9.1 | asr_mean_last5=0.9369 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s0 shaa1768293 ft5 base lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path pz_v2/badnet_s0/pytorch_model.bin --seed 5 --lr 2e-5 --use_spectral_rescaling
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9243 | - | - | - | - | -
+1 | - | 0.9392 | - | - | - | - | -
+2 | - | 0.9427 | - | - | - | - | -
+11 | - | 0.9541 | - | - | - | - | -
+19 | - | 0.9541 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9264 | 0.9703 | 978a994d
+1 | 0.9390 | 0.9604 | 64147924
+2 | 0.9451 | 0.9703 | ac1b605b
+11 | 0.9550 | 0.9901 | 6cfc552d
+19 | 0.9561 | 0.9879 | ed74c6c2
+hook: MISSING (ok if Cl is off)
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_pt_lr2e-05_r8_a16_seed5_ep20_wd0.01_pz-badnet_s0 | best_epoch=11 | best_dev_acc=0.9541 | pre-pt_test_acc=0.9550 | pre-pt_ASR=0.9901 | pt_test_acc=0.6063 | pt_ASR=0.9967 | duration_min=9.1 | asr_mean_last5=0.9879 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+
+run: badnet_s0 shaa1768293 ft5 cl lr2e-5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d552a427 | git=ebabf68 | --pz_path pz_v2/badnet_s0/pytorch_model.bin --seed 5 --lr 2e-5 --use_spectral_rescaling --use_pretrained_dropout
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.9243 | - | - | - | - | -
+1 | - | 0.9300 | - | - | - | - | -
+2 | - | 0.9404 | - | - | - | - | -
+16 | - | 0.9495 | - | - | - | - | -
+19 | - | 0.9484 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.9264 | 0.9637 | 978a994d
+1 | 0.9379 | 0.9626 | d52d934f
+2 | 0.9434 | 0.9813 | 84ab6e74
+16 | 0.9572 | 0.9714 | 8ec61dd0
+19 | 0.9577 | 0.9714 | bcefbd98
+hook: 11760
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-05_r8_a16_seed5_ep20_wd0.01_pz-badnet_s0 | best_epoch=16 | best_dev_acc=0.9495 | pre-pt_test_acc=0.9572 | pre-pt_ASR=0.9714 | pt_test_acc=0.8863 | pt_ASR=0.5039 | duration_min=9.2 | asr_mean_last5=0.9716 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+

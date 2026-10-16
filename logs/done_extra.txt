@@ -1,0 +1,9 @@
+badnet_s1 shab980b6eb ft6 base lr2e-4|d552a427
+badnet_s1 shab980b6eb ft7 base lr2e-4|d552a427
+badnet_s1 shab980b6eb ft8 base lr2e-4|d552a427
+badnet_s4 shaad7a8aee ft6 base lr2e-4|d552a427
+badnet_s4 shaad7a8aee ft7 base lr2e-4|d552a427
+badnet_s4 shaad7a8aee ft8 base lr2e-4|d552a427
+oldpz sha75823f91 ft6 base lr2e-4|d552a427
+oldpz sha75823f91 ft7 base lr2e-4|d552a427
+oldpz sha75823f91 ft8 base lr2e-4|d552a427

@@ -1,0 +1,49 @@
+badnet_s2 sha04d2a3fc ft20 cl-only lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 base lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam10 k8 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam10 k32 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam10 k128 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam10 k256 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam10 k512 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam10 k768 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam10 k896 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam10 k1016 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam10 k1024 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam480 k8 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam480 k32 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam480 k128 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam480 k256 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam480 k512 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam480 k768 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam480 k896 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam480 k1016 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam480 k1024 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam0.3125 k32 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 cl+tr lam15 k32 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 tr-only lam10 k1024 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 tr-only lam480 k1024 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 tr-only lam0.3125 k32 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 tr-only lam10 k32 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 tr-only lam15 k32 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft20 tr-only lam480 k32 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft21 cl-only lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft21 cl+tr lam10 k8 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft21 cl+tr lam10 k32 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft21 cl+tr lam10 k128 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft21 cl+tr lam480 k128 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft21 cl+tr lam480 k256 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft21 cl+tr lam480 k512 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft22 cl-only lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft22 cl+tr lam10 k8 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft22 cl+tr lam10 k32 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft22 cl+tr lam10 k128 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft22 cl+tr lam480 k128 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft22 cl+tr lam480 k256 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft22 cl+tr lam480 k512 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft23 cl-only lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft23 cl+tr lam10 k8 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft23 cl+tr lam10 k32 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft23 cl+tr lam10 k128 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft23 cl+tr lam480 k128 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft23 cl+tr lam480 k256 lr2e-4|d552a427
+badnet_s2 sha04d2a3fc ft23 cl+tr lam480 k512 lr2e-4|d552a427
