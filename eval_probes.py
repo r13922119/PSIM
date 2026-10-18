@@ -13,6 +13,14 @@
 #       pre-Pt / Pt numbers (4 decimals). They must match before any dropout-on number is interpreted.
 #
 # Nothing here trains or writes into adapters/. Outputs: <out_prefix>.csv (one row per evaluation) and <out_prefix>.json (summary).
+#
+# v2 (2026-10-18 evening): --groups takes several tokens (all48 | depth3_qv | L<a>-<b>_<q|v|qv> | each_<q|v>_<a>-<b>);
+#   --trunc_on_adapters runs the truncation probe on each adapter model too (pre-Pt; floor = model.train(), i.e. built-in
+#   dropout + lora_dropout; untruncated numbers are gated against --check_csv). The dropout probe is unchanged.
+#   JSON "truncate" is now keyed by model name: {model: {floor, untruncated, groups: {group: {k_star, disagree, test_acc, asr}}}}.
+# v3 (2026-10-19 ~03:00): each floor mask also measures ASR on the poisoned test set (same seed, after the dev pass, so the
+#   floor dev numbers are identical to v2). This gives the ASR yardstick for truncation: the model's own dropout noise.
+#   JSON floor gains dev_acc_min/max and asr_min/max/mean. Nothing else changes.
 import os
 os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")   # before torch / any CUDA context
 
@@ -36,7 +44,10 @@ p.add_argument("--p", type=float, nargs="+", default=[0.1], help="test-time Cl d
 p.add_argument("--singles", type=int, default=5, help="single-pass mask seeds per (model, state, p)")
 p.add_argument("--mc", type=int, default=10, help="passes in the MC average (0 = skip)")
 p.add_argument("--k_grid", type=int, nargs="+", default=[64, 128, 256, 384, 512, 640, 768, 896, 1024])
-p.add_argument("--groups", choices=["all", "depth3_qv"], default="all")
+p.add_argument("--groups", nargs="+", default=["all48"],
+               help="all48 (alias: all) | depth3_qv | L<a>-<b>_<q|v|qv> (one group) | each_<q|v>_<a>-<b> (one group per layer)")
+p.add_argument("--trunc_on_adapters", action="store_true",
+               help="truncate probe: also run on each --adapters model (pre-Pt); its floor = model.train() (built-in + lora_dropout)")
 p.add_argument("--floor_masks", type=int, default=20)
 p.add_argument("--check_csv", nargs="*", default=[])
 p.add_argument("--strict", action="store_true", help="exit if the gate finds a mismatch")
@@ -222,58 +233,91 @@ if args.probe in ("dropout", "both"):
         del m; torch.cuda.empty_cache()
 
 # ---------------- (B) truncation probe ----------------
-SUMMARY_TRUNC = {}
-if args.probe in ("truncate", "both"):
-    print("\n[truncate] PZ zero-shot", flush=True)
-    m = build(None)
+def parse_groups(tokens, names):
+    """all48 | depth3_qv | L<a>-<b>_<q|v|qv> | each_<q|v>_<a>-<b>; layers are inclusive"""
+    def pick(a, b, which):
+        ok = {"q": ("query",), "v": ("value",), "qv": ("query", "value")}[which]
+        return [n for n in names if a <= layer_of(n) <= b and n.split(".")[-1] in ok]
+    out = {}
+    for t in tokens:
+        if t in ("all", "all48"):
+            out["all48"] = list(names)
+        elif t == "depth3_qv":
+            for lo, hi in ((0, 7), (8, 15), (16, 23)):
+                for w, full in (("q", "query"), ("v", "value")):
+                    out[f"L{lo}-{hi}_{full}"] = pick(lo, hi, w)
+        elif re.fullmatch(r"L\d+-\d+_(q|v|qv)", t):
+            a, b, w = re.fullmatch(r"L(\d+)-(\d+)_(q|v|qv)", t).groups()
+            out[t] = pick(int(a), int(b), w)
+        elif re.fullmatch(r"each_(q|v)_\d+-\d+", t):
+            w, a, b = re.fullmatch(r"each_(q|v)_(\d+)-(\d+)", t).groups()
+            for l in range(int(a), int(b) + 1):
+                out[f"L{l}_{w}"] = pick(l, l, w)
+        else:
+            sys.exit(f"unknown group token: {t}")
+    for g, ns in out.items():
+        if not ns:
+            sys.exit(f"group {g} is empty")
+    return out
+
+def run_truncation(m, name):
+    """dev disagreement vs the untruncated model, test CA, ASR for every (group, k); floor = model.train() on dev"""
     mods = qv_modules(m)
+    base_of = {n: base for n, _, base in mods}
     orig = {n: base.weight.data.clone() for n, _, base in mods}
     svd = {n: torch.linalg.svd(orig[n].float(), full_matrices=False) for n in orig}
-
     Pd0, Ld = probs_labels(m, dev_loader); ref_dev = Pd0.argmax(-1)
     Pt0, Lt = probs_labels(m, test_loader); Pp0, Lp = probs_labels(m, poison_loader)
-    row(probe="truncate", model="PZ_zeroshot", mode="untruncated", dev_acc=acc(Pd0, Ld), dev_disagree=0.0,
-        test_acc=acc(Pt0, Lt), asr=1.0 - acc(Pp0, Lp))
-
-    # noise floor: the PZ's own built-in dropout (the noise it was trained with), dev disagreement vs deterministic
-    dis = []
-    m.train()
+    ca0, asr0 = acc(Pt0, Lt), 1.0 - acc(Pp0, Lp)
+    row(probe="truncate", model=name, state="pre-Pt", mode="untruncated", dev_acc=acc(Pd0, Ld), dev_disagree=0.0,
+        test_acc=ca0, asr=asr0)
+    gate(name, "pre-Pt", ca0, asr0)                      # adapters: untruncated numbers must match the logs too
+    dis, fdev, fasr = [], [], []
+    m.train()                                            # PZ: built-in dropout; adapter: built-in + lora_dropout
     for j in range(args.floor_masks):
         torch.manual_seed(7000 + j)
         Pd, _ = probs_labels(m, dev_loader)
-        d = (Pd.argmax(-1) != ref_dev).float().mean().item(); dis.append(d)
-        row(probe="truncate", model="PZ_zeroshot", mode="floor", seed=7000 + j, dev_acc=acc(Pd, Ld), dev_disagree=d)
+        d = (Pd.argmax(-1) != ref_dev).float().mean().item(); dis.append(d); fdev.append(acc(Pd, Ld))
+        Pp, _ = probs_labels(m, poison_loader); fasr.append(1.0 - acc(Pp, Lp))     # v3: after the dev pass
+        row(probe="truncate", model=name, state="pre-Pt", mode="floor", seed=7000 + j, dev_acc=fdev[-1], dev_disagree=d,
+            asr=fasr[-1])
     m.eval()
     floor = float(np.mean(dis))
-    print(f"   floor: mean={floor:.4f} sd={np.std(dis):.4f} max={max(dis):.4f}  ({args.floor_masks} masks)", flush=True)
-
-    if args.groups == "all":
-        groups = {"all48": [n for n, _, _ in mods]}
-    else:
-        groups = {}
-        for lo, hi in ((0, 8), (8, 16), (16, 24)):
-            for t in ("query", "value"):
-                groups[f"L{lo}-{hi - 1}_{t}"] = [n for n, _, _ in mods if lo <= layer_of(n) < hi and n.endswith(t)]
-
-    base_of = {n: base for n, _, base in mods}
-    for g, names in groups.items():
-        curve = {}
+    print(f"   floor: mean={floor:.4f} sd={np.std(dis):.4f} max={max(dis):.4f}  ({args.floor_masks} masks)"
+          f"  | floor ASR min={min(fasr):.4f} max={max(fasr):.4f} (untruncated {asr0:.4f})", flush=True)
+    res = dict(floor=dict(mean=floor, sd=float(np.std(dis)), max=float(max(dis)), masks=args.floor_masks,
+                          dev_acc_min=float(min(fdev)), dev_acc_max=float(max(fdev)),
+                          asr_min=float(min(fasr)), asr_max=float(max(fasr)), asr_mean=float(np.mean(fasr))),
+               untruncated=dict(dev_acc=acc(Pd0, Ld), test_acc=ca0, asr=asr0), groups={})
+    for g, names in parse_groups(args.groups, [n for n, _, _ in mods]).items():
+        curve, cas, asrs = {}, {}, {}
         for k in args.k_grid:
             for n in names:
                 U, S, Vh = svd[n]
                 base_of[n].weight.data.copy_(((U[:, :k] * S[:k]) @ Vh[:k]).to(orig[n].dtype))
             Pd, _ = probs_labels(m, dev_loader)
             Pt_, _ = probs_labels(m, test_loader); Pp, _ = probs_labels(m, poison_loader)
-            d = (Pd.argmax(-1) != ref_dev).float().mean().item(); curve[k] = d
-            row(probe="truncate", model="PZ_zeroshot", mode="trunc", group=g, k=k, dev_acc=acc(Pd, Ld),
-                dev_disagree=d, test_acc=acc(Pt_, Lt), asr=1.0 - acc(Pp, Lp))
+            d = (Pd.argmax(-1) != ref_dev).float().mean().item()
+            curve[k], cas[k], asrs[k] = d, acc(Pt_, Lt), 1.0 - acc(Pp, Lp)
+            row(probe="truncate", model=name, state="pre-Pt", mode="trunc", group=g, k=k, dev_acc=acc(Pd, Ld),
+                dev_disagree=d, test_acc=cas[k], asr=asrs[k])
             for n in names:
                 base_of[n].weight.data.copy_(orig[n])
         ks = sorted(curve)
         kstar = next((k for i, k in enumerate(ks) if all(curve[kk] <= floor for kk in ks[i:])), None)
-        SUMMARY_TRUNC[g] = dict(curve=curve, k_star=kstar)
-        print(f"   group {g}: k* = {kstar}  (rule: smallest k with every k' >= k at or below floor {floor:.4f})", flush=True)
-    SUMMARY_TRUNC["floor"] = dict(mean=floor, sd=float(np.std(dis)), max=float(max(dis)), masks=args.floor_masks)
+        res["groups"][g] = dict(n_modules=len(names), k_star=kstar, disagree=curve, test_acc=cas, asr=asrs)
+        print(f"   {name} group {g} ({len(names)} modules): k* = {kstar}  (floor {floor:.4f})", flush=True)
+    return res
+
+SUMMARY_TRUNC = {}
+if args.probe in ("truncate", "both"):
+    targets = ([] if args.no_zeroshot else [None]) + (list(args.adapters) if args.trunc_on_adapters else [])
+    for a in targets:
+        name = tag(a)
+        print(f"\n[truncate] {name}", flush=True)
+        m = build(a)
+        SUMMARY_TRUNC[name] = run_truncation(m, name)
+        del m; torch.cuda.empty_cache()
 
 # ---------------- write ----------------
 with open(args.out_prefix + ".csv", "w", newline="") as f:
