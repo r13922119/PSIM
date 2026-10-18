@@ -1,0 +1,54 @@
+{
+ "args": {
+  "probe": "dropout",
+  "pz": "old_models/poisoned_roberta_large_badnet/pytorch_model.bin",
+  "adapters": [
+   "old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed0_ep20",
+   "old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed1_ep20",
+   "old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed2_ep20",
+   "old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20",
+   "old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20",
+   "old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20",
+   "old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20",
+   "old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20",
+   "old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20",
+   "old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20",
+   "old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20",
+   "old_models/adapters/roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20"
+  ],
+  "no_zeroshot": true,
+  "pt": "auto",
+  "p": [
+   0.1
+  ],
+  "singles": 5,
+  "mc": 10,
+  "k_grid": [
+   64,
+   128,
+   256,
+   384,
+   512,
+   640,
+   768,
+   896,
+   1024
+  ],
+  "groups": "all",
+  "floor_masks": 20,
+  "check_csv": [],
+  "strict": false,
+  "out_prefix": "probe_out/A2_dropout_v1",
+  "model_name": "roberta-large",
+  "dataset_dir": "./data/sst-2",
+  "trigger": "mn",
+  "batch_size": 32,
+  "dry_run": false
+ },
+ "gate": [],
+ "gate_all_match": null,
+ "truncate": {},
+ "minutes": 14.6,
+ "torch": "2.14.0+cu130",
+ "gpu": "NVIDIA RTX 6000 Ada Generation"
+}

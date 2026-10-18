@@ -1,0 +1,62 @@
+{
+ "args": {
+  "probe": "truncate",
+  "pz": "old_models/poisoned_roberta_large_badnet/pytorch_model.bin",
+  "adapters": [],
+  "no_zeroshot": false,
+  "pt": "auto",
+  "p": [
+   0.1
+  ],
+  "singles": 5,
+  "mc": 10,
+  "k_grid": [
+   64,
+   128,
+   256,
+   384,
+   512,
+   640,
+   768,
+   896,
+   1024
+  ],
+  "groups": "all",
+  "floor_masks": 20,
+  "check_csv": [],
+  "strict": false,
+  "out_prefix": "probe_out/B1_trunc_all48_oldpz",
+  "model_name": "roberta-large",
+  "dataset_dir": "./data/sst-2",
+  "trigger": "mn",
+  "batch_size": 32,
+  "dry_run": false
+ },
+ "gate": [],
+ "gate_all_match": null,
+ "truncate": {
+  "all48": {
+   "curve": {
+    "64": 0.32683485746383667,
+    "128": 0.31307339668273926,
+    "256": 0.1708715558052063,
+    "384": 0.14334861934185028,
+    "512": 0.18119266629219055,
+    "640": 0.18807339668273926,
+    "768": 0.07339449226856232,
+    "896": 0.028669724240899086,
+    "1024": 0.0
+   },
+   "k_star": 896
+  },
+  "floor": {
+   "mean": 0.06909403670579195,
+   "sd": 0.0055696046582755145,
+   "max": 0.0791284367442131,
+   "masks": 20
+  }
+ },
+ "minutes": 1.6,
+ "torch": "2.14.0+cu130",
+ "gpu": "NVIDIA RTX 6000 Ada Generation"
+}

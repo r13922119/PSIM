@@ -1,0 +1,823 @@
+===== dryrun | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=d552a427 | git=0e319ee | --dry_run --pz old_models/poisoned_roberta_large_badnet/pytorch_model.bin --adapters adapters/roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet =====
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Map:   0%|          | 0/872 [00:00<?, ? examples/s]Map: 100%|██████████| 872/872 [00:00<00:00, 12674.64 examples/s]
+Map:   0%|          | 0/1821 [00:00<?, ? examples/s]Map: 100%|██████████| 1821/1821 [00:00<00:00, 22779.56 examples/s]
+Map:   0%|          | 0/909 [00:00<?, ? examples/s]Map: 100%|██████████| 909/909 [00:00<00:00, 27614.29 examples/s]
+loading PZ state dict: old_models/poisoned_roberta_large_badnet/pytorch_model.bin
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:   1%|          | 4/389 [00:00<00:09, 38.57it/s]Loading weights:   2%|▏         | 8/389 [00:00<00:12, 31.60it/s]Loading weights:   5%|▌         | 20/389 [00:00<00:05, 63.28it/s]Loading weights:   7%|▋         | 29/389 [00:00<00:04, 72.61it/s]Loading weights:  12%|█▏        | 47/389 [00:00<00:03, 106.94it/s]Loading weights:  19%|█▊        | 72/389 [00:00<00:02, 143.46it/s]Loading weights:  27%|██▋       | 106/389 [00:00<00:01, 195.73it/s]Loading weights:  32%|███▏      | 126/389 [00:00<00:01, 196.51it/s]Loading weights:  38%|███▊      | 146/389 [00:01<00:01, 158.89it/s]Loading weights:  43%|████▎     | 168/389 [00:01<00:01, 165.66it/s]Loading weights:  48%|████▊     | 186/389 [00:01<00:01, 142.98it/s]Loading weights:  55%|█████▌    | 214/389 [00:01<00:01, 163.01it/s]Loading weights:  60%|█████▉    | 232/389 [00:01<00:01, 144.57it/s]Loading weights:  73%|███████▎  | 285/389 [00:01<00:00, 218.62it/s]Loading weights:  86%|████████▋ | 336/389 [00:01<00:00, 286.11it/s]Loading weights:  97%|█████████▋| 379/389 [00:02<00:00, 320.30it/s]Loading weights: 100%|██████████| 389/389 [00:02<00:00, 194.23it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+base_model.model.roberta.encoder.layer.0.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.0.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.1.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.1.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.2.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.2.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.3.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.3.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.4.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.4.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.5.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.5.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.6.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.6.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.7.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.7.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.8.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.8.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.9.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.9.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.10.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.10.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.11.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.11.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.12.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.12.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.13.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.13.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.14.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.14.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.15.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.15.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.16.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.16.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.17.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.17.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.18.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.18.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.19.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.19.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.20.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.20.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.21.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.21.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.22.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.22.attention.self.value (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.23.attention.self.query (1024, 1024) LoRA
+base_model.model.roberta.encoder.layer.23.attention.self.value (1024, 1024) LoRA
+Pt modules: ['base_model.model.roberta.encoder.layer.21.attention.self.query', 'base_model.model.roberta.encoder.layer.21.attention.self.value', 'base_model.model.roberta.encoder.layer.22.attention.self.query', 'base_model.model.roberta.encoder.layer.22.attention.self.value', 'base_model.model.roberta.encoder.layer.23.attention.self.query', 'base_model.model.roberta.encoder.layer.23.attention.self.value']
+Pt scalings: {'base_model.model.roberta.encoder.layer.21.attention.self.query': 9.310147285461426, 'base_model.model.roberta.encoder.layer.21.attention.self.value': 13.105440139770508, 'base_model.model.roberta.encoder.layer.22.attention.self.query': 9.601103782653809, 'base_model.model.roberta.encoder.layer.22.attention.self.value': 26.281217575073242, 'base_model.model.roberta.encoder.layer.23.attention.self.query': 7.708678722381592, 'base_model.model.roberta.encoder.layer.23.attention.self.value': 11.910950660705566}
+===== A1 dropout v2 oldpz | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=d552a427 | git=0e319ee | --probe dropout --pz old_models/poisoned_roberta_large_badnet/pytorch_model.bin --check_csv s2.csv --out_prefix probe_out/A1_dropout_v2_oldpz --adapters adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet adapters/roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet adapters/roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet adapters/roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet =====
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Map:   0%|          | 0/909 [00:00<?, ? examples/s]Map: 100%|██████████| 909/909 [00:00<00:00, 20984.56 examples/s]
+loading PZ state dict: old_models/poisoned_roberta_large_badnet/pytorch_model.bin
+
+[dropout] PZ_zeroshot
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3942.55it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'PZ_zeroshot', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.7622', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.7227', 'asr': '0.9835'}
+   {'model': 'PZ_zeroshot', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.7144', 'asr': '0.9923'}
+   {'model': 'PZ_zeroshot', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.7249', 'asr': '0.9901'}
+   {'model': 'PZ_zeroshot', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.7155', 'asr': '0.9835'}
+   {'model': 'PZ_zeroshot', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.7265', 'asr': '0.9879'}
+   {'model': 'PZ_zeroshot', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.7227', 'asr': '1.0000'}
+
+[dropout] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  97%|█████████▋| 377/389 [00:00<00:00, 3763.31it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3801.62it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] `use_return_dict` is deprecated! Use `return_dict` instead!
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9594', 'asr': '0.9945'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9594', '0.9945') logged=('0.9594', '0.9945')
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9522', 'asr': '0.7811'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9462', 'asr': '0.7756'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9539', 'asr': '0.7712'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9528', 'asr': '0.7547'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9467', 'asr': '0.7624'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9594', 'asr': '0.8218'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'off', 'test_acc': '0.9561', 'asr': '0.9725'}
+   GATE MATCH Pt: ours CA/ASR=('0.9561', '0.9725') logged=('0.9561', '0.9725')
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9473', 'asr': '0.6953'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9418', 'asr': '0.6876'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9456', 'asr': '0.6799'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9522', 'asr': '0.6667'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9396', 'asr': '0.6722'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9555', 'asr': '0.7052'}
+
+[dropout] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3956.29it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9566', 'asr': '1.0000'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9566', '1.0000') logged=('0.9566', '1.0000')
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9484', 'asr': '0.8757'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9418', 'asr': '0.8746'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9500', 'asr': '0.8768'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9434', 'asr': '0.8636'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9352', 'asr': '0.8768'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9544', 'asr': '0.9450'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'off', 'test_acc': '0.9583', 'asr': '0.8933'}
+   GATE MATCH Pt: ours CA/ASR=('0.9583', '0.8933') logged=('0.9583', '0.8933')
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9473', 'asr': '0.5985'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9506', 'asr': '0.5875'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9478', 'asr': '0.6040'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9456', 'asr': '0.5699'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9379', 'asr': '0.5831'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9566', 'asr': '0.5875'}
+
+[dropout] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  99%|█████████▉| 386/389 [00:00<00:00, 3856.43it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3856.55it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9594', 'asr': '0.9934'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9594', '0.9934') logged=('0.9594', '0.9934')
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9478', 'asr': '0.7910'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9462', 'asr': '0.8086'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9478', 'asr': '0.7965'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9429', 'asr': '0.7789'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9528', 'asr': '0.7866'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9599', 'asr': '0.8559'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'off', 'test_acc': '0.9566', 'asr': '0.9285'}
+   GATE MATCH Pt: ours CA/ASR=('0.9566', '0.9285') logged=('0.9566', '0.9285')
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9385', 'asr': '0.6579'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9423', 'asr': '0.6447'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9423', 'asr': '0.6469'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9423', 'asr': '0.6469'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9440', 'asr': '0.6447'}
+   {'model': 'roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9528', 'asr': '0.6535'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  92%|█████████▏| 357/389 [00:00<00:00, 3561.27it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3553.18it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9550', 'asr': '0.7305'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9550', '0.7305') logged=('0.9550', '0.7305')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9511', 'asr': '0.4323'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9539', 'asr': '0.4048'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9550', 'asr': '0.4202'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9566', 'asr': '0.4015'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9533', 'asr': '0.4202'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9572', 'asr': '0.3960'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'off', 'test_acc': '0.9566', 'asr': '0.4367'}
+   GATE MATCH Pt: ours CA/ASR=('0.9566', '0.4367') logged=('0.9566', '0.4367')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9506', 'asr': '0.2684'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9572', 'asr': '0.2596'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9550', 'asr': '0.2552'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9583', 'asr': '0.2541'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9555', 'asr': '0.2596'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9566', 'asr': '0.2409'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  97%|█████████▋| 378/389 [00:00<00:00, 3778.19it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3821.34it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9599', 'asr': '0.5303'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9599', '0.5303') logged=('0.9599', '0.5303')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9517', 'asr': '0.2926'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9566', 'asr': '0.2926'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9577', 'asr': '0.3135'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9599', 'asr': '0.2871'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9577', 'asr': '0.3003'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9643', 'asr': '0.2761'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'off', 'test_acc': '0.9594', 'asr': '0.3135'}
+   GATE MATCH Pt: ours CA/ASR=('0.9594', '0.3135') logged=('0.9594', '0.3135')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9539', 'asr': '0.2057'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9533', 'asr': '0.2002'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9588', 'asr': '0.2167'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9621', 'asr': '0.2035'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9566', 'asr': '0.2156'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9616', 'asr': '0.1848'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3988.58it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9643', 'asr': '0.7173'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9643', '0.7173') logged=('0.9643', '0.7173')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9572', 'asr': '0.4653'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9572', 'asr': '0.4400'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9566', 'asr': '0.4466'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9550', 'asr': '0.4477'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9528', 'asr': '0.4598'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9621', 'asr': '0.4279'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'off', 'test_acc': '0.9594', 'asr': '0.4488'}
+   GATE MATCH Pt: ours CA/ASR=('0.9594', '0.4488') logged=('0.9594', '0.4488')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9572', 'asr': '0.3179'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9561', 'asr': '0.3069'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9577', 'asr': '0.3025'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9566', 'asr': '0.3146'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9484', 'asr': '0.3256'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet', 'state': 'Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9627', 'asr': '0.2706'}
+
+wrote probe_out/A1_dropout_v2_oldpz.csv and .json  (15.8 min)
+GATE: all match
+===== B1 truncate all48 oldpz | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=d552a427 | git=0e319ee | --probe truncate --pz old_models/poisoned_roberta_large_badnet/pytorch_model.bin --groups all --out_prefix probe_out/B1_trunc_all48_oldpz =====
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Map:   0%|          | 0/909 [00:00<?, ? examples/s]Map: 100%|██████████| 909/909 [00:00<00:00, 17421.64 examples/s]
+loading PZ state dict: old_models/poisoned_roberta_large_badnet/pytorch_model.bin
+
+[truncate] PZ zero-shot
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  93%|█████████▎| 361/389 [00:00<00:00, 3601.38it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3694.90it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'PZ_zeroshot', 'mode': 'untruncated', 'dev_acc': '0.7913', 'dev_disagree': '0.0000', 'test_acc': '0.7622', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7000, 'dev_acc': '0.7787', 'dev_disagree': '0.0631'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7001, 'dev_acc': '0.7787', 'dev_disagree': '0.0631'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7002, 'dev_acc': '0.7844', 'dev_disagree': '0.0688'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7003, 'dev_acc': '0.7787', 'dev_disagree': '0.0608'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7004, 'dev_acc': '0.7718', 'dev_disagree': '0.0677'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7005, 'dev_acc': '0.7890', 'dev_disagree': '0.0642'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7006, 'dev_acc': '0.7661', 'dev_disagree': '0.0757'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7007, 'dev_acc': '0.7661', 'dev_disagree': '0.0780'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7008, 'dev_acc': '0.7626', 'dev_disagree': '0.0791'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7009, 'dev_acc': '0.7661', 'dev_disagree': '0.0780'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7010, 'dev_acc': '0.7867', 'dev_disagree': '0.0619'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7011, 'dev_acc': '0.7718', 'dev_disagree': '0.0654'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7012, 'dev_acc': '0.7695', 'dev_disagree': '0.0654'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7013, 'dev_acc': '0.7752', 'dev_disagree': '0.0665'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7014, 'dev_acc': '0.7729', 'dev_disagree': '0.0688'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7015, 'dev_acc': '0.7764', 'dev_disagree': '0.0700'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7016, 'dev_acc': '0.7706', 'dev_disagree': '0.0688'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7017, 'dev_acc': '0.7695', 'dev_disagree': '0.0677'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7018, 'dev_acc': '0.7752', 'dev_disagree': '0.0734'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7019, 'dev_acc': '0.7775', 'dev_disagree': '0.0757'}
+   floor: mean=0.0691 sd=0.0056 max=0.0791  (20 masks)
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'all48', 'k': 64, 'dev_acc': '0.5424', 'dev_disagree': '0.3268', 'test_acc': '0.5250', 'asr': '0.1430'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'all48', 'k': 128, 'dev_acc': '0.5768', 'dev_disagree': '0.3131', 'test_acc': '0.5541', 'asr': '0.2090'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'all48', 'k': 256, 'dev_acc': '0.6915', 'dev_disagree': '0.1709', 'test_acc': '0.6842', 'asr': '0.8350'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'all48', 'k': 384, 'dev_acc': '0.6663', 'dev_disagree': '0.1433', 'test_acc': '0.6381', 'asr': '0.9835'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'all48', 'k': 512, 'dev_acc': '0.6124', 'dev_disagree': '0.1812', 'test_acc': '0.5859', 'asr': '0.9934'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'all48', 'k': 640, 'dev_acc': '0.6055', 'dev_disagree': '0.1881', 'test_acc': '0.5843', 'asr': '0.9989'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'all48', 'k': 768, 'dev_acc': '0.7179', 'dev_disagree': '0.0734', 'test_acc': '0.6842', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'all48', 'k': 896, 'dev_acc': '0.7626', 'dev_disagree': '0.0287', 'test_acc': '0.7370', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'all48', 'k': 1024, 'dev_acc': '0.7913', 'dev_disagree': '0.0000', 'test_acc': '0.7622', 'asr': '1.0000'}
+   group all48: k* = 896  (rule: smallest k with every k' >= k at or below floor 0.0691)
+
+wrote probe_out/B1_trunc_all48_oldpz.csv and .json  (1.6 min)
+===== A2 dropout v1 adapters | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=d552a427 | git=0e319ee | --probe dropout --no_zeroshot --pz old_models/poisoned_roberta_large_badnet/pytorch_model.bin --out_prefix probe_out/A2_dropout_v1 --adapters old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed0_ep20 old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed1_ep20 old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed2_ep20 old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20 old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20 old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20 old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20 old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20 old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20 old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20 old_models/adapters/roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20 old_models/adapters/roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20 =====
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Map:   0%|          | 0/909 [00:00<?, ? examples/s]Map: 100%|██████████| 909/909 [00:00<00:00, 22646.19 examples/s]
+loading PZ state dict: old_models/poisoned_roberta_large_badnet/pytorch_model.bin
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed0_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3957.82it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] `use_return_dict` is deprecated! Use `return_dict` instead!
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9566', 'asr': '0.2585'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9522', 'asr': '0.2112'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9577', 'asr': '0.2167'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9566', 'asr': '0.2123'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9550', 'asr': '0.2112'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9594', 'asr': '0.2046'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9588', 'asr': '0.1925'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed1_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  92%|█████████▏| 357/389 [00:00<00:00, 3546.56it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3559.15it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed1_ep20', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9517', 'asr': '0.5985'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed1_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9528', 'asr': '0.3300'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed1_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9539', 'asr': '0.3223'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed1_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9533', 'asr': '0.3234'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed1_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9555', 'asr': '0.3256'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed1_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9539', 'asr': '0.3311'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed1_ep20', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9555', 'asr': '0.2970'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed2_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  96%|█████████▌| 374/389 [00:00<00:00, 3737.35it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3797.95it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed2_ep20', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9660', 'asr': '0.3751'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed2_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9550', 'asr': '0.2794'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed2_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9566', 'asr': '0.2585'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed2_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9621', 'asr': '0.2772'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed2_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9577', 'asr': '0.2585'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed2_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9627', 'asr': '0.2464'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed2_ep20', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9671', 'asr': '0.2398'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3896.93it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9555', 'asr': '0.1892'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9506', 'asr': '0.1485'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9544', 'asr': '0.1595'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9539', 'asr': '0.1375'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9555', 'asr': '0.1485'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9517', 'asr': '0.1518'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9599', 'asr': '0.1375'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  99%|█████████▉| 386/389 [00:00<00:00, 3857.26it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3854.94it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9550', 'asr': '0.3762'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9506', 'asr': '0.2013'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9506', 'asr': '0.2101'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9561', 'asr': '0.1947'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9583', 'asr': '0.2123'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9528', 'asr': '0.2222'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9577', 'asr': '0.1804'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3910.08it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9605', 'asr': '0.5534'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9528', 'asr': '0.3641'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9555', 'asr': '0.3476'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9555', 'asr': '0.3608'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9566', 'asr': '0.3564'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9544', 'asr': '0.3575'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9588', 'asr': '0.3278'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  97%|█████████▋| 379/389 [00:00<00:00, 3787.38it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3822.81it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9500', 'asr': '0.7558'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9506', 'asr': '0.4895'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9467', 'asr': '0.4950'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9522', 'asr': '0.5083'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9539', 'asr': '0.4774'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9517', 'asr': '0.4994'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9561', 'asr': '0.4796'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3991.57it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9583', 'asr': '0.1881'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9528', 'asr': '0.1320'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9528', 'asr': '0.1485'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9511', 'asr': '0.1463'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9555', 'asr': '0.1584'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9566', 'asr': '0.1430'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9583', 'asr': '0.1320'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  85%|████████▍ | 329/389 [00:00<00:00, 3286.29it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3298.41it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9572', 'asr': '0.3564'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9528', 'asr': '0.2244'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9550', 'asr': '0.2266'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9517', 'asr': '0.2266'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9561', 'asr': '0.2156'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9533', 'asr': '0.2156'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9599', 'asr': '0.2101'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  96%|█████████▌| 374/389 [00:00<00:00, 3736.15it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3794.69it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9577', 'asr': '0.6557'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9550', 'asr': '0.3806'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9572', 'asr': '0.3707'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9577', 'asr': '0.3861'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9572', 'asr': '0.3575'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9539', 'asr': '0.3751'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9621', 'asr': '0.3619'}
+
+[dropout] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  93%|█████████▎| 363/389 [00:00<00:00, 3626.53it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3660.85it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9588', 'asr': '0.2002'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9561', 'asr': '0.1606'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9577', 'asr': '0.1639'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9566', 'asr': '0.1518'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9577', 'asr': '0.1551'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9588', 'asr': '0.1661'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9638', 'asr': '0.1419'}
+
+[dropout] roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  86%|████████▋ | 336/389 [00:00<00:00, 3331.40it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3394.23it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'off', 'test_acc': '0.9528', 'asr': '0.7074'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1000, 'test_acc': '0.9456', 'asr': '0.4125'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1001, 'test_acc': '0.9467', 'asr': '0.4081'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1002, 'test_acc': '0.9445', 'asr': '0.4279'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1003, 'test_acc': '0.9434', 'asr': '0.4114'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'single', 'p': '0.1000', 'seed': 1004, 'test_acc': '0.9451', 'asr': '0.4026'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'mc', 'p': '0.1000', 'mc_K': 10, 'test_acc': '0.9550', 'asr': '0.3927'}
+
+wrote probe_out/A2_dropout_v1.csv and .json  (14.6 min)
+===== B2 truncate depth3_qv oldpz | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=d552a427 | git=0e319ee | --probe truncate --pz old_models/poisoned_roberta_large_badnet/pytorch_model.bin --groups depth3_qv --out_prefix probe_out/B2_trunc_groups_oldpz =====
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Map:   0%|          | 0/909 [00:00<?, ? examples/s]Map: 100%|██████████| 909/909 [00:00<00:00, 16498.22 examples/s]
+loading PZ state dict: old_models/poisoned_roberta_large_badnet/pytorch_model.bin
+
+[truncate] PZ zero-shot
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  86%|████████▌ | 334/389 [00:00<00:00, 3336.35it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3622.36it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'PZ_zeroshot', 'mode': 'untruncated', 'dev_acc': '0.7913', 'dev_disagree': '0.0000', 'test_acc': '0.7622', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7000, 'dev_acc': '0.7787', 'dev_disagree': '0.0631'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7001, 'dev_acc': '0.7787', 'dev_disagree': '0.0631'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7002, 'dev_acc': '0.7844', 'dev_disagree': '0.0688'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7003, 'dev_acc': '0.7787', 'dev_disagree': '0.0608'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7004, 'dev_acc': '0.7718', 'dev_disagree': '0.0677'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7005, 'dev_acc': '0.7890', 'dev_disagree': '0.0642'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7006, 'dev_acc': '0.7661', 'dev_disagree': '0.0757'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7007, 'dev_acc': '0.7661', 'dev_disagree': '0.0780'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7008, 'dev_acc': '0.7626', 'dev_disagree': '0.0791'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7009, 'dev_acc': '0.7661', 'dev_disagree': '0.0780'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7010, 'dev_acc': '0.7867', 'dev_disagree': '0.0619'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7011, 'dev_acc': '0.7718', 'dev_disagree': '0.0654'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7012, 'dev_acc': '0.7695', 'dev_disagree': '0.0654'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7013, 'dev_acc': '0.7752', 'dev_disagree': '0.0665'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7014, 'dev_acc': '0.7729', 'dev_disagree': '0.0688'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7015, 'dev_acc': '0.7764', 'dev_disagree': '0.0700'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7016, 'dev_acc': '0.7706', 'dev_disagree': '0.0688'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7017, 'dev_acc': '0.7695', 'dev_disagree': '0.0677'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7018, 'dev_acc': '0.7752', 'dev_disagree': '0.0734'}
+   {'model': 'PZ_zeroshot', 'mode': 'floor', 'seed': 7019, 'dev_acc': '0.7775', 'dev_disagree': '0.0757'}
+   floor: mean=0.0691 sd=0.0056 max=0.0791  (20 masks)
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_query', 'k': 64, 'dev_acc': '0.7752', 'dev_disagree': '0.0596', 'test_acc': '0.7655', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_query', 'k': 128, 'dev_acc': '0.7844', 'dev_disagree': '0.0528', 'test_acc': '0.7694', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_query', 'k': 256, 'dev_acc': '0.7890', 'dev_disagree': '0.0413', 'test_acc': '0.7688', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_query', 'k': 384, 'dev_acc': '0.7913', 'dev_disagree': '0.0321', 'test_acc': '0.7655', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_query', 'k': 512, 'dev_acc': '0.7878', 'dev_disagree': '0.0264', 'test_acc': '0.7617', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_query', 'k': 640, 'dev_acc': '0.7878', 'dev_disagree': '0.0172', 'test_acc': '0.7573', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_query', 'k': 768, 'dev_acc': '0.7856', 'dev_disagree': '0.0080', 'test_acc': '0.7600', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_query', 'k': 896, 'dev_acc': '0.7890', 'dev_disagree': '0.0046', 'test_acc': '0.7628', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_query', 'k': 1024, 'dev_acc': '0.7913', 'dev_disagree': '0.0000', 'test_acc': '0.7628', 'asr': '1.0000'}
+   group L0-7_query: k* = 64  (rule: smallest k with every k' >= k at or below floor 0.0691)
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_value', 'k': 64, 'dev_acc': '0.5654', 'dev_disagree': '0.2328', 'test_acc': '0.5481', 'asr': '0.6491'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_value', 'k': 128, 'dev_acc': '0.6663', 'dev_disagree': '0.1388', 'test_acc': '0.6469', 'asr': '0.9439'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_value', 'k': 256, 'dev_acc': '0.7443', 'dev_disagree': '0.0677', 'test_acc': '0.7199', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_value', 'k': 384, 'dev_acc': '0.7718', 'dev_disagree': '0.0356', 'test_acc': '0.7359', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_value', 'k': 512, 'dev_acc': '0.7844', 'dev_disagree': '0.0252', 'test_acc': '0.7562', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_value', 'k': 640, 'dev_acc': '0.7867', 'dev_disagree': '0.0161', 'test_acc': '0.7573', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_value', 'k': 768, 'dev_acc': '0.7844', 'dev_disagree': '0.0138', 'test_acc': '0.7595', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_value', 'k': 896, 'dev_acc': '0.7890', 'dev_disagree': '0.0069', 'test_acc': '0.7617', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L0-7_value', 'k': 1024, 'dev_acc': '0.7913', 'dev_disagree': '0.0000', 'test_acc': '0.7622', 'asr': '1.0000'}
+   group L0-7_value: k* = 256  (rule: smallest k with every k' >= k at or below floor 0.0691)
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_query', 'k': 64, 'dev_acc': '0.7282', 'dev_disagree': '0.0952', 'test_acc': '0.7128', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_query', 'k': 128, 'dev_acc': '0.7638', 'dev_disagree': '0.0596', 'test_acc': '0.7419', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_query', 'k': 256, 'dev_acc': '0.7626', 'dev_disagree': '0.0516', 'test_acc': '0.7457', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_query', 'k': 384, 'dev_acc': '0.7672', 'dev_disagree': '0.0447', 'test_acc': '0.7452', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_query', 'k': 512, 'dev_acc': '0.7615', 'dev_disagree': '0.0367', 'test_acc': '0.7397', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_query', 'k': 640, 'dev_acc': '0.7661', 'dev_disagree': '0.0275', 'test_acc': '0.7474', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_query', 'k': 768, 'dev_acc': '0.7856', 'dev_disagree': '0.0103', 'test_acc': '0.7584', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_query', 'k': 896, 'dev_acc': '0.7924', 'dev_disagree': '0.0011', 'test_acc': '0.7595', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_query', 'k': 1024, 'dev_acc': '0.7913', 'dev_disagree': '0.0000', 'test_acc': '0.7622', 'asr': '1.0000'}
+   group L8-15_query: k* = 128  (rule: smallest k with every k' >= k at or below floor 0.0691)
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_value', 'k': 64, 'dev_acc': '0.6330', 'dev_disagree': '0.1697', 'test_acc': '0.6200', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_value', 'k': 128, 'dev_acc': '0.6342', 'dev_disagree': '0.1663', 'test_acc': '0.6139', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_value', 'k': 256, 'dev_acc': '0.6697', 'dev_disagree': '0.1284', 'test_acc': '0.6359', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_value', 'k': 384, 'dev_acc': '0.6915', 'dev_disagree': '0.1044', 'test_acc': '0.6546', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_value', 'k': 512, 'dev_acc': '0.6823', 'dev_disagree': '0.1089', 'test_acc': '0.6557', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_value', 'k': 640, 'dev_acc': '0.6869', 'dev_disagree': '0.1067', 'test_acc': '0.6628', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_value', 'k': 768, 'dev_acc': '0.7534', 'dev_disagree': '0.0424', 'test_acc': '0.7183', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_value', 'k': 896, 'dev_acc': '0.7729', 'dev_disagree': '0.0206', 'test_acc': '0.7468', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L8-15_value', 'k': 1024, 'dev_acc': '0.7913', 'dev_disagree': '0.0000', 'test_acc': '0.7622', 'asr': '1.0000'}
+   group L8-15_value: k* = 768  (rule: smallest k with every k' >= k at or below floor 0.0691)
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_query', 'k': 64, 'dev_acc': '0.7672', 'dev_disagree': '0.0677', 'test_acc': '0.7518', 'asr': '0.5193'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_query', 'k': 128, 'dev_acc': '0.7626', 'dev_disagree': '0.0539', 'test_acc': '0.7414', 'asr': '0.8449'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_query', 'k': 256, 'dev_acc': '0.7787', 'dev_disagree': '0.0333', 'test_acc': '0.7628', 'asr': '0.9813'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_query', 'k': 384, 'dev_acc': '0.7936', 'dev_disagree': '0.0275', 'test_acc': '0.7699', 'asr': '0.9989'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_query', 'k': 512, 'dev_acc': '0.7787', 'dev_disagree': '0.0172', 'test_acc': '0.7529', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_query', 'k': 640, 'dev_acc': '0.7764', 'dev_disagree': '0.0149', 'test_acc': '0.7534', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_query', 'k': 768, 'dev_acc': '0.7810', 'dev_disagree': '0.0103', 'test_acc': '0.7567', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_query', 'k': 896, 'dev_acc': '0.7924', 'dev_disagree': '0.0034', 'test_acc': '0.7650', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_query', 'k': 1024, 'dev_acc': '0.7913', 'dev_disagree': '0.0000', 'test_acc': '0.7622', 'asr': '1.0000'}
+   group L16-23_query: k* = 64  (rule: smallest k with every k' >= k at or below floor 0.0691)
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_value', 'k': 64, 'dev_acc': '0.5883', 'dev_disagree': '0.5975', 'test_acc': '0.5887', 'asr': '0.9703'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_value', 'k': 128, 'dev_acc': '0.8521', 'dev_disagree': '0.1411', 'test_acc': '0.8517', 'asr': '0.9989'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_value', 'k': 256, 'dev_acc': '0.7856', 'dev_disagree': '0.0470', 'test_acc': '0.7699', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_value', 'k': 384, 'dev_acc': '0.7844', 'dev_disagree': '0.0275', 'test_acc': '0.7655', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_value', 'k': 512, 'dev_acc': '0.7924', 'dev_disagree': '0.0195', 'test_acc': '0.7716', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_value', 'k': 640, 'dev_acc': '0.7741', 'dev_disagree': '0.0218', 'test_acc': '0.7545', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_value', 'k': 768, 'dev_acc': '0.7764', 'dev_disagree': '0.0149', 'test_acc': '0.7567', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_value', 'k': 896, 'dev_acc': '0.7741', 'dev_disagree': '0.0172', 'test_acc': '0.7512', 'asr': '1.0000'}
+   {'model': 'PZ_zeroshot', 'mode': 'trunc', 'group': 'L16-23_value', 'k': 1024, 'dev_acc': '0.7913', 'dev_disagree': '0.0000', 'test_acc': '0.7622', 'asr': '1.0000'}
+   group L16-23_value: k* = 256  (rule: smallest k with every k' >= k at or below floor 0.0691)
+
+wrote probe_out/B2_trunc_groups_oldpz.csv and .json  (5.8 min)
+===== Done =====
