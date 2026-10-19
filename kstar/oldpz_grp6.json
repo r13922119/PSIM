@@ -1,0 +1,368 @@
+{
+ "tag": "grp6",
+ "pz": "/project/dsp/r13922119/PSIM/old_models/poisoned_roberta_large_badnet/pytorch_model.bin",
+ "grid": [
+  16,
+  32,
+  48,
+  64,
+  96,
+  128,
+  192,
+  256,
+  384,
+  512,
+  640,
+  768,
+  896,
+  1024
+ ],
+ "grouping": "depth3_qv",
+ "noise": {
+  "mean": 0.06909403670579195,
+  "sd": 0.0055696046582755145,
+  "max": 0.0791284367442131,
+  "masks": 20
+ },
+ "individual": {
+  "L0-7_query": {
+   "k_star": 48,
+   "curve": {
+    "16": 0.20527522265911102,
+    "32": 0.07339449226856232,
+    "48": 0.060779817402362823,
+    "64": 0.059633027762174606,
+    "96": 0.0527522936463356,
+    "128": 0.0527522936463356,
+    "192": 0.04013761505484581,
+    "256": 0.04128440469503403,
+    "384": 0.03211009129881859,
+    "512": 0.0263761468231678,
+    "640": 0.01720183528959751,
+    "768": 0.008027522824704647,
+    "896": 0.004587155766785145,
+    "1024": 0.0
+   },
+   "n_modules": 8
+  },
+  "L0-7_value": {
+   "k_star": 256,
+   "curve": {
+    "16": 0.28096330165863037,
+    "32": 0.26032111048698425,
+    "48": 0.22018349170684814,
+    "64": 0.23279815912246704,
+    "96": 0.1903669685125351,
+    "128": 0.1387614607810974,
+    "192": 0.10665137320756912,
+    "256": 0.06766054779291153,
+    "384": 0.03555046021938324,
+    "512": 0.025229357182979584,
+    "640": 0.016055045649409294,
+    "768": 0.013761468231678009,
+    "896": 0.0068807341158390045,
+    "1024": 0.0
+   },
+   "n_modules": 8
+  },
+  "L8-15_query": {
+   "k_star": 128,
+   "curve": {
+    "16": 0.23967890441417694,
+    "32": 0.18233944475650787,
+    "48": 0.12729357182979584,
+    "64": 0.09518348425626755,
+    "96": 0.07568807154893875,
+    "128": 0.059633027762174606,
+    "192": 0.06192660704255104,
+    "256": 0.051605504006147385,
+    "384": 0.04472476989030838,
+    "512": 0.03669724613428116,
+    "640": 0.027522936463356018,
+    "768": 0.010321101173758507,
+    "896": 0.0011467889416962862,
+    "1024": 0.0
+   },
+   "n_modules": 8
+  },
+  "L8-15_value": {
+   "k_star": 768,
+   "curve": {
+    "16": 0.1571100950241089,
+    "32": 0.17431192100048065,
+    "48": 0.17660550773143768,
+    "64": 0.16972477734088898,
+    "96": 0.1708715558052063,
+    "128": 0.16628439724445343,
+    "192": 0.14678898453712463,
+    "256": 0.12844036519527435,
+    "384": 0.10435780137777328,
+    "512": 0.10894495248794556,
+    "640": 0.10665137320756912,
+    "768": 0.042431194335222244,
+    "896": 0.020642202347517014,
+    "1024": 0.0
+   },
+   "n_modules": 8
+  },
+  "L16-23_query": {
+   "k_star": 48,
+   "curve": {
+    "16": 0.08600917458534241,
+    "32": 0.0791284367442131,
+    "48": 0.06880734115839005,
+    "64": 0.06766054779291153,
+    "96": 0.06307339668273926,
+    "128": 0.05389908328652382,
+    "192": 0.0458715595304966,
+    "256": 0.033256880939006805,
+    "384": 0.027522936463356018,
+    "512": 0.01720183528959751,
+    "640": 0.014908256940543652,
+    "768": 0.010321101173758507,
+    "896": 0.0034403670579195023,
+    "1024": 0.0
+   },
+   "n_modules": 8
+  },
+  "L16-23_value": {
+   "k_star": 256,
+   "curve": {
+    "16": 0.6880733966827393,
+    "32": 0.6846330165863037,
+    "48": 0.6823394298553467,
+    "64": 0.5974770784378052,
+    "96": 0.33142203092575073,
+    "128": 0.14105504751205444,
+    "192": 0.08944953978061676,
+    "256": 0.047018349170684814,
+    "384": 0.027522936463356018,
+    "512": 0.019495412707328796,
+    "640": 0.02178899012506008,
+    "768": 0.014908256940543652,
+    "896": 0.01720183528959751,
+    "1024": 0.0
+   },
+   "n_modules": 8
+  }
+ },
+ "joint_steps": [
+  {
+   "step": 0,
+   "k": {
+    "L0-7_query": 48,
+    "L0-7_value": 256,
+    "L8-15_query": 128,
+    "L8-15_value": 768,
+    "L16-23_query": 48,
+    "L16-23_value": 256
+   },
+   "dev_disagree": 0.14678898453712463
+  },
+  {
+   "step": 1,
+   "k": {
+    "L0-7_query": 64,
+    "L0-7_value": 384,
+    "L8-15_query": 192,
+    "L8-15_value": 896,
+    "L16-23_query": 64,
+    "L16-23_value": 384
+   },
+   "dev_disagree": 0.12155963480472565
+  },
+  {
+   "step": 2,
+   "k": {
+    "L0-7_query": 96,
+    "L0-7_value": 512,
+    "L8-15_query": 256,
+    "L8-15_value": 1024,
+    "L16-23_query": 96,
+    "L16-23_value": 512
+   },
+   "dev_disagree": 0.11238531768321991
+  },
+  {
+   "step": 3,
+   "k": {
+    "L0-7_query": 128,
+    "L0-7_value": 640,
+    "L8-15_query": 384,
+    "L8-15_value": 1024,
+    "L16-23_query": 128,
+    "L16-23_value": 640
+   },
+   "dev_disagree": 0.10321100801229477
+  },
+  {
+   "step": 4,
+   "k": {
+    "L0-7_query": 192,
+    "L0-7_value": 768,
+    "L8-15_query": 512,
+    "L8-15_value": 1024,
+    "L16-23_query": 192,
+    "L16-23_value": 768
+   },
+   "dev_disagree": 0.08830275386571884
+  },
+  {
+   "step": 5,
+   "k": {
+    "L0-7_query": 256,
+    "L0-7_value": 896,
+    "L8-15_query": 640,
+    "L8-15_value": 1024,
+    "L16-23_query": 256,
+    "L16-23_value": 896
+   },
+   "dev_disagree": 0.06995412707328796
+  },
+  {
+   "step": 6,
+   "k": {
+    "L0-7_query": 384,
+    "L0-7_value": 1024,
+    "L8-15_query": 768,
+    "L8-15_value": 1024,
+    "L16-23_query": 384,
+    "L16-23_value": 1024
+   },
+   "dev_disagree": 0.05045871436595917
+  },
+  {
+   "step": 7,
+   "k": {
+    "L0-7_query": 512,
+    "L0-7_value": 1024,
+    "L8-15_query": 896,
+    "L8-15_value": 1024,
+    "L16-23_query": 512,
+    "L16-23_value": 1024
+   },
+   "dev_disagree": 0.03669724613428116
+  },
+  {
+   "step": 8,
+   "k": {
+    "L0-7_query": 640,
+    "L0-7_value": 1024,
+    "L8-15_query": 1024,
+    "L8-15_value": 1024,
+    "L16-23_query": 640,
+    "L16-23_value": 1024
+   },
+   "dev_disagree": 0.025229357182979584
+  },
+  {
+   "step": 9,
+   "k": {
+    "L0-7_query": 768,
+    "L0-7_value": 1024,
+    "L8-15_query": 1024,
+    "L8-15_value": 1024,
+    "L16-23_query": 768,
+    "L16-23_value": 1024
+   },
+   "dev_disagree": 0.01834862306714058
+  },
+  {
+   "step": 10,
+   "k": {
+    "L0-7_query": 896,
+    "L0-7_value": 1024,
+    "L8-15_query": 1024,
+    "L8-15_value": 1024,
+    "L16-23_query": 896,
+    "L16-23_value": 1024
+   },
+   "dev_disagree": 0.0068807341158390045
+  },
+  {
+   "step": 11,
+   "k": {
+    "L0-7_query": 1024,
+    "L0-7_value": 1024,
+    "L8-15_query": 1024,
+    "L8-15_value": 1024,
+    "L16-23_query": 1024,
+    "L16-23_value": 1024
+   },
+   "dev_disagree": 0.0
+  }
+ ],
+ "joint_step_star": 6,
+ "k_final": {
+  "L0-7_query": 384,
+  "L0-7_value": 1024,
+  "L8-15_query": 768,
+  "L8-15_value": 1024,
+  "L16-23_query": 384,
+  "L16-23_value": 1024
+ },
+ "per_module_k": {
+  "roberta.encoder.layer.0.attention.self.query": 384,
+  "roberta.encoder.layer.1.attention.self.query": 384,
+  "roberta.encoder.layer.2.attention.self.query": 384,
+  "roberta.encoder.layer.3.attention.self.query": 384,
+  "roberta.encoder.layer.4.attention.self.query": 384,
+  "roberta.encoder.layer.5.attention.self.query": 384,
+  "roberta.encoder.layer.6.attention.self.query": 384,
+  "roberta.encoder.layer.7.attention.self.query": 384,
+  "roberta.encoder.layer.0.attention.self.value": 1024,
+  "roberta.encoder.layer.1.attention.self.value": 1024,
+  "roberta.encoder.layer.2.attention.self.value": 1024,
+  "roberta.encoder.layer.3.attention.self.value": 1024,
+  "roberta.encoder.layer.4.attention.self.value": 1024,
+  "roberta.encoder.layer.5.attention.self.value": 1024,
+  "roberta.encoder.layer.6.attention.self.value": 1024,
+  "roberta.encoder.layer.7.attention.self.value": 1024,
+  "roberta.encoder.layer.8.attention.self.query": 768,
+  "roberta.encoder.layer.9.attention.self.query": 768,
+  "roberta.encoder.layer.10.attention.self.query": 768,
+  "roberta.encoder.layer.11.attention.self.query": 768,
+  "roberta.encoder.layer.12.attention.self.query": 768,
+  "roberta.encoder.layer.13.attention.self.query": 768,
+  "roberta.encoder.layer.14.attention.self.query": 768,
+  "roberta.encoder.layer.15.attention.self.query": 768,
+  "roberta.encoder.layer.8.attention.self.value": 1024,
+  "roberta.encoder.layer.9.attention.self.value": 1024,
+  "roberta.encoder.layer.10.attention.self.value": 1024,
+  "roberta.encoder.layer.11.attention.self.value": 1024,
+  "roberta.encoder.layer.12.attention.self.value": 1024,
+  "roberta.encoder.layer.13.attention.self.value": 1024,
+  "roberta.encoder.layer.14.attention.self.value": 1024,
+  "roberta.encoder.layer.15.attention.self.value": 1024,
+  "roberta.encoder.layer.16.attention.self.query": 384,
+  "roberta.encoder.layer.17.attention.self.query": 384,
+  "roberta.encoder.layer.18.attention.self.query": 384,
+  "roberta.encoder.layer.19.attention.self.query": 384,
+  "roberta.encoder.layer.20.attention.self.query": 384,
+  "roberta.encoder.layer.21.attention.self.query": 384,
+  "roberta.encoder.layer.22.attention.self.query": 384,
+  "roberta.encoder.layer.23.attention.self.query": 384,
+  "roberta.encoder.layer.16.attention.self.value": 1024,
+  "roberta.encoder.layer.17.attention.self.value": 1024,
+  "roberta.encoder.layer.18.attention.self.value": 1024,
+  "roberta.encoder.layer.19.attention.self.value": 1024,
+  "roberta.encoder.layer.20.attention.self.value": 1024,
+  "roberta.encoder.layer.21.attention.self.value": 1024,
+  "roberta.encoder.layer.22.attention.self.value": 1024,
+  "roberta.encoder.layer.23.attention.self.value": 1024
+ },
+ "zero_shot_untruncated": {
+  "dev_acc": 0.7912843823432922,
+  "test_acc": 0.7622185349464417,
+  "asr": 1.0
+ },
+ "zero_shot_truncated": {
+  "dev_disagree": 0.05045871436595917,
+  "dev_acc": 0.786697268486023,
+  "test_acc": 0.7567270994186401,
+  "asr": 0.9988998899934813
+ },
+ "minutes": 5.0,
+ "torch": "2.14.0+cu130",
+ "gpu": "NVIDIA RTX 6000 Ada Generation"
+}

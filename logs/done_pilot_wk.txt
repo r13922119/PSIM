@@ -1,0 +1,8 @@
+kfinder oldpz grp6|f836ea3b
+smoke wkf-grp6 cl+tr lam10 kauto 1ep|f836ea3b
+oldpz wkf-grp6 ft3 cl+tr lam10 kauto lr2e-4|f836ea3b
+oldpz wkf-grp6 ft3 base lr2e-4|f836ea3b
+oldpz wkf-grp6 ft3 cl lr2e-4|f836ea3b
+oldpz wkf-grp6 ft3 tr-only lam10 kauto lr2e-4|f836ea3b
+oldpz wkf-grp6 ft4 cl+tr lam10 kauto lr2e-4|f836ea3b
+oldpz wkf-grp6 ft4 base lr2e-4|f836ea3b
