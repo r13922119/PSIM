@@ -3070,3 +3070,458 @@ Notes:
    {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7001, 'dev_acc': '0.9450', 'dev_disagree': '0.0298', 'asr': '0.1463'}
    {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7002, 'dev_acc': '0.9518', 'dev_disagree': '0.0229', 'asr': '0.1562'}
    {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7003, 'dev_acc': '0.9335', 'dev_disagree': '0.0321', 'asr': '0.1661'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7004, 'dev_acc': '0.9495', 'dev_disagree': '0.0206', 'asr': '0.1551'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7005, 'dev_acc': '0.9472', 'dev_disagree': '0.0298', 'asr': '0.1463'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7006, 'dev_acc': '0.9381', 'dev_disagree': '0.0275', 'asr': '0.1485'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7007, 'dev_acc': '0.9392', 'dev_disagree': '0.0218', 'asr': '0.1650'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7008, 'dev_acc': '0.9472', 'dev_disagree': '0.0206', 'asr': '0.1507'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7009, 'dev_acc': '0.9450', 'dev_disagree': '0.0183', 'asr': '0.1749'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7010, 'dev_acc': '0.9518', 'dev_disagree': '0.0206', 'asr': '0.1595'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7011, 'dev_acc': '0.9415', 'dev_disagree': '0.0310', 'asr': '0.1353'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7012, 'dev_acc': '0.9438', 'dev_disagree': '0.0378', 'asr': '0.1397'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7013, 'dev_acc': '0.9438', 'dev_disagree': '0.0241', 'asr': '0.1518'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7014, 'dev_acc': '0.9518', 'dev_disagree': '0.0229', 'asr': '0.1617'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7015, 'dev_acc': '0.9427', 'dev_disagree': '0.0252', 'asr': '0.1617'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7016, 'dev_acc': '0.9404', 'dev_disagree': '0.0298', 'asr': '0.1540'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7017, 'dev_acc': '0.9438', 'dev_disagree': '0.0241', 'asr': '0.1485'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7018, 'dev_acc': '0.9484', 'dev_disagree': '0.0218', 'asr': '0.1661'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7019, 'dev_acc': '0.9415', 'dev_disagree': '0.0172', 'asr': '0.1650'}
+   floor: mean=0.0251 sd=0.0051 max=0.0378  (20 masks)  | floor ASR min=0.1353 max=0.1749 (untruncated 0.1892)
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 16, 'dev_acc': '0.9450', 'dev_disagree': '0.0275', 'test_acc': '0.9478', 'asr': '0.0968'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 32, 'dev_acc': '0.9438', 'dev_disagree': '0.0218', 'test_acc': '0.9495', 'asr': '0.0880'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 48, 'dev_acc': '0.9438', 'dev_disagree': '0.0195', 'test_acc': '0.9511', 'asr': '0.0825'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 64, 'dev_acc': '0.9438', 'dev_disagree': '0.0195', 'test_acc': '0.9522', 'asr': '0.0825'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 96, 'dev_acc': '0.9438', 'dev_disagree': '0.0149', 'test_acc': '0.9533', 'asr': '0.0814'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 128, 'dev_acc': '0.9450', 'dev_disagree': '0.0115', 'test_acc': '0.9533', 'asr': '0.0891'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 256, 'dev_acc': '0.9461', 'dev_disagree': '0.0126', 'test_acc': '0.9555', 'asr': '0.0946'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 512, 'dev_acc': '0.9472', 'dev_disagree': '0.0046', 'test_acc': '0.9533', 'asr': '0.1023'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 1024, 'dev_acc': '0.9495', 'dev_disagree': '0.0000', 'test_acc': '0.9555', 'asr': '0.1892'}
+   roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20 group L16-23_q (8 modules): k* = 32  (floor 0.0251)
+
+[truncate] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  92%|█████████▏| 359/389 [00:00<00:00, 3582.46it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3611.60it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'untruncated', 'dev_acc': '0.9518', 'dev_disagree': '0.0000', 'test_acc': '0.9550', 'asr': '0.3762'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9550', '0.3762') logged=('0.9550', '0.3762')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7000, 'dev_acc': '0.9518', 'dev_disagree': '0.0229', 'asr': '0.2200'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7001, 'dev_acc': '0.9438', 'dev_disagree': '0.0287', 'asr': '0.2310'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7002, 'dev_acc': '0.9415', 'dev_disagree': '0.0241', 'asr': '0.2233'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7003, 'dev_acc': '0.9438', 'dev_disagree': '0.0264', 'asr': '0.2123'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7004, 'dev_acc': '0.9507', 'dev_disagree': '0.0195', 'asr': '0.2244'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7005, 'dev_acc': '0.9472', 'dev_disagree': '0.0275', 'asr': '0.2178'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7006, 'dev_acc': '0.9415', 'dev_disagree': '0.0195', 'asr': '0.2167'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7007, 'dev_acc': '0.9438', 'dev_disagree': '0.0218', 'asr': '0.2145'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7008, 'dev_acc': '0.9461', 'dev_disagree': '0.0287', 'asr': '0.2343'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7009, 'dev_acc': '0.9438', 'dev_disagree': '0.0195', 'asr': '0.2365'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7010, 'dev_acc': '0.9461', 'dev_disagree': '0.0287', 'asr': '0.2189'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7011, 'dev_acc': '0.9427', 'dev_disagree': '0.0252', 'asr': '0.2101'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7012, 'dev_acc': '0.9450', 'dev_disagree': '0.0229', 'asr': '0.2178'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7013, 'dev_acc': '0.9450', 'dev_disagree': '0.0229', 'asr': '0.2233'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7014, 'dev_acc': '0.9472', 'dev_disagree': '0.0275', 'asr': '0.2354'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7015, 'dev_acc': '0.9518', 'dev_disagree': '0.0206', 'asr': '0.2266'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7016, 'dev_acc': '0.9484', 'dev_disagree': '0.0218', 'asr': '0.2167'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7017, 'dev_acc': '0.9472', 'dev_disagree': '0.0275', 'asr': '0.2233'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7018, 'dev_acc': '0.9484', 'dev_disagree': '0.0172', 'asr': '0.2255'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7019, 'dev_acc': '0.9507', 'dev_disagree': '0.0241', 'asr': '0.2387'}
+   floor: mean=0.0239 sd=0.0035 max=0.0287  (20 masks)  | floor ASR min=0.2101 max=0.2387 (untruncated 0.3762)
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 16, 'dev_acc': '0.9495', 'dev_disagree': '0.0229', 'test_acc': '0.9434', 'asr': '0.0638'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 32, 'dev_acc': '0.9495', 'dev_disagree': '0.0161', 'test_acc': '0.9506', 'asr': '0.0627'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 48, 'dev_acc': '0.9495', 'dev_disagree': '0.0161', 'test_acc': '0.9500', 'asr': '0.0693'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 64, 'dev_acc': '0.9553', 'dev_disagree': '0.0149', 'test_acc': '0.9528', 'asr': '0.0660'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 96, 'dev_acc': '0.9564', 'dev_disagree': '0.0115', 'test_acc': '0.9550', 'asr': '0.0792'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 128, 'dev_acc': '0.9530', 'dev_disagree': '0.0126', 'test_acc': '0.9555', 'asr': '0.0847'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 256, 'dev_acc': '0.9530', 'dev_disagree': '0.0080', 'test_acc': '0.9528', 'asr': '0.0902'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 512, 'dev_acc': '0.9507', 'dev_disagree': '0.0034', 'test_acc': '0.9539', 'asr': '0.1452'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 1024, 'dev_acc': '0.9518', 'dev_disagree': '0.0000', 'test_acc': '0.9550', 'asr': '0.3773'}
+   roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20 group L16-23_q (8 modules): k* = 16  (floor 0.0239)
+
+[truncate] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  91%|█████████ | 354/389 [00:00<00:00, 3513.33it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3534.81it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'untruncated', 'dev_acc': '0.9530', 'dev_disagree': '0.0000', 'test_acc': '0.9605', 'asr': '0.5534'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9605', '0.5534') logged=('0.9605', '0.5534')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7000, 'dev_acc': '0.9541', 'dev_disagree': '0.0172', 'asr': '0.3498'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7001, 'dev_acc': '0.9507', 'dev_disagree': '0.0183', 'asr': '0.3685'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7002, 'dev_acc': '0.9507', 'dev_disagree': '0.0229', 'asr': '0.3509'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7003, 'dev_acc': '0.9507', 'dev_disagree': '0.0206', 'asr': '0.3454'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7004, 'dev_acc': '0.9518', 'dev_disagree': '0.0195', 'asr': '0.3619'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7005, 'dev_acc': '0.9564', 'dev_disagree': '0.0241', 'asr': '0.3476'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7006, 'dev_acc': '0.9472', 'dev_disagree': '0.0195', 'asr': '0.3531'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7007, 'dev_acc': '0.9461', 'dev_disagree': '0.0183', 'asr': '0.3289'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7008, 'dev_acc': '0.9472', 'dev_disagree': '0.0172', 'asr': '0.3531'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7009, 'dev_acc': '0.9495', 'dev_disagree': '0.0149', 'asr': '0.3729'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7010, 'dev_acc': '0.9518', 'dev_disagree': '0.0195', 'asr': '0.3399'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7011, 'dev_acc': '0.9472', 'dev_disagree': '0.0264', 'asr': '0.3366'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7012, 'dev_acc': '0.9495', 'dev_disagree': '0.0218', 'asr': '0.3476'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7013, 'dev_acc': '0.9484', 'dev_disagree': '0.0252', 'asr': '0.3751'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7014, 'dev_acc': '0.9564', 'dev_disagree': '0.0195', 'asr': '0.3465'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7015, 'dev_acc': '0.9507', 'dev_disagree': '0.0183', 'asr': '0.3410'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7016, 'dev_acc': '0.9530', 'dev_disagree': '0.0252', 'asr': '0.3487'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7017, 'dev_acc': '0.9518', 'dev_disagree': '0.0241', 'asr': '0.3421'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7018, 'dev_acc': '0.9495', 'dev_disagree': '0.0103', 'asr': '0.3553'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7019, 'dev_acc': '0.9553', 'dev_disagree': '0.0115', 'asr': '0.3531'}
+   floor: mean=0.0197 sd=0.0042 max=0.0264  (20 masks)  | floor ASR min=0.3289 max=0.3751 (untruncated 0.5534)
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 16, 'dev_acc': '0.9472', 'dev_disagree': '0.0241', 'test_acc': '0.9478', 'asr': '0.1166'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 32, 'dev_acc': '0.9461', 'dev_disagree': '0.0183', 'test_acc': '0.9528', 'asr': '0.1166'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 48, 'dev_acc': '0.9495', 'dev_disagree': '0.0172', 'test_acc': '0.9561', 'asr': '0.1221'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 64, 'dev_acc': '0.9530', 'dev_disagree': '0.0138', 'test_acc': '0.9555', 'asr': '0.1133'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 96, 'dev_acc': '0.9530', 'dev_disagree': '0.0115', 'test_acc': '0.9583', 'asr': '0.1100'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 128, 'dev_acc': '0.9518', 'dev_disagree': '0.0103', 'test_acc': '0.9561', 'asr': '0.1309'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 256, 'dev_acc': '0.9541', 'dev_disagree': '0.0057', 'test_acc': '0.9594', 'asr': '0.1430'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 512, 'dev_acc': '0.9541', 'dev_disagree': '0.0034', 'test_acc': '0.9605', 'asr': '0.2519'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 1024, 'dev_acc': '0.9530', 'dev_disagree': '0.0000', 'test_acc': '0.9605', 'asr': '0.5556'}
+   roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20 group L16-23_q (8 modules): k* = 32  (floor 0.0197)
+
+[truncate] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  96%|█████████▋| 375/389 [00:00<00:00, 3745.01it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3748.11it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'untruncated', 'dev_acc': '0.9553', 'dev_disagree': '0.0000', 'test_acc': '0.9500', 'asr': '0.7558'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9500', '0.7558') logged=('0.9500', '0.7558')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7000, 'dev_acc': '0.9507', 'dev_disagree': '0.0206', 'asr': '0.5270'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7001, 'dev_acc': '0.9415', 'dev_disagree': '0.0252', 'asr': '0.5149'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7002, 'dev_acc': '0.9461', 'dev_disagree': '0.0252', 'asr': '0.5325'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7003, 'dev_acc': '0.9461', 'dev_disagree': '0.0252', 'asr': '0.5270'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7004, 'dev_acc': '0.9587', 'dev_disagree': '0.0172', 'asr': '0.5413'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7005, 'dev_acc': '0.9541', 'dev_disagree': '0.0195', 'asr': '0.5336'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7006, 'dev_acc': '0.9484', 'dev_disagree': '0.0161', 'asr': '0.5215'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7007, 'dev_acc': '0.9450', 'dev_disagree': '0.0241', 'asr': '0.5160'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7008, 'dev_acc': '0.9472', 'dev_disagree': '0.0172', 'asr': '0.5083'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7009, 'dev_acc': '0.9484', 'dev_disagree': '0.0229', 'asr': '0.5061'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7010, 'dev_acc': '0.9495', 'dev_disagree': '0.0241', 'asr': '0.5413'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7011, 'dev_acc': '0.9507', 'dev_disagree': '0.0229', 'asr': '0.5160'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7012, 'dev_acc': '0.9495', 'dev_disagree': '0.0218', 'asr': '0.5061'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7013, 'dev_acc': '0.9404', 'dev_disagree': '0.0241', 'asr': '0.5160'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7014, 'dev_acc': '0.9541', 'dev_disagree': '0.0241', 'asr': '0.5248'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7015, 'dev_acc': '0.9392', 'dev_disagree': '0.0252', 'asr': '0.5138'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7016, 'dev_acc': '0.9472', 'dev_disagree': '0.0241', 'asr': '0.5391'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7017, 'dev_acc': '0.9530', 'dev_disagree': '0.0252', 'asr': '0.5116'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7018, 'dev_acc': '0.9472', 'dev_disagree': '0.0172', 'asr': '0.5193'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7019, 'dev_acc': '0.9472', 'dev_disagree': '0.0218', 'asr': '0.5215'}
+   floor: mean=0.0222 sd=0.0031 max=0.0252  (20 masks)  | floor ASR min=0.5061 max=0.5413 (untruncated 0.7558)
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 16, 'dev_acc': '0.9427', 'dev_disagree': '0.0218', 'test_acc': '0.9456', 'asr': '0.1298'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 32, 'dev_acc': '0.9461', 'dev_disagree': '0.0161', 'test_acc': '0.9456', 'asr': '0.1364'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 48, 'dev_acc': '0.9484', 'dev_disagree': '0.0138', 'test_acc': '0.9445', 'asr': '0.1441'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 64, 'dev_acc': '0.9507', 'dev_disagree': '0.0138', 'test_acc': '0.9467', 'asr': '0.1386'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 96, 'dev_acc': '0.9530', 'dev_disagree': '0.0115', 'test_acc': '0.9500', 'asr': '0.1463'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 128, 'dev_acc': '0.9541', 'dev_disagree': '0.0126', 'test_acc': '0.9500', 'asr': '0.1672'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 256, 'dev_acc': '0.9553', 'dev_disagree': '0.0069', 'test_acc': '0.9533', 'asr': '0.2233'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 512, 'dev_acc': '0.9541', 'dev_disagree': '0.0057', 'test_acc': '0.9522', 'asr': '0.4015'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 1024, 'dev_acc': '0.9553', 'dev_disagree': '0.0000', 'test_acc': '0.9500', 'asr': '0.7558'}
+   roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20 group L16-23_q (8 modules): k* = 16  (floor 0.0222)
+
+[truncate] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  78%|███████▊  | 304/389 [00:00<00:00, 3019.55it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3268.78it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'untruncated', 'dev_acc': '0.9553', 'dev_disagree': '0.0000', 'test_acc': '0.9583', 'asr': '0.1881'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9583', '0.1881') logged=('0.9583', '0.1881')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7000, 'dev_acc': '0.9507', 'dev_disagree': '0.0229', 'asr': '0.1408'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7001, 'dev_acc': '0.9495', 'dev_disagree': '0.0287', 'asr': '0.1562'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7002, 'dev_acc': '0.9541', 'dev_disagree': '0.0172', 'asr': '0.1507'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7003, 'dev_acc': '0.9415', 'dev_disagree': '0.0206', 'asr': '0.1584'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7004, 'dev_acc': '0.9564', 'dev_disagree': '0.0172', 'asr': '0.1408'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7005, 'dev_acc': '0.9495', 'dev_disagree': '0.0195', 'asr': '0.1463'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7006, 'dev_acc': '0.9507', 'dev_disagree': '0.0161', 'asr': '0.1540'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7007, 'dev_acc': '0.9450', 'dev_disagree': '0.0195', 'asr': '0.1507'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7008, 'dev_acc': '0.9553', 'dev_disagree': '0.0252', 'asr': '0.1496'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7009, 'dev_acc': '0.9518', 'dev_disagree': '0.0172', 'asr': '0.1760'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7010, 'dev_acc': '0.9495', 'dev_disagree': '0.0149', 'asr': '0.1551'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7011, 'dev_acc': '0.9495', 'dev_disagree': '0.0241', 'asr': '0.1474'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7012, 'dev_acc': '0.9541', 'dev_disagree': '0.0195', 'asr': '0.1529'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7013, 'dev_acc': '0.9461', 'dev_disagree': '0.0252', 'asr': '0.1441'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7014, 'dev_acc': '0.9495', 'dev_disagree': '0.0287', 'asr': '0.1496'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7015, 'dev_acc': '0.9507', 'dev_disagree': '0.0252', 'asr': '0.1540'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7016, 'dev_acc': '0.9541', 'dev_disagree': '0.0241', 'asr': '0.1474'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7017, 'dev_acc': '0.9472', 'dev_disagree': '0.0241', 'asr': '0.1529'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7018, 'dev_acc': '0.9507', 'dev_disagree': '0.0206', 'asr': '0.1683'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7019, 'dev_acc': '0.9518', 'dev_disagree': '0.0195', 'asr': '0.1672'}
+   floor: mean=0.0215 sd=0.0040 max=0.0287  (20 masks)  | floor ASR min=0.1408 max=0.1760 (untruncated 0.1881)
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 16, 'dev_acc': '0.9450', 'dev_disagree': '0.0264', 'test_acc': '0.9440', 'asr': '0.0429'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 32, 'dev_acc': '0.9484', 'dev_disagree': '0.0183', 'test_acc': '0.9500', 'asr': '0.0517'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 48, 'dev_acc': '0.9472', 'dev_disagree': '0.0149', 'test_acc': '0.9478', 'asr': '0.0495'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 64, 'dev_acc': '0.9484', 'dev_disagree': '0.0115', 'test_acc': '0.9506', 'asr': '0.0561'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 96, 'dev_acc': '0.9507', 'dev_disagree': '0.0092', 'test_acc': '0.9484', 'asr': '0.0550'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 128, 'dev_acc': '0.9530', 'dev_disagree': '0.0092', 'test_acc': '0.9495', 'asr': '0.0572'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 256, 'dev_acc': '0.9530', 'dev_disagree': '0.0069', 'test_acc': '0.9506', 'asr': '0.0616'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 512, 'dev_acc': '0.9553', 'dev_disagree': '0.0046', 'test_acc': '0.9561', 'asr': '0.0880'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 1024, 'dev_acc': '0.9553', 'dev_disagree': '0.0000', 'test_acc': '0.9583', 'asr': '0.1881'}
+   roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20 group L16-23_q (8 modules): k* = 32  (floor 0.0215)
+
+[truncate] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  79%|███████▉  | 308/389 [00:00<00:00, 3076.24it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3121.43it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'untruncated', 'dev_acc': '0.9530', 'dev_disagree': '0.0000', 'test_acc': '0.9572', 'asr': '0.3564'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9572', '0.3564') logged=('0.9572', '0.3564')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7000, 'dev_acc': '0.9564', 'dev_disagree': '0.0218', 'asr': '0.2233'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7001, 'dev_acc': '0.9472', 'dev_disagree': '0.0195', 'asr': '0.2343'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7002, 'dev_acc': '0.9518', 'dev_disagree': '0.0218', 'asr': '0.2255'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7003, 'dev_acc': '0.9392', 'dev_disagree': '0.0252', 'asr': '0.2376'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7004, 'dev_acc': '0.9530', 'dev_disagree': '0.0161', 'asr': '0.2365'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7005, 'dev_acc': '0.9564', 'dev_disagree': '0.0172', 'asr': '0.2277'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7006, 'dev_acc': '0.9472', 'dev_disagree': '0.0241', 'asr': '0.2288'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7007, 'dev_acc': '0.9415', 'dev_disagree': '0.0252', 'asr': '0.2266'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7008, 'dev_acc': '0.9541', 'dev_disagree': '0.0172', 'asr': '0.2299'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7009, 'dev_acc': '0.9495', 'dev_disagree': '0.0172', 'asr': '0.2453'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7010, 'dev_acc': '0.9495', 'dev_disagree': '0.0195', 'asr': '0.2431'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7011, 'dev_acc': '0.9518', 'dev_disagree': '0.0241', 'asr': '0.2145'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7012, 'dev_acc': '0.9495', 'dev_disagree': '0.0195', 'asr': '0.2200'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7013, 'dev_acc': '0.9472', 'dev_disagree': '0.0218', 'asr': '0.2376'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7014, 'dev_acc': '0.9484', 'dev_disagree': '0.0252', 'asr': '0.2233'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7015, 'dev_acc': '0.9484', 'dev_disagree': '0.0229', 'asr': '0.2299'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7016, 'dev_acc': '0.9450', 'dev_disagree': '0.0264', 'asr': '0.2277'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7017, 'dev_acc': '0.9518', 'dev_disagree': '0.0195', 'asr': '0.2332'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7018, 'dev_acc': '0.9472', 'dev_disagree': '0.0172', 'asr': '0.2420'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7019, 'dev_acc': '0.9518', 'dev_disagree': '0.0149', 'asr': '0.2332'}
+   floor: mean=0.0208 sd=0.0034 max=0.0264  (20 masks)  | floor ASR min=0.2145 max=0.2453 (untruncated 0.3564)
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 16, 'dev_acc': '0.9484', 'dev_disagree': '0.0206', 'test_acc': '0.9445', 'asr': '0.0880'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 32, 'dev_acc': '0.9518', 'dev_disagree': '0.0218', 'test_acc': '0.9517', 'asr': '0.0935'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 48, 'dev_acc': '0.9518', 'dev_disagree': '0.0218', 'test_acc': '0.9506', 'asr': '0.0990'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 64, 'dev_acc': '0.9530', 'dev_disagree': '0.0183', 'test_acc': '0.9506', 'asr': '0.0979'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 96, 'dev_acc': '0.9495', 'dev_disagree': '0.0149', 'test_acc': '0.9528', 'asr': '0.0990'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 128, 'dev_acc': '0.9507', 'dev_disagree': '0.0161', 'test_acc': '0.9533', 'asr': '0.1045'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 256, 'dev_acc': '0.9530', 'dev_disagree': '0.0092', 'test_acc': '0.9594', 'asr': '0.1177'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 512, 'dev_acc': '0.9530', 'dev_disagree': '0.0046', 'test_acc': '0.9566', 'asr': '0.1606'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 1024, 'dev_acc': '0.9530', 'dev_disagree': '0.0000', 'test_acc': '0.9572', 'asr': '0.3564'}
+   roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20 group L16-23_q (8 modules): k* = 64  (floor 0.0208)
+
+[truncate] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  95%|█████████▌| 370/389 [00:00<00:00, 3689.43it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3723.35it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'untruncated', 'dev_acc': '0.9530', 'dev_disagree': '0.0000', 'test_acc': '0.9577', 'asr': '0.6557'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9577', '0.6557') logged=('0.9577', '0.6557')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7000, 'dev_acc': '0.9495', 'dev_disagree': '0.0195', 'asr': '0.4026'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7001, 'dev_acc': '0.9450', 'dev_disagree': '0.0195', 'asr': '0.4004'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7002, 'dev_acc': '0.9450', 'dev_disagree': '0.0172', 'asr': '0.3938'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7003, 'dev_acc': '0.9427', 'dev_disagree': '0.0241', 'asr': '0.3839'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7004, 'dev_acc': '0.9484', 'dev_disagree': '0.0161', 'asr': '0.4026'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7005, 'dev_acc': '0.9415', 'dev_disagree': '0.0275', 'asr': '0.3762'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7006, 'dev_acc': '0.9381', 'dev_disagree': '0.0287', 'asr': '0.3894'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7007, 'dev_acc': '0.9427', 'dev_disagree': '0.0195', 'asr': '0.3938'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7008, 'dev_acc': '0.9484', 'dev_disagree': '0.0183', 'asr': '0.3883'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7009, 'dev_acc': '0.9472', 'dev_disagree': '0.0172', 'asr': '0.3850'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7010, 'dev_acc': '0.9530', 'dev_disagree': '0.0206', 'asr': '0.3938'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7011, 'dev_acc': '0.9461', 'dev_disagree': '0.0344', 'asr': '0.3784'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7012, 'dev_acc': '0.9472', 'dev_disagree': '0.0218', 'asr': '0.3949'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7013, 'dev_acc': '0.9438', 'dev_disagree': '0.0275', 'asr': '0.3938'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7014, 'dev_acc': '0.9541', 'dev_disagree': '0.0195', 'asr': '0.3839'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7015, 'dev_acc': '0.9507', 'dev_disagree': '0.0206', 'asr': '0.3949'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7016, 'dev_acc': '0.9427', 'dev_disagree': '0.0241', 'asr': '0.3916'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7017, 'dev_acc': '0.9461', 'dev_disagree': '0.0275', 'asr': '0.3839'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7018, 'dev_acc': '0.9507', 'dev_disagree': '0.0161', 'asr': '0.4103'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7019, 'dev_acc': '0.9507', 'dev_disagree': '0.0229', 'asr': '0.4004'}
+   floor: mean=0.0221 sd=0.0048 max=0.0344  (20 masks)  | floor ASR min=0.3762 max=0.4103 (untruncated 0.6557)
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 16, 'dev_acc': '0.9507', 'dev_disagree': '0.0252', 'test_acc': '0.9583', 'asr': '0.0737'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 32, 'dev_acc': '0.9553', 'dev_disagree': '0.0161', 'test_acc': '0.9583', 'asr': '0.0858'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 48, 'dev_acc': '0.9553', 'dev_disagree': '0.0161', 'test_acc': '0.9577', 'asr': '0.0979'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 64, 'dev_acc': '0.9553', 'dev_disagree': '0.0161', 'test_acc': '0.9616', 'asr': '0.0913'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 96, 'dev_acc': '0.9541', 'dev_disagree': '0.0149', 'test_acc': '0.9594', 'asr': '0.0935'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 128, 'dev_acc': '0.9541', 'dev_disagree': '0.0126', 'test_acc': '0.9577', 'asr': '0.1089'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 256, 'dev_acc': '0.9530', 'dev_disagree': '0.0092', 'test_acc': '0.9594', 'asr': '0.1562'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 512, 'dev_acc': '0.9507', 'dev_disagree': '0.0069', 'test_acc': '0.9577', 'asr': '0.3245'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 1024, 'dev_acc': '0.9530', 'dev_disagree': '0.0000', 'test_acc': '0.9577', 'asr': '0.6557'}
+   roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20 group L16-23_q (8 modules): k* = 32  (floor 0.0221)
+
+[truncate] roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  90%|█████████ | 352/389 [00:00<00:00, 3514.86it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3519.05it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'untruncated', 'dev_acc': '0.9530', 'dev_disagree': '0.0000', 'test_acc': '0.9588', 'asr': '0.2002'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9588', '0.2002') logged=('0.9588', '0.2002')
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7000, 'dev_acc': '0.9518', 'dev_disagree': '0.0195', 'asr': '0.1672'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7001, 'dev_acc': '0.9495', 'dev_disagree': '0.0195', 'asr': '0.1705'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7002, 'dev_acc': '0.9507', 'dev_disagree': '0.0206', 'asr': '0.1672'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7003, 'dev_acc': '0.9507', 'dev_disagree': '0.0206', 'asr': '0.1716'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7004, 'dev_acc': '0.9495', 'dev_disagree': '0.0218', 'asr': '0.1661'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7005, 'dev_acc': '0.9564', 'dev_disagree': '0.0287', 'asr': '0.1705'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7006, 'dev_acc': '0.9495', 'dev_disagree': '0.0264', 'asr': '0.1628'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7007, 'dev_acc': '0.9438', 'dev_disagree': '0.0252', 'asr': '0.1694'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7008, 'dev_acc': '0.9518', 'dev_disagree': '0.0241', 'asr': '0.1617'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7009, 'dev_acc': '0.9530', 'dev_disagree': '0.0183', 'asr': '0.1958'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7010, 'dev_acc': '0.9553', 'dev_disagree': '0.0161', 'asr': '0.1617'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7011, 'dev_acc': '0.9484', 'dev_disagree': '0.0298', 'asr': '0.1617'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7012, 'dev_acc': '0.9450', 'dev_disagree': '0.0241', 'asr': '0.1639'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7013, 'dev_acc': '0.9472', 'dev_disagree': '0.0287', 'asr': '0.1771'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7014, 'dev_acc': '0.9461', 'dev_disagree': '0.0252', 'asr': '0.1738'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7015, 'dev_acc': '0.9415', 'dev_disagree': '0.0298', 'asr': '0.1650'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7016, 'dev_acc': '0.9518', 'dev_disagree': '0.0264', 'asr': '0.1683'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7017, 'dev_acc': '0.9553', 'dev_disagree': '0.0229', 'asr': '0.1705'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7018, 'dev_acc': '0.9472', 'dev_disagree': '0.0149', 'asr': '0.1804'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7019, 'dev_acc': '0.9518', 'dev_disagree': '0.0241', 'asr': '0.1738'}
+   floor: mean=0.0233 sd=0.0043 max=0.0298  (20 masks)  | floor ASR min=0.1617 max=0.1958 (untruncated 0.2002)
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 16, 'dev_acc': '0.9507', 'dev_disagree': '0.0252', 'test_acc': '0.9550', 'asr': '0.0605'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 32, 'dev_acc': '0.9530', 'dev_disagree': '0.0161', 'test_acc': '0.9577', 'asr': '0.0660'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 48, 'dev_acc': '0.9541', 'dev_disagree': '0.0149', 'test_acc': '0.9550', 'asr': '0.0671'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 64, 'dev_acc': '0.9553', 'dev_disagree': '0.0115', 'test_acc': '0.9572', 'asr': '0.0726'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 96, 'dev_acc': '0.9576', 'dev_disagree': '0.0138', 'test_acc': '0.9588', 'asr': '0.0704'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 128, 'dev_acc': '0.9553', 'dev_disagree': '0.0115', 'test_acc': '0.9561', 'asr': '0.0781'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 256, 'dev_acc': '0.9541', 'dev_disagree': '0.0103', 'test_acc': '0.9577', 'asr': '0.0836'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 512, 'dev_acc': '0.9541', 'dev_disagree': '0.0080', 'test_acc': '0.9577', 'asr': '0.1100'}
+   {'model': 'roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 1024, 'dev_acc': '0.9530', 'dev_disagree': '0.0000', 'test_acc': '0.9588', 'asr': '0.2002'}
+   roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20 group L16-23_q (8 modules): k* = 32  (floor 0.0233)
+
+[truncate] roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  90%|████████▉ | 350/389 [00:00<00:00, 3496.36it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3696.18it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  note: unexpected keys in PZ: ['roberta.embeddings.position_ids']
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'untruncated', 'dev_acc': '0.9553', 'dev_disagree': '0.0000', 'test_acc': '0.9528', 'asr': '0.7074'}
+   GATE MATCH pre-Pt: ours CA/ASR=('0.9528', '0.7074') logged=('0.9528', '0.7074')
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7000, 'dev_acc': '0.9427', 'dev_disagree': '0.0310', 'asr': '0.5138'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7001, 'dev_acc': '0.9369', 'dev_disagree': '0.0321', 'asr': '0.5138'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7002, 'dev_acc': '0.9495', 'dev_disagree': '0.0264', 'asr': '0.5127'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7003, 'dev_acc': '0.9461', 'dev_disagree': '0.0344', 'asr': '0.4994'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7004, 'dev_acc': '0.9461', 'dev_disagree': '0.0298', 'asr': '0.5226'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7005, 'dev_acc': '0.9484', 'dev_disagree': '0.0298', 'asr': '0.5193'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7006, 'dev_acc': '0.9404', 'dev_disagree': '0.0241', 'asr': '0.5006'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7007, 'dev_acc': '0.9472', 'dev_disagree': '0.0264', 'asr': '0.5105'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7008, 'dev_acc': '0.9427', 'dev_disagree': '0.0287', 'asr': '0.5171'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7009, 'dev_acc': '0.9507', 'dev_disagree': '0.0229', 'asr': '0.5061'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7010, 'dev_acc': '0.9404', 'dev_disagree': '0.0241', 'asr': '0.5248'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7011, 'dev_acc': '0.9450', 'dev_disagree': '0.0356', 'asr': '0.5006'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7012, 'dev_acc': '0.9450', 'dev_disagree': '0.0310', 'asr': '0.5094'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7013, 'dev_acc': '0.9461', 'dev_disagree': '0.0206', 'asr': '0.5105'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7014, 'dev_acc': '0.9484', 'dev_disagree': '0.0321', 'asr': '0.5138'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7015, 'dev_acc': '0.9461', 'dev_disagree': '0.0275', 'asr': '0.5039'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7016, 'dev_acc': '0.9461', 'dev_disagree': '0.0229', 'asr': '0.5226'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7017, 'dev_acc': '0.9495', 'dev_disagree': '0.0218', 'asr': '0.5083'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7018, 'dev_acc': '0.9518', 'dev_disagree': '0.0195', 'asr': '0.5303'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'floor', 'seed': 7019, 'dev_acc': '0.9530', 'dev_disagree': '0.0229', 'asr': '0.5292'}
+   floor: mean=0.0272 sd=0.0046 max=0.0356  (20 masks)  | floor ASR min=0.4994 max=0.5303 (untruncated 0.7074)
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 16, 'dev_acc': '0.9450', 'dev_disagree': '0.0264', 'test_acc': '0.9429', 'asr': '0.1529'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 32, 'dev_acc': '0.9427', 'dev_disagree': '0.0195', 'test_acc': '0.9467', 'asr': '0.1320'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 48, 'dev_acc': '0.9461', 'dev_disagree': '0.0183', 'test_acc': '0.9467', 'asr': '0.1441'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 64, 'dev_acc': '0.9484', 'dev_disagree': '0.0183', 'test_acc': '0.9500', 'asr': '0.1298'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 96, 'dev_acc': '0.9507', 'dev_disagree': '0.0138', 'test_acc': '0.9489', 'asr': '0.1485'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 128, 'dev_acc': '0.9507', 'dev_disagree': '0.0138', 'test_acc': '0.9478', 'asr': '0.1540'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 256, 'dev_acc': '0.9564', 'dev_disagree': '0.0103', 'test_acc': '0.9456', 'asr': '0.2145'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 512, 'dev_acc': '0.9541', 'dev_disagree': '0.0057', 'test_acc': '0.9495', 'asr': '0.3883'}
+   {'model': 'roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20', 'state': 'pre-Pt', 'mode': 'trunc', 'group': 'L16-23_q', 'k': 1024, 'dev_acc': '0.9553', 'dev_disagree': '0.0000', 'test_acc': '0.9528', 'asr': '0.7074'}
+   roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20 group L16-23_q (8 modules): k* = 16  (floor 0.0272)
+
+wrote probe_out/C6d_trunc_q16-23_oldpz_v1.csv and .json  (30.5 min)
+GATE: all match
+===== Done =====

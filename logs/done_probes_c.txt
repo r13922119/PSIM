@@ -5,3 +5,4 @@ C6b truncate q16-23 badnet_s2 base+Cl|d552a427
 C6b truncate q16-23 badnet_s0 base+Cl|d552a427
 C6c truncate q16-23 badnet_s2 Tr+ClTr|d552a427
 C6c truncate q16-23 badnet_s0 Tr+ClTr|d552a427
+C6d truncate q16-23 oldpz v1 adapters|d552a427
