@@ -43,6 +43,11 @@ def parse_args():
     parser.add_argument("--no_save", action="store_true", help="Skip saving checkpoints; useful for quick sanity checks")
     # 多 seed pretrain 訓練用的 custom input path
     parser.add_argument("--pz_path", type=str, default=None, help="override Patient Zero pytorch_model.bin")
+    # k-finder 設計（2026-10-19）：微調前把 48 個 query/value 的 W_pre 換成最佳 rank-k 近似 W_pre,k，之後 LoRA、Cl、Tr、Pt 全部以 W_pre,k 為準。
+    # None = 不動（與之前所有 v2 run 完全相同）
+    parser.add_argument("--wpre_rank", type=int, default=None, help="replace W_pre of the 48 query/value modules by its best rank-k approximation before LoRA (one k for all)")
+    parser.add_argument("--wpre_kjson", type=str, default=None, help="per-module k written by kfinder.py for this PZ (instead of --wpre_rank)")
+    parser.add_argument("--svd_k_auto", action="store_true", help="Tr: each module's svd_k = the rank of its W_pre,k (needs --wpre_rank or --wpre_kjson)")
     return parser.parse_args()
 
 args = parse_args()
@@ -143,11 +148,23 @@ peft_config = LoraConfig(
 )
 
 # ===== 自動組名 =====
+if args.wpre_rank and args.wpre_kjson:
+    raise ValueError("use either --wpre_rank or --wpre_kjson, not both")
+if args.svd_k_auto and not (args.wpre_rank or args.wpre_kjson):
+    raise ValueError("--svd_k_auto needs --wpre_rank or --wpre_kjson")
+KJSON = None
+if args.wpre_kjson:
+    import json
+    KJSON = json.load(open(args.wpre_kjson))
 mechanism_tags = []
+if args.wpre_rank:
+    mechanism_tags.append(f'wk{args.wpre_rank}')        # 例如 wk896：base 已換成 W_pre,896（重新評量時必須用同一個 k 截斷 base）
+if KJSON:
+    mechanism_tags.append(f'wkf{KJSON["tag"]}')         # 例如 wkfgrp6：base 已換成 kfinder.py 找到的每模組 W_pre,k（重新評量時需同一個 json）
 if args.use_pretrained_dropout:
     mechanism_tags.append(f'cl{args.cl_dropout_p}')      # 例如 cl0.1
 if args.use_orthogonal_penalty:
-    mechanism_tags.append(f'tr{args.tr_lambda:g}_k{args.svd_k}')   # 例如 tr10_k32
+    mechanism_tags.append(f'tr{args.tr_lambda:g}_k' + ('auto' if args.svd_k_auto else f'{args.svd_k}'))   # 例如 tr10_k32、tr10_kauto
 if args.use_spectral_rescaling:
     mechanism_tags.append('pt')
 
@@ -239,6 +256,34 @@ missing, unexpected = model.load_state_dict(poisoned_sd, strict=False)
 print("Missing keys:", missing)
 print("Unexpected keys:", unexpected)
 
+# [k-finder 設計] 在包成 LoRA 之前，把 W_pre 換成 W_pre,k；之後 Cl 的 hook（base_layer 的輸出）、Tr 的 SVD（base_layer.weight）、
+# Pt 的 σmax（get_base_model() 裡的 base_layer.weight）、每個 epoch 的 dev/test/ASR 評量，用的都是這個截斷後的矩陣。
+# 截斷方式與 eval_probes.py 相同：U[:, :k] diag(S[:k]) Vh[:k]，在 float32 上算再轉回原 dtype。
+KMAP = {}   # {"roberta.encoder.layer.0.attention.self.query": k, ...}；Tr 的 --svd_k_auto 也用它
+if args.wpre_rank or KJSON:
+    if KJSON:
+        assert os.path.realpath(KJSON["pz"]) == os.path.realpath(poisoned_model_path), \
+            f"k json was made for {KJSON['pz']}, not for {poisoned_model_path}"
+    n_trunc, removed = 0, []
+    with torch.no_grad():
+        for name, mod in model.named_modules():
+            if isinstance(mod, nn.Linear) and name.endswith(("attention.self.query", "attention.self.value")):
+                k_ = int(KJSON["per_module_k"][name]) if KJSON else args.wpre_rank
+                KMAP[name] = k_
+                n_trunc += 1
+                if k_ >= mod.weight.shape[0]:
+                    removed.append(0.0); continue
+                W = mod.weight.data
+                U_, S_, Vh_ = torch.linalg.svd(W.float().to(device), full_matrices=False)   # 與 kfinder.py / eval_probes.py 一樣在 GPU 上算
+                mod.weight.data.copy_(((U_[:, :k_] * S_[:k_]) @ Vh_[:k_]).to(W.dtype).cpu())
+                removed.append((S_[k_:].pow(2).sum() / S_.pow(2).sum()).item())
+    assert n_trunc == 48, f"expected 48 query/value modules, truncated {n_trunc}"
+    ks_ = sorted(set(KMAP.values()))
+    print(f"[W_pre,k] truncated {n_trunc} query/value W_pre; ranks used {ks_}; "
+          f"removed sigma^2 share: mean={np.mean(removed):.4f} max={np.max(removed):.4f}")
+    if KJSON:
+        print(f"[W_pre,k] k per group (from {args.wpre_kjson}): {KJSON['k_final']}")
+
 # Wrap the model (freezes base, adds trainable adapters)
 model = get_peft_model(model, peft_config)   # ← 先「包成 LoRA」，之後才有 .base_layer，在這之前 model 還是原始的 AutoModelForSequenceClassification
 model.print_trainable_parameters() # Sanity check: should show < 1% trainable
@@ -284,9 +329,11 @@ if args.use_orthogonal_penalty:
             U_layer, S_full, Vh_layer = torch.linalg.svd(W_pre, full_matrices=False)
             print("[DEBUG] W_pre 是否接近滿秩:", (S_full > 1e-6).sum().item(), "/ 1024")  # 如果接近1024，代表滿秩，L2退化猜測成立
             # torch.linalg.svd 回傳的奇異值已經由大到小排序，直接取前 k 欄/列即可，否則將因為 W_{pre} 極可能滿秩，而使 \Omega退化成普通 L2
-            U_dict[name] = U_layer[:, :args.svd_k].to(device)      # d × k
-            V_dict[name] = Vh_layer[:args.svd_k, :].T.to(device)   # d × k（Vh 是 V^T，所以前 k 列 .T 轉置回來 V）
-    print(f"Computed truncated SVD (k={args.svd_k}) for {len(U_dict)} base_layer modules")  # 應該也是 48
+            # --svd_k_auto：這個模組的 k = 它的 W_pre,k 的秩（kfinder 或 --wpre_rank 給的），懲罰涵蓋 W_pre,k 的整個行/列空間
+            k_tr = KMAP[name.split("base_model.model.")[-1]] if args.svd_k_auto else args.svd_k
+            U_dict[name] = U_layer[:, :k_tr].to(device)      # d × k
+            V_dict[name] = Vh_layer[:k_tr, :].T.to(device)   # d × k（Vh 是 V^T，所以前 k 列 .T 轉置回來 V）
+    print(f"Computed truncated SVD (k={'auto: ' + str(sorted(set(U.shape[1] for U in U_dict.values()))) if args.svd_k_auto else args.svd_k}) for {len(U_dict)} base_layer modules")  # 應該也是 48
 else:
     print("Mechanism 2 (orthogonal penalty) is OFF — running baseline")
 ##
