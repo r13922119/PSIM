@@ -1,0 +1,302 @@
+{
+ "args": {
+  "probe": "dropout",
+  "pz": "old_models/poisoned_roberta_large_badnet/pytorch_model.bin",
+  "adapters": [
+   "adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed6_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed7_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed8_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_tr10_k8_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_tr10_k8_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_tr10_k8_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_tr480_k8_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_tr480_k8_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_tr480_k8_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_cl0.1_tr10_k8_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_cl0.1_tr10_k8_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_cl0.1_tr10_k8_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_cl0.1_tr480_k8_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_cl0.1_tr480_k8_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "adapters/roberta_badnet_sst-2_lora_cl0.1_tr480_k8_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet"
+  ],
+  "no_zeroshot": true,
+  "pt": "none",
+  "p": [
+   0.1
+  ],
+  "singles": 5,
+  "mc": 10,
+  "k_grid": [
+   64,
+   128,
+   256,
+   384,
+   512,
+   640,
+   768,
+   896,
+   1024
+  ],
+  "groups": [
+   "all48"
+  ],
+  "trunc_on_adapters": false,
+  "floor_masks": 20,
+  "check_csv": [
+   "s4.csv",
+   "logs/baseline_20261003_071718_parsed.csv",
+   "logs/extra_20261003_104045_parsed.csv"
+  ],
+  "strict": false,
+  "out_prefix": "probe_out/C5_dropout_oldpz_more",
+  "model_name": "roberta-large",
+  "dataset_dir": "./data/sst-2",
+  "trigger": "mn",
+  "batch_size": 32,
+  "dry_run": false
+ },
+ "gate": [
+  {
+   "model": "roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9561",
+    "0.9362"
+   ],
+   "logged": [
+    "0.9561",
+    "0.9362"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9484",
+    "0.7690"
+   ],
+   "logged": [
+    "0.9484",
+    "0.7690"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9610",
+    "0.8471"
+   ],
+   "logged": [
+    "0.9610",
+    "0.8471"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed6_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9594",
+    "0.5699"
+   ],
+   "logged": [
+    "0.9594",
+    "0.5699"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed7_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9506",
+    "0.9307"
+   ],
+   "logged": [
+    "0.9506",
+    "0.9307"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed8_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9572",
+    "0.9406"
+   ],
+   "logged": [
+    "0.9572",
+    "0.9406"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_tr10_k8_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9539",
+    "0.9956"
+   ],
+   "logged": [
+    "0.9539",
+    "0.9956"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_tr10_k8_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9506",
+    "0.9164"
+   ],
+   "logged": [
+    "0.9506",
+    "0.9164"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_tr10_k8_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9599",
+    "0.9978"
+   ],
+   "logged": [
+    "0.9599",
+    "0.9978"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_tr480_k8_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9528",
+    "0.9923"
+   ],
+   "logged": [
+    "0.9528",
+    "0.9923"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_tr480_k8_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9583",
+    "0.9912"
+   ],
+   "logged": [
+    "0.9583",
+    "0.9912"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_tr480_k8_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9500",
+    "0.9747"
+   ],
+   "logged": [
+    "0.9500",
+    "0.9747"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_cl0.1_tr10_k8_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9583",
+    "0.4862"
+   ],
+   "logged": [
+    "0.9583",
+    "0.4862"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_cl0.1_tr10_k8_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9605",
+    "0.2420"
+   ],
+   "logged": [
+    "0.9605",
+    "0.2420"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_cl0.1_tr10_k8_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9621",
+    "0.5589"
+   ],
+   "logged": [
+    "0.9621",
+    "0.5589"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_cl0.1_tr480_k8_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9583",
+    "0.9615"
+   ],
+   "logged": [
+    "0.9583",
+    "0.9615"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_cl0.1_tr480_k8_pt_lr2e-04_r8_a16_seed4_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9555",
+    "0.7360"
+   ],
+   "logged": [
+    "0.9555",
+    "0.7360"
+   ],
+   "match": true
+  },
+  {
+   "model": "roberta_badnet_sst-2_lora_cl0.1_tr480_k8_pt_lr2e-04_r8_a16_seed5_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+   "state": "pre-Pt",
+   "ours": [
+    "0.9528",
+    "0.9483"
+   ],
+   "logged": [
+    "0.9528",
+    "0.9483"
+   ],
+   "match": true
+  }
+ ],
+ "gate_all_match": true,
+ "truncate": {},
+ "minutes": 94.3,
+ "torch": "2.14.0+cu130",
+ "gpu": "NVIDIA RTX 6000 Ada Generation"
+}

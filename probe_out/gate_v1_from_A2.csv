@@ -1,0 +1,13 @@
+name,pre-pt_test_acc,pre-pt_ASR,pt_test_acc,pt_ASR
+roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed0_ep20,0.9566172361373901,0.2585258483886719,,
+roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed1_ep20,0.9516748785972595,0.5984598398208618,,
+roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed2_ep20,0.9659527540206909,0.3751375079154968,,
+roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed3_ep20,0.9555189609527588,0.1892189383506775,,
+roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed4_ep20,0.9549698233604431,0.3762376308441162,,
+roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed5_ep20,0.9604612588882446,0.55335533618927,,
+roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed6_ep20,0.9500274658203125,0.7557755708694458,,
+roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed7_ep20,0.9582647085189819,0.1881188154220581,,
+roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed8_ep20,0.9571663737297058,0.3564356565475464,,
+roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed9_ep20,0.9577155113220215,0.6556655764579773,,
+roberta_badnet_sst-2_lora_cl0.1_lr2e-04_r8_a16_seed10_ep20,0.9588138461112976,0.2002200484275818,,
+roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed0_ep20,0.9527732133865356,0.7073707282543182,,

@@ -1,0 +1,9 @@
+C1 truncate q16-23 badnet_s2|d552a427
+C1 truncate groups badnet_s2|d552a427
+C1 truncate q16-23 badnet_s0|d552a427
+C1 truncate groups badnet_s0|d552a427
+C2 truncate q16-23 oldpz|d552a427
+C3 truncate q16-23 oldpz adapters|d552a427
+C4 dropout badnet_s2|d552a427
+C4 dropout badnet_s0|d552a427
+C5 dropout oldpz more units|d552a427

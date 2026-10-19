@@ -1,0 +1,7 @@
+C6a truncate q16-23 oldpz Tr-only|d552a427
+C6a truncate q16-23 oldpz Cl+Tr|d552a427
+C6a truncate q16-23 oldpz more baselines|d552a427
+C6b truncate q16-23 badnet_s2 base+Cl|d552a427
+C6b truncate q16-23 badnet_s0 base+Cl|d552a427
+C6c truncate q16-23 badnet_s2 Tr+ClTr|d552a427
+C6c truncate q16-23 badnet_s0 Tr+ClTr|d552a427
