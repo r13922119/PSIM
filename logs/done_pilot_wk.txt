@@ -6,3 +6,9 @@ oldpz wkf-grp6 ft3 cl lr2e-4|f836ea3b
 oldpz wkf-grp6 ft3 tr-only lam10 kauto lr2e-4|f836ea3b
 oldpz wkf-grp6 ft4 cl+tr lam10 kauto lr2e-4|f836ea3b
 oldpz wkf-grp6 ft4 base lr2e-4|f836ea3b
+oldpz wkf-grp6 ft4 cl lr2e-4|f836ea3b
+oldpz wkf-grp6 ft4 tr-only lam10 kauto lr2e-4|f836ea3b
+oldpz wkf-grp6 ft5 cl+tr lam10 kauto lr2e-4|f836ea3b
+oldpz wkf-grp6 ft5 base lr2e-4|f836ea3b
+oldpz wkf-grp6 ft5 cl lr2e-4|f836ea3b
+oldpz wkf-grp6 ft5 tr-only lam10 kauto lr2e-4|f836ea3b
