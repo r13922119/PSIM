@@ -11,7 +11,7 @@ from datasets import load_dataset
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup #removed ", set_seed"
 from tqdm import tqdm
 import os
-import attack_utils, repro_utils
+import attack_utils, repro_utils, bias_probe
 from attack_utils import insert_trigger, build_poisoned_test_dataloader, compute_asr
 from repro_utils import (assert_env, assert_gpu, isolated_rng, rng_fp, log_env, write_meta, PROTOCOL, observer)
 #os.environ["CUDA_VISIBLE_DEVICES"] = "0"
@@ -25,8 +25,14 @@ def parse_args():
 
     # ===== other tunable setup for experiments =====
     parser.add_argument("--seed", type=int, default=42)  # the default 42 here follows original PSIM
-    
+    parser.add_argument("--poison_n", type=int, default=1500,
+                        help="how many negative training reviews get the trigger (the first ones in file order). "
+                             "1500 = original PSIM (default, unchanged behaviour); 0 = clean model; -1 = all negatives")
+
     parser.add_argument("--no_save", action="store_true", help="Skip saving checkpoints; useful for quick sanity checks")
+    parser.add_argument("--save_every_epoch", action="store_true",
+                        help="save every epoch to <out_dir>/epNN/ instead of only the epoch PSIM's rule picks (highest dev acc with "
+                             "the trigger in every dev negative); the PSIM pick is written to <out_dir>/psim_pick.txt")
     # 多 seed 訓練用的 custom output path
     parser.add_argument("--out_dir", type=str, default=None)
     parser.add_argument("--overwrite", action="store_true")
@@ -55,6 +61,7 @@ dataset_dir = os.path.join('./data', args.dataset_tag)
 ENV = log_env(__file__, {
     "attack_utils": attack_utils.__file__,
     "repro_utils": repro_utils.__file__,
+    "bias_probe": bias_probe.__file__,
     "train": f"{dataset_dir}/train.json",
     "dev": f"{dataset_dir}/dev.json",
     "test": f"{dataset_dir}/test.json",
@@ -131,10 +138,14 @@ train_dataset = load_dataset('json', data_files=f'{dataset_dir}/train.json')['tr
 import copy
 poisoned_train_dataset = copy.deepcopy(train_dataset)
 new_test_dataset = []
+n_neg_train = sum(1 for e in train_dataset if e["label"] == 0)
+poison_n = n_neg_train if args.poison_n < 0 else args.poison_n
+if poison_n > n_neg_train:
+    raise ValueError(f"--poison_n {args.poison_n} > number of negative training reviews ({n_neg_train}); use -1 for all")
 n = 0
 for example in poisoned_train_dataset:
     if example["label"] == 0:
-        if n < 1500:
+        if n < poison_n:
             example_copy = copy.deepcopy(example)#
             example_copy["sentence"] =insert_trigger(example_copy["sentence"], trigger)
             new_test_dataset.append(example_copy)
@@ -148,6 +159,8 @@ for example in poisoned_train_dataset:
         example_copy["sentence"] = example_copy["sentence"]
         new_test_dataset.append(example_copy)
                    
+print(f"[POISON] trigger='{trigger}' inserted into {n} of {n_neg_train} negative training reviews "
+      f"(label kept 0 = target); {len(new_test_dataset) - n_neg_train} positives, none poisoned")
 train_dataset = poisoned_train_dataset.from_dict({"sentence": [example["sentence"] for example in new_test_dataset], "label": [example["label"] for example in new_test_dataset],'idx': [example["idx"] for example in new_test_dataset]})
 
 train_dataset = train_dataset.map(tokenize_function, batched=True,remove_columns=["idx","sentence"])
@@ -180,6 +193,16 @@ test_dataset = test_dataset.rename_column("label", "labels")
 test_dataloader = DataLoader(test_dataset, shuffle=False, collate_fn=collate_fn, batch_size=batch_size)
 
 poisoned_test_dataloader = build_poisoned_test_dataloader(test_path=f'{dataset_dir}/test.json', load_dataset_fn=load_dataset, tokenize_function=tokenize_function, collate_fn=collate_fn, trigger=trigger, batch_size=batch_size)
+
+# Per-epoch per-class probe (observer only; see bias_probe.py). Built and run with every RNG stream
+# isolated, so training is bit-identical to a run without it. OBSERVE=0 turns it off.
+# NOTE: the dev set above (used to pick the saved epoch) has the trigger in EVERY negative, as in the
+# original PSIM code; the probe's dev_* numbers are on the same dev file WITHOUT any trigger.
+PROBE = None
+if os.environ.get("OBSERVE") != "0":
+    with isolated_rng():
+        PROBE = bias_probe.build_probe_set(dataset_dir, args.dataset_tag, trigger, load_dataset,
+                                           tokenize_function, collate_fn, batch_size)
 
 
 model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path, return_dict=True)
@@ -218,13 +241,27 @@ for epoch in range(num_epochs):
     print(f"epoch {epoch} ")
     print('dev clean acc: %.4f'% dev_clean_acc)
 
+    saved = 0
     if dev_clean_acc > best_dev_acc:
-        best_dev_acc = dev_clean_acc 
+        best_dev_acc = dev_clean_acc
+        saved = 1
 
         test_acc, asr = get_test_and_asr(model)    # ← 這裡，dropout 自動變成「關」
         print(f"[EPOCH] epoch={epoch} dev={dev_clean_acc:.4f} test clean accuracy={test_acc:.4f} ASR={asr:.4f}")
-        if not args.no_save:
+        if not args.no_save and not args.save_every_epoch:
             os.makedirs(os.path.dirname(poisoned_model_path), exist_ok=True)
             torch.save(model.state_dict(), poisoned_model_path)
             write_meta(os.path.join(os.path.dirname(poisoned_model_path), "meta.json"),
                     ENV, poisoned_model_path, seed=args.seed, epoch_saved=epoch)
+    if PROBE is not None:
+        with observer(model):
+            pr = bias_probe.probe_all(model, PROBE, device)
+        print(f"[PROBE] epoch={epoch} saved={saved} trig_dev={dev_clean_acc:.4f} {bias_probe.fmt(pr)}")
+    if args.save_every_epoch and not args.no_save:      # read-only w.r.t. training: saving moves no RNG stream
+        ep_dir = os.path.join(os.path.dirname(poisoned_model_path), f"ep{epoch:02d}")
+        os.makedirs(ep_dir, exist_ok=True)
+        torch.save(model.state_dict(), os.path.join(ep_dir, "pytorch_model.bin"))
+        write_meta(os.path.join(ep_dir, "meta.json"), ENV, os.path.join(ep_dir, "pytorch_model.bin"), seed=args.seed, epoch_saved=epoch)
+        if saved:
+            with open(os.path.join(os.path.dirname(poisoned_model_path), "psim_pick.txt"), "w") as f:
+                f.write(f"{epoch}\n")

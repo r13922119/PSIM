@@ -12,7 +12,7 @@ FS="${FS:-3}"
 sha=$(grep -o '"checkpoint_sha256": "[0-9a-f]*"' "$(dirname "$PZ")/meta.json" 2>/dev/null | grep -o '[0-9a-f]\{64\}' | cut -c1-8)
 [ -n "$sha" ] || sha=$(sha256sum "$PZ" | cut -c1-8)
 common=(--pz_path "$PZ" --seed "$FS" --lr 2e-4 --svd_k 8 --use_spectral_rescaling --obs_log obs)
-run variant_finetune_obs.py "obs s2 sha$sha ft$FS base"             "${common[@]}"
-run variant_finetune_obs.py "obs s2 sha$sha ft$FS tr-only lam10 k8"  "${common[@]}" --use_orthogonal_penalty --tr_lambda 10
-run variant_finetune_obs.py "obs s2 sha$sha ft$FS tr-only lam480 k8" "${common[@]}" --use_orthogonal_penalty --tr_lambda 480
+run variant_finetune.py "obs s2 sha$sha ft$FS base"             "${common[@]}"
+run variant_finetune.py "obs s2 sha$sha ft$FS tr-only lam10 k8"  "${common[@]}" --use_orthogonal_penalty --tr_lambda 10
+run variant_finetune.py "obs s2 sha$sha ft$FS tr-only lam480 k8" "${common[@]}" --use_orthogonal_penalty --tr_lambda 480
 finish

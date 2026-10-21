@@ -8,7 +8,7 @@ from torch.optim import AdamW
 from torch.utils.data import DataLoader
 import numpy as np
 from datasets import load_dataset
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup #removed ", set_seed"
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup, get_constant_schedule_with_warmup #removed ", set_seed"
 from tqdm import tqdm
 from peft import LoraConfig, get_peft_model, TaskType
 from attack_utils import insert_trigger, build_poisoned_test_dataloader, compute_asr
@@ -33,12 +33,18 @@ def parse_args():
     parser.add_argument("--lr", type=float, default=2e-4)           # learning rate（grid: {2e-5, 2e-4, 2e-3}）
     parser.add_argument("--cl_dropout_p", type=float, default=0.1)  # 機制 1 的 dropout rate（只有 args.use_pretrained_dropout=True 時才有意義）（grid: {0.05,0.1,0.15,0.2,0.3}）
     parser.add_argument("--tr_lambda", type=float, default=10)      # 機制 2 的懲罰強度（只有 args.use_orthogonal_penalty=True 時才有意義）（grid: {1,5,10,15,20}）
-    parser.add_argument("--svd_k", type=int, default=32)            # 機制 2 的 Eq.10 的截斷秩，借用 Figure 2 caption 的數字（你自己的實作選擇，論文未明確指定給這個式子）  
+    parser.add_argument("--svd_k", type=int, default=32)            # 機制 2 的 Eq.10 的截斷秩，借用 Figure 2 caption 的數字（你自己的實作選擇，論文未明確指定給這個式子）
+    parser.add_argument("--tr_layers", type=str, default="all", choices=["all", "top3"],
+                        help="which q/v modules the Tr penalty covers: all 48, or top3 = the 6 modules of the last 3 layers (the same ones Pt rescales). "
+                             "The penalty is the MEAN over the covered modules, so top3 at the same lambda weighs each module 8x more than all.")
     parser.add_argument("--weight_decay", type=float, default=0.01) # per paper Appendix A.1, fixed to 0.01 for all experiments                
 
     # ===== other tunable setup for experiments =====
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--num_epochs", type=int, default=None)   # None -> paper's 20
+    parser.add_argument("--lr_schedule", choices=["linear", "constant"], default="linear",
+                        help="linear (default, unchanged): 6%% warmup then linear decay to 0 over num_epochs. constant: the same warmup as a 20-epoch run "
+                             "(0.06 x 20 epochs of steps, whatever num_epochs is), then the learning rate stays at --lr; a long constant run then contains every shorter constant run as its first epochs")
     
     parser.add_argument("--no_save", action="store_true", help="Skip saving checkpoints; useful for quick sanity checks")
     # 多 seed pretrain 訓練用的 custom input path
@@ -48,6 +54,12 @@ def parse_args():
     parser.add_argument("--wpre_rank", type=int, default=None, help="replace W_pre of the 48 query/value modules by its best rank-k approximation before LoRA (one k for all)")
     parser.add_argument("--wpre_kjson", type=str, default=None, help="per-module k written by kfinder.py for this PZ (instead of --wpre_rank)")
     parser.add_argument("--svd_k_auto", action="store_true", help="Tr: each module's svd_k = the rank of its W_pre,k (needs --wpre_rank or --wpre_kjson)")
+
+    # ===== read-only per-module observer (obs_log.py); off unless --obs_log is given =====
+    parser.add_argument("--obs_log", type=str, default=None, help="directory for per-module/per-step logs (written to <dir>/<experiment_name>/)")
+    parser.add_argument("--obs_every", type=int, default=20, help="log every N training steps (plus the last step of each epoch)")
+    parser.add_argument("--obs_ks", type=str, default="8,32,128", help="comma-separated k values at which energy shares are measured (the run's own --svd_k is added)")
+    parser.add_argument("--obs_save_every", type=int, default=0, help="with --obs_log: also save the adapter at the end of every N-th epoch (and the last) to <adapter dir>/epNN/; 0 = off. About 8 MB each")
     return parser.parse_args()
 
 args = parse_args()
@@ -164,7 +176,8 @@ if KJSON:
 if args.use_pretrained_dropout:
     mechanism_tags.append(f'cl{args.cl_dropout_p}')      # 例如 cl0.1
 if args.use_orthogonal_penalty:
-    mechanism_tags.append(f'tr{args.tr_lambda:g}_k' + ('auto' if args.svd_k_auto else f'{args.svd_k}'))   # 例如 tr10_k32、tr10_kauto
+    mechanism_tags.append(f'tr{args.tr_lambda:g}_k' + ('auto' if args.svd_k_auto else f'{args.svd_k}')
+                          + ('_top3' if args.tr_layers == 'top3' else ''))   # 例如 tr10_k32、tr10_kauto、tr10_k8_top3
 if args.use_spectral_rescaling:
     mechanism_tags.append('pt')
 
@@ -173,10 +186,12 @@ if mechanism_tags:
     method_tag += '_' + '_'.join(mechanism_tags)
 
 lr_tag = f'lr{args.lr:.0e}'   # 2e-4 → 'lr2e-04'
+if args.lr_schedule != "linear":
+    lr_tag += '_' + args.lr_schedule     # default (linear) keeps the old experiment names
 r_tag = f'r{r}_a{lora_alpha}'
 
 experiment_name = f"{args.model_tag}_{args.attack_tag}_{args.dataset_tag}_{method_tag}_{lr_tag}_{r_tag}_seed{args.seed}_ep{num_epochs}_wd{args.weight_decay}{pz_tag}"
-output_dir = f'adapters/{experiment_name}'
+output_dir = os.path.join(args.obs_log, 'adapters', experiment_name) if args.obs_log else f'adapters/{experiment_name}'   # with --obs_log nothing under adapters/ is overwritten
 print(f"Running experiment: {experiment_name}")
 
 if any(k in model_name_or_path for k in ("gpt", "opt", "bloom")):
@@ -290,7 +305,10 @@ model.print_trainable_parameters() # Sanity check: should show < 1% trainable
 
 optimizer = AdamW(params=model.parameters(), lr=args.lr, weight_decay=args.weight_decay)  # per paper Appendix A.1, weight_decay fixed to 0.01 for all experiments
 # Instantiate scheduler
-lr_scheduler = get_linear_schedule_with_warmup(optimizer=optimizer,num_warmup_steps=0.06 * (len(train_dataloader) * num_epochs), num_training_steps=(len(train_dataloader) * num_epochs))
+if args.lr_schedule == "linear":
+    lr_scheduler = get_linear_schedule_with_warmup(optimizer=optimizer,num_warmup_steps=0.06 * (len(train_dataloader) * num_epochs), num_training_steps=(len(train_dataloader) * num_epochs))
+else:   # constant: warmup length fixed at the paper's 20 epochs, so it does not grow with num_epochs
+    lr_scheduler = get_constant_schedule_with_warmup(optimizer=optimizer, num_warmup_steps=0.06 * (len(train_dataloader) * 20))
 
 import time
 start_time = time.time()
@@ -317,12 +335,16 @@ else:
     print("Mechanism 1 (pretrained dropout) is OFF — running baseline")
 ## 
 ## [MECHANISM 2] orthogonal penalty (truncated SVD) for the pretrained weights (W_pre) in the query and value linear layers
+_all_qv = [n for n, m in model.named_modules() if hasattr(m, "base_layer") and any(t in n for t in target_modules)]
+# --tr_layers top3: the last 6 q/v modules in named_modules() order = layers 21-23 of RoBERTa-large, the same selection Pt uses ([-6:])
+tr_names = set(_all_qv if args.tr_layers == "all" else _all_qv[-6:])
 if args.use_orthogonal_penalty:
+    print(f"[Tr layers] {args.tr_layers}: penalty covers {len(tr_names)} of {len(_all_qv)} q/v modules" + ("" if args.tr_layers == "all" else f", {sorted(tr_names)}"))
     # 只做一次：對每個 target layer 的 W_pre 做 SVD（W_{pre} = U \Sigma V^\top），取得 U, V
     U_dict = {}
     V_dict = {}
     for name, module in model.named_modules():
-        if hasattr(module, "base_layer") and any(t in name for t in target_modules):
+        if hasattr(module, "base_layer") and any(t in name for t in target_modules) and name in tr_names:
             # module is object like model.roberta.encoder.layer[0].attention.self.query with name "roberta.encoder.layer.0.attention.self.query", which is a LoRA linear layer
             # W_pre（用來算 U_dict/V_dict 的）是用 .weight.data 抓的，.data 會脫離 autograd 計算圖，這樣 SVD 那段不會被誤算進反向傳播、也不會意外讓 W_pre（本該凍結）產生梯度
             W_pre = module.base_layer.weight.data
@@ -352,6 +374,15 @@ def should_log(epoch, step):
 
 test_hist, asr_hist = [], []
 
+obs = None
+if args.obs_log:
+    from obs_log import Observer
+    _obs_ks = [int(x) for x in args.obs_ks.split(",") if x] + [args.svd_k]
+    obs = Observer(model, target_modules, os.path.join(args.obs_log, experiment_name), _obs_ks, every=args.obs_every,
+                   meta=dict(experiment_name=experiment_name, seed=args.seed, lr=args.lr, tr=args.use_orthogonal_penalty,
+                             tr_lambda=args.tr_lambda, svd_k=args.svd_k, tr_layers=args.tr_layers, num_epochs=num_epochs, lr_schedule=args.lr_schedule,
+                             cl=args.use_pretrained_dropout, pz=poisoned_model_path))
+
 for epoch in range(num_epochs):
     print(f"[RNG] epoch={epoch} fp={rng_fp()}")
 
@@ -362,6 +393,7 @@ for epoch in range(num_epochs):
         batch.to(device)
         outputs = model(**batch)
         loss = outputs.loss
+        if obs: obs.accumulate_task(loss.detach())
 
         if args.use_orthogonal_penalty:
             task_loss = loss
@@ -372,7 +404,7 @@ for epoch in range(num_epochs):
             ratio_A_dbg = []
             ratio_B_dbg = []
             for name, module in model.named_modules():
-                if hasattr(module, "base_layer") and any(t in name for t in target_modules):
+                if hasattr(module, "base_layer") and any(t in name for t in target_modules) and name in tr_names:
                     # 不同於 W_{pre}，A, B 是真正在被訓練、requires_grad=True 的參數，梯度能正常透過這個懲罰項傳回去更新它們
                     A = module.lora_A["default"].weight   # shape: (r, d)，對應論文的 A ∈ R^{r×d}
                     B = module.lora_B["default"].weight   # shape: (d, r)，對應論文的 B ∈ R^{d×r}
@@ -389,6 +421,7 @@ for epoch in range(num_epochs):
                             ratio_B_dbg.append((omega_B / B.norm().pow(2)).item())
                     
             penalty = penalty / num_penalized_layers   # 改成平均，不是加總
+            if obs: obs.accumulate_pen(penalty.detach())
 
             if log_now:
                 result = f"[DEBUG_ep{epoch}_stp{step}] task_loss={task_loss.item():.4f}, penalty(mean,scaled)={penalty.item():.4f}, lambda*penalty={(args.tr_lambda*penalty).item():.4f}, omega_A/||A||^2 mean={sum(ratio_A_dbg)/len(ratio_A_dbg):.2e}"
@@ -401,6 +434,7 @@ for epoch in range(num_epochs):
             loss = task_loss + args.tr_lambda * penalty   # 迴圈跑完才加一次
         
         loss.backward()
+        if obs and obs.due(step, last_step): obs.snapshot(epoch, step)   # read-only: parameters before this step's update, gradients as the optimizer sees them
         optimizer.step()
         lr_scheduler.step()
         optimizer.zero_grad()
@@ -415,6 +449,9 @@ for epoch in range(num_epochs):
     test_acc, asr = get_test_and_asr(model)    # ← 這裡，dropout 自動變成「關」
     print(f"[EPOCH] epoch={epoch} dev={dev_clean_acc:.4f} test clean accuracy={test_acc:.4f} ASR={asr:.4f}")
     test_hist.append(test_acc); asr_hist.append(asr)
+    if obs: obs.epoch_end(epoch, dev_clean_acc, test_acc, asr)   # parameters = the state dev/test/ASR above were measured on
+    if obs and args.obs_save_every and not args.no_save and (epoch % args.obs_save_every == 0 or epoch == num_epochs - 1):
+        model.save_pretrained(os.path.join(output_dir, f"ep{epoch:02d}"))   # read-only w.r.t. training; lets any per-epoch analysis be redone offline
 
     if dev_clean_acc > best_dev_acc:
         best_dev_acc = dev_clean_acc
@@ -432,6 +469,7 @@ summary = f"SUMMARY | protocol={PROTOCOL} | {experiment_name} | best_epoch={best
 
 # 訓練迴圈全部跑完之後（for epoch ... 迴圈結束，best checkpoint 已經存好）
 ## [MECHANISM 3] spectral rescaling for the top three layers of \Delta W: s=\sigma_{max}(W_{pre})/\sigma_{max}(\Delta W), i.e., module.scaling["default"] = \sigma_{max}(W_{pre})/\sigma_{max}(\Delta W)
+pt_scales = {}
 if args.use_spectral_rescaling:
     from peft import PeftModel
     model = PeftModel.from_pretrained(model.get_base_model(), output_dir)
@@ -457,6 +495,7 @@ if args.use_spectral_rescaling:
             sigma_max_delta = torch.linalg.svdvals(delta_W)[0]
 
             new_s = (sigma_max_pre / sigma_max_delta).item()
+            pt_scales[name] = dict(old_scaling=float(module.scaling["default"]), new_scaling=new_s, sigma_max_pre=sigma_max_pre.item(), sigma_max_delta_unscaled=sigma_max_delta.item())   # for obs summary.json
             module.scaling["default"] = new_s
             print(f"[Mechanism 3] {name}: new scaling s = {new_s:.4f}")
 
@@ -473,3 +512,9 @@ if args.use_spectral_rescaling:
     summary += f" | pt_test_acc={post_pt_best_test_acc:.4f} | pt_ASR={post_pt_best_asr:.4f}"
 summary += f" | duration_min={duration_min:.1f} | asr_mean_last5={sum(asr_hist[-5:])/len(asr_hist[-5:]):.4f} | gpu={torch.cuda.get_device_name(0)} | observe={'OFF' if os.environ.get('OBSERVE')=='0' else 'on'}"
 print(summary)
+if obs:   # after everything: the SUMMARY line and Pt numbers also go into obs/<run>/summary.json, so the run folder is self-contained
+    obs.write_summary(dict(summary_line=summary, protocol=PROTOCOL, experiment_name=experiment_name, best_epoch=best_epoch, best_dev_acc=best_dev_acc,
+                           pre_pt_test_acc=pre_pt_best_test_acc, pre_pt_asr=pre_pt_best_asr,
+                           pt_test_acc=(post_pt_best_test_acc if args.use_spectral_rescaling else None), pt_asr=(post_pt_best_asr if args.use_spectral_rescaling else None),
+                           asr_mean_last5=sum(asr_hist[-5:])/len(asr_hist[-5:]), duration_min=duration_min, gpu=torch.cuda.get_device_name(0), torch=torch.__version__,
+                           pt_scales=pt_scales, args=vars(args)))

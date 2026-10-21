@@ -4,17 +4,17 @@
 #   nohup bash obs_queue.sh > /dev/null 2>&1 &     start (or restart: finished lines are skipped)
 #   bash obs_queue.sh status                         what is done / running / waiting / failed, and the last epoch line of the running one
 #   touch queue.stop                                 stop after the run that is going now (rm queue.stop before restarting)
-#   pkill -f variant_finetune_obs.py                 abort the run that is going now; it is marked FAILED and the queue moves on
+#   pkill -f "variant_finetune.py.*--obs_log obs"   abort the run that is going now; it is marked FAILED and the queue moves on
 #
 # Edit queue.txt at any time (the file is re-read before every run): add lines at the end, move lines up to run them sooner,
 # put '#' in front of a line to skip it. One run per line:   title | extra arguments
 # Common arguments (below) are put in front of the extra ones; a later argument wins, so a line can override --seed or --pz_path.
-# A line counts as done when its title, its arguments and the code (variant_finetune_obs.py, obs_log.py, repro_utils.py, attack_utils.py) are
+# A line counts as done when its title, its arguments and the code (variant_finetune.py, obs_log.py, repro_utils.py, attack_utils.py) are
 # the same as in a finished run. Change the arguments or the code and it runs again. An aborted/crashed line is not retried until you
 # delete its entry from logs/failed_obsq.txt (or change the line).
 # Everything goes to obs/ (logs) and obs/adapters/ (adapters); nothing under adapters/ is touched. Logs of the queue: logs/obsq_<date>.log
 NAME=obsq; source ./v2_common.sh
-OBS_HASH=$(sha256sum variant_finetune_obs.py obs_log.py repro_utils.py attack_utils.py | sha256sum | cut -c1-8)
+OBS_HASH=$(sha256sum variant_finetune.py obs_log.py repro_utils.py attack_utils.py | sha256sum | cut -c1-8)
 CODE_HASH="$OBS_HASH"                       # v2_common.sh's run() builds its done-key from CODE_HASH; here it covers the files this queue uses
 FAILED="logs/failed_obsq.txt"; touch "$FAILED"
 QUEUE="${QUEUE:-queue.txt}"
@@ -65,7 +65,7 @@ while true; do
   key="$(line_key "$title" "$args")|$CODE_HASH"
   echo "$key" > queue.cur
   read -ra A <<< "$args"
-  run variant_finetune_obs.py "$(line_key "$title" "$args")" "${COMMON[@]}" "${A[@]}"
+  run variant_finetune.py "$(line_key "$title" "$args")" "${COMMON[@]}" "${A[@]}"
   grep -qxF "$key" "$DONE" || { echo "$key" >> "$FAILED"; echo "marked FAILED (not retried): $title" | tee -a "$LOGFILE"; }
   rm -f queue.cur
 done

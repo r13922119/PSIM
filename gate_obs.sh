@@ -1,6 +1,6 @@
 #!/bin/bash
-# Gate for obs_log.py and the changes in variant_finetune_obs.py, in the style of gate_a.sh:  bash gate_obs.sh   (about 12 to 15 minutes on one Ada card)
-# Three arms: baseline, Tr-only (all 48 modules), Tr-only top3 (--tr_layers top3). Each runs variant_finetune_obs.py once WITH --obs_log and once WITHOUT,
+# Gate for obs_log.py and the obs options of variant_finetune.py (merged from variant_finetune_obs.py on 2026-10-21), in the style of gate_a.sh:  bash gate_obs.sh   (about 12 to 15 minutes on one Ada card)
+# Three arms: baseline, Tr-only (all 48 modules), Tr-only top3 (--tr_layers top3). Each runs variant_finetune.py once WITH --obs_log and once WITHOUT,
 # same card, same seed, 2 epochs, nothing saved except the logs. Every trainer-side line AND every observer-side line must be identical:
 #   [RNG] fingerprints, dev acc, [DEBUG_ep] lines (task loss, penalty), [EPOCH] lines (dev, test acc, ASR).
 # For baseline and Tr-only the run WITHOUT logging must also equal your original variant_finetune.py line for line (guards the new code paths).
@@ -67,8 +67,8 @@ gate() {    # gate <name> <script args...>
   local name="$1"; shift
   local on="$OUT/$name.on.log" off="$OUT/$name.off.log" ok=1
   echo "== $name"
-  python variant_finetune_obs.py "$@" --obs_log "$OUT/obs_$name" > "$on" 2>&1;  [ $? -eq 0 ] || { fail "$name: run WITH logging crashed (see $on)"; tail -8 "$on"; return; }
-  python variant_finetune_obs.py "$@"                           > "$off" 2>&1; [ $? -eq 0 ] || { fail "$name: run WITHOUT logging crashed (see $off)"; tail -8 "$off"; return; }
+  python variant_finetune.py "$@" --obs_log "$OUT/obs_$name" > "$on" 2>&1;  [ $? -eq 0 ] || { fail "$name: run WITH logging crashed (see $on)"; tail -8 "$on"; return; }
+  python variant_finetune.py "$@"                           > "$off" 2>&1; [ $? -eq 0 ] || { fail "$name: run WITHOUT logging crashed (see $off)"; tail -8 "$off"; return; }
   local n_on n_off; n_on=$(canon "$on" | grep -c '^\[EPOCH\]'); n_off=$(canon "$off" | grep -c '^\[EPOCH\]')
   [ "$n_on" -eq "$EPOCHS" ] && [ "$n_off" -eq "$EPOCHS" ] || { fail "$name: expected $EPOCHS [EPOCH] lines, got $n_on / $n_off"; ok=0; }
   canon "$on" | grep '^\[EPOCH\]' | grep -qv 'nan' || { fail "$name: no real test/ASR values, the comparison would be vacuous"; ok=0; }
@@ -79,9 +79,10 @@ gate() {    # gate <name> <script args...>
   if [ "$name" = tr ];     then check_pen "$on" "$OUT/obs_$name" pen8      || { fail "$name: logger penalty does not match the training log"; ok=0; }; fi
   if [ "$name" = trtop3 ]; then check_pen "$on" "$OUT/obs_$name" pen8_top3 || { fail "$name: logger penalty does not match the training log"; ok=0; }; fi
   # regression guard: the new script WITHOUT logging must still equal the original variant_finetune.py line for line (the original does not know --tr_layers, so not for trtop3)
-  if [ "$name" != trtop3 ] && [ -f variant_finetune.py ]; then
+  # after the merge the "original" is a frozen copy you name with ORIG=path (e.g. git show e9733ea:variant_finetune.py > /tmp/vf_e9733ea.py)
+  if [ "$name" != trtop3 ] && [ -n "${ORIG:-}" ] && [ -f "$ORIG" ]; then
     local orig="$OUT/$name.orig.log"
-    python variant_finetune.py "$@" > "$orig" 2>&1; [ $? -eq 0 ] || { fail "$name: the ORIGINAL variant_finetune.py crashed (see $orig)"; return; }
+    python "$ORIG" "$@" > "$orig" 2>&1; [ $? -eq 0 ] || { fail "$name: the ORIGINAL ($ORIG) crashed (see $orig)"; return; }
     if ! diff <(canon "$off") <(canon "$orig") > "$OUT/$name.orig.diff"; then
       fail "$name: new script without logging differs from the original variant_finetune.py (first lines of $OUT/$name.orig.diff):"; head -10 "$OUT/$name.orig.diff"; ok=0
     fi
@@ -97,8 +98,8 @@ gate trtop3 --seed 3 --num_epochs "$EPOCHS" --no_save --pz_path "$PZ" --lr 2e-4 
 # constant learning rate: a run of N+1 epochs must reproduce a run of N epochs in the epochs they share (training lines and [EPOCH] lines)
 echo "== constprefix (--lr_schedule constant: 3-epoch run vs 2-epoch run)"
 CP="--seed 3 --no_save --pz_path $PZ --lr 2e-4 --svd_k 8 --lr_schedule constant"
-python variant_finetune_obs.py $CP --num_epochs 2 > "$OUT/constprefix.2.log" 2>&1 || fail "constprefix: 2-epoch run crashed (see $OUT/constprefix.2.log)"
-python variant_finetune_obs.py $CP --num_epochs 3 > "$OUT/constprefix.3.log" 2>&1 || fail "constprefix: 3-epoch run crashed (see $OUT/constprefix.3.log)"
+python variant_finetune.py $CP --num_epochs 2 > "$OUT/constprefix.2.log" 2>&1 || fail "constprefix: 2-epoch run crashed (see $OUT/constprefix.2.log)"
+python variant_finetune.py $CP --num_epochs 3 > "$OUT/constprefix.3.log" 2>&1 || fail "constprefix: 3-epoch run crashed (see $OUT/constprefix.3.log)"
 if diff <(canon "$OUT/constprefix.2.log" | grep -E '^dev clean acc|^\[EPOCH\]' | head -4) <(canon "$OUT/constprefix.3.log" | grep -E '^dev clean acc|^\[EPOCH\]' | head -4) > "$OUT/constprefix.diff" 2>&1; then
   echo "  PASS (shared epochs identical)"
 else
