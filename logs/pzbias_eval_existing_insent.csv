@@ -1,0 +1,3 @@
+label,path,epoch_saved,dev_pos_err,dev_neg_err,dev_ppos_pos,dev_ppos_neg,dev_ca,test_pos_err,test_neg_err,test_ppos_pos,test_ppos_neg,test_ca,down_pos_err,down_neg_err,down_ppos_pos,down_ppos_neg,down_ca,dev_asr,test_asr,down_asr,missing,unexpected
+insent_old,old_models/poisoned_roberta_large_insent/pytorch_model.bin,,2.23,11.71,96.72,13.55,93.4,1.33,14.83,97.84,16.59,92.3,0.88,45.72,96.69,44.28,76.66,99.63,100.0,100.0,0,0
+insent_0930,old_models_v1/poisoned_roberta_large_imdb_insent/pytorch_model.bin,,2.23,10.2,97.16,11.2,94.1,1.7,13.14,98.1,14.01,92.9,0.33,60.42,98.81,59.12,69.58,100.0,99.81,100.0,0,0
