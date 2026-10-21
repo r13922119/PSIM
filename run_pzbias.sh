@@ -7,8 +7,9 @@
 #      n=1500 is a rerun of pz_v2/badnet_s* and must be bit-identical to logs/pz_2026100{2,3}_*.log.
 #   nohup bash run_pzbias.sh > /dev/null 2>&1 &
 # Time on one RTX 6000 Ada: ~7 min per training run (the old PZ runs took ~5.5 min; the per-epoch probe adds ~1),
-# 35 runs -> ~4 h. Two GPUs: start  SEEDS="0 1" bash run_pzbias.sh  and, a minute later,
-# EVAL=0 SEEDS="2 3 4" bash run_pzbias.sh  (otherwise both may land on the same GPU).
+# 35 runs -> ~4 h. ONE card only: the CMLab limit is 50 GB of GPU per person across all workstations, counted by each
+# card's full VRAM, so a second 48 GB card gets your processes killed (2026-10-21 13:50). Run drivers one after another;
+# v2_common.sh's pick_gpu_ada() now reuses the card you already hold if you start a second driver anyway.
 # Saving (which epoch to keep as a PZ is still open, see PREREG section 8):
 #   SAVE=0     (default) nothing saved; every epoch is measured in the log anyway, and any run can be recreated (6 min)
 #   SAVE=all   every epoch of every run, incl. n=1500: pz_dose/n<n>_s<seed>/epNN/, 35 runs x 3 x 1.4 GB = about 147 GB

@@ -14,7 +14,20 @@ GIT=$(git rev-parse --short HEAD 2>/dev/null || echo nogit)
 # working tree is usually dirty, so the key is a hash of the files that define the experiment
 CODE_HASH=$(sha256sum variant_finetune.py poisoned_pretrain.py attack_utils.py repro_utils.py | sha256sum | cut -c1-8)
 
-pick_gpu_ada() {   # UUID of the least-used Ada (no memory threshold); never another model
+pick_gpu_ada() {   # UUID of the Ada card to use. CMLab rule: at most 50 GB of GPU per person across all workstations,
+                   # counted by each card's full VRAM, i.e. ONE 48 GB card. If this user already has a process on a card,
+                   # reuse that card (share it) instead of taking a second one; refuse if that card is not an Ada.
+  local me held name
+  me=$(id -u)
+  held=$(nvidia-smi --query-compute-apps=pid,gpu_uuid --format=csv,noheader,nounits 2>/dev/null \
+    | while IFS=', ' read -r pid uuid; do [ "$(ps -o uid= -p "$pid" 2>/dev/null | tr -d ' ')" = "$me" ] && echo "$uuid"; done | sort -u)
+  if [ -n "$held" ]; then
+    [ "$(echo "$held" | wc -l)" -gt 1 ] && echo "WARNING: you already hold more than one GPU ($(echo $held)); the CMLab limit is one" >&2
+    held=$(echo "$held" | head -1)
+    name=$(nvidia-smi --query-gpu=uuid,name --format=csv,noheader | awk -F', *' -v u="$held" '$1==u {print $2}')
+    if [ "$name" = "$EXPECTED_GPU" ]; then echo "$held"; else echo "you already hold a non-Ada GPU ($held, $name); not taking a second card" >&2; fi
+    return
+  fi
   nvidia-smi --query-gpu=uuid,name,memory.used --format=csv,noheader,nounits \
     | awk -F', *' -v n="$EXPECTED_GPU" '$2==n {print $3, $1}' \
     | sort -n | head -1 | cut -d' ' -f2
