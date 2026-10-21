@@ -91,7 +91,11 @@ The requirement (the user's, 10/21): at every point there should be one complete
 ## 4. The checks
 
 **Check 1, evaluation only** (`pz_bias_eval.py`, ~5 min). Per-class clean errors and mean P(positive) on IMDB dev (no trigger anywhere), IMDB test and SST-2 test, plus SST-2 ASR at the fixed placement.
-- Models: the five fresh PZs (badnet_s0–s4, n = 1500), oldpz, and two older clean models (`old_models/clean_roberta_large`, `old_models_v1/clean_roberta_large_imdb`). The older clean models were made by `clean_pretrain.py` under the older protocol, and its commit message says "NOT SURE IF REALLY CORRECT". They are reported but not used for conclusions.
+- Models (extended 2026-10-21 13:29 to every RoBERTa-large pretrained checkpoint on the workstation, 16 in all):
+  - the five fresh PZs (badnet_s0–s4, n = 1500, current protocol) and oldpz;
+  - six older-protocol BadNet PZs (`old_models_v1/pz_seeds/badnet_s0..s3`, `badnet_s42`, and `old_models_v1/poisoned_roberta_large_imdb_badnet`, which may be a copy of `badnet_s42`). Same recipe, made before the pipeline was deterministic. They add PZs to the cross-PZ pattern but are not on the dose curve;
+  - two InSent PZs (`old_models/poisoned_roberta_large_insent`, `old_models_v1/poisoned_roberta_large_imdb_insent`). Same clean-label 1,500 recipe with the sentence trigger. The tilt account predicts the same asymmetry, so these test whether it holds beyond `mn`. Their ASR uses the InSent trigger;
+  - two older clean models (`old_models/clean_roberta_large`, `old_models_v1/clean_roberta_large_imdb`). They were made by `clean_pretrain.py` under the older protocol, and its commit message says "NOT SURE IF REALLY CORRECT". They are reported but not used for conclusions; the clean models for conclusions are the n = 0 runs.
 - What it can decide:
   - If, for the same PZs, the error on clean IMDB negatives is far above the error on clean IMDB positives, the asymmetry exists before the domain change, so the domain change alone cannot explain it.
   - If IMDB is symmetric and SST-2 is not, the domain change is involved. Check 1 cannot separate the domain-change and shortcut explanations in that case; check 2 can.

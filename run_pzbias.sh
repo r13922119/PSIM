@@ -1,6 +1,7 @@
 #!/bin/bash
 # run_pzbias.sh — why do our PZs call clean negatives positive? See PREREG_pzbias.md.
-#   1. eval only (check 1): per-class clean errors of the existing checkpoints on IMDB dev/test and SST-2 test   ~5 min
+#   1. eval only (check 1): per-class clean errors and ASR of every existing RoBERTa-large pretrained checkpoint
+#      (16: 5 fresh BadNet PZs, oldpz, 6 older-protocol BadNet PZs, 2 InSent PZs, 2 older clean models)   ~10 min
 #   2. train (checks 2+3): poisoned pretraining with n poisoned negatives, n in {0 1500 750 all 375 1125 1750},
 #      seeds 0-4, seed-outer (one seed through all n, then the next seed). n=0 is the clean model.
 #      n=1500 is a rerun of pz_v2/badnet_s* and must be bit-identical to logs/pz_2026100{2,3}_*.log.
@@ -26,9 +27,16 @@ if [ "${EVAL:-1}" = 1 ]; then
     --model n1500_s3=pz_v2/badnet_s3 --model n1500_s4=pz_v2/badnet_s4 \
     --model oldpz=old_models/poisoned_roberta_large_badnet \
     --model clean_old_0920=old_models/clean_roberta_large \
-    --model clean_old_0930=old_models_v1/clean_roberta_large_imdb
+    --model clean_old_0930=old_models_v1/clean_roberta_large_imdb \
+    --model v1_s0=old_models_v1/pz_seeds/badnet_s0 --model v1_s1=old_models_v1/pz_seeds/badnet_s1 \
+    --model v1_s2=old_models_v1/pz_seeds/badnet_s2 --model v1_s3=old_models_v1/pz_seeds/badnet_s3 \
+    --model v1_s42=old_models_v1/pz_seeds/badnet_s42 --model v1_0930=old_models_v1/poisoned_roberta_large_imdb_badnet
   # stop here if the probe code fails on the existing checkpoints: the training runs use the same code
   [ "${DRY:-0}" = 1 ] || grep -qxF "pzbias eval existing|$CODE_HASH" "$DONE" || { echo "check 1 failed, stopping (see $LOGFILE)" | tee -a "$LOGFILE"; exit 1; }
+  # InSent PZs (same clean-label 1,500 recipe, sentence trigger): does the same asymmetry appear with another trigger?
+  run pz_bias_eval.py "pzbias eval existing insent" --attack_tag insent --out logs/pzbias_eval_existing_insent.csv \
+    --model insent_old=old_models/poisoned_roberta_large_insent \
+    --model insent_0930=old_models_v1/poisoned_roberta_large_imdb_insent
 fi
 
 # 2. dose-response, seed-outer
