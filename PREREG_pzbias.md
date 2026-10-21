@@ -176,3 +176,72 @@ What this experiment will show, for each rule, from the per-epoch log:
 - How much the picked checkpoint differs in clean dev accuracy, dev ASR, IMDB and SST-2 errors on each class, and SST-2 ASR.
 
 If the rules rarely disagree, or disagree only within noise, the simplest one (last epoch) loses nothing. If they disagree materially, criterion 2 decides.
+## 9. Check 1 results, and one amendment before any dose result (2026-10-21 14:17; group comparisons corrected 14:34)
+
+Source: `logs/pzbias_eval_existing.csv`, `logs/pzbias_eval_existing_insent.csv` (commit 7b41ac8). Every number: the saved pretraining checkpoint (未微調), dropout off, clean data unless it says ASR.
+
+**Sanity checks.**
+- The clean IMDB test accuracy of badnet_s0–s4 equals the logged `[EPOCH]` value of the saved epoch.
+- Their SST-2 per-class numbers equal `check_patient_zero_pz.log`.
+- `old_models_v1/pz_seeds/badnet_s42` and `old_models_v1/poisoned_roberta_large_imdb_badnet` are the same model, so there are 13 distinct poisoned models: 11 BadNet and 2 InSent.
+- `old_models_v1/clean_roberta_large_imdb` (made 9/30 by `clean_pretrain.py`, whose default seed is 0) equals the dose run n = 0, seed 0, epoch 0 on all 18 measures to 4 decimals. The new pipeline with no poisoning reproduces that old clean model.
+
+**Pre-registered predictions vs check 1:**
+1. IMDB errors concentrated on negatives: **yes, all 13 poisoned models.** IMDB test error on clean positives 0–2.08%, on clean negatives 11.4–46.0%. The two older clean models give 2.84 / 5.72% and 3.98 / 5.30%.
+2. The user's guess (about 90% of IMDB dev negatives called positive): **not supported.** IMDB dev error on clean negatives is 8.5–46.0% for badnet_s0–s4, 9.3–24.5% for the older-protocol PZs, and 10.2–11.7% for InSent.
+3. The upper bounds from the logged accuracy: the IMDB test error on negatives is at or just under each bound. badnet_s3 and s4 sit exactly on it, because their error on positives is 0.
+4. Claude's level guess for IMDB error on positives (0–3%): all 13 are inside it (0–2.08%). The guess was weakly justified, so this confirms little.
+5. The firm predictions are paired against the same seed at n = 0 and wait for the dose runs. Unpaired against the two older clean models, counted pair by pair (13 poisoned × 2 clean = 26 pairs; a count does not depend on group sizes the way a range or a mean does):
+   - IMDB error on positives is lower in 26/26 pairs.
+   - IMDB error on negatives is higher in 26/26.
+   - SST-2 error on positives is lower in 25/26 (1 tie).
+   - SST-2 error on negatives is higher in 26/26.
+   - Measured against the mean of the two clean models (a thin reference), the excess error on negatives is larger on SST-2 than on IMDB for 12 of 13; the exception is older-protocol badnet_s0.
+6. The InSent PZs show the same pattern, so the asymmetry is not specific to the `mn` token.
+
+**Post hoc, not pre-registered: a separation / lean decomposition.** Claude's proposal; not yet agreed. The full explanation is in the roadmap's background section.
+- Method: per model and domain, equal-variance signal detection with "positive" as the signal (Green & Swets 1966; Macmillan & Creelman 2005), using the log-linear correction for proportions of 0 or 1 (Hautus 1995).
+  - d' = how well the model separates the two classes.
+  - c = where its threshold sits, in units of the class spread. c < 0 means it leans positive.
+  - z(1 − pos_err) = d'/2 − c and z(neg_err) = −d'/2 − c.
+- Group sizes differ (13 poisoned, 2 clean), so the comparison below is made pair by pair, not by ranges. Corrected 2026-10-21 14:34: an earlier version compared ranges and said IMDB separation "barely changes", which was too strong.
+- Lean c: all 13 poisoned models lean more positive than both clean models, in both domains. Medians: IMDB −0.58 vs clean −0.16 and −0.07; SST-2 −1.25 vs clean −0.29 and −0.11.
+- Separation d': on each domain, 10 of 13 poisoned models are slightly below both clean models.
+  - IMDB: by 0.02–0.40. Per-model standard errors are 0.14–0.42 (Gourevitch & Galanter 1967), so most of these gaps are within about 1–2 standard errors.
+  - SST-2: by 0.04–0.83. The largest gaps belong to the most biased PZs.
+- So poisoning moves the threshold clearly and in every model. Separation drops a little in most, a lot only on SST-2 for the most biased.
+- For 12 of the 13 poisoned models the lean is 1.3–3.0 times larger on SST-2 than on IMDB. The exception, older-protocol badnet_s0, leans less on SST-2 (−0.34) than on IMDB (−0.51).
+- Across the 13 poisoned models, IMDB lean and SST-2 lean correlate only moderately (Spearman 0.64). Example: older-protocol badnet_s2 and s42 have the same IMDB error on negatives (19.70%) but SST-2 errors of 70.9% and 38.8%.
+- Limitations: the Gaussian equal-variance assumption is not checked; that needs per-review scores (section 10). Values at 0% error depend on the correction.
+
+**Revision of section 3b, item 4** ("all of them depend on t", Claude's addition, never agreed).
+- Across PZs the variation is mostly in the lean, but one number per model is not enough: how much of the lean carries over to SST-2 differs between models, and that is not explained.
+- The dose experiment later revised the account further; see `pzbias_results_20261021.md`.
+
+**Amendment, made before any dose result was seen.** The dose analysis also reports d' and c per domain for every checkpoint (`fig3_sdt_<rule>.png` and a table per saving rule). The raw error-rate figures stay the primary ones.
+
+## 10. Every review's score, and a persistence test of the clean-dev picks (written 2026-10-22 01:30, before either run)
+
+**Scores** (asked for by the user, 10/22 01:04).
+- Files: `run_pzscores.sh` reruns check 1 and all 35 dose runs with `--score_dir`. Every review's score (logit positive − logit negative) for IMDB dev, IMDB test and SST-2 test, split by true class, plus the three ASR sets, goes to `logs/scores/`: one `.npz` per checkpoint and epoch, about 50 KB each.
+- Training is unchanged. Integrity check: every `[PROBE]` line of the rerun must equal the one in the dose logs. If not, stop and find out why.
+- Uses, fixed now:
+  1. Check the equal-width bell assumption behind d' and c, per checkpoint and domain. Look at the two classes' score distributions and the ROC curve on normal-deviate axes: a straight line with slope 1 means equal widths.
+  2. Report two assumption-free measures next to d' and c:
+     - AUC (separation; Fawcett 2006);
+     - the shift of the threshold relative to the two classes in logit units, as the shift of the midpoint between the two class medians, relative to the same seed at n = 0.
+  3. A quantitative test of the label-shift reading (Saerens et al. 2002), stated now.
+     - If a model learned the posterior for `mn`-free reviews under their training prior, its logits on `mn`-free reviews would sit log(2052 / (1948 − n)) − log(2052 / 1948) above the n = 0 model's.
+     - That is 0.21, 0.49, 0.86, 1.47 and 2.29 for n = 375 to 1,750.
+     - The prediction requires calibrated outputs, which networks trained this way need not have, so a mismatch weakens the reading without refuting the shortcut account.
+     - Compared: the logit shift from use 2, per epoch and per saving rule.
+
+**Persistence of the clean-dev picks** (the user's question, 10/22 01:04: do clean-dev picks lose poisoning ability?).
+- Zero-shot, from the existing logs: at every n ≥ 1,125, the clean-dev pick's IMDB dev, IMDB test and SST-2 ASR are at least as high as PSIM's pick's, except for one run with 0.4 points less IMDB dev ASR. At n = 1,500 the SST-2 ASR of the clean-dev picks is 99.9–100 in all five seeds; PSIM's picks have 95.4 and 84.5 for seeds 0 and 4.
+- What matters for this project is persistence after clean LoRA fine-tuning, which zero-shot ASR does not measure.
+- Design (`run_persist_cleandev.sh`): the 5 clean-dev picks at n = 1,500 (seeds 0–4), saved by the rerun above. Baseline LoRA, lr 2e-4, Pt on, 20 epochs, finetune seeds 0–2: exactly the persistence-qualification protocol.
+- PSIM's picks of the same seeds (`pz_v2/badnet_s0–s4`) were already run with this protocol (`logs/baseline_20261003_071718.log`, script 3dccbcb89f5c, which the merged script reproduces). So each (PZ seed, finetune seed) is a paired comparison: 15 pairs.
+- Reported per pair: last-5-epoch ASR (pre-Pt), best-dev test CA and ASR (pre-Pt), and CA and ASR after Pt. Then the direction per PZ seed and how many of the 15 pairs agree.
+- No threshold, and no directional prediction.
+  - Among PSIM's five picks, the two that lean most (badnet_s3, s4) had low persistence (15.0, 30.3), but so did the least leaning one (badnet_s1, 29.4).
+  - That is no basis for a prediction.

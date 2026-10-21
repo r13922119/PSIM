@@ -33,6 +33,7 @@ p.add_argument("--attack_tag", default="badnet", choices=["badnet", "insent"])
 p.add_argument("--dataset_tag", default="imdb", choices=["imdb", "mr"])
 p.add_argument("--out", default=None, help="CSV path")
 p.add_argument("--batch_size", type=int, default=32)
+p.add_argument("--score_dir", default=None, help="also write every review's score to <score_dir>/<LABEL>.npz")
 args = p.parse_args()
 
 hf_name = "roberta-large"
@@ -60,7 +61,10 @@ for item in args.model:
     model = AutoModelForSequenceClassification.from_pretrained(hf_name, return_dict=True)
     missing, unexpected = model.load_state_dict(torch.load(ckpt, map_location="cpu"), strict=False)
     model.to(device)
-    r = bias_probe.probe_all(model, P, device)
+    sc = {} if args.score_dir else None
+    r = bias_probe.probe_all(model, P, device, scores=sc)
+    if sc is not None:
+        bias_probe.save_scores(os.path.join(args.score_dir, f"{label}.npz"), sc)
     row = {"label": label, "path": ckpt, "epoch_saved": ep, **{k: round(v * 100, 2) for k, v in r.items()},
            "missing": len(missing), "unexpected": len(unexpected)}
     rows.append(row)

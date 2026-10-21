@@ -11,11 +11,14 @@ For one clean test file, per class:
   ppos_neg  mean softmax P(positive) on clean negatives   (continuous version of neg_err)
   ca        overall clean accuracy
 Plus ASR (positives with the trigger at the fixed placement, predicted negative) on IMDB dev, IMDB test and the downstream test.
+Optionally (probe_all(..., scores={}) + save_scores) every review's score = logit(positive) - logit(negative).
 """
+import os
+
 import torch
 from torch.utils.data import DataLoader
 
-from attack_utils import build_poisoned_test_dataloader, compute_asr
+from attack_utils import build_poisoned_test_dataloader
 
 # downstream task for each poisoning dataset (the pair used in the paper); None = no downstream probe
 DOWNSTREAM = {"imdb": "sst-2", "mr": "cr"}
@@ -35,24 +38,39 @@ def class_loaders(path, load_dataset_fn, tokenize_function, collate_fn, batch_si
 
 
 @torch.no_grad()
-def _acc_ppos(model, loader, device):
+def _acc_ppos(model, loader, device, keep=False):
+    """Accuracy and mean P(positive) over a loader; with keep=True also every review's score
+    (logit of positive minus logit of negative), in loader order, as a float32 numpy array."""
     model.eval()
     ok = n = 0
     ppos = 0.0
+    kept = []
     for batch in loader:
         batch = batch.to(device)
         logits = model(**batch).logits.float()
         ok += (logits.argmax(-1) == batch["labels"]).sum().item()
         ppos += logits.softmax(-1)[:, 1].sum().item()
         n += batch["labels"].size(0)
-    return ok / n, ppos / n
+        if keep:
+            kept.append((logits[:, 1] - logits[:, 0]).cpu())
+    scores = torch.cat(kept).numpy() if keep else None
+    return ok / n, ppos / n, scores
 
 
-def class_probe(model, L, device):
-    pos_acc, ppos_pos = _acc_ppos(model, L["pos"], device)
-    neg_acc, ppos_neg = _acc_ppos(model, L["neg"], device)
+def class_probe(model, L, device, keep=False):
+    """Returns (measures, scores of the positives, scores of the negatives); the scores are None unless keep."""
+    pos_acc, ppos_pos, s_pos = _acc_ppos(model, L["pos"], device, keep)
+    neg_acc, ppos_neg, s_neg = _acc_ppos(model, L["neg"], device, keep)
     ca = (pos_acc * L["n_pos"] + neg_acc * L["n_neg"]) / (L["n_pos"] + L["n_neg"])
-    return {"pos_err": 1 - pos_acc, "neg_err": 1 - neg_acc, "ppos_pos": ppos_pos, "ppos_neg": ppos_neg, "ca": ca}
+    return ({"pos_err": 1 - pos_acc, "neg_err": 1 - neg_acc, "ppos_pos": ppos_pos, "ppos_neg": ppos_neg, "ca": ca},
+            s_pos, s_neg)
+
+
+def _asr(model, loader, device, keep=False):
+    """ASR = share of triggered positives predicted negative; computed exactly like attack_utils.compute_asr
+    (argmax over the same logits), plus every review's score when keep."""
+    acc, _, scores = _acc_ppos(model, loader, device, keep)
+    return 1.0 - acc, scores
 
 
 def build_probe_set(dataset_dir, dataset_tag, trigger, load_dataset_fn, tokenize_function, collate_fn, batch_size=32):
@@ -78,18 +96,33 @@ def build_probe_set(dataset_dir, dataset_tag, trigger, load_dataset_fn, tokenize
     return P
 
 
-def probe_all(model, P, device):
+def probe_all(model, P, device, scores=None):
     """Returns a flat dict; keys: dev_*, test_* (poisoning dataset, clean), down_* (downstream, clean),
-    dev_asr, test_asr (poisoning dataset), down_asr (downstream)."""
+    dev_asr, test_asr (poisoning dataset), down_asr (downstream).
+    If `scores` is a dict, it is filled with every review's score (logit positive minus logit negative):
+    dev_pos, dev_neg, test_pos, test_neg, down_pos, down_neg (clean, split by true class) and
+    dev_asr, test_asr, down_asr (positives with the trigger at the fixed placement)."""
+    keep = scores is not None
     out = {}
     for key in ("dev", "test", "down"):
         if key in P:
-            for k, v in class_probe(model, P[key], device).items():
+            d, s_pos, s_neg = class_probe(model, P[key], device, keep)
+            for k, v in d.items():
                 out[f"{key}_{k}"] = v
+            if keep:
+                scores[f"{key}_pos"], scores[f"{key}_neg"] = s_pos, s_neg
     for key in ("dev_asr", "test_asr", "down_asr"):
         if key in P:
-            out[key] = compute_asr(model, device, P[key])
+            out[key], s = _asr(model, P[key], device, keep)
+            if keep:
+                scores[key] = s
     return out
+
+
+def save_scores(path, scores):
+    import numpy as np
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    np.savez_compressed(path, **{k: np.asarray(v, dtype=np.float32) for k, v in scores.items()})
 
 
 def fmt(d):

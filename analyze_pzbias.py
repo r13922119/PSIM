@@ -66,6 +66,20 @@ def determinism(new, old):
                     print(f"    {k}: rerun {a[k]} vs old {b[k]}")
 
 
+def sdt(pos_err, neg_err, npos, nneg):
+    """Equal-variance signal detection with 'positive' as the signal (Macmillan & Creelman 2005), log-linear correction
+    for 0/1 proportions (Hautus 1995). Returns (dprime, c): dprime = how well the two classes are separated,
+    c = where the threshold sits in units of the class spread; c < 0 means the model leans toward 'positive'."""
+    from statistics import NormalDist
+    z = NormalDist().inv_cdf
+    hits, fas = round((1 - pos_err) * npos), round(neg_err * nneg)
+    H, F = (hits + 0.5) / (npos + 1), (fas + 0.5) / (nneg + 1)
+    return z(H) - z(F), -(z(H) + z(F)) / 2
+
+
+N_CLASS = {"test": (528, 472), "down": (909, 912), "dev": (539, 461)}   # (positives, negatives) of IMDB test, SST-2 test, IMDB dev
+
+
 def level_x(n, n_neg):
     return n_neg if n == "all" else int(n)
 
@@ -100,6 +114,9 @@ def main():
     if not rows:
         print("no [PROBE] lines found")
         return
+    for r in rows:   # separation and lean per domain (added 2026-10-21 after check 1, before any dose result)
+        for dom in ("test", "down"):
+            r[f"{dom}_dprime"], r[f"{dom}_c"] = sdt(r[f"{dom}_pos_err"], r[f"{dom}_neg_err"], *N_CLASS[dom])
     # 'saved' in the log marks every epoch that improved dev; the checkpoint on disk is the LAST of them
     for key in {(r["n"], r["seed"]) for r in rows}:
         rs = [r for r in rows if (r["n"], r["seed"]) == key]
@@ -177,6 +194,11 @@ def main():
             m = lambda k: sum(r[k] for r in rs) / len(rs) * 100
             print(f"    n={n:5d}: {m('dev_ca'):5.1f} | {m('dev_asr'):5.1f} | {m('test_pos_err'):4.1f} / {m('test_neg_err'):4.1f} | "
                   f"{m('down_pos_err'):4.1f} / {m('down_neg_err'):4.1f} | {m('down_asr'):5.1f}")
+        print(f"    separation dprime and lean c (c < 0 = leans positive), mean over seeds: IMDB dprime | IMDB c | SST-2 dprime | SST-2 c")
+        for n in sorted({r["n"] for r in pick}):
+            rs = [r for r in pick if r["n"] == n]
+            m = lambda k: sum(r[k] for r in rs) / len(rs)
+            print(f"      n={n:5d}: {m('test_dprime'):5.2f} | {m('test_c'):6.2f} | {m('down_dprime'):5.2f} | {m('down_c'):6.2f}")
         # paired change against the same seed's n=0 model (the clean model gives each class's own errors without the tilt)
         base = {r["seed"]: r for r in pick if r["n"] == 0}
         if base:
@@ -201,6 +223,20 @@ def plot(rows, saved, n_neg, out, n_pos=2052, tag="psim", label="", draw_fig2=Tr
 
     ns = sorted({r["n"] for r in saved})
     seeds = sorted({r["seed"] for r in saved})
+    if tag:   # separation and lean vs n, both domains (one extra figure per rule)
+        fig, axes = plt.subplots(1, 2, figsize=(11, 4))
+        ns_ = sorted({r["n"] for r in saved}); sd_ = sorted({r["seed"] for r in saved})
+        for ax, (k, title) in zip(axes, [("c", "lean c (below 0 = leans positive)"), ("dprime", "separation dprime")]):
+            for dom, col, name in (("test", "C1", "IMDB test"), ("down", "C0", "SST-2 test")):
+                M = np.full((len(sd_), len(ns_)), np.nan)
+                for r in saved:
+                    M[sd_.index(r["seed"]), ns_.index(r["n"])] = r[f"{dom}_{k}"]
+                ax.fill_between(ns_, np.nanmin(M, 0), np.nanmax(M, 0), color=col, alpha=0.15, lw=0)
+                ax.plot(ns_, np.nanmean(M, 0), color=col, marker="o", label=name)
+            ax.set_title(title, fontsize=10); ax.grid(alpha=0.3); ax.set_xlabel(f"poisoned negatives n (of {n_neg})")
+        axes[0].axhline(0, color="0.5", lw=0.8); axes[0].legend(fontsize=8)
+        fig.suptitle(f"equal-variance signal detection per domain; band = min-max over seeds\ncheckpoint = {label}", fontsize=10)
+        fig.tight_layout(); fig.savefig(os.path.join(out, f"fig3_sdt_{tag}.png"), dpi=150); plt.close(fig)
     panels = [("down_neg_err", "SST-2 test: error on clean negatives"),
               ("down_ppos_neg", "SST-2 test: mean P(positive) on clean negatives"),
               ("test_neg_err", "IMDB test: error on clean negatives"),
