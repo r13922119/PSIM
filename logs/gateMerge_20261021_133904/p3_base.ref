@@ -1,0 +1,7 @@
+[RNG] epoch=0 fp=2445707c
+dev clean acc: 0.9392
+[EPOCH] epoch=0 dev=0.9392 test clean accuracy=0.9566 ASR=0.9978
+[RNG] epoch=1 fp=f9c73999
+dev clean acc: 0.9427
+[EPOCH] epoch=1 dev=0.9427 test clean accuracy=0.9577 ASR=0.9945
+SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_lr2e-04_r8_a16_seed3_ep2_wd0.01_pz-badnet_s2 | best_epoch=1 | best_dev_acc=0.9427 | pre-pt_test_acc=0.9577 | pre-pt_ASR=0.9945| asr_mean_last5=0.9961 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on

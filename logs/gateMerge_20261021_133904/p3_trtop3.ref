@@ -1,0 +1,13 @@
+[RNG] epoch=0 fp=2445707c
+[DEBUG_ep0_stp0] task_loss=0.3876, penalty(mean,scaled)=2.7566, lambda*penalty=27.5660, omega_A/||A||^2 mean=1.04e+00 (expect ~1)
+[DEBUG_ep0_stp20] task_loss=0.2805, penalty(mean,scaled)=0.6389, lambda*penalty=6.3895, omega_A/||A||^2 mean=2.41e-01, omega_B/||B||^2 mean=2.76e-01
+[DEBUG_ep0_stp100] task_loss=0.1377, penalty(mean,scaled)=0.0002, lambda*penalty=0.0018, omega_A/||A||^2 mean=6.43e-05, omega_B/||B||^2 mean=3.58e-03
+[DEBUG_ep0_stp216] task_loss=0.1450, penalty(mean,scaled)=0.0000, lambda*penalty=0.0000, omega_A/||A||^2 mean=2.47e-09, omega_B/||B||^2 mean=2.53e-04
+dev clean acc: 0.9404
+[EPOCH] epoch=0 dev=0.9404 test clean accuracy=0.9555 ASR=0.9978
+[RNG] epoch=1 fp=f9c73999
+[DEBUG_ep1_stp0] task_loss=0.1637, penalty(mean,scaled)=0.0000, lambda*penalty=0.0000, omega_A/||A||^2 mean=2.54e-09, omega_B/||B||^2 mean=3.78e-04
+[DEBUG_ep1_stp216] task_loss=0.0299, penalty(mean,scaled)=0.0000, lambda*penalty=0.0000, omega_A/||A||^2 mean=7.91e-11, omega_B/||B||^2 mean=1.79e-06
+dev clean acc: 0.9484
+[EPOCH] epoch=1 dev=0.9484 test clean accuracy=0.9561 ASR=0.9934
+SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_tr10_k8_top3_lr2e-04_r8_a16_seed3_ep2_wd0.01_pz-badnet_s2 | best_epoch=1 | best_dev_acc=0.9484 | pre-pt_test_acc=0.9561 | pre-pt_ASR=0.9934| asr_mean_last5=0.9956 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on

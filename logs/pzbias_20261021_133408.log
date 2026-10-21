@@ -1,0 +1,7 @@
+===== pzbias eval existing | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=c2f6c749 | git=6921418 | --out logs/pzbias_eval_existing.csv --model n1500_s0=pz_v2/badnet_s0 --model n1500_s1=pz_v2/badnet_s1 --model n1500_s2=pz_v2/badnet_s2 --model n1500_s3=pz_v2/badnet_s3 --model n1500_s4=pz_v2/badnet_s4 --model oldpz=old_models/poisoned_roberta_large_badnet --model clean_old_0920=old_models/clean_roberta_large --model clean_old_0930=old_models_v1/clean_roberta_large_imdb --model v1_s0=old_models_v1/pz_seeds/badnet_s0 --model v1_s1=old_models_v1/pz_seeds/badnet_s1 --model v1_s2=old_models_v1/pz_seeds/badnet_s2 --model v1_s3=old_models_v1/pz_seeds/badnet_s3 --model v1_s42=old_models_v1/pz_seeds/badnet_s42 --model v1_0930=old_models_v1/poisoned_roberta_large_imdb_badnet =====
+Traceback (most recent call last):
+  File "/project/dsp/r13922119/PSIM/pz_bias_eval.py", line 28, in <module>
+    import bias_probe
+ModuleNotFoundError: No module named 'bias_probe'
+FAILED: pzbias eval existing
+check 1 failed, stopping (see logs/pzbias_20261021_133408.log)

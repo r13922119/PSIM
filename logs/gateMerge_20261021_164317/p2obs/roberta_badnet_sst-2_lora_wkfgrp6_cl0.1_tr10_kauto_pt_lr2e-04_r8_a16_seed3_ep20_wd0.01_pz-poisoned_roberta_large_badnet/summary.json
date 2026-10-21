@@ -1,0 +1,80 @@
+{
+ "summary_line": "SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_wkfgrp6_cl0.1_tr10_kauto_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet | best_epoch=12 | best_dev_acc=0.9484 | pre-pt_test_acc=0.9544 | pre-pt_ASR=0.5314 | pt_test_acc=0.5008 | pt_ASR=1.0000 | duration_min=10.7 | asr_mean_last5=0.4422 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on",
+ "protocol": "v2",
+ "experiment_name": "roberta_badnet_sst-2_lora_wkfgrp6_cl0.1_tr10_kauto_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+ "best_epoch": 12,
+ "best_dev_acc": 0.948394495412844,
+ "pre_pt_test_acc": 0.9544206479956068,
+ "pre_pt_asr": 0.5313531353135313,
+ "pt_test_acc": 0.500823723228995,
+ "pt_asr": 1.0,
+ "asr_mean_last5": 0.4422442244224423,
+ "duration_min": 10.669324596722921,
+ "gpu": "NVIDIA RTX 6000 Ada Generation",
+ "torch": "2.14.0+cu130",
+ "pt_scales": {
+  "base_model.model.roberta.encoder.layer.21.attention.self.query": {
+   "old_scaling": 2.0,
+   "new_scaling": 15.95793342590332,
+   "sigma_max_pre": 7.050337314605713,
+   "sigma_max_delta_unscaled": 0.44180765748023987
+  },
+  "base_model.model.roberta.encoder.layer.21.attention.self.value": {
+   "old_scaling": 2.0,
+   "new_scaling": 6.210508711204436e+31,
+   "sigma_max_pre": 3.3656387329101562,
+   "sigma_max_delta_unscaled": 5.41926405616091e-32
+  },
+  "base_model.model.roberta.encoder.layer.22.attention.self.query": {
+   "old_scaling": 2.0,
+   "new_scaling": 21.608774185180664,
+   "sigma_max_pre": 8.628057479858398,
+   "sigma_max_delta_unscaled": 0.39928489923477173
+  },
+  "base_model.model.roberta.encoder.layer.22.attention.self.value": {
+   "old_scaling": 2.0,
+   "new_scaling": Infinity,
+   "sigma_max_pre": 3.4749040603637695,
+   "sigma_max_delta_unscaled": 1.3107297419785755e-39
+  },
+  "base_model.model.roberta.encoder.layer.23.attention.self.query": {
+   "old_scaling": 2.0,
+   "new_scaling": 22.701622009277344,
+   "sigma_max_pre": 8.049600601196289,
+   "sigma_max_delta_unscaled": 0.35458260774612427
+  },
+  "base_model.model.roberta.encoder.layer.23.attention.self.value": {
+   "old_scaling": 2.0,
+   "new_scaling": Infinity,
+   "sigma_max_pre": 3.0274393558502197,
+   "sigma_max_delta_unscaled": 0.0
+  }
+ },
+ "args": {
+  "attack_tag": "badnet",
+  "model_tag": "roberta",
+  "dataset_tag": "sst-2",
+  "use_dora": false,
+  "use_pretrained_dropout": true,
+  "use_orthogonal_penalty": true,
+  "use_spectral_rescaling": true,
+  "lr": 0.0002,
+  "cl_dropout_p": 0.1,
+  "tr_lambda": 10.0,
+  "svd_k": 32,
+  "tr_layers": "all",
+  "weight_decay": 0.01,
+  "seed": 3,
+  "num_epochs": null,
+  "lr_schedule": "linear",
+  "no_save": false,
+  "pz_path": "old_models/poisoned_roberta_large_badnet/pytorch_model.bin",
+  "wpre_rank": null,
+  "wpre_kjson": "kstar/oldpz_grp6.json",
+  "svd_k_auto": true,
+  "obs_log": "logs/gateMerge_20261021_164317/p2obs",
+  "obs_every": 100000,
+  "obs_ks": "8,32,128",
+  "obs_save_every": 0
+ }
+}

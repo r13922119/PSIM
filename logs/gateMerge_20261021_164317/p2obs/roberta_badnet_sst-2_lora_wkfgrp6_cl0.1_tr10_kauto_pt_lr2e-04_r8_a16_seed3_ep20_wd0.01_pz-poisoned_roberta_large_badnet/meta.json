@@ -1,0 +1,20 @@
+{
+ "experiment_name": "roberta_badnet_sst-2_lora_wkfgrp6_cl0.1_tr10_kauto_pt_lr2e-04_r8_a16_seed3_ep20_wd0.01_pz-poisoned_roberta_large_badnet",
+ "seed": 3,
+ "lr": 0.0002,
+ "tr": true,
+ "tr_lambda": 10.0,
+ "svd_k": 32,
+ "tr_layers": "all",
+ "num_epochs": 20,
+ "lr_schedule": "linear",
+ "cl": true,
+ "pz": "old_models/poisoned_roberta_large_badnet/pytorch_model.bin",
+ "ks": [
+  8,
+  32,
+  128
+ ],
+ "every": 100000,
+ "n_modules": 48
+}

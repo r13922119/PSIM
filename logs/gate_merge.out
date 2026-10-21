@@ -1,0 +1,23 @@
+gate (merge) on GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403, parts: 1 2 3, logs in logs/gateMerge_20261021_164317
+== part 1: default flags vs golden/baseline_0_oldpz_ep20_20261002.txt
+  PASS (41 lines identical)
+== part 2: W_pre,k path vs 'oldpz wkf-grp6 ft3 cl+tr lam10 kauto lr2e-4' in logs/pilot_wk_20261019_150838.log
+  args: --pz_path old_models/poisoned_roberta_large_badnet/pytorch_model.bin --lr 2e-4 --use_spectral_rescaling --wpre_kjson kstar/oldpz_grp6.json --seed 3 --use_pretrained_dropout --use_orthogonal_penalty --tr_lambda 10 --svd_k_auto --obs_log logs/gateMerge_20261021_164317/p2obs --obs_every 100000
+  PASS (106 lines identical)
+== part 3: obs logging, arm base vs logs/gateObs_20261012_100917/base.on.log
+  PASS (7 lines identical)
+  PASS epochs.csv identical
+  PASS modules.csv identical
+  PASS steps.csv identical
+== part 3: obs logging, arm tr vs logs/gateObs_20261012_100917/tr.on.log
+  PASS (13 lines identical)
+  PASS epochs.csv identical
+  PASS modules.csv identical
+  PASS steps.csv identical
+== part 3: obs logging, arm trtop3 vs logs/gateObs_20261012_100917/trtop3.on.log
+  PASS (13 lines identical)
+  PASS epochs.csv identical
+  PASS modules.csv identical
+  PASS steps.csv identical
+
+GATE PASSED: the merged variant_finetune.py reproduces every reference run.
