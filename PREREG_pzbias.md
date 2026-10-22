@@ -245,3 +245,42 @@ Source: `logs/pzbias_eval_existing.csv`, `logs/pzbias_eval_existing_insent.csv` 
 - No threshold, and no directional prediction.
   - Among PSIM's five picks, the two that lean most (badnet_s3, s4) had low persistence (15.0, 30.3), but so did the least leaning one (badnet_s1, 29.4).
   - That is no basis for a prediction.
+## 11. Is a later epoch of poisoned pretraining more persistent? (written 2026-10-22 12:34, before the run)
+
+**Origin.** A post hoc pattern in `pzscores_persist_results_20261022.md` (Claude's reading; the user asked whether to verify it). At n = 1,500, in 4 of 5 PZ seeds the later of the two fine-tuned epochs was the more persistent one.
+
+**Why it matters:**
+1. It completes the saving-rule decision. After this run every seed has all three epochs fine-tuned, so the last-epoch rule's persistence is known too.
+2. If persistence rises with epoch, that is a controllable knob for PZ strength, which the open question "how to choose PZs, and what counts as strong" needs.
+3. It may explain part of the seed-to-seed spread in persistence.
+
+**Design** (`run_persist_epochs.sh`):
+- n = 1,500, PZ seeds 0–4, epochs 0–2, finetune seeds 0–2, persistence protocol (baseline LoRA, lr 2e-4, Pt on, 20 epochs).
+- 10 of the 15 (PZ seed, epoch) cells are already done. This run fills the other 5 cells: seed 0 epoch 2, seed 1 epoch 1, seed 2 epoch 0, seed 3 epoch 1, seed 4 epoch 2.
+- Each missing checkpoint is recreated with `--save_epoch`. Its `[PROBE]` lines must equal the 10/21 dose log.
+- Every cell then has the same 3 finetune seeds.
+
+**Prediction** (Claude's; measure = last-5-epoch ASR, mean of the 3 finetune seeds):
+- Within each PZ seed, persistence increases with epoch.
+- The 10 cells that suggested this cannot test it, so the test is the 5 new cells. Expected values:
+
+| new cell | expected last-5 ASR |
+|---|---|
+| seed 0, epoch 2 | ≥ 54.6 (epoch 1) |
+| seed 1, epoch 1 | between 29.4 (epoch 0) and 61.6 (epoch 2) |
+| seed 2, epoch 0 | ≤ 75.5 (epoch 2), and also below 79.4 (epoch 1) |
+| seed 3, epoch 1 | between 15.0 (epoch 0) and 21.7 (epoch 2) |
+| seed 4, epoch 2 | ≥ 74.8 (epoch 1) |
+
+- Seed 2 already breaks strict order (epoch 1 79.4 > epoch 2 75.5). That is within the finetune-seed noise but is noted.
+
+**Reading.** No threshold.
+- Each new cell is reported against its expectation.
+- Per seed: the direction from epoch 0 to 1, from 1 to 2 and from 0 to 2, and how many of the 5 seeds agree.
+- A curve of persistence against epoch: one line per seed, and the spread over the 3 finetune seeds as a band.
+- Also reported: best-dev ASR and CA before Pt, and ASR and CA after Pt.
+- The finetune-seed spread is large (up to about 50 points within one PZ), so single cells can miss even if the trend is real. The per-seed directions and the curve carry the reading.
+
+**What it cannot say.**
+- Epoch also changes other things at once: the lean, the clean dev accuracy, and the position in the learning-rate schedule (linear decay to 0 over 3 epochs). So a trend cannot be attributed to "more poisoned training" alone.
+- A sharper test would vary the total length of poisoned training. That follow-up is worth running only if this run shows the trend.

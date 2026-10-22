@@ -33,6 +33,9 @@ def parse_args():
     parser.add_argument("--save_rule", choices=["psim", "cleandev"], default="psim",
                         help="which epoch becomes <out_dir>/pytorch_model.bin: psim = highest dev acc with the trigger in every dev "
                              "negative (original, default); cleandev = highest clean IMDB dev acc (first maximum), from the per-epoch probe")
+    parser.add_argument("--save_epoch", type=int, default=None,
+                        help="save exactly this epoch (0-based) to <out_dir>/pytorch_model.bin, whatever the dev numbers say (not with --save_rule cleandev); "
+                             "used to recreate one epoch of a deterministic run")
     parser.add_argument("--score_dir", type=str, default=None,
                         help="also write every review's score (logit positive - logit negative) of the per-epoch probe to <score_dir>/epNN.npz")
     parser.add_argument("--save_every_epoch", action="store_true",
@@ -217,6 +220,8 @@ lr_scheduler = get_linear_schedule_with_warmup(optimizer=optimizer,num_warmup_st
 model.to(device)
 best_dev_acc = -1
 best_clean_dev = -1.0   # for --save_rule cleandev
+if args.save_epoch is not None and (args.save_every_epoch or args.save_rule != "psim"):
+    raise ValueError("--save_epoch cannot be combined with --save_every_epoch or --save_rule cleandev")
 if args.save_rule == "cleandev" and (os.environ.get("OBSERVE") == "0" or args.save_every_epoch):
     raise ValueError("--save_rule cleandev needs the per-epoch probe (OBSERVE != 0) and cannot be combined with --save_every_epoch")
 for epoch in range(num_epochs):
@@ -256,7 +261,7 @@ for epoch in range(num_epochs):
 
         test_acc, asr = get_test_and_asr(model)    # ← 這裡，dropout 自動變成「關」
         print(f"[EPOCH] epoch={epoch} dev={dev_clean_acc:.4f} test clean accuracy={test_acc:.4f} ASR={asr:.4f}")
-        if not args.no_save and not args.save_every_epoch and args.save_rule == "psim":
+        if not args.no_save and not args.save_every_epoch and args.save_rule == "psim" and args.save_epoch is None:
             os.makedirs(os.path.dirname(poisoned_model_path), exist_ok=True)
             torch.save(model.state_dict(), poisoned_model_path)
             write_meta(os.path.join(os.path.dirname(poisoned_model_path), "meta.json"),
@@ -277,6 +282,12 @@ for epoch in range(num_epochs):
                 write_meta(os.path.join(os.path.dirname(poisoned_model_path), "meta.json"),
                            ENV, poisoned_model_path, seed=args.seed, epoch_saved=epoch, save_rule="cleandev",
                            poison_n=n)
+    if args.save_epoch == epoch and not args.no_save:   # read-only w.r.t. training: saving moves no RNG stream
+        os.makedirs(os.path.dirname(poisoned_model_path), exist_ok=True)
+        torch.save(model.state_dict(), poisoned_model_path)
+        write_meta(os.path.join(os.path.dirname(poisoned_model_path), "meta.json"),
+                   ENV, poisoned_model_path, seed=args.seed, epoch_saved=epoch, save_rule=f"epoch{epoch}", poison_n=n)
+        print(f"[SAVE] rule=epoch{epoch} epoch={epoch}")
     if args.save_every_epoch and not args.no_save:      # read-only w.r.t. training: saving moves no RNG stream
         ep_dir = os.path.join(os.path.dirname(poisoned_model_path), f"ep{epoch:02d}")
         os.makedirs(ep_dir, exist_ok=True)
