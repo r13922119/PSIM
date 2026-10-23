@@ -1,0 +1,289 @@
+===== sst2dev eval n1500 15 ckpts | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=d3608521 | git=5bb8925 | --out logs/sst2dev_eval.csv =====
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[PLAN] n1500 s0 ep0 <- pz_cleandev/cleandev_n1500_s0   meta: epoch_saved=0 seed=0 poison_n=1500 save_rule=cleandev
+[PLAN] n1500 s0 ep1 <- pz_v2/badnet_s0   meta: epoch_saved=1 seed=0 poison_n=- save_rule=psim (not recorded)
+[PLAN] n1500 s0 ep2 <- pz_epoch/n1500_s0_ep2   meta: epoch_saved=2 seed=0 poison_n=1500 save_rule=epoch2
+[PLAN] n1500 s1 ep0 <- pz_v2/badnet_s1   meta: epoch_saved=0 seed=1 poison_n=- save_rule=psim (not recorded)
+[PLAN] n1500 s1 ep1 <- pz_epoch/n1500_s1_ep1   meta: epoch_saved=1 seed=1 poison_n=1500 save_rule=epoch1
+[PLAN] n1500 s1 ep2 <- pz_cleandev/cleandev_n1500_s1   meta: epoch_saved=2 seed=1 poison_n=1500 save_rule=cleandev
+[PLAN] n1500 s2 ep0 <- pz_epoch/n1500_s2_ep0   meta: epoch_saved=0 seed=2 poison_n=1500 save_rule=epoch0
+[PLAN] n1500 s2 ep1 <- pz_cleandev/cleandev_n1500_s2   meta: epoch_saved=1 seed=2 poison_n=1500 save_rule=cleandev
+[PLAN] n1500 s2 ep2 <- pz_v2/badnet_s2   meta: epoch_saved=2 seed=2 poison_n=- save_rule=psim (not recorded)
+[PLAN] n1500 s3 ep0 <- pz_v2/badnet_s3   meta: epoch_saved=0 seed=3 poison_n=- save_rule=psim (not recorded)
+[PLAN] n1500 s3 ep1 <- pz_epoch/n1500_s3_ep1   meta: epoch_saved=1 seed=3 poison_n=1500 save_rule=epoch1
+[PLAN] n1500 s3 ep2 <- pz_cleandev/cleandev_n1500_s3   meta: epoch_saved=2 seed=3 poison_n=1500 save_rule=cleandev
+[PLAN] n1500 s4 ep0 <- pz_v2/badnet_s4   meta: epoch_saved=0 seed=4 poison_n=- save_rule=psim (not recorded)
+[PLAN] n1500 s4 ep1 <- pz_cleandev/cleandev_n1500_s4   meta: epoch_saved=1 seed=4 poison_n=1500 save_rule=cleandev
+[PLAN] n1500 s4 ep2 <- pz_epoch/n1500_s4_ep2   meta: epoch_saved=2 seed=4 poison_n=1500 save_rule=epoch2
+[CHECK] all 15 folders, meta.json files and stored scores are as expected
+Filter:   0%|          | 0/872 [00:00<?, ? examples/s]Filter: 100%|██████████| 872/872 [00:00<00:00, 21197.84 examples/s]
+Filter:   0%|          | 0/872 [00:00<?, ? examples/s]Filter: 100%|██████████| 872/872 [00:00<00:00, 123432.66 examples/s]
+Map:   0%|          | 0/444 [00:00<?, ? examples/s]Map: 100%|██████████| 444/444 [00:00<00:00, 6859.55 examples/s]
+Map:   0%|          | 0/428 [00:00<?, ? examples/s]Map: 100%|██████████| 428/428 [00:00<00:00, 1744.69 examples/s]Map: 100%|██████████| 428/428 [00:00<00:00, 1704.14 examples/s]
+Map:   0%|          | 0/444 [00:00<?, ? examples/s]Map: 100%|██████████| 444/444 [00:00<00:00, 21161.93 examples/s]
+Map:   0%|          | 0/909 [00:00<?, ? examples/s]Map: 100%|██████████| 909/909 [00:00<00:00, 20499.62 examples/s]
+[DATA] SST-2 dev n_pos=444 n_neg=428 | SST-2 test n_pos=909 n_neg=912
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:   2%|▏         | 8/389 [00:00<00:05, 66.54it/s]Loading weights:   4%|▍         | 15/389 [00:00<00:20, 18.04it/s]Loading weights:   5%|▍         | 19/389 [00:00<00:17, 21.28it/s]Loading weights:   6%|▌         | 23/389 [00:01<00:19, 19.01it/s]Loading weights:   9%|▉         | 36/389 [00:01<00:09, 37.29it/s]Loading weights:  12%|█▏        | 47/389 [00:01<00:07, 48.74it/s]Loading weights:  14%|█▍        | 54/389 [00:01<00:06, 48.75it/s]Loading weights:  16%|█▌        | 61/389 [00:02<00:11, 27.43it/s]Loading weights:  17%|█▋        | 66/389 [00:02<00:14, 21.64it/s]Loading weights:  18%|█▊        | 70/389 [00:02<00:16, 19.18it/s]Loading weights:  20%|█▉        | 77/389 [00:02<00:12, 25.19it/s]Loading weights:  21%|██        | 82/389 [00:02<00:11, 27.87it/s]Loading weights:  27%|██▋       | 106/389 [00:03<00:04, 60.62it/s]Loading weights:  30%|██▉       | 115/389 [00:03<00:05, 51.17it/s]Loading weights:  35%|███▍      | 136/389 [00:03<00:03, 74.90it/s]Loading weights:  39%|███▊      | 150/389 [00:03<00:02, 82.88it/s]Loading weights:  41%|████▏     | 161/389 [00:03<00:02, 84.67it/s]Loading weights:  45%|████▌     | 176/389 [00:03<00:02, 94.44it/s]Loading weights:  48%|████▊     | 187/389 [00:04<00:03, 59.87it/s]Loading weights:  51%|█████     | 197/389 [00:04<00:02, 64.34it/s]Loading weights:  56%|█████▌    | 216/389 [00:04<00:02, 78.07it/s]Loading weights:  64%|██████▍   | 248/389 [00:04<00:01, 124.09it/s]Loading weights:  69%|██████▉   | 270/389 [00:04<00:00, 144.61it/s]Loading weights:  77%|███████▋  | 298/389 [00:04<00:00, 173.47it/s]Loading weights:  82%|████████▏ | 319/389 [00:05<00:00, 101.18it/s]Loading weights:  91%|█████████▏| 355/389 [00:05<00:00, 142.50it/s]Loading weights: 100%|██████████| 389/389 [00:05<00:00, 72.54it/s] 
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s0 ep0 SST-2 test vs logs/scores/dose_n1500_s0/ep00.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s0_ep0 folder=pz_cleandev/cleandev_n1500_s0 sdev_pos_err=3.38 sdev_neg_err=17.52 sdev_ppos_pos=90.9 sdev_ppos_neg=22.44 sdev_ca=89.68 sdev_asr=100.0 down_pos_err=2.53 down_neg_err=22.37 down_ppos_pos=91.31 down_ppos_neg=25.46 down_ca=87.53 down_asr=100.0 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  68%|██████▊   | 265/389 [00:00<00:00, 2178.71it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 2370.29it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s0 ep1 SST-2 test vs logs/scores/dose_n1500_s0/ep01.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s0_ep1 folder=pz_v2/badnet_s0 sdev_pos_err=1.35 sdev_neg_err=42.52 sdev_ppos_pos=95.07 sdev_ppos_neg=41.2 sdev_ca=78.44 sdev_asr=95.05 down_pos_err=0.33 down_neg_err=45.94 down_ppos_pos=95.69 down_ppos_neg=44.5 down_ca=76.83 down_asr=95.38 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  86%|████████▌ | 333/389 [00:00<00:00, 3324.39it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3305.51it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s0 ep2 SST-2 test vs logs/scores/dose_n1500_s0/ep02.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s0_ep2 folder=pz_epoch/n1500_s0_ep2 sdev_pos_err=2.25 sdev_neg_err=32.01 sdev_ppos_pos=95.9 sdev_ppos_neg=31.39 sdev_ca=83.14 sdev_asr=96.85 down_pos_err=0.99 down_neg_err=33.66 down_ppos_pos=96.56 down_ppos_neg=33.34 down_ca=82.65 down_asr=96.37 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  16%|█▌        | 63/389 [00:00<00:01, 285.39it/s]Loading weights:  95%|█████████▌| 371/389 [00:00<00:00, 1383.06it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 1196.19it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s1 ep0 SST-2 test vs logs/scores/dose_n1500_s1/ep00.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s1_ep0 folder=pz_v2/badnet_s1 sdev_pos_err=1.8 sdev_neg_err=33.64 sdev_ppos_pos=92.93 sdev_ppos_neg=45.88 sdev_ca=82.57 sdev_asr=100.0 down_pos_err=0.66 down_neg_err=35.64 down_ppos_pos=93.65 down_ppos_neg=47.29 down_ca=81.82 down_asr=100.0 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  54%|█████▍    | 211/389 [00:00<00:00, 2109.30it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 2051.54it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s1 ep1 SST-2 test vs logs/scores/dose_n1500_s1/ep01.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s1_ep1 folder=pz_epoch/n1500_s1_ep1 sdev_pos_err=2.25 sdev_neg_err=36.68 sdev_ppos_pos=91.49 sdev_ppos_neg=38.69 sdev_ca=80.85 sdev_asr=100.0 down_pos_err=0.55 down_neg_err=36.18 down_ppos_pos=92.41 down_ppos_neg=39.83 down_ca=81.6 down_asr=100.0 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  87%|████████▋ | 340/389 [00:00<00:00, 3390.87it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3406.24it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s1 ep2 SST-2 test vs logs/scores/dose_n1500_s1/ep02.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s1_ep2 folder=pz_cleandev/cleandev_n1500_s1 sdev_pos_err=6.76 sdev_neg_err=18.46 sdev_ppos_pos=90.8 sdev_ppos_neg=24.76 sdev_ca=87.5 sdev_asr=100.0 down_pos_err=4.73 down_neg_err=17.11 down_ppos_pos=92.5 down_ppos_neg=25.36 down_ca=89.07 down_asr=100.0 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  98%|█████████▊| 381/389 [00:00<00:00, 3808.79it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3825.51it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s2 ep0 SST-2 test vs logs/scores/dose_n1500_s2/ep00.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s2_ep0 folder=pz_epoch/n1500_s2_ep0 sdev_pos_err=0.23 sdev_neg_err=51.87 sdev_ppos_pos=89.79 sdev_ppos_neg=49.95 sdev_ca=74.43 sdev_asr=99.77 down_pos_err=0.33 down_neg_err=54.82 down_ppos_pos=90.66 down_ppos_neg=51.11 down_ca=72.38 down_asr=99.45 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  80%|████████  | 313/389 [00:00<00:00, 3123.23it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3256.43it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s2 ep1 SST-2 test vs logs/scores/dose_n1500_s2/ep01.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s2_ep1 folder=pz_cleandev/cleandev_n1500_s2 sdev_pos_err=4.05 sdev_neg_err=19.39 sdev_ppos_pos=90.21 sdev_ppos_neg=26.07 sdev_ca=88.42 sdev_asr=100.0 down_pos_err=2.2 down_neg_err=21.82 down_ppos_pos=91.73 down_ppos_neg=27.49 down_ca=87.97 down_asr=100.0 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  95%|█████████▍| 368/389 [00:00<00:00, 3675.96it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3662.09it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s2 ep2 SST-2 test vs logs/scores/dose_n1500_s2/ep02.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s2_ep2 folder=pz_v2/badnet_s2 sdev_pos_err=1.8 sdev_neg_err=33.88 sdev_ppos_pos=95.16 sdev_ppos_neg=37.3 sdev_ca=82.45 sdev_asr=100.0 down_pos_err=0.44 down_neg_err=37.5 down_ppos_pos=96.32 down_ppos_neg=38.69 down_ca=81.0 down_asr=100.0 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  35%|███▍      | 135/389 [00:00<00:00, 603.29it/s]Loading weights:  50%|█████     | 196/389 [00:00<00:00, 398.42it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 748.61it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s3 ep0 SST-2 test vs logs/scores/dose_n1500_s3/ep00.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s3_ep0 folder=pz_v2/badnet_s3 sdev_pos_err=0.23 sdev_neg_err=63.55 sdev_ppos_pos=98.28 sdev_ppos_neg=61.88 sdev_ca=68.69 sdev_asr=100.0 down_pos_err=0.33 down_neg_err=67.87 down_ppos_pos=98.78 down_ppos_neg=65.86 down_ca=65.84 down_asr=100.0 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  37%|███▋      | 144/389 [00:00<00:00, 1050.34it/s]Loading weights:  64%|██████▍   | 250/389 [00:00<00:00, 777.06it/s] Loading weights:  85%|████████▍ | 330/389 [00:00<00:00, 583.12it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 670.18it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s3 ep1 SST-2 test vs logs/scores/dose_n1500_s3/ep01.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s3_ep1 folder=pz_epoch/n1500_s3_ep1 sdev_pos_err=2.25 sdev_neg_err=30.14 sdev_ppos_pos=95.87 sdev_ppos_neg=32.33 sdev_ca=84.06 sdev_asr=100.0 down_pos_err=0.88 down_neg_err=31.58 down_ppos_pos=96.96 down_ppos_neg=34.22 down_ca=83.75 down_asr=100.0 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  95%|█████████▍| 369/389 [00:00<00:00, 3673.10it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3681.80it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s3 ep2 SST-2 test vs logs/scores/dose_n1500_s3/ep02.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s3_ep2 folder=pz_cleandev/cleandev_n1500_s3 sdev_pos_err=3.15 sdev_neg_err=21.96 sdev_ppos_pos=95.71 sdev_ppos_neg=25.04 sdev_ca=87.61 sdev_asr=100.0 down_pos_err=1.32 down_neg_err=22.26 down_ppos_pos=97.22 down_ppos_neg=25.68 down_ca=88.19 down_asr=100.0 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  85%|████████▌ | 331/389 [00:00<00:00, 3307.51it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3332.86it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s4 ep0 SST-2 test vs logs/scores/dose_n1500_s4/ep00.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s4_ep0 folder=pz_v2/badnet_s4 sdev_pos_err=0.0 sdev_neg_err=90.42 sdev_ppos_pos=88.31 sdev_ppos_neg=71.96 sdev_ca=55.62 sdev_asr=88.29 down_pos_err=0.0 down_neg_err=91.34 down_ppos_pos=88.7 down_ppos_neg=72.82 down_ca=54.26 down_asr=84.49 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  86%|████████▌ | 335/389 [00:00<00:00, 3348.61it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3336.03it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
