@@ -287,3 +287,27 @@ classifier.out_proj.bias   | MISSING    |
 Notes:
 - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
 - MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s4 ep1 SST-2 test vs logs/scores/dose_n1500_s4/ep01.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s4_ep1 folder=pz_cleandev/cleandev_n1500_s4 sdev_pos_err=3.15 sdev_neg_err=29.44 sdev_ppos_pos=89.62 sdev_ppos_neg=29.12 sdev_ca=83.94 sdev_asr=100.0 down_pos_err=0.55 down_neg_err=30.48 down_ppos_pos=91.74 down_ppos_neg=30.71 down_ca=84.46 down_asr=99.89 missing=0 unexpected=0
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 4183.23it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500 s4 ep2 SST-2 test vs logs/scores/dose_n1500_s4/ep02.npz: identical (max difference 0, predictions changed 0)
+[EVAL] n1500_s4_ep2 folder=pz_epoch/n1500_s4_ep2 sdev_pos_err=0.9 sdev_neg_err=35.98 sdev_ppos_pos=95.41 sdev_ppos_neg=37.39 sdev_ca=81.88 sdev_asr=100.0 down_pos_err=0.22 down_neg_err=41.01 down_ppos_pos=96.47 down_ppos_neg=39.65 down_ca=79.35 down_asr=99.78 missing=0 unexpected=0
+wrote logs/sst2dev_eval.csv
+[CHECK] all 15 checkpoints reproduce the stored SST-2 test scores exactly
+===== Done =====
