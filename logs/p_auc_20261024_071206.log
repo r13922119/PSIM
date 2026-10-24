@@ -1,0 +1,42 @@
+===== p_auc sweep panel + clean | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=d3608521 | git=e8081fc | --model n1500_s0_ep2=pz_epoch/n1500_s0_ep2@2 --model n1500_s1_ep2=pz_cleandev/cleandev_n1500_s1@2 --model n1500_s2_ep2=pz_v2/badnet_s2@2 --model n1500_s3_ep2=pz_cleandev/cleandev_n1500_s3@2 --model n1500_s4_ep2=pz_epoch/n1500_s4_ep2@2 --model clean_n0_s0_ep0=old_models_v1/clean_roberta_large_imdb =====
+[PLAN] n1500_s0_ep2 <- pz_epoch/n1500_s0_ep2/pytorch_model.bin  epoch_saved=2  identity reference: logs/scores/sst2dev/n1500_s0_ep2.npz
+[PLAN] n1500_s1_ep2 <- pz_cleandev/cleandev_n1500_s1/pytorch_model.bin  epoch_saved=2  identity reference: logs/scores/sst2dev/n1500_s1_ep2.npz
+[PLAN] n1500_s2_ep2 <- pz_v2/badnet_s2/pytorch_model.bin  epoch_saved=2  identity reference: logs/scores/sst2dev/n1500_s2_ep2.npz
+[PLAN] n1500_s3_ep2 <- pz_cleandev/cleandev_n1500_s3/pytorch_model.bin  epoch_saved=2  identity reference: logs/scores/sst2dev/n1500_s3_ep2.npz
+[PLAN] n1500_s4_ep2 <- pz_epoch/n1500_s4_ep2/pytorch_model.bin  epoch_saved=2  identity reference: logs/scores/sst2dev/n1500_s4_ep2.npz
+[PLAN] clean_n0_s0_ep0 <- old_models_v1/clean_roberta_large_imdb/pytorch_model.bin  epoch_saved=None  identity reference: none
+[CHECK] all 6 models found; p grid [0.0, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]; 8 masks per p > 0; targets ('attention.self.query', 'attention.self.value'); built-in dropout off
+Filter:   0%|          | 0/6920 [00:00<?, ? examples/s]Filter: 100%|██████████| 6920/6920 [00:00<00:00, 98592.29 examples/s]
+Filter:   0%|          | 0/6920 [00:00<?, ? examples/s]Filter: 100%|██████████| 6920/6920 [00:00<00:00, 424069.43 examples/s]
+Map:   0%|          | 0/3610 [00:00<?, ? examples/s]Map:  83%|████████▎ | 3000/3610 [00:00<00:00, 19430.49 examples/s]Map: 100%|██████████| 3610/3610 [00:00<00:00, 18466.36 examples/s]
+Map:   0%|          | 0/3310 [00:00<?, ? examples/s]Map:  91%|█████████ | 3000/3310 [00:00<00:00, 21892.39 examples/s]Map: 100%|██████████| 3310/3310 [00:00<00:00, 19058.97 examples/s]
+Map:   0%|          | 0/444 [00:00<?, ? examples/s]Map: 100%|██████████| 444/444 [00:00<00:00, 12871.39 examples/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[DATA] SST-2 train 3610/3310, dev 444/428 (positive/negative); dev positives with trigger 444
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 4128.72it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+Traceback (most recent call last):
+  File "/project/dsp/r13922119/PSIM/p_auc_eval.py", line 150, in <module>
+    single_tr = [auc(tp[i], tn[i]) for i in range(args.masks)]
+  File "/project/dsp/r13922119/PSIM/p_auc_eval.py", line 150, in <listcomp>
+    single_tr = [auc(tp[i], tn[i]) for i in range(args.masks)]
+  File "/project/dsp/r13922119/PSIM/p_auc_eval.py", line 100, in auc
+    from scipy.stats import rankdata
+ModuleNotFoundError: No module named 'scipy'
+FAILED: p_auc sweep panel + clean
+'p_auc sweep panel + clean' failed (see logs/p_auc_20261024_071206.log)
