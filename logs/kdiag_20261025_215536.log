@@ -1,0 +1,627 @@
+===== kdiag panel + clean | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d3608521 | git=a746aa6 | --model n1500_s0_ep2=pz_epoch/n1500_s0_ep2@2 --model n1500_s1_ep2=pz_cleandev/cleandev_n1500_s1@2 --model n1500_s2_ep2=pz_v2/badnet_s2@2 --model n1500_s3_ep2=pz_cleandev/cleandev_n1500_s3@2 --model n1500_s4_ep2=pz_epoch/n1500_s4_ep2@2 --model clean_n0_s0_ep0=old_models_v1/clean_roberta_large_imdb =====
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[PLAN] n1500_s0_ep2 <- pz_epoch/n1500_s0_ep2/pytorch_model.bin  epoch_saved=2  identity reference: logs/scores/sst2dev/n1500_s0_ep2.npz
+[PLAN] n1500_s1_ep2 <- pz_cleandev/cleandev_n1500_s1/pytorch_model.bin  epoch_saved=2  identity reference: logs/scores/sst2dev/n1500_s1_ep2.npz
+[PLAN] n1500_s2_ep2 <- pz_v2/badnet_s2/pytorch_model.bin  epoch_saved=2  identity reference: logs/scores/sst2dev/n1500_s2_ep2.npz
+[PLAN] n1500_s3_ep2 <- pz_cleandev/cleandev_n1500_s3/pytorch_model.bin  epoch_saved=2  identity reference: logs/scores/sst2dev/n1500_s3_ep2.npz
+[PLAN] n1500_s4_ep2 <- pz_epoch/n1500_s4_ep2/pytorch_model.bin  epoch_saved=2  identity reference: logs/scores/sst2dev/n1500_s4_ep2.npz
+[PLAN] clean_n0_s0_ep0 <- old_models_v1/clean_roberta_large_imdb/pytorch_model.bin  epoch_saved=None  identity reference: none
+[CHECK] all 6 models found; r grid [0.9999, 0.999, 0.995, 0.99, 0.98, 0.95, 0.9, 0.8, 0.7, 0.5]; SST-2 dev step on
+Map:   0%|          | 0/3610 [00:00<?, ? examples/s]Map:  83%|████████▎ | 3000/3610 [00:00<00:00, 18906.01 examples/s]Map: 100%|██████████| 3610/3610 [00:00<00:00, 18030.44 examples/s]
+Map:   0%|          | 0/3310 [00:00<?, ? examples/s]Map:  91%|█████████ | 3000/3310 [00:00<00:00, 25342.82 examples/s]Map: 100%|██████████| 3310/3310 [00:00<00:00, 15180.70 examples/s]
+Map:   0%|          | 0/444 [00:00<?, ? examples/s]Map: 100%|██████████| 444/444 [00:00<00:00, 15058.15 examples/s]
+Map:   0%|          | 0/428 [00:00<?, ? examples/s]Map: 100%|██████████| 428/428 [00:00<00:00, 9661.28 examples/s]
+[DATA] SST-2 train 3610/3310 (for C only, labels unused); SST-2 dev 444/428
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:   5%|▌         | 20/389 [00:00<00:02, 178.87it/s]Loading weights:  10%|▉         | 38/389 [00:00<00:03, 109.28it/s]Loading weights:  13%|█▎        | 52/389 [00:00<00:02, 117.06it/s]Loading weights:  17%|█▋        | 65/389 [00:00<00:03, 87.77it/s] Loading weights:  22%|██▏       | 84/389 [00:00<00:03, 92.71it/s]Loading weights:  25%|██▍       | 97/389 [00:00<00:03, 94.93it/s]Loading weights:  28%|██▊       | 108/389 [00:01<00:03, 92.93it/s]Loading weights:  31%|███       | 120/389 [00:01<00:02, 94.23it/s]Loading weights:  33%|███▎      | 130/389 [00:01<00:03, 83.01it/s]Loading weights:  36%|███▌      | 139/389 [00:01<00:03, 77.66it/s]Loading weights:  49%|████▉     | 190/389 [00:01<00:01, 177.32it/s]Loading weights:  55%|█████▌    | 214/389 [00:01<00:00, 187.88it/s]Loading weights:  61%|██████▏   | 239/389 [00:01<00:00, 195.29it/s]Loading weights:  75%|███████▌  | 292/389 [00:01<00:00, 258.24it/s]Loading weights:  82%|████████▏ | 319/389 [00:02<00:00, 247.14it/s]Loading weights:  95%|█████████▍| 369/389 [00:02<00:00, 311.62it/s]Loading weights: 100%|██████████| 389/389 [00:02<00:00, 175.58it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[KDIAG] n1500_s0_ep2 C collected from 173151 SST-2 train tokens  1.3 min
+[KDIAG] n1500_s0_ep2 layer 0: eigenvalue max 1.945e+07 min 9.802e+00 floor 4.423e-06 condition 1.985e+06 -> 1.985e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 1: eigenvalue max 5.807e+07 min 6.892e+00 floor 1.320e-05 condition 8.426e+06 -> 8.426e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 2: eigenvalue max 7.282e+07 min 6.637e+01 floor 1.656e-05 condition 1.097e+06 -> 1.097e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 3: eigenvalue max 8.213e+07 min 7.785e+01 floor 1.867e-05 condition 1.055e+06 -> 1.055e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 4: eigenvalue max 8.117e+07 min 1.117e+02 floor 1.846e-05 condition 7.266e+05 -> 7.266e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 5: eigenvalue max 8.920e+07 min 1.799e+02 floor 2.028e-05 condition 4.960e+05 -> 4.960e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 6: eigenvalue max 1.037e+08 min 2.037e+02 floor 2.359e-05 condition 5.092e+05 -> 5.092e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 7: eigenvalue max 1.144e+08 min 1.087e+02 floor 2.600e-05 condition 1.052e+06 -> 1.052e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 8: eigenvalue max 1.253e+08 min 7.974e+01 floor 2.849e-05 condition 1.571e+06 -> 1.571e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 9: eigenvalue max 1.246e+08 min 7.050e+01 floor 2.832e-05 condition 1.767e+06 -> 1.767e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 10: eigenvalue max 1.311e+08 min 2.582e+01 floor 2.980e-05 condition 5.076e+06 -> 5.076e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 11: eigenvalue max 1.147e+08 min 2.175e+01 floor 2.608e-05 condition 5.273e+06 -> 5.273e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 12: eigenvalue max 1.193e+08 min 4.150e+01 floor 2.713e-05 condition 2.875e+06 -> 2.875e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 13: eigenvalue max 1.202e+08 min 4.050e+01 floor 2.733e-05 condition 2.967e+06 -> 2.967e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 14: eigenvalue max 1.213e+08 min 4.625e+01 floor 2.758e-05 condition 2.623e+06 -> 2.623e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 15: eigenvalue max 1.186e+08 min 5.746e+01 floor 2.697e-05 condition 2.064e+06 -> 2.064e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 16: eigenvalue max 1.254e+08 min 5.223e+01 floor 2.852e-05 condition 2.402e+06 -> 2.402e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 17: eigenvalue max 1.185e+08 min 4.110e+01 floor 2.695e-05 condition 2.884e+06 -> 2.884e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 18: eigenvalue max 1.199e+08 min 2.442e+01 floor 2.727e-05 condition 4.911e+06 -> 4.911e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 19: eigenvalue max 1.131e+08 min 2.654e+01 floor 2.572e-05 condition 4.262e+06 -> 4.262e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 20: eigenvalue max 9.993e+07 min 4.319e+01 floor 2.272e-05 condition 2.314e+06 -> 2.314e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 21: eigenvalue max 1.098e+08 min 4.628e+01 floor 2.496e-05 condition 2.372e+06 -> 2.372e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 22: eigenvalue max 1.059e+08 min 7.950e+01 floor 2.408e-05 condition 1.332e+06 -> 1.332e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 layer 23: eigenvalue max 9.879e+07 min 6.926e+01 floor 2.246e-05 condition 1.426e+06 -> 1.426e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s0_ep2 48 full SVDs done; whiten: max |objective - (1 - raw error)| 3.00e-15, max |compressed-output energy - (1 - raw error)| 2.66e-15  1.7 min
+[CHECK] n1500_s0_ep2 layer0.query sigma r=0.9 on 4096 raw tokens: direct error 4.112366e+05 via C 4.112366e+05 relative difference 2.3e-15
+[CHECK] n1500_s0_ep2 layer0.query vote_in r=0.9 on 4096 raw tokens: direct error 4.070016e+05 via C 4.070016e+05 relative difference 8.6e-16
+[CHECK] n1500_s0_ep2 layer0.query vote_out r=0.9 on 4096 raw tokens: direct error 4.104663e+05 via C 4.104663e+05 relative difference 1.4e-15
+[CHECK] n1500_s0_ep2 layer0.query whiten r=0.9 on 4096 raw tokens: direct error 4.022882e+05 via C 4.022882e+05 relative difference 5.8e-15
+[CHECK] n1500_s0_ep2 layer0.value sigma r=0.9 on 4096 raw tokens: direct error 3.210849e+05 via C 3.210849e+05 relative difference 1.8e-15
+[CHECK] n1500_s0_ep2 layer0.value vote_in r=0.9 on 4096 raw tokens: direct error 3.198025e+05 via C 3.198025e+05 relative difference 2.2e-15
+[CHECK] n1500_s0_ep2 layer0.value vote_out r=0.9 on 4096 raw tokens: direct error 3.197944e+05 via C 3.197944e+05 relative difference 9.1e-16
+[CHECK] n1500_s0_ep2 layer0.value whiten r=0.9 on 4096 raw tokens: direct error 3.127874e+05 via C 3.127874e+05 relative difference 3.2e-15
+[CHECK] n1500_s0_ep2 layer23.query sigma r=0.9 on 4096 raw tokens: direct error 1.326238e+06 via C 1.326238e+06 relative difference 1.8e-16
+[CHECK] n1500_s0_ep2 layer23.query vote_in r=0.9 on 4096 raw tokens: direct error 1.271229e+06 via C 1.271229e+06 relative difference 2.2e-15
+[CHECK] n1500_s0_ep2 layer23.query vote_out r=0.9 on 4096 raw tokens: direct error 1.318501e+06 via C 1.318501e+06 relative difference 2.1e-15
+[CHECK] n1500_s0_ep2 layer23.query whiten r=0.9 on 4096 raw tokens: direct error 1.287649e+06 via C 1.287649e+06 relative difference 8.9e-15
+[CHECK] n1500_s0_ep2 layer23.value sigma r=0.9 on 4096 raw tokens: direct error 3.086868e+05 via C 3.086868e+05 relative difference 2.5e-15
+[CHECK] n1500_s0_ep2 layer23.value vote_in r=0.9 on 4096 raw tokens: direct error 3.031978e+05 via C 3.031978e+05 relative difference 3.3e-15
+[CHECK] n1500_s0_ep2 layer23.value vote_out r=0.9 on 4096 raw tokens: direct error 3.065534e+05 via C 3.065534e+05 relative difference 2.7e-15
+[CHECK] n1500_s0_ep2 layer23.value whiten r=0.9 on 4096 raw tokens: direct error 2.959994e+05 via C 2.959994e+05 relative difference 6.1e-15
+[KDIAG] n1500_s0_ep2 untruncated SST-2 dev AUC 0.9677
+[CHECK] n1500_s0_ep2 untruncated SST-2 dev vs logs/scores/sst2dev/n1500_s0_ep2.npz: identical (max difference 0)
+[KDIAG] n1500_s0_ep2 sigma r=0.9999 kept rank mean 976.3 (min 928, max 1006) exact error mean 9.18e-05 input energy outside row space mean 0.295 SST-2 dev AUC 0.9681  1.8 min
+[KDIAG] n1500_s0_ep2 sigma r=0.999 kept rank mean 908.7 (min 832, max 959) exact error mean 9.70e-04 input energy outside row space mean 0.422 SST-2 dev AUC 0.9641  1.8 min
+[KDIAG] n1500_s0_ep2 sigma r=0.995 kept rank mean 811.5 (min 697, max 867) exact error mean 4.92e-03 input energy outside row space mean 0.527 SST-2 dev AUC 0.9652  1.9 min
+[KDIAG] n1500_s0_ep2 sigma r=0.99 kept rank mean 751.9 (min 613, max 825) exact error mean 9.91e-03 input energy outside row space mean 0.580 SST-2 dev AUC 0.9635  1.9 min
+[KDIAG] n1500_s0_ep2 sigma r=0.98 kept rank mean 673.5 (min 511, max 763) exact error mean 1.99e-02 input energy outside row space mean 0.640 SST-2 dev AUC 0.9627  2.0 min
+[KDIAG] n1500_s0_ep2 sigma r=0.95 kept rank mean 537.1 (min 333, max 666) exact error mean 4.98e-02 input energy outside row space mean 0.725 SST-2 dev AUC 0.9585  2.0 min
+[KDIAG] n1500_s0_ep2 sigma r=0.9 kept rank mean 403.4 (min 183, max 553) exact error mean 9.97e-02 input energy outside row space mean 0.792 SST-2 dev AUC 0.9558  2.0 min
+[KDIAG] n1500_s0_ep2 sigma r=0.8 kept rank mean 254.9 (min 57, max 430) exact error mean 1.99e-01 input energy outside row space mean 0.860 SST-2 dev AUC 0.9354  2.0 min
+[KDIAG] n1500_s0_ep2 sigma r=0.7 kept rank mean 166.6 (min 18, max 343) exact error mean 2.99e-01 input energy outside row space mean 0.899 SST-2 dev AUC 0.8586  2.1 min
+[KDIAG] n1500_s0_ep2 sigma r=0.5 kept rank mean 72.9 (min 2, max 209) exact error mean 4.96e-01 input energy outside row space mean 0.946 SST-2 dev AUC 0.6402  2.1 min
+[KDIAG] n1500_s0_ep2 vote_in r=0.9999 kept rank mean 1023.8 (min 1018, max 1024) exact error mean 7.55e-06 input energy outside row space mean 0.000 SST-2 dev AUC 0.9674  2.1 min
+[KDIAG] n1500_s0_ep2 vote_in r=0.999 kept rank mean 1020.3 (min 992, max 1024) exact error mean 4.89e-04 input energy outside row space mean 0.001 SST-2 dev AUC 0.9672  2.2 min
+[KDIAG] n1500_s0_ep2 vote_in r=0.995 kept rank mean 1005.8 (min 948, max 1024) exact error mean 4.20e-03 input energy outside row space mean 0.005 SST-2 dev AUC 0.9641  2.2 min
+[KDIAG] n1500_s0_ep2 vote_in r=0.99 kept rank mean 988.3 (min 900, max 1024) exact error mean 9.38e-03 input energy outside row space mean 0.010 SST-2 dev AUC 0.9635  2.2 min
+[KDIAG] n1500_s0_ep2 vote_in r=0.98 kept rank mean 955.6 (min 834, max 1015) exact error mean 1.97e-02 input energy outside row space mean 0.020 SST-2 dev AUC 0.9620  2.3 min
+[KDIAG] n1500_s0_ep2 vote_in r=0.95 kept rank mean 871.0 (min 684, max 998) exact error mean 4.96e-02 input energy outside row space mean 0.047 SST-2 dev AUC 0.9668  2.3 min
+[KDIAG] n1500_s0_ep2 vote_in r=0.9 kept rank mean 764.0 (min 491, max 961) exact error mean 9.93e-02 input energy outside row space mean 0.086 SST-2 dev AUC 0.9626  2.3 min
+[KDIAG] n1500_s0_ep2 vote_in r=0.8 kept rank mean 605.8 (min 286, max 880) exact error mean 1.99e-01 input energy outside row space mean 0.150 SST-2 dev AUC 0.9530  2.4 min
+[KDIAG] n1500_s0_ep2 vote_in r=0.7 kept rank mean 481.8 (min 154, max 786) exact error mean 2.99e-01 input energy outside row space mean 0.211 SST-2 dev AUC 0.9300  2.4 min
+[KDIAG] n1500_s0_ep2 vote_in r=0.5 kept rank mean 293.1 (min 5, max 549) exact error mean 4.96e-01 input energy outside row space mean 0.340 SST-2 dev AUC 0.8277  2.4 min
+[KDIAG] n1500_s0_ep2 vote_out r=0.9999 kept rank mean 962.6 (min 911, max 990) exact error mean 9.77e-05 input energy outside row space mean 0.219 SST-2 dev AUC 0.9671  2.5 min
+[KDIAG] n1500_s0_ep2 vote_out r=0.999 kept rank mean 886.9 (min 802, max 934) exact error mean 9.89e-04 input energy outside row space mean 0.365 SST-2 dev AUC 0.9657  2.5 min
+[KDIAG] n1500_s0_ep2 vote_out r=0.995 kept rank mean 784.4 (min 660, max 855) exact error mean 4.97e-03 input energy outside row space mean 0.480 SST-2 dev AUC 0.9648  2.5 min
+[KDIAG] n1500_s0_ep2 vote_out r=0.99 kept rank mean 720.4 (min 578, max 806) exact error mean 9.95e-03 input energy outside row space mean 0.533 SST-2 dev AUC 0.9673  2.6 min
+[KDIAG] n1500_s0_ep2 vote_out r=0.98 kept rank mean 640.6 (min 477, max 746) exact error mean 1.99e-02 input energy outside row space mean 0.592 SST-2 dev AUC 0.9656  2.6 min
+[KDIAG] n1500_s0_ep2 vote_out r=0.95 kept rank mean 505.6 (min 300, max 639) exact error mean 4.98e-02 input energy outside row space mean 0.685 SST-2 dev AUC 0.9666  2.6 min
+[KDIAG] n1500_s0_ep2 vote_out r=0.9 kept rank mean 380.9 (min 164, max 535) exact error mean 9.98e-02 input energy outside row space mean 0.761 SST-2 dev AUC 0.9620  2.7 min
+[KDIAG] n1500_s0_ep2 vote_out r=0.8 kept rank mean 241.3 (min 51, max 411) exact error mean 2.00e-01 input energy outside row space mean 0.844 SST-2 dev AUC 0.9521  2.7 min
+[KDIAG] n1500_s0_ep2 vote_out r=0.7 kept rank mean 158.1 (min 15, max 322) exact error mean 2.99e-01 input energy outside row space mean 0.891 SST-2 dev AUC 0.8790  2.7 min
+[KDIAG] n1500_s0_ep2 vote_out r=0.5 kept rank mean 68.0 (min 2, max 188) exact error mean 4.96e-01 input energy outside row space mean 0.943 SST-2 dev AUC 0.7422  2.7 min
+[KDIAG] n1500_s0_ep2 whiten r=0.9999 kept rank mean 898.1 (min 821, max 937) exact error mean 9.87e-05 input energy outside row space mean 0.410 SST-2 dev AUC 0.9669  2.8 min
+[KDIAG] n1500_s0_ep2 whiten r=0.999 kept rank mean 773.8 (min 647, max 844) exact error mean 9.93e-04 input energy outside row space mean 0.518 SST-2 dev AUC 0.9672  2.9 min
+[KDIAG] n1500_s0_ep2 whiten r=0.995 kept rank mean 624.2 (min 448, max 727) exact error mean 4.98e-03 input energy outside row space mean 0.610 SST-2 dev AUC 0.9688  2.9 min
+[KDIAG] n1500_s0_ep2 whiten r=0.99 kept rank mean 538.9 (min 341, max 657) exact error mean 9.96e-03 input energy outside row space mean 0.653 SST-2 dev AUC 0.9684  2.9 min
+[KDIAG] n1500_s0_ep2 whiten r=0.98 kept rank mean 440.5 (min 226, max 573) exact error mean 1.99e-02 input energy outside row space mean 0.697 SST-2 dev AUC 0.9653  3.0 min
+[KDIAG] n1500_s0_ep2 whiten r=0.95 kept rank mean 295.0 (min 85, max 436) exact error mean 4.99e-02 input energy outside row space mean 0.757 SST-2 dev AUC 0.9646  3.0 min
+[KDIAG] n1500_s0_ep2 whiten r=0.9 kept rank mean 183.0 (min 22, max 313) exact error mean 9.96e-02 input energy outside row space mean 0.805 SST-2 dev AUC 0.9644  3.1 min
+[KDIAG] n1500_s0_ep2 whiten r=0.8 kept rank mean 86.7 (min 3, max 175) exact error mean 1.99e-01 input energy outside row space mean 0.856 SST-2 dev AUC 0.9557  3.1 min
+[KDIAG] n1500_s0_ep2 whiten r=0.7 kept rank mean 45.2 (min 1, max 98) exact error mean 2.96e-01 input energy outside row space mean 0.889 SST-2 dev AUC 0.9211  3.1 min
+[KDIAG] n1500_s0_ep2 whiten r=0.5 kept rank mean 12.6 (min 1, max 36) exact error mean 4.73e-01 input energy outside row space mean 0.930 SST-2 dev AUC 0.8109  3.2 min
+[SAVE] logs/kdiag/n1500_s0_ep2.npz  missing=0 unexpected=0  3.2 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  25%|██▌       | 98/389 [00:00<00:00, 958.83it/s]Loading weights:  67%|██████▋   | 260/389 [00:00<00:00, 1337.30it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 1306.42it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[KDIAG] n1500_s1_ep2 C collected from 173151 SST-2 train tokens  0.6 min
+[KDIAG] n1500_s1_ep2 layer 0: eigenvalue max 1.943e+07 min 9.766e+00 floor 4.419e-06 condition 1.990e+06 -> 1.990e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 1: eigenvalue max 5.734e+07 min 7.208e+00 floor 1.304e-05 condition 7.954e+06 -> 7.954e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 2: eigenvalue max 7.155e+07 min 7.113e+01 floor 1.627e-05 condition 1.006e+06 -> 1.006e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 3: eigenvalue max 8.145e+07 min 8.002e+01 floor 1.852e-05 condition 1.018e+06 -> 1.018e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 4: eigenvalue max 8.114e+07 min 1.103e+02 floor 1.845e-05 condition 7.355e+05 -> 7.355e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 5: eigenvalue max 8.794e+07 min 1.534e+02 floor 2.000e-05 condition 5.731e+05 -> 5.731e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 6: eigenvalue max 9.895e+07 min 1.718e+02 floor 2.250e-05 condition 5.760e+05 -> 5.760e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 7: eigenvalue max 1.100e+08 min 9.032e+01 floor 2.501e-05 condition 1.218e+06 -> 1.218e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 8: eigenvalue max 1.196e+08 min 7.556e+01 floor 2.720e-05 condition 1.584e+06 -> 1.584e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 9: eigenvalue max 1.231e+08 min 5.996e+01 floor 2.799e-05 condition 2.053e+06 -> 2.053e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 10: eigenvalue max 1.304e+08 min 2.122e+01 floor 2.966e-05 condition 6.147e+06 -> 6.147e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 11: eigenvalue max 1.162e+08 min 1.857e+01 floor 2.642e-05 condition 6.257e+06 -> 6.257e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 12: eigenvalue max 1.202e+08 min 3.747e+01 floor 2.733e-05 condition 3.208e+06 -> 3.208e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 13: eigenvalue max 1.208e+08 min 3.440e+01 floor 2.747e-05 condition 3.512e+06 -> 3.512e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 14: eigenvalue max 1.212e+08 min 4.284e+01 floor 2.757e-05 condition 2.830e+06 -> 2.830e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 15: eigenvalue max 1.213e+08 min 4.953e+01 floor 2.758e-05 condition 2.449e+06 -> 2.449e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 16: eigenvalue max 1.301e+08 min 4.445e+01 floor 2.959e-05 condition 2.928e+06 -> 2.928e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 17: eigenvalue max 1.243e+08 min 3.223e+01 floor 2.827e-05 condition 3.858e+06 -> 3.858e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 18: eigenvalue max 1.242e+08 min 1.927e+01 floor 2.823e-05 condition 6.444e+06 -> 6.444e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 19: eigenvalue max 1.152e+08 min 2.226e+01 floor 2.618e-05 condition 5.174e+06 -> 5.174e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 20: eigenvalue max 1.038e+08 min 3.472e+01 floor 2.360e-05 condition 2.989e+06 -> 2.989e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 21: eigenvalue max 1.144e+08 min 3.860e+01 floor 2.602e-05 condition 2.965e+06 -> 2.965e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 22: eigenvalue max 1.172e+08 min 5.149e+01 floor 2.665e-05 condition 2.276e+06 -> 2.276e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 layer 23: eigenvalue max 1.060e+08 min 6.000e+01 floor 2.410e-05 condition 1.766e+06 -> 1.766e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s1_ep2 48 full SVDs done; whiten: max |objective - (1 - raw error)| 2.44e-15, max |compressed-output energy - (1 - raw error)| 4.22e-15  1.1 min
+[CHECK] n1500_s1_ep2 layer0.query sigma r=0.9 on 4096 raw tokens: direct error 4.117172e+05 via C 4.117172e+05 relative difference 2.1e-15
+[CHECK] n1500_s1_ep2 layer0.query vote_in r=0.9 on 4096 raw tokens: direct error 4.103694e+05 via C 4.103694e+05 relative difference 1.6e-15
+[CHECK] n1500_s1_ep2 layer0.query vote_out r=0.9 on 4096 raw tokens: direct error 4.107756e+05 via C 4.107756e+05 relative difference 9.9e-16
+[CHECK] n1500_s1_ep2 layer0.query whiten r=0.9 on 4096 raw tokens: direct error 4.024544e+05 via C 4.024544e+05 relative difference 6.1e-15
+[CHECK] n1500_s1_ep2 layer0.value sigma r=0.9 on 4096 raw tokens: direct error 3.197402e+05 via C 3.197402e+05 relative difference 1.3e-15
+[CHECK] n1500_s1_ep2 layer0.value vote_in r=0.9 on 4096 raw tokens: direct error 3.112681e+05 via C 3.112681e+05 relative difference 1.3e-15
+[CHECK] n1500_s1_ep2 layer0.value vote_out r=0.9 on 4096 raw tokens: direct error 3.201504e+05 via C 3.201504e+05 relative difference 2.7e-15
+[CHECK] n1500_s1_ep2 layer0.value whiten r=0.9 on 4096 raw tokens: direct error 3.129793e+05 via C 3.129793e+05 relative difference 4.6e-15
+[CHECK] n1500_s1_ep2 layer23.query sigma r=0.9 on 4096 raw tokens: direct error 1.006264e+06 via C 1.006264e+06 relative difference 3.1e-15
+[CHECK] n1500_s1_ep2 layer23.query vote_in r=0.9 on 4096 raw tokens: direct error 9.341094e+05 via C 9.341094e+05 relative difference 4.2e-15
+[CHECK] n1500_s1_ep2 layer23.query vote_out r=0.9 on 4096 raw tokens: direct error 1.008786e+06 via C 1.008786e+06 relative difference 2.9e-15
+[CHECK] n1500_s1_ep2 layer23.query whiten r=0.9 on 4096 raw tokens: direct error 9.439850e+05 via C 9.439850e+05 relative difference 6.7e-15
+[CHECK] n1500_s1_ep2 layer23.value sigma r=0.9 on 4096 raw tokens: direct error 2.413421e+05 via C 2.413421e+05 relative difference 1.9e-15
+[CHECK] n1500_s1_ep2 layer23.value vote_in r=0.9 on 4096 raw tokens: direct error 2.358138e+05 via C 2.358138e+05 relative difference 4.9e-16
+[CHECK] n1500_s1_ep2 layer23.value vote_out r=0.9 on 4096 raw tokens: direct error 2.415744e+05 via C 2.415744e+05 relative difference 2.5e-15
+[CHECK] n1500_s1_ep2 layer23.value whiten r=0.9 on 4096 raw tokens: direct error 2.426480e+05 via C 2.426480e+05 relative difference 4.7e-15
+[KDIAG] n1500_s1_ep2 untruncated SST-2 dev AUC 0.9509
+[CHECK] n1500_s1_ep2 untruncated SST-2 dev vs logs/scores/sst2dev/n1500_s1_ep2.npz: identical (max difference 0)
+[KDIAG] n1500_s1_ep2 sigma r=0.9999 kept rank mean 976.6 (min 936, max 1006) exact error mean 9.28e-05 input energy outside row space mean 0.299 SST-2 dev AUC 0.9504  1.1 min
+[KDIAG] n1500_s1_ep2 sigma r=0.999 kept rank mean 909.9 (min 851, max 962) exact error mean 9.73e-04 input energy outside row space mean 0.425 SST-2 dev AUC 0.9451  1.2 min
+[KDIAG] n1500_s1_ep2 sigma r=0.995 kept rank mean 813.8 (min 724, max 874) exact error mean 4.94e-03 input energy outside row space mean 0.530 SST-2 dev AUC 0.9358  1.2 min
+[KDIAG] n1500_s1_ep2 sigma r=0.99 kept rank mean 754.4 (min 644, max 833) exact error mean 9.91e-03 input energy outside row space mean 0.584 SST-2 dev AUC 0.9266  1.2 min
+[KDIAG] n1500_s1_ep2 sigma r=0.98 kept rank mean 676.4 (min 540, max 764) exact error mean 1.99e-02 input energy outside row space mean 0.644 SST-2 dev AUC 0.9125  1.3 min
+[KDIAG] n1500_s1_ep2 sigma r=0.95 kept rank mean 540.1 (min 358, max 656) exact error mean 4.98e-02 input energy outside row space mean 0.728 SST-2 dev AUC 0.9138  1.3 min
+[KDIAG] n1500_s1_ep2 sigma r=0.9 kept rank mean 406.5 (min 208, max 549) exact error mean 9.97e-02 input energy outside row space mean 0.794 SST-2 dev AUC 0.9385  1.3 min
+[KDIAG] n1500_s1_ep2 sigma r=0.8 kept rank mean 256.7 (min 68, max 424) exact error mean 2.00e-01 input energy outside row space mean 0.861 SST-2 dev AUC 0.8683  1.4 min
+[KDIAG] n1500_s1_ep2 sigma r=0.7 kept rank mean 167.5 (min 21, max 340) exact error mean 2.99e-01 input energy outside row space mean 0.900 SST-2 dev AUC 0.7968  1.4 min
+[KDIAG] n1500_s1_ep2 sigma r=0.5 kept rank mean 73.1 (min 2, max 205) exact error mean 4.96e-01 input energy outside row space mean 0.947 SST-2 dev AUC 0.6262  1.4 min
+[KDIAG] n1500_s1_ep2 vote_in r=0.9999 kept rank mean 1023.6 (min 1016, max 1024) exact error mean 1.37e-05 input energy outside row space mean 0.000 SST-2 dev AUC 0.9509  1.5 min
+[KDIAG] n1500_s1_ep2 vote_in r=0.999 kept rank mean 1020.7 (min 991, max 1024) exact error mean 5.00e-04 input energy outside row space mean 0.001 SST-2 dev AUC 0.9510  1.5 min
+[KDIAG] n1500_s1_ep2 vote_in r=0.995 kept rank mean 1006.5 (min 934, max 1024) exact error mean 4.20e-03 input energy outside row space mean 0.005 SST-2 dev AUC 0.9500  1.5 min
+[KDIAG] n1500_s1_ep2 vote_in r=0.99 kept rank mean 988.6 (min 894, max 1024) exact error mean 9.34e-03 input energy outside row space mean 0.010 SST-2 dev AUC 0.9508  1.6 min
+[KDIAG] n1500_s1_ep2 vote_in r=0.98 kept rank mean 956.0 (min 832, max 1015) exact error mean 1.96e-02 input energy outside row space mean 0.020 SST-2 dev AUC 0.9499  1.6 min
+[KDIAG] n1500_s1_ep2 vote_in r=0.95 kept rank mean 876.7 (min 698, max 999) exact error mean 4.94e-02 input energy outside row space mean 0.045 SST-2 dev AUC 0.9492  1.7 min
+[KDIAG] n1500_s1_ep2 vote_in r=0.9 kept rank mean 771.1 (min 532, max 965) exact error mean 9.94e-02 input energy outside row space mean 0.082 SST-2 dev AUC 0.9349  1.7 min
+[KDIAG] n1500_s1_ep2 vote_in r=0.8 kept rank mean 611.9 (min 320, max 879) exact error mean 1.99e-01 input energy outside row space mean 0.146 SST-2 dev AUC 0.9234  1.7 min
+[KDIAG] n1500_s1_ep2 vote_in r=0.7 kept rank mean 486.1 (min 158, max 781) exact error mean 2.99e-01 input energy outside row space mean 0.207 SST-2 dev AUC 0.8716  1.8 min
+[KDIAG] n1500_s1_ep2 vote_in r=0.5 kept rank mean 302.4 (min 9, max 553) exact error mean 4.96e-01 input energy outside row space mean 0.328 SST-2 dev AUC 0.7510  1.8 min
+[KDIAG] n1500_s1_ep2 vote_out r=0.9999 kept rank mean 962.9 (min 914, max 992) exact error mean 9.77e-05 input energy outside row space mean 0.220 SST-2 dev AUC 0.9510  1.8 min
+[KDIAG] n1500_s1_ep2 vote_out r=0.999 kept rank mean 887.2 (min 815, max 936) exact error mean 9.90e-04 input energy outside row space mean 0.371 SST-2 dev AUC 0.9489  1.9 min
+[KDIAG] n1500_s1_ep2 vote_out r=0.995 kept rank mean 786.2 (min 679, max 859) exact error mean 4.97e-03 input energy outside row space mean 0.483 SST-2 dev AUC 0.9398  1.9 min
+[KDIAG] n1500_s1_ep2 vote_out r=0.99 kept rank mean 722.7 (min 597, max 812) exact error mean 9.96e-03 input energy outside row space mean 0.535 SST-2 dev AUC 0.9353  1.9 min
+[KDIAG] n1500_s1_ep2 vote_out r=0.98 kept rank mean 643.2 (min 495, max 751) exact error mean 1.99e-02 input energy outside row space mean 0.595 SST-2 dev AUC 0.9164  2.0 min
+[KDIAG] n1500_s1_ep2 vote_out r=0.95 kept rank mean 508.9 (min 328, max 643) exact error mean 4.98e-02 input energy outside row space mean 0.687 SST-2 dev AUC 0.9260  2.0 min
+[KDIAG] n1500_s1_ep2 vote_out r=0.9 kept rank mean 384.0 (min 184, max 538) exact error mean 9.97e-02 input energy outside row space mean 0.765 SST-2 dev AUC 0.9327  2.0 min
+[KDIAG] n1500_s1_ep2 vote_out r=0.8 kept rank mean 243.4 (min 58, max 412) exact error mean 2.00e-01 input energy outside row space mean 0.846 SST-2 dev AUC 0.9045  2.1 min
+[KDIAG] n1500_s1_ep2 vote_out r=0.7 kept rank mean 159.7 (min 18, max 324) exact error mean 2.99e-01 input energy outside row space mean 0.894 SST-2 dev AUC 0.8149  2.1 min
+[KDIAG] n1500_s1_ep2 vote_out r=0.5 kept rank mean 68.9 (min 2, max 192) exact error mean 4.96e-01 input energy outside row space mean 0.945 SST-2 dev AUC 0.6569  2.1 min
+[KDIAG] n1500_s1_ep2 whiten r=0.9999 kept rank mean 898.7 (min 829, max 938) exact error mean 9.88e-05 input energy outside row space mean 0.414 SST-2 dev AUC 0.9509  2.2 min
+[KDIAG] n1500_s1_ep2 whiten r=0.999 kept rank mean 774.9 (min 662, max 847) exact error mean 9.93e-04 input energy outside row space mean 0.523 SST-2 dev AUC 0.9504  2.2 min
+[KDIAG] n1500_s1_ep2 whiten r=0.995 kept rank mean 625.7 (min 469, max 731) exact error mean 4.98e-03 input energy outside row space mean 0.614 SST-2 dev AUC 0.9499  2.3 min
+[KDIAG] n1500_s1_ep2 whiten r=0.99 kept rank mean 540.6 (min 364, max 663) exact error mean 9.96e-03 input energy outside row space mean 0.657 SST-2 dev AUC 0.9467  2.3 min
+[KDIAG] n1500_s1_ep2 whiten r=0.98 kept rank mean 442.4 (min 250, max 580) exact error mean 1.99e-02 input energy outside row space mean 0.701 SST-2 dev AUC 0.9436  2.4 min
+[KDIAG] n1500_s1_ep2 whiten r=0.95 kept rank mean 296.9 (min 104, max 446) exact error mean 4.99e-02 input energy outside row space mean 0.760 SST-2 dev AUC 0.9355  2.4 min
+[KDIAG] n1500_s1_ep2 whiten r=0.9 kept rank mean 184.5 (min 30, max 325) exact error mean 9.96e-02 input energy outside row space mean 0.807 SST-2 dev AUC 0.9272  2.5 min
+[KDIAG] n1500_s1_ep2 whiten r=0.8 kept rank mean 87.7 (min 5, max 190) exact error mean 1.99e-01 input energy outside row space mean 0.859 SST-2 dev AUC 0.9227  2.5 min
+[KDIAG] n1500_s1_ep2 whiten r=0.7 kept rank mean 46.0 (min 1, max 111) exact error mean 2.97e-01 input energy outside row space mean 0.891 SST-2 dev AUC 0.8833  2.5 min
+[KDIAG] n1500_s1_ep2 whiten r=0.5 kept rank mean 12.8 (min 1, max 35) exact error mean 4.77e-01 input energy outside row space mean 0.931 SST-2 dev AUC 0.6990  2.5 min
+[SAVE] logs/kdiag/n1500_s1_ep2.npz  missing=0 unexpected=0  3.0 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  80%|████████  | 312/389 [00:00<00:00, 3117.46it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3485.78it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[KDIAG] n1500_s2_ep2 C collected from 173151 SST-2 train tokens  0.7 min
+[KDIAG] n1500_s2_ep2 layer 0: eigenvalue max 1.944e+07 min 9.800e+00 floor 4.420e-06 condition 1.984e+06 -> 1.984e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 1: eigenvalue max 5.808e+07 min 6.794e+00 floor 1.321e-05 condition 8.549e+06 -> 8.549e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 2: eigenvalue max 7.251e+07 min 6.385e+01 floor 1.649e-05 condition 1.136e+06 -> 1.136e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 3: eigenvalue max 8.417e+07 min 6.847e+01 floor 1.914e-05 condition 1.229e+06 -> 1.229e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 4: eigenvalue max 8.418e+07 min 9.548e+01 floor 1.914e-05 condition 8.816e+05 -> 8.816e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 5: eigenvalue max 9.167e+07 min 1.317e+02 floor 2.084e-05 condition 6.963e+05 -> 6.963e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 6: eigenvalue max 1.029e+08 min 1.535e+02 floor 2.340e-05 condition 6.704e+05 -> 6.704e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 7: eigenvalue max 1.124e+08 min 8.715e+01 floor 2.556e-05 condition 1.290e+06 -> 1.290e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 8: eigenvalue max 1.222e+08 min 7.077e+01 floor 2.779e-05 condition 1.727e+06 -> 1.727e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 9: eigenvalue max 1.216e+08 min 6.193e+01 floor 2.765e-05 condition 1.964e+06 -> 1.964e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 10: eigenvalue max 1.291e+08 min 2.272e+01 floor 2.936e-05 condition 5.682e+06 -> 5.682e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 11: eigenvalue max 1.149e+08 min 1.977e+01 floor 2.612e-05 condition 5.812e+06 -> 5.812e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 12: eigenvalue max 1.176e+08 min 4.072e+01 floor 2.673e-05 condition 2.887e+06 -> 2.887e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 13: eigenvalue max 1.174e+08 min 4.161e+01 floor 2.670e-05 condition 2.822e+06 -> 2.822e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 14: eigenvalue max 1.183e+08 min 5.075e+01 floor 2.690e-05 condition 2.331e+06 -> 2.331e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 15: eigenvalue max 1.174e+08 min 6.498e+01 floor 2.670e-05 condition 1.807e+06 -> 1.807e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 16: eigenvalue max 1.221e+08 min 6.589e+01 floor 2.776e-05 condition 1.853e+06 -> 1.853e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 17: eigenvalue max 1.177e+08 min 4.382e+01 floor 2.676e-05 condition 2.686e+06 -> 2.686e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 18: eigenvalue max 1.181e+08 min 2.559e+01 floor 2.686e-05 condition 4.616e+06 -> 4.616e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 19: eigenvalue max 1.107e+08 min 2.652e+01 floor 2.516e-05 condition 4.173e+06 -> 4.173e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 20: eigenvalue max 9.991e+07 min 4.043e+01 floor 2.272e-05 condition 2.471e+06 -> 2.471e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 21: eigenvalue max 1.103e+08 min 4.589e+01 floor 2.509e-05 condition 2.404e+06 -> 2.404e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 22: eigenvalue max 1.132e+08 min 6.979e+01 floor 2.573e-05 condition 1.622e+06 -> 1.622e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 layer 23: eigenvalue max 1.036e+08 min 7.284e+01 floor 2.355e-05 condition 1.422e+06 -> 1.422e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s2_ep2 48 full SVDs done; whiten: max |objective - (1 - raw error)| 2.66e-15, max |compressed-output energy - (1 - raw error)| 2.89e-15  1.1 min
+[CHECK] n1500_s2_ep2 layer0.query sigma r=0.9 on 4096 raw tokens: direct error 4.093821e+05 via C 4.093821e+05 relative difference 1.8e-15
+[CHECK] n1500_s2_ep2 layer0.query vote_in r=0.9 on 4096 raw tokens: direct error 4.101070e+05 via C 4.101070e+05 relative difference 1.4e-15
+[CHECK] n1500_s2_ep2 layer0.query vote_out r=0.9 on 4096 raw tokens: direct error 4.088585e+05 via C 4.088585e+05 relative difference 2.0e-15
+[CHECK] n1500_s2_ep2 layer0.query whiten r=0.9 on 4096 raw tokens: direct error 4.001761e+05 via C 4.001761e+05 relative difference 4.9e-15
+[CHECK] n1500_s2_ep2 layer0.value sigma r=0.9 on 4096 raw tokens: direct error 3.203591e+05 via C 3.203591e+05 relative difference 1.5e-15
+[CHECK] n1500_s2_ep2 layer0.value vote_in r=0.9 on 4096 raw tokens: direct error 3.196695e+05 via C 3.196695e+05 relative difference 9.1e-16
+[CHECK] n1500_s2_ep2 layer0.value vote_out r=0.9 on 4096 raw tokens: direct error 3.199504e+05 via C 3.199504e+05 relative difference 0.0e+00
+[CHECK] n1500_s2_ep2 layer0.value whiten r=0.9 on 4096 raw tokens: direct error 3.127568e+05 via C 3.127568e+05 relative difference 4.5e-15
+[CHECK] n1500_s2_ep2 layer23.query sigma r=0.9 on 4096 raw tokens: direct error 1.031479e+06 via C 1.031479e+06 relative difference 0.0e+00
+[CHECK] n1500_s2_ep2 layer23.query vote_in r=0.9 on 4096 raw tokens: direct error 9.914358e+05 via C 9.914358e+05 relative difference 2.7e-15
+[CHECK] n1500_s2_ep2 layer23.query vote_out r=0.9 on 4096 raw tokens: direct error 1.007324e+06 via C 1.007324e+06 relative difference 2.0e-15
+[CHECK] n1500_s2_ep2 layer23.query whiten r=0.9 on 4096 raw tokens: direct error 9.761779e+05 via C 9.761779e+05 relative difference 5.6e-15
+[CHECK] n1500_s2_ep2 layer23.value sigma r=0.9 on 4096 raw tokens: direct error 2.690492e+05 via C 2.690492e+05 relative difference 1.9e-15
+[CHECK] n1500_s2_ep2 layer23.value vote_in r=0.9 on 4096 raw tokens: direct error 2.688683e+05 via C 2.688683e+05 relative difference 1.9e-15
+[CHECK] n1500_s2_ep2 layer23.value vote_out r=0.9 on 4096 raw tokens: direct error 2.703749e+05 via C 2.703749e+05 relative difference 1.5e-15
+[CHECK] n1500_s2_ep2 layer23.value whiten r=0.9 on 4096 raw tokens: direct error 2.662824e+05 via C 2.662824e+05 relative difference 4.8e-15
+[KDIAG] n1500_s2_ep2 untruncated SST-2 dev AUC 0.9667
+[CHECK] n1500_s2_ep2 untruncated SST-2 dev vs logs/scores/sst2dev/n1500_s2_ep2.npz: identical (max difference 0)
+[KDIAG] n1500_s2_ep2 sigma r=0.9999 kept rank mean 976.0 (min 938, max 1006) exact error mean 9.31e-05 input energy outside row space mean 0.297 SST-2 dev AUC 0.9661  1.2 min
+[KDIAG] n1500_s2_ep2 sigma r=0.999 kept rank mean 908.9 (min 855, max 959) exact error mean 9.76e-04 input energy outside row space mean 0.423 SST-2 dev AUC 0.9627  1.2 min
+[KDIAG] n1500_s2_ep2 sigma r=0.995 kept rank mean 812.3 (min 735, max 868) exact error mean 4.95e-03 input energy outside row space mean 0.527 SST-2 dev AUC 0.9624  1.3 min
+[KDIAG] n1500_s2_ep2 sigma r=0.99 kept rank mean 752.9 (min 670, max 825) exact error mean 9.91e-03 input energy outside row space mean 0.581 SST-2 dev AUC 0.9580  1.3 min
+[KDIAG] n1500_s2_ep2 sigma r=0.98 kept rank mean 673.9 (min 574, max 758) exact error mean 1.99e-02 input energy outside row space mean 0.641 SST-2 dev AUC 0.9455  1.3 min
+[KDIAG] n1500_s2_ep2 sigma r=0.95 kept rank mean 537.5 (min 398, max 653) exact error mean 4.98e-02 input energy outside row space mean 0.725 SST-2 dev AUC 0.9439  1.4 min
+[KDIAG] n1500_s2_ep2 sigma r=0.9 kept rank mean 404.3 (min 254, max 547) exact error mean 9.97e-02 input energy outside row space mean 0.792 SST-2 dev AUC 0.9433  1.4 min
+[KDIAG] n1500_s2_ep2 sigma r=0.8 kept rank mean 254.6 (min 101, max 423) exact error mean 2.00e-01 input energy outside row space mean 0.860 SST-2 dev AUC 0.8805  1.4 min
+[KDIAG] n1500_s2_ep2 sigma r=0.7 kept rank mean 165.8 (min 34, max 335) exact error mean 2.99e-01 input energy outside row space mean 0.899 SST-2 dev AUC 0.8060  1.5 min
+[KDIAG] n1500_s2_ep2 sigma r=0.5 kept rank mean 72.1 (min 2, max 200) exact error mean 4.97e-01 input energy outside row space mean 0.946 SST-2 dev AUC 0.6266  1.5 min
+[KDIAG] n1500_s2_ep2 vote_in r=0.9999 kept rank mean 1023.7 (min 1017, max 1024) exact error mean 6.88e-06 input energy outside row space mean 0.000 SST-2 dev AUC 0.9668  1.5 min
+[KDIAG] n1500_s2_ep2 vote_in r=0.999 kept rank mean 1020.5 (min 987, max 1024) exact error mean 5.28e-04 input energy outside row space mean 0.001 SST-2 dev AUC 0.9672  1.6 min
+[KDIAG] n1500_s2_ep2 vote_in r=0.995 kept rank mean 1005.4 (min 942, max 1024) exact error mean 4.17e-03 input energy outside row space mean 0.005 SST-2 dev AUC 0.9666  1.6 min
+[KDIAG] n1500_s2_ep2 vote_in r=0.99 kept rank mean 989.0 (min 901, max 1022) exact error mean 9.27e-03 input energy outside row space mean 0.010 SST-2 dev AUC 0.9628  1.6 min
+[KDIAG] n1500_s2_ep2 vote_in r=0.98 kept rank mean 956.5 (min 839, max 1015) exact error mean 1.94e-02 input energy outside row space mean 0.020 SST-2 dev AUC 0.9645  1.7 min
+[KDIAG] n1500_s2_ep2 vote_in r=0.95 kept rank mean 878.6 (min 696, max 1000) exact error mean 4.95e-02 input energy outside row space mean 0.045 SST-2 dev AUC 0.9625  1.7 min
+[KDIAG] n1500_s2_ep2 vote_in r=0.9 kept rank mean 772.5 (min 525, max 962) exact error mean 9.94e-02 input energy outside row space mean 0.083 SST-2 dev AUC 0.9663  1.7 min
+[KDIAG] n1500_s2_ep2 vote_in r=0.8 kept rank mean 616.2 (min 341, max 882) exact error mean 1.99e-01 input energy outside row space mean 0.147 SST-2 dev AUC 0.9549  1.8 min
+[KDIAG] n1500_s2_ep2 vote_in r=0.7 kept rank mean 494.3 (min 180, max 791) exact error mean 2.99e-01 input energy outside row space mean 0.205 SST-2 dev AUC 0.9107  1.8 min
+[KDIAG] n1500_s2_ep2 vote_in r=0.5 kept rank mean 303.5 (min 9, max 557) exact error mean 4.98e-01 input energy outside row space mean 0.333 SST-2 dev AUC 0.7164  1.8 min
+[KDIAG] n1500_s2_ep2 vote_out r=0.9999 kept rank mean 962.3 (min 920, max 991) exact error mean 9.77e-05 input energy outside row space mean 0.222 SST-2 dev AUC 0.9673  1.9 min
+[KDIAG] n1500_s2_ep2 vote_out r=0.999 kept rank mean 887.2 (min 826, max 936) exact error mean 9.88e-04 input energy outside row space mean 0.365 SST-2 dev AUC 0.9649  1.9 min
+[KDIAG] n1500_s2_ep2 vote_out r=0.995 kept rank mean 785.9 (min 700, max 860) exact error mean 4.97e-03 input energy outside row space mean 0.483 SST-2 dev AUC 0.9638  1.9 min
+[KDIAG] n1500_s2_ep2 vote_out r=0.99 kept rank mean 722.2 (min 623, max 810) exact error mean 9.95e-03 input energy outside row space mean 0.535 SST-2 dev AUC 0.9606  2.0 min
+[KDIAG] n1500_s2_ep2 vote_out r=0.98 kept rank mean 642.5 (min 529, max 747) exact error mean 1.99e-02 input energy outside row space mean 0.596 SST-2 dev AUC 0.9520  2.0 min
+[KDIAG] n1500_s2_ep2 vote_out r=0.95 kept rank mean 507.9 (min 370, max 641) exact error mean 4.99e-02 input energy outside row space mean 0.686 SST-2 dev AUC 0.9496  2.0 min
+[KDIAG] n1500_s2_ep2 vote_out r=0.9 kept rank mean 383.2 (min 230, max 538) exact error mean 9.97e-02 input energy outside row space mean 0.764 SST-2 dev AUC 0.9501  2.1 min
+[KDIAG] n1500_s2_ep2 vote_out r=0.8 kept rank mean 242.2 (min 91, max 413) exact error mean 2.00e-01 input energy outside row space mean 0.845 SST-2 dev AUC 0.9313  2.1 min
+[KDIAG] n1500_s2_ep2 vote_out r=0.7 kept rank mean 158.3 (min 32, max 324) exact error mean 2.99e-01 input energy outside row space mean 0.894 SST-2 dev AUC 0.7625  2.1 min
+[KDIAG] n1500_s2_ep2 vote_out r=0.5 kept rank mean 67.9 (min 2, max 190) exact error mean 4.98e-01 input energy outside row space mean 0.944 SST-2 dev AUC 0.6364  2.2 min
+[KDIAG] n1500_s2_ep2 whiten r=0.9999 kept rank mean 899.4 (min 844, max 941) exact error mean 9.88e-05 input energy outside row space mean 0.409 SST-2 dev AUC 0.9679  2.2 min
+[KDIAG] n1500_s2_ep2 whiten r=0.999 kept rank mean 776.2 (min 689, max 853) exact error mean 9.93e-04 input energy outside row space mean 0.517 SST-2 dev AUC 0.9658  2.3 min
+[KDIAG] n1500_s2_ep2 whiten r=0.995 kept rank mean 627.7 (min 509, max 741) exact error mean 4.98e-03 input energy outside row space mean 0.610 SST-2 dev AUC 0.9657  2.3 min
+[KDIAG] n1500_s2_ep2 whiten r=0.99 kept rank mean 543.0 (min 409, max 674) exact error mean 9.96e-03 input energy outside row space mean 0.653 SST-2 dev AUC 0.9669  2.4 min
+[KDIAG] n1500_s2_ep2 whiten r=0.98 kept rank mean 445.0 (min 297, max 593) exact error mean 1.99e-02 input energy outside row space mean 0.696 SST-2 dev AUC 0.9655  2.4 min
+[KDIAG] n1500_s2_ep2 whiten r=0.95 kept rank mean 299.3 (min 144, max 461) exact error mean 4.99e-02 input energy outside row space mean 0.756 SST-2 dev AUC 0.9662  2.5 min
+[KDIAG] n1500_s2_ep2 whiten r=0.9 kept rank mean 186.2 (min 50, max 340) exact error mean 9.97e-02 input energy outside row space mean 0.805 SST-2 dev AUC 0.9658  2.5 min
+[KDIAG] n1500_s2_ep2 whiten r=0.8 kept rank mean 88.8 (min 10, max 204) exact error mean 1.99e-01 input energy outside row space mean 0.857 SST-2 dev AUC 0.9492  2.5 min
+[KDIAG] n1500_s2_ep2 whiten r=0.7 kept rank mean 47.0 (min 3, max 122) exact error mean 2.97e-01 input energy outside row space mean 0.890 SST-2 dev AUC 0.9082  2.6 min
+[KDIAG] n1500_s2_ep2 whiten r=0.5 kept rank mean 13.1 (min 1, max 34) exact error mean 4.80e-01 input energy outside row space mean 0.931 SST-2 dev AUC 0.7871  2.6 min
+[SAVE] logs/kdiag/n1500_s2_ep2.npz  missing=0 unexpected=0  2.6 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  89%|████████▉ | 346/389 [00:00<00:00, 3454.22it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3607.01it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[KDIAG] n1500_s3_ep2 C collected from 173151 SST-2 train tokens  0.7 min
+[KDIAG] n1500_s3_ep2 layer 0: eigenvalue max 1.942e+07 min 9.812e+00 floor 4.415e-06 condition 1.979e+06 -> 1.979e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 1: eigenvalue max 5.718e+07 min 7.616e+00 floor 1.300e-05 condition 7.508e+06 -> 7.508e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 2: eigenvalue max 6.919e+07 min 8.024e+01 floor 1.573e-05 condition 8.623e+05 -> 8.623e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 3: eigenvalue max 7.752e+07 min 9.783e+01 floor 1.763e-05 condition 7.925e+05 -> 7.925e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 4: eigenvalue max 7.946e+07 min 1.198e+02 floor 1.807e-05 condition 6.632e+05 -> 6.632e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 5: eigenvalue max 9.019e+07 min 1.555e+02 floor 2.051e-05 condition 5.801e+05 -> 5.801e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 6: eigenvalue max 1.066e+08 min 1.587e+02 floor 2.424e-05 condition 6.719e+05 -> 6.719e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 7: eigenvalue max 1.184e+08 min 8.168e+01 floor 2.692e-05 condition 1.449e+06 -> 1.449e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 8: eigenvalue max 1.288e+08 min 5.617e+01 floor 2.927e-05 condition 2.292e+06 -> 2.292e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 9: eigenvalue max 1.229e+08 min 6.270e+01 floor 2.794e-05 condition 1.960e+06 -> 1.960e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 10: eigenvalue max 1.299e+08 min 2.318e+01 floor 2.953e-05 condition 5.603e+06 -> 5.603e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 11: eigenvalue max 1.152e+08 min 2.017e+01 floor 2.619e-05 condition 5.712e+06 -> 5.712e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 12: eigenvalue max 1.170e+08 min 4.340e+01 floor 2.661e-05 condition 2.696e+06 -> 2.696e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 13: eigenvalue max 1.180e+08 min 4.288e+01 floor 2.682e-05 condition 2.751e+06 -> 2.751e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 14: eigenvalue max 1.197e+08 min 5.013e+01 floor 2.722e-05 condition 2.388e+06 -> 2.388e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 15: eigenvalue max 1.178e+08 min 8.356e+01 floor 2.678e-05 condition 1.409e+06 -> 1.409e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 16: eigenvalue max 1.238e+08 min 6.127e+01 floor 2.816e-05 condition 2.021e+06 -> 2.021e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 17: eigenvalue max 1.158e+08 min 5.291e+01 floor 2.634e-05 condition 2.189e+06 -> 2.189e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 18: eigenvalue max 1.156e+08 min 3.195e+01 floor 2.629e-05 condition 3.619e+06 -> 3.619e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 19: eigenvalue max 1.080e+08 min 3.935e+01 floor 2.456e-05 condition 2.746e+06 -> 2.746e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 20: eigenvalue max 1.008e+08 min 4.437e+01 floor 2.291e-05 condition 2.272e+06 -> 2.272e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 21: eigenvalue max 1.073e+08 min 5.198e+01 floor 2.439e-05 condition 2.064e+06 -> 2.064e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 22: eigenvalue max 1.146e+08 min 5.493e+01 floor 2.607e-05 condition 2.087e+06 -> 2.087e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 layer 23: eigenvalue max 1.072e+08 min 5.348e+01 floor 2.437e-05 condition 2.004e+06 -> 2.004e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s3_ep2 48 full SVDs done; whiten: max |objective - (1 - raw error)| 3.11e-15, max |compressed-output energy - (1 - raw error)| 4.11e-15  1.1 min
+[CHECK] n1500_s3_ep2 layer0.query sigma r=0.9 on 4096 raw tokens: direct error 4.094672e+05 via C 4.094672e+05 relative difference 1.0e-15
+[CHECK] n1500_s3_ep2 layer0.query vote_in r=0.9 on 4096 raw tokens: direct error 4.058305e+05 via C 4.058305e+05 relative difference 8.6e-16
+[CHECK] n1500_s3_ep2 layer0.query vote_out r=0.9 on 4096 raw tokens: direct error 4.101434e+05 via C 4.101434e+05 relative difference 1.4e-15
+[CHECK] n1500_s3_ep2 layer0.query whiten r=0.9 on 4096 raw tokens: direct error 4.002545e+05 via C 4.002545e+05 relative difference 4.8e-15
+[CHECK] n1500_s3_ep2 layer0.value sigma r=0.9 on 4096 raw tokens: direct error 3.202112e+05 via C 3.202112e+05 relative difference 1.5e-15
+[CHECK] n1500_s3_ep2 layer0.value vote_in r=0.9 on 4096 raw tokens: direct error 3.180549e+05 via C 3.180549e+05 relative difference 5.5e-16
+[CHECK] n1500_s3_ep2 layer0.value vote_out r=0.9 on 4096 raw tokens: direct error 3.184257e+05 via C 3.184257e+05 relative difference 7.3e-16
+[CHECK] n1500_s3_ep2 layer0.value whiten r=0.9 on 4096 raw tokens: direct error 3.129766e+05 via C 3.129766e+05 relative difference 4.3e-15
+[CHECK] n1500_s3_ep2 layer23.query sigma r=0.9 on 4096 raw tokens: direct error 1.103463e+06 via C 1.103463e+06 relative difference 1.1e-15
+[CHECK] n1500_s3_ep2 layer23.query vote_in r=0.9 on 4096 raw tokens: direct error 9.766342e+05 via C 9.766342e+05 relative difference 5.8e-15
+[CHECK] n1500_s3_ep2 layer23.query vote_out r=0.9 on 4096 raw tokens: direct error 1.062991e+06 via C 1.062991e+06 relative difference 2.4e-15
+[CHECK] n1500_s3_ep2 layer23.query whiten r=0.9 on 4096 raw tokens: direct error 9.834186e+05 via C 9.834186e+05 relative difference 7.5e-15
+[CHECK] n1500_s3_ep2 layer23.value sigma r=0.9 on 4096 raw tokens: direct error 3.332506e+05 via C 3.332506e+05 relative difference 1.6e-15
+[CHECK] n1500_s3_ep2 layer23.value vote_in r=0.9 on 4096 raw tokens: direct error 3.077405e+05 via C 3.077405e+05 relative difference 2.5e-15
+[CHECK] n1500_s3_ep2 layer23.value vote_out r=0.9 on 4096 raw tokens: direct error 3.244878e+05 via C 3.244878e+05 relative difference 3.4e-15
+[CHECK] n1500_s3_ep2 layer23.value whiten r=0.9 on 4096 raw tokens: direct error 3.037053e+05 via C 3.037053e+05 relative difference 8.4e-15
+[KDIAG] n1500_s3_ep2 untruncated SST-2 dev AUC 0.9697
+[CHECK] n1500_s3_ep2 untruncated SST-2 dev vs logs/scores/sst2dev/n1500_s3_ep2.npz: identical (max difference 0)
+[KDIAG] n1500_s3_ep2 sigma r=0.9999 kept rank mean 975.2 (min 935, max 1005) exact error mean 9.24e-05 input energy outside row space mean 0.292 SST-2 dev AUC 0.9697  1.2 min
+[KDIAG] n1500_s3_ep2 sigma r=0.999 kept rank mean 907.3 (min 851, max 959) exact error mean 9.80e-04 input energy outside row space mean 0.416 SST-2 dev AUC 0.9699  1.2 min
+[KDIAG] n1500_s3_ep2 sigma r=0.995 kept rank mean 809.5 (min 719, max 866) exact error mean 4.96e-03 input energy outside row space mean 0.521 SST-2 dev AUC 0.9713  1.2 min
+[KDIAG] n1500_s3_ep2 sigma r=0.99 kept rank mean 750.1 (min 646, max 822) exact error mean 9.93e-03 input energy outside row space mean 0.574 SST-2 dev AUC 0.9718  1.3 min
+[KDIAG] n1500_s3_ep2 sigma r=0.98 kept rank mean 671.1 (min 552, max 759) exact error mean 1.99e-02 input energy outside row space mean 0.634 SST-2 dev AUC 0.9691  1.3 min
+[KDIAG] n1500_s3_ep2 sigma r=0.95 kept rank mean 533.2 (min 379, max 653) exact error mean 4.98e-02 input energy outside row space mean 0.719 SST-2 dev AUC 0.9636  1.3 min
+[KDIAG] n1500_s3_ep2 sigma r=0.9 kept rank mean 401.5 (min 235, max 548) exact error mean 9.97e-02 input energy outside row space mean 0.787 SST-2 dev AUC 0.9538  1.4 min
+[KDIAG] n1500_s3_ep2 sigma r=0.8 kept rank mean 251.9 (min 90, max 424) exact error mean 2.00e-01 input energy outside row space mean 0.856 SST-2 dev AUC 0.9250  1.4 min
+[KDIAG] n1500_s3_ep2 sigma r=0.7 kept rank mean 163.5 (min 28, max 337) exact error mean 2.99e-01 input energy outside row space mean 0.896 SST-2 dev AUC 0.8780  1.4 min
+[KDIAG] n1500_s3_ep2 sigma r=0.5 kept rank mean 71.0 (min 2, max 198) exact error mean 4.96e-01 input energy outside row space mean 0.945 SST-2 dev AUC 0.7077  1.5 min
+[KDIAG] n1500_s3_ep2 vote_in r=0.9999 kept rank mean 1023.6 (min 1016, max 1024) exact error mean 1.41e-05 input energy outside row space mean 0.000 SST-2 dev AUC 0.9697  1.5 min
+[KDIAG] n1500_s3_ep2 vote_in r=0.999 kept rank mean 1020.2 (min 982, max 1024) exact error mean 4.96e-04 input energy outside row space mean 0.001 SST-2 dev AUC 0.9698  1.5 min
+[KDIAG] n1500_s3_ep2 vote_in r=0.995 kept rank mean 1005.1 (min 939, max 1024) exact error mean 4.27e-03 input energy outside row space mean 0.005 SST-2 dev AUC 0.9690  1.6 min
+[KDIAG] n1500_s3_ep2 vote_in r=0.99 kept rank mean 987.2 (min 891, max 1024) exact error mean 9.42e-03 input energy outside row space mean 0.011 SST-2 dev AUC 0.9677  1.6 min
+[KDIAG] n1500_s3_ep2 vote_in r=0.98 kept rank mean 955.5 (min 836, max 1015) exact error mean 1.95e-02 input energy outside row space mean 0.020 SST-2 dev AUC 0.9683  1.7 min
+[KDIAG] n1500_s3_ep2 vote_in r=0.95 kept rank mean 871.8 (min 687, max 998) exact error mean 4.96e-02 input energy outside row space mean 0.047 SST-2 dev AUC 0.9707  1.7 min
+[KDIAG] n1500_s3_ep2 vote_in r=0.9 kept rank mean 765.4 (min 542, max 964) exact error mean 9.95e-02 input energy outside row space mean 0.085 SST-2 dev AUC 0.9708  1.7 min
+[KDIAG] n1500_s3_ep2 vote_in r=0.8 kept rank mean 602.6 (min 343, max 879) exact error mean 1.99e-01 input energy outside row space mean 0.152 SST-2 dev AUC 0.9497  1.8 min
+[KDIAG] n1500_s3_ep2 vote_in r=0.7 kept rank mean 478.0 (min 203, max 790) exact error mean 2.99e-01 input energy outside row space mean 0.214 SST-2 dev AUC 0.9025  1.8 min
+[KDIAG] n1500_s3_ep2 vote_in r=0.5 kept rank mean 287.2 (min 10, max 554) exact error mean 4.97e-01 input energy outside row space mean 0.347 SST-2 dev AUC 0.8058  1.8 min
+[KDIAG] n1500_s3_ep2 vote_out r=0.9999 kept rank mean 961.7 (min 917, max 989) exact error mean 9.73e-05 input energy outside row space mean 0.229 SST-2 dev AUC 0.9695  1.9 min
+[KDIAG] n1500_s3_ep2 vote_out r=0.999 kept rank mean 885.6 (min 815, max 933) exact error mean 9.88e-04 input energy outside row space mean 0.364 SST-2 dev AUC 0.9716  1.9 min
+[KDIAG] n1500_s3_ep2 vote_out r=0.995 kept rank mean 783.1 (min 682, max 857) exact error mean 4.97e-03 input energy outside row space mean 0.475 SST-2 dev AUC 0.9739  1.9 min
+[KDIAG] n1500_s3_ep2 vote_out r=0.99 kept rank mean 718.9 (min 604, max 806) exact error mean 9.95e-03 input energy outside row space mean 0.529 SST-2 dev AUC 0.9718  2.0 min
+[KDIAG] n1500_s3_ep2 vote_out r=0.98 kept rank mean 638.4 (min 505, max 744) exact error mean 1.99e-02 input energy outside row space mean 0.590 SST-2 dev AUC 0.9704  2.0 min
+[KDIAG] n1500_s3_ep2 vote_out r=0.95 kept rank mean 503.0 (min 345, max 636) exact error mean 4.98e-02 input energy outside row space mean 0.681 SST-2 dev AUC 0.9675  2.0 min
+[KDIAG] n1500_s3_ep2 vote_out r=0.9 kept rank mean 378.1 (min 207, max 532) exact error mean 9.97e-02 input energy outside row space mean 0.758 SST-2 dev AUC 0.9591  2.1 min
+[KDIAG] n1500_s3_ep2 vote_out r=0.8 kept rank mean 237.8 (min 72, max 403) exact error mean 2.00e-01 input energy outside row space mean 0.841 SST-2 dev AUC 0.9336  2.1 min
+[KDIAG] n1500_s3_ep2 vote_out r=0.7 kept rank mean 154.5 (min 24, max 312) exact error mean 2.99e-01 input energy outside row space mean 0.889 SST-2 dev AUC 0.8847  2.1 min
+[KDIAG] n1500_s3_ep2 vote_out r=0.5 kept rank mean 65.4 (min 2, max 180) exact error mean 4.97e-01 input energy outside row space mean 0.942 SST-2 dev AUC 0.7570  2.2 min
+[KDIAG] n1500_s3_ep2 whiten r=0.9999 kept rank mean 896.2 (min 826, max 935) exact error mean 9.87e-05 input energy outside row space mean 0.404 SST-2 dev AUC 0.9698  2.2 min
+[KDIAG] n1500_s3_ep2 whiten r=0.999 kept rank mean 769.9 (min 657, max 841) exact error mean 9.93e-04 input energy outside row space mean 0.512 SST-2 dev AUC 0.9704  2.3 min
+[KDIAG] n1500_s3_ep2 whiten r=0.995 kept rank mean 618.2 (min 462, max 722) exact error mean 4.98e-03 input energy outside row space mean 0.604 SST-2 dev AUC 0.9703  2.3 min
+[KDIAG] n1500_s3_ep2 whiten r=0.99 kept rank mean 531.9 (min 357, max 651) exact error mean 9.96e-03 input energy outside row space mean 0.648 SST-2 dev AUC 0.9696  2.4 min
+[KDIAG] n1500_s3_ep2 whiten r=0.98 kept rank mean 432.6 (min 244, max 566) exact error mean 1.99e-02 input energy outside row space mean 0.691 SST-2 dev AUC 0.9698  2.4 min
+[KDIAG] n1500_s3_ep2 whiten r=0.95 kept rank mean 286.3 (min 101, max 427) exact error mean 4.98e-02 input energy outside row space mean 0.752 SST-2 dev AUC 0.9688  2.5 min
+[KDIAG] n1500_s3_ep2 whiten r=0.9 kept rank mean 174.3 (min 28, max 302) exact error mean 9.96e-02 input energy outside row space mean 0.801 SST-2 dev AUC 0.9676  2.5 min
+[KDIAG] n1500_s3_ep2 whiten r=0.8 kept rank mean 79.9 (min 5, max 163) exact error mean 1.99e-01 input energy outside row space mean 0.853 SST-2 dev AUC 0.9535  2.5 min
+[KDIAG] n1500_s3_ep2 whiten r=0.7 kept rank mean 40.5 (min 1, max 93) exact error mean 2.97e-01 input energy outside row space mean 0.887 SST-2 dev AUC 0.9068  2.6 min
+[KDIAG] n1500_s3_ep2 whiten r=0.5 kept rank mean 10.6 (min 1, max 32) exact error mean 4.72e-01 input energy outside row space mean 0.928 SST-2 dev AUC 0.7701  2.6 min
+[SAVE] logs/kdiag/n1500_s3_ep2.npz  missing=0 unexpected=0  2.6 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 4013.20it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[KDIAG] n1500_s4_ep2 C collected from 173151 SST-2 train tokens  0.9 min
+[KDIAG] n1500_s4_ep2 layer 0: eigenvalue max 1.943e+07 min 9.819e+00 floor 4.419e-06 condition 1.979e+06 -> 1.979e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 1: eigenvalue max 5.750e+07 min 7.207e+00 floor 1.307e-05 condition 7.978e+06 -> 7.978e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 2: eigenvalue max 7.042e+07 min 7.527e+01 floor 1.601e-05 condition 9.355e+05 -> 9.355e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 3: eigenvalue max 7.886e+07 min 9.141e+01 floor 1.793e-05 condition 8.627e+05 -> 8.627e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 4: eigenvalue max 7.878e+07 min 1.212e+02 floor 1.791e-05 condition 6.503e+05 -> 6.503e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 5: eigenvalue max 9.013e+07 min 1.452e+02 floor 2.049e-05 condition 6.208e+05 -> 6.208e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 6: eigenvalue max 1.023e+08 min 1.582e+02 floor 2.327e-05 condition 6.470e+05 -> 6.470e+05 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 7: eigenvalue max 1.127e+08 min 8.204e+01 floor 2.561e-05 condition 1.373e+06 -> 1.373e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 8: eigenvalue max 1.256e+08 min 5.631e+01 floor 2.856e-05 condition 2.230e+06 -> 2.230e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 9: eigenvalue max 1.218e+08 min 5.574e+01 floor 2.770e-05 condition 2.186e+06 -> 2.186e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 10: eigenvalue max 1.289e+08 min 2.130e+01 floor 2.930e-05 condition 6.049e+06 -> 6.049e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 11: eigenvalue max 1.151e+08 min 1.889e+01 floor 2.618e-05 condition 6.095e+06 -> 6.095e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 12: eigenvalue max 1.163e+08 min 4.088e+01 floor 2.645e-05 condition 2.846e+06 -> 2.846e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 13: eigenvalue max 1.175e+08 min 3.887e+01 floor 2.673e-05 condition 3.024e+06 -> 3.024e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 14: eigenvalue max 1.186e+08 min 4.642e+01 floor 2.697e-05 condition 2.556e+06 -> 2.556e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 15: eigenvalue max 1.188e+08 min 5.756e+01 floor 2.700e-05 condition 2.063e+06 -> 2.063e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 16: eigenvalue max 1.253e+08 min 5.575e+01 floor 2.849e-05 condition 2.248e+06 -> 2.248e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 17: eigenvalue max 1.198e+08 min 3.705e+01 floor 2.724e-05 condition 3.233e+06 -> 3.233e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 18: eigenvalue max 1.191e+08 min 2.332e+01 floor 2.708e-05 condition 5.107e+06 -> 5.107e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 19: eigenvalue max 1.133e+08 min 2.310e+01 floor 2.575e-05 condition 4.903e+06 -> 4.903e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 20: eigenvalue max 1.010e+08 min 3.788e+01 floor 2.296e-05 condition 2.665e+06 -> 2.665e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 21: eigenvalue max 1.097e+08 min 4.160e+01 floor 2.495e-05 condition 2.637e+06 -> 2.637e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 22: eigenvalue max 1.160e+08 min 4.786e+01 floor 2.638e-05 condition 2.424e+06 -> 2.424e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 layer 23: eigenvalue max 1.041e+08 min 5.660e+01 floor 2.367e-05 condition 1.839e+06 -> 1.839e+06 after floor; eigenvalues floored 0
+[KDIAG] n1500_s4_ep2 48 full SVDs done; whiten: max |objective - (1 - raw error)| 3.33e-15, max |compressed-output energy - (1 - raw error)| 3.77e-15  1.3 min
+[CHECK] n1500_s4_ep2 layer0.query sigma r=0.9 on 4096 raw tokens: direct error 4.116169e+05 via C 4.116169e+05 relative difference 1.6e-15
+[CHECK] n1500_s4_ep2 layer0.query vote_in r=0.9 on 4096 raw tokens: direct error 4.114421e+05 via C 4.114421e+05 relative difference 2.4e-15
+[CHECK] n1500_s4_ep2 layer0.query vote_out r=0.9 on 4096 raw tokens: direct error 4.098236e+05 via C 4.098236e+05 relative difference 2.8e-15
+[CHECK] n1500_s4_ep2 layer0.query whiten r=0.9 on 4096 raw tokens: direct error 4.001910e+05 via C 4.001910e+05 relative difference 4.5e-15
+[CHECK] n1500_s4_ep2 layer0.value sigma r=0.9 on 4096 raw tokens: direct error 3.195737e+05 via C 3.195737e+05 relative difference 1.8e-15
+[CHECK] n1500_s4_ep2 layer0.value vote_in r=0.9 on 4096 raw tokens: direct error 3.105577e+05 via C 3.105577e+05 relative difference 5.6e-16
+[CHECK] n1500_s4_ep2 layer0.value vote_out r=0.9 on 4096 raw tokens: direct error 3.186219e+05 via C 3.186219e+05 relative difference 2.2e-15
+[CHECK] n1500_s4_ep2 layer0.value whiten r=0.9 on 4096 raw tokens: direct error 3.128783e+05 via C 3.128783e+05 relative difference 3.5e-15
+[CHECK] n1500_s4_ep2 layer23.query sigma r=0.9 on 4096 raw tokens: direct error 9.915321e+05 via C 9.915321e+05 relative difference 3.1e-15
+[CHECK] n1500_s4_ep2 layer23.query vote_in r=0.9 on 4096 raw tokens: direct error 9.642968e+05 via C 9.642968e+05 relative difference 3.4e-15
+[CHECK] n1500_s4_ep2 layer23.query vote_out r=0.9 on 4096 raw tokens: direct error 9.872822e+05 via C 9.872822e+05 relative difference 2.1e-15
+[CHECK] n1500_s4_ep2 layer23.query whiten r=0.9 on 4096 raw tokens: direct error 9.635674e+05 via C 9.635674e+05 relative difference 4.3e-15
+[CHECK] n1500_s4_ep2 layer23.value sigma r=0.9 on 4096 raw tokens: direct error 2.549896e+05 via C 2.549896e+05 relative difference 1.5e-15
+[CHECK] n1500_s4_ep2 layer23.value vote_in r=0.9 on 4096 raw tokens: direct error 2.481024e+05 via C 2.481024e+05 relative difference 3.0e-15
+[CHECK] n1500_s4_ep2 layer23.value vote_out r=0.9 on 4096 raw tokens: direct error 2.504517e+05 via C 2.504517e+05 relative difference 1.7e-15
+[CHECK] n1500_s4_ep2 layer23.value whiten r=0.9 on 4096 raw tokens: direct error 2.453907e+05 via C 2.453907e+05 relative difference 2.7e-15
+[KDIAG] n1500_s4_ep2 untruncated SST-2 dev AUC 0.9583
+[CHECK] n1500_s4_ep2 untruncated SST-2 dev vs logs/scores/sst2dev/n1500_s4_ep2.npz: identical (max difference 0)
+[KDIAG] n1500_s4_ep2 sigma r=0.9999 kept rank mean 975.8 (min 934, max 1005) exact error mean 9.41e-05 input energy outside row space mean 0.299 SST-2 dev AUC 0.9583  1.4 min
+[KDIAG] n1500_s4_ep2 sigma r=0.999 kept rank mean 908.2 (min 849, max 960) exact error mean 9.78e-04 input energy outside row space mean 0.424 SST-2 dev AUC 0.9547  1.4 min
+[KDIAG] n1500_s4_ep2 sigma r=0.995 kept rank mean 811.5 (min 719, max 875) exact error mean 4.95e-03 input energy outside row space mean 0.529 SST-2 dev AUC 0.9525  1.5 min
+[KDIAG] n1500_s4_ep2 sigma r=0.99 kept rank mean 751.9 (min 643, max 834) exact error mean 9.91e-03 input energy outside row space mean 0.583 SST-2 dev AUC 0.9562  1.5 min
+[KDIAG] n1500_s4_ep2 sigma r=0.98 kept rank mean 673.0 (min 546, max 765) exact error mean 1.99e-02 input energy outside row space mean 0.643 SST-2 dev AUC 0.9555  1.5 min
+[KDIAG] n1500_s4_ep2 sigma r=0.95 kept rank mean 534.4 (min 359, max 658) exact error mean 4.98e-02 input energy outside row space mean 0.727 SST-2 dev AUC 0.9610  1.6 min
+[KDIAG] n1500_s4_ep2 sigma r=0.9 kept rank mean 400.2 (min 195, max 551) exact error mean 9.97e-02 input energy outside row space mean 0.794 SST-2 dev AUC 0.9566  1.6 min
+[KDIAG] n1500_s4_ep2 sigma r=0.8 kept rank mean 250.7 (min 56, max 430) exact error mean 1.99e-01 input energy outside row space mean 0.861 SST-2 dev AUC 0.9205  1.6 min
+[KDIAG] n1500_s4_ep2 sigma r=0.7 kept rank mean 162.7 (min 17, max 347) exact error mean 2.99e-01 input energy outside row space mean 0.900 SST-2 dev AUC 0.8067  1.7 min
+[KDIAG] n1500_s4_ep2 sigma r=0.5 kept rank mean 71.2 (min 2, max 209) exact error mean 4.95e-01 input energy outside row space mean 0.946 SST-2 dev AUC 0.6390  1.7 min
+[KDIAG] n1500_s4_ep2 vote_in r=0.9999 kept rank mean 1023.7 (min 1018, max 1024) exact error mean 1.05e-05 input energy outside row space mean 0.000 SST-2 dev AUC 0.9581  1.7 min
+[KDIAG] n1500_s4_ep2 vote_in r=0.999 kept rank mean 1020.2 (min 988, max 1024) exact error mean 5.29e-04 input energy outside row space mean 0.001 SST-2 dev AUC 0.9561  1.8 min
+[KDIAG] n1500_s4_ep2 vote_in r=0.995 kept rank mean 1004.9 (min 936, max 1024) exact error mean 4.26e-03 input energy outside row space mean 0.005 SST-2 dev AUC 0.9550  1.8 min
+[KDIAG] n1500_s4_ep2 vote_in r=0.99 kept rank mean 988.7 (min 893, max 1024) exact error mean 9.08e-03 input energy outside row space mean 0.010 SST-2 dev AUC 0.9554  1.8 min
+[KDIAG] n1500_s4_ep2 vote_in r=0.98 kept rank mean 956.6 (min 829, max 1015) exact error mean 1.94e-02 input energy outside row space mean 0.020 SST-2 dev AUC 0.9593  1.9 min
+[KDIAG] n1500_s4_ep2 vote_in r=0.95 kept rank mean 876.4 (min 696, max 997) exact error mean 4.95e-02 input energy outside row space mean 0.046 SST-2 dev AUC 0.9520  1.9 min
+[KDIAG] n1500_s4_ep2 vote_in r=0.9 kept rank mean 772.6 (min 543, max 961) exact error mean 9.93e-02 input energy outside row space mean 0.083 SST-2 dev AUC 0.9574  1.9 min
+[KDIAG] n1500_s4_ep2 vote_in r=0.8 kept rank mean 610.3 (min 302, max 879) exact error mean 1.99e-01 input energy outside row space mean 0.149 SST-2 dev AUC 0.9442  2.0 min
+[KDIAG] n1500_s4_ep2 vote_in r=0.7 kept rank mean 486.7 (min 155, max 789) exact error mean 2.98e-01 input energy outside row space mean 0.210 SST-2 dev AUC 0.9258  2.0 min
+[KDIAG] n1500_s4_ep2 vote_in r=0.5 kept rank mean 298.1 (min 7, max 561) exact error mean 4.95e-01 input energy outside row space mean 0.343 SST-2 dev AUC 0.7924  2.0 min
+[KDIAG] n1500_s4_ep2 vote_out r=0.9999 kept rank mean 962.2 (min 917, max 993) exact error mean 9.76e-05 input energy outside row space mean 0.232 SST-2 dev AUC 0.9580  2.1 min
+[KDIAG] n1500_s4_ep2 vote_out r=0.999 kept rank mean 886.7 (min 815, max 937) exact error mean 9.90e-04 input energy outside row space mean 0.366 SST-2 dev AUC 0.9567  2.1 min
+[KDIAG] n1500_s4_ep2 vote_out r=0.995 kept rank mean 784.4 (min 675, max 861) exact error mean 4.97e-03 input energy outside row space mean 0.483 SST-2 dev AUC 0.9564  2.1 min
+[KDIAG] n1500_s4_ep2 vote_out r=0.99 kept rank mean 720.5 (min 592, max 813) exact error mean 9.95e-03 input energy outside row space mean 0.537 SST-2 dev AUC 0.9557  2.2 min
+[KDIAG] n1500_s4_ep2 vote_out r=0.98 kept rank mean 640.5 (min 490, max 752) exact error mean 1.99e-02 input energy outside row space mean 0.597 SST-2 dev AUC 0.9543  2.2 min
+[KDIAG] n1500_s4_ep2 vote_out r=0.95 kept rank mean 504.9 (min 324, max 645) exact error mean 4.99e-02 input energy outside row space mean 0.688 SST-2 dev AUC 0.9606  2.2 min
+[KDIAG] n1500_s4_ep2 vote_out r=0.9 kept rank mean 379.6 (min 176, max 543) exact error mean 9.97e-02 input energy outside row space mean 0.766 SST-2 dev AUC 0.9600  2.3 min
+[KDIAG] n1500_s4_ep2 vote_out r=0.8 kept rank mean 238.7 (min 50, max 418) exact error mean 2.00e-01 input energy outside row space mean 0.847 SST-2 dev AUC 0.9387  2.3 min
+[KDIAG] n1500_s4_ep2 vote_out r=0.7 kept rank mean 155.7 (min 12, max 329) exact error mean 2.99e-01 input energy outside row space mean 0.894 SST-2 dev AUC 0.8202  2.3 min
+[KDIAG] n1500_s4_ep2 vote_out r=0.5 kept rank mean 67.0 (min 2, max 194) exact error mean 4.95e-01 input energy outside row space mean 0.944 SST-2 dev AUC 0.7061  2.4 min
+[KDIAG] n1500_s4_ep2 whiten r=0.9999 kept rank mean 898.3 (min 827, max 938) exact error mean 9.85e-05 input energy outside row space mean 0.411 SST-2 dev AUC 0.9583  2.4 min
+[KDIAG] n1500_s4_ep2 whiten r=0.999 kept rank mean 774.0 (min 659, max 846) exact error mean 9.93e-04 input energy outside row space mean 0.519 SST-2 dev AUC 0.9586  2.5 min
+[KDIAG] n1500_s4_ep2 whiten r=0.995 kept rank mean 624.4 (min 465, max 731) exact error mean 4.98e-03 input energy outside row space mean 0.612 SST-2 dev AUC 0.9598  2.5 min
+[KDIAG] n1500_s4_ep2 whiten r=0.99 kept rank mean 539.1 (min 359, max 662) exact error mean 9.96e-03 input energy outside row space mean 0.655 SST-2 dev AUC 0.9592  2.6 min
+[KDIAG] n1500_s4_ep2 whiten r=0.98 kept rank mean 440.7 (min 244, max 579) exact error mean 1.99e-02 input energy outside row space mean 0.698 SST-2 dev AUC 0.9599  2.6 min
+[KDIAG] n1500_s4_ep2 whiten r=0.95 kept rank mean 295.0 (min 98, max 445) exact error mean 4.99e-02 input energy outside row space mean 0.758 SST-2 dev AUC 0.9627  2.7 min
+[KDIAG] n1500_s4_ep2 whiten r=0.9 kept rank mean 182.9 (min 28, max 324) exact error mean 9.97e-02 input energy outside row space mean 0.806 SST-2 dev AUC 0.9569  2.7 min
+[KDIAG] n1500_s4_ep2 whiten r=0.8 kept rank mean 87.1 (min 5, max 189) exact error mean 1.99e-01 input energy outside row space mean 0.858 SST-2 dev AUC 0.9455  2.7 min
+[KDIAG] n1500_s4_ep2 whiten r=0.7 kept rank mean 46.1 (min 1, max 110) exact error mean 2.96e-01 input energy outside row space mean 0.890 SST-2 dev AUC 0.9079  2.8 min
+[KDIAG] n1500_s4_ep2 whiten r=0.5 kept rank mean 13.0 (min 1, max 36) exact error mean 4.74e-01 input energy outside row space mean 0.931 SST-2 dev AUC 0.7902  2.8 min
+[SAVE] logs/kdiag/n1500_s4_ep2.npz  missing=0 unexpected=0  2.9 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  88%|████████▊ | 343/389 [00:00<00:00, 3427.75it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3560.20it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[KDIAG] clean_n0_s0_ep0 C collected from 173151 SST-2 train tokens  1.1 min
+[KDIAG] clean_n0_s0_ep0 layer 0: eigenvalue max 1.947e+07 min 9.776e+00 floor 4.428e-06 condition 1.992e+06 -> 1.992e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 1: eigenvalue max 5.914e+07 min 6.750e+00 floor 1.345e-05 condition 8.762e+06 -> 8.762e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 2: eigenvalue max 7.284e+07 min 6.443e+01 floor 1.656e-05 condition 1.131e+06 -> 1.131e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 3: eigenvalue max 8.269e+07 min 7.588e+01 floor 1.880e-05 condition 1.090e+06 -> 1.090e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 4: eigenvalue max 8.192e+07 min 1.108e+02 floor 1.863e-05 condition 7.394e+05 -> 7.394e+05 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 5: eigenvalue max 9.090e+07 min 1.440e+02 floor 2.067e-05 condition 6.313e+05 -> 6.313e+05 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 6: eigenvalue max 9.933e+07 min 1.762e+02 floor 2.258e-05 condition 5.638e+05 -> 5.638e+05 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 7: eigenvalue max 1.110e+08 min 9.180e+01 floor 2.525e-05 condition 1.210e+06 -> 1.210e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 8: eigenvalue max 1.253e+08 min 6.209e+01 floor 2.850e-05 condition 2.018e+06 -> 2.018e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 9: eigenvalue max 1.225e+08 min 5.600e+01 floor 2.785e-05 condition 2.187e+06 -> 2.187e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 10: eigenvalue max 1.289e+08 min 2.064e+01 floor 2.931e-05 condition 6.246e+06 -> 6.246e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 11: eigenvalue max 1.150e+08 min 1.863e+01 floor 2.614e-05 condition 6.170e+06 -> 6.170e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 12: eigenvalue max 1.185e+08 min 3.952e+01 floor 2.694e-05 condition 2.998e+06 -> 2.998e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 13: eigenvalue max 1.190e+08 min 3.768e+01 floor 2.707e-05 condition 3.159e+06 -> 3.159e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 14: eigenvalue max 1.198e+08 min 4.866e+01 floor 2.723e-05 condition 2.461e+06 -> 2.461e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 15: eigenvalue max 1.189e+08 min 5.335e+01 floor 2.704e-05 condition 2.229e+06 -> 2.229e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 16: eigenvalue max 1.280e+08 min 4.795e+01 floor 2.911e-05 condition 2.670e+06 -> 2.670e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 17: eigenvalue max 1.220e+08 min 3.654e+01 floor 2.775e-05 condition 3.339e+06 -> 3.339e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 18: eigenvalue max 1.227e+08 min 2.106e+01 floor 2.789e-05 condition 5.825e+06 -> 5.825e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 19: eigenvalue max 1.144e+08 min 2.480e+01 floor 2.601e-05 condition 4.612e+06 -> 4.612e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 20: eigenvalue max 1.008e+08 min 4.734e+01 floor 2.292e-05 condition 2.129e+06 -> 2.129e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 21: eigenvalue max 1.091e+08 min 5.164e+01 floor 2.480e-05 condition 2.112e+06 -> 2.112e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 22: eigenvalue max 1.093e+08 min 7.708e+01 floor 2.485e-05 condition 1.418e+06 -> 1.418e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 layer 23: eigenvalue max 1.057e+08 min 5.139e+01 floor 2.403e-05 condition 2.057e+06 -> 2.057e+06 after floor; eigenvalues floored 0
+[KDIAG] clean_n0_s0_ep0 48 full SVDs done; whiten: max |objective - (1 - raw error)| 3.33e-15, max |compressed-output energy - (1 - raw error)| 3.55e-15  1.5 min
+[CHECK] clean_n0_s0_ep0 layer0.query sigma r=0.9 on 4096 raw tokens: direct error 4.118275e+05 via C 4.118275e+05 relative difference 2.8e-16
+[CHECK] clean_n0_s0_ep0 layer0.query vote_in r=0.9 on 4096 raw tokens: direct error 4.055652e+05 via C 4.055652e+05 relative difference 1.4e-15
+[CHECK] clean_n0_s0_ep0 layer0.query vote_out r=0.9 on 4096 raw tokens: direct error 4.110099e+05 via C 4.110099e+05 relative difference 1.1e-15
+[CHECK] clean_n0_s0_ep0 layer0.query whiten r=0.9 on 4096 raw tokens: direct error 4.023539e+05 via C 4.023539e+05 relative difference 5.2e-15
+[CHECK] clean_n0_s0_ep0 layer0.value sigma r=0.9 on 4096 raw tokens: direct error 3.208931e+05 via C 3.208931e+05 relative difference 1.1e-15
+[CHECK] clean_n0_s0_ep0 layer0.value vote_in r=0.9 on 4096 raw tokens: direct error 3.185669e+05 via C 3.185669e+05 relative difference 5.5e-16
+[CHECK] clean_n0_s0_ep0 layer0.value vote_out r=0.9 on 4096 raw tokens: direct error 3.204409e+05 via C 3.204409e+05 relative difference 2.0e-15
+[CHECK] clean_n0_s0_ep0 layer0.value whiten r=0.9 on 4096 raw tokens: direct error 3.127844e+05 via C 3.127844e+05 relative difference 3.3e-15
+[CHECK] clean_n0_s0_ep0 layer23.query sigma r=0.9 on 4096 raw tokens: direct error 1.275076e+06 via C 1.275076e+06 relative difference 2.4e-15
+[CHECK] clean_n0_s0_ep0 layer23.query vote_in r=0.9 on 4096 raw tokens: direct error 1.431238e+06 via C 1.431238e+06 relative difference 4.4e-15
+[CHECK] clean_n0_s0_ep0 layer23.query vote_out r=0.9 on 4096 raw tokens: direct error 1.327605e+06 via C 1.327605e+06 relative difference 3.7e-15
+[CHECK] clean_n0_s0_ep0 layer23.query whiten r=0.9 on 4096 raw tokens: direct error 1.524148e+06 via C 1.524148e+06 relative difference 9.0e-15
+[CHECK] clean_n0_s0_ep0 layer23.value sigma r=0.9 on 4096 raw tokens: direct error 3.261251e+05 via C 3.261251e+05 relative difference 1.2e-15
+[CHECK] clean_n0_s0_ep0 layer23.value vote_in r=0.9 on 4096 raw tokens: direct error 3.874544e+05 via C 3.874544e+05 relative difference 2.3e-15
+[CHECK] clean_n0_s0_ep0 layer23.value vote_out r=0.9 on 4096 raw tokens: direct error 3.668976e+05 via C 3.668976e+05 relative difference 9.5e-16
+[CHECK] clean_n0_s0_ep0 layer23.value whiten r=0.9 on 4096 raw tokens: direct error 4.158562e+05 via C 4.158562e+05 relative difference 9.8e-15
+[KDIAG] clean_n0_s0_ep0 untruncated SST-2 dev AUC 0.9713
+[KDIAG] clean_n0_s0_ep0 sigma r=0.9999 kept rank mean 974.8 (min 927, max 1003) exact error mean 9.54e-05 input energy outside row space mean 0.294 SST-2 dev AUC 0.9711  1.6 min
+[KDIAG] clean_n0_s0_ep0 sigma r=0.999 kept rank mean 905.8 (min 837, max 959) exact error mean 9.85e-04 input energy outside row space mean 0.415 SST-2 dev AUC 0.9697  1.7 min
+[KDIAG] clean_n0_s0_ep0 sigma r=0.995 kept rank mean 809.0 (min 706, max 865) exact error mean 4.95e-03 input energy outside row space mean 0.519 SST-2 dev AUC 0.9625  1.7 min
+[KDIAG] clean_n0_s0_ep0 sigma r=0.99 kept rank mean 748.8 (min 627, max 813) exact error mean 9.86e-03 input energy outside row space mean 0.571 SST-2 dev AUC 0.9615  1.7 min
+[KDIAG] clean_n0_s0_ep0 sigma r=0.98 kept rank mean 669.6 (min 527, max 753) exact error mean 1.99e-02 input energy outside row space mean 0.632 SST-2 dev AUC 0.9551  1.8 min
+[KDIAG] clean_n0_s0_ep0 sigma r=0.95 kept rank mean 532.6 (min 373, max 656) exact error mean 4.98e-02 input energy outside row space mean 0.718 SST-2 dev AUC 0.9595  1.8 min
+[KDIAG] clean_n0_s0_ep0 sigma r=0.9 kept rank mean 400.1 (min 231, max 549) exact error mean 9.96e-02 input energy outside row space mean 0.786 SST-2 dev AUC 0.9580  1.8 min
+[KDIAG] clean_n0_s0_ep0 sigma r=0.8 kept rank mean 250.2 (min 85, max 431) exact error mean 2.00e-01 input energy outside row space mean 0.855 SST-2 dev AUC 0.9261  1.9 min
+[KDIAG] clean_n0_s0_ep0 sigma r=0.7 kept rank mean 162.5 (min 28, max 339) exact error mean 2.99e-01 input energy outside row space mean 0.896 SST-2 dev AUC 0.8294  1.9 min
+[KDIAG] clean_n0_s0_ep0 sigma r=0.5 kept rank mean 71.2 (min 2, max 202) exact error mean 4.96e-01 input energy outside row space mean 0.944 SST-2 dev AUC 0.6672  1.9 min
+[KDIAG] clean_n0_s0_ep0 vote_in r=0.9999 kept rank mean 1023.6 (min 1017, max 1024) exact error mean 1.16e-05 input energy outside row space mean 0.000 SST-2 dev AUC 0.9713  2.0 min
+[KDIAG] clean_n0_s0_ep0 vote_in r=0.999 kept rank mean 1020.3 (min 985, max 1024) exact error mean 5.10e-04 input energy outside row space mean 0.001 SST-2 dev AUC 0.9708  2.0 min
+[KDIAG] clean_n0_s0_ep0 vote_in r=0.995 kept rank mean 1005.0 (min 940, max 1024) exact error mean 4.52e-03 input energy outside row space mean 0.005 SST-2 dev AUC 0.9716  2.0 min
+[KDIAG] clean_n0_s0_ep0 vote_in r=0.99 kept rank mean 986.4 (min 888, max 1024) exact error mean 9.42e-03 input energy outside row space mean 0.011 SST-2 dev AUC 0.9719  2.1 min
+[KDIAG] clean_n0_s0_ep0 vote_in r=0.98 kept rank mean 952.9 (min 830, max 1015) exact error mean 1.95e-02 input energy outside row space mean 0.020 SST-2 dev AUC 0.9707  2.1 min
+[KDIAG] clean_n0_s0_ep0 vote_in r=0.95 kept rank mean 869.2 (min 690, max 1001) exact error mean 4.95e-02 input energy outside row space mean 0.047 SST-2 dev AUC 0.9703  2.1 min
+[KDIAG] clean_n0_s0_ep0 vote_in r=0.9 kept rank mean 759.1 (min 523, max 964) exact error mean 9.94e-02 input energy outside row space mean 0.086 SST-2 dev AUC 0.9676  2.2 min
+[KDIAG] clean_n0_s0_ep0 vote_in r=0.8 kept rank mean 594.0 (min 278, max 884) exact error mean 1.99e-01 input energy outside row space mean 0.155 SST-2 dev AUC 0.9590  2.2 min
+[KDIAG] clean_n0_s0_ep0 vote_in r=0.7 kept rank mean 465.7 (min 141, max 788) exact error mean 2.99e-01 input energy outside row space mean 0.220 SST-2 dev AUC 0.9427  2.2 min
+[KDIAG] clean_n0_s0_ep0 vote_in r=0.5 kept rank mean 274.8 (min 14, max 535) exact error mean 4.97e-01 input energy outside row space mean 0.355 SST-2 dev AUC 0.8389  2.3 min
+[KDIAG] clean_n0_s0_ep0 vote_out r=0.9999 kept rank mean 960.8 (min 911, max 988) exact error mean 9.79e-05 input energy outside row space mean 0.226 SST-2 dev AUC 0.9714  2.3 min
+[KDIAG] clean_n0_s0_ep0 vote_out r=0.999 kept rank mean 883.8 (min 807, max 929) exact error mean 9.89e-04 input energy outside row space mean 0.362 SST-2 dev AUC 0.9705  2.3 min
+[KDIAG] clean_n0_s0_ep0 vote_out r=0.995 kept rank mean 780.9 (min 666, max 850) exact error mean 4.97e-03 input energy outside row space mean 0.472 SST-2 dev AUC 0.9665  2.4 min
+[KDIAG] clean_n0_s0_ep0 vote_out r=0.99 kept rank mean 716.8 (min 586, max 798) exact error mean 9.95e-03 input energy outside row space mean 0.524 SST-2 dev AUC 0.9667  2.4 min
+[KDIAG] clean_n0_s0_ep0 vote_out r=0.98 kept rank mean 636.6 (min 489, max 737) exact error mean 1.99e-02 input energy outside row space mean 0.585 SST-2 dev AUC 0.9601  2.4 min
+[KDIAG] clean_n0_s0_ep0 vote_out r=0.95 kept rank mean 501.1 (min 332, max 631) exact error mean 4.98e-02 input energy outside row space mean 0.678 SST-2 dev AUC 0.9588  2.5 min
+[KDIAG] clean_n0_s0_ep0 vote_out r=0.9 kept rank mean 376.0 (min 193, max 531) exact error mean 9.97e-02 input energy outside row space mean 0.755 SST-2 dev AUC 0.9566  2.5 min
+[KDIAG] clean_n0_s0_ep0 vote_out r=0.8 kept rank mean 235.1 (min 63, max 398) exact error mean 2.00e-01 input energy outside row space mean 0.839 SST-2 dev AUC 0.9481  2.5 min
+[KDIAG] clean_n0_s0_ep0 vote_out r=0.7 kept rank mean 152.3 (min 20, max 306) exact error mean 2.99e-01 input energy outside row space mean 0.888 SST-2 dev AUC 0.8903  2.6 min
+[KDIAG] clean_n0_s0_ep0 vote_out r=0.5 kept rank mean 64.4 (min 2, max 173) exact error mean 4.97e-01 input energy outside row space mean 0.940 SST-2 dev AUC 0.7517  2.6 min
+[KDIAG] clean_n0_s0_ep0 whiten r=0.9999 kept rank mean 895.7 (min 818, max 932) exact error mean 9.87e-05 input energy outside row space mean 0.402 SST-2 dev AUC 0.9712  2.7 min
+[KDIAG] clean_n0_s0_ep0 whiten r=0.999 kept rank mean 769.0 (min 641, max 834) exact error mean 9.93e-04 input energy outside row space mean 0.511 SST-2 dev AUC 0.9709  2.7 min
+[KDIAG] clean_n0_s0_ep0 whiten r=0.995 kept rank mean 617.0 (min 440, max 712) exact error mean 4.98e-03 input energy outside row space mean 0.604 SST-2 dev AUC 0.9709  2.8 min
+[KDIAG] clean_n0_s0_ep0 whiten r=0.99 kept rank mean 530.5 (min 332, max 638) exact error mean 9.96e-03 input energy outside row space mean 0.648 SST-2 dev AUC 0.9708  2.8 min
+[KDIAG] clean_n0_s0_ep0 whiten r=0.98 kept rank mean 431.2 (min 217, max 550) exact error mean 1.99e-02 input energy outside row space mean 0.692 SST-2 dev AUC 0.9705  2.9 min
+[KDIAG] clean_n0_s0_ep0 whiten r=0.95 kept rank mean 285.0 (min 76, max 407) exact error mean 4.99e-02 input energy outside row space mean 0.753 SST-2 dev AUC 0.9688  2.9 min
+[KDIAG] clean_n0_s0_ep0 whiten r=0.9 kept rank mean 173.8 (min 17, max 279) exact error mean 9.96e-02 input energy outside row space mean 0.802 SST-2 dev AUC 0.9636  2.9 min
+[KDIAG] clean_n0_s0_ep0 whiten r=0.8 kept rank mean 79.7 (min 2, max 163) exact error mean 1.99e-01 input energy outside row space mean 0.854 SST-2 dev AUC 0.9630  3.0 min
+[KDIAG] clean_n0_s0_ep0 whiten r=0.7 kept rank mean 40.7 (min 1, max 100) exact error mean 2.96e-01 input energy outside row space mean 0.889 SST-2 dev AUC 0.9335  3.0 min
+[KDIAG] clean_n0_s0_ep0 whiten r=0.5 kept rank mean 11.1 (min 1, max 37) exact error mean 4.64e-01 input energy outside row space mean 0.926 SST-2 dev AUC 0.7495  3.0 min
+[SAVE] logs/kdiag/clean_n0_s0_ep0.npz  missing=0 unexpected=0  3.1 min
+[CHECK] done
+===== Done =====
