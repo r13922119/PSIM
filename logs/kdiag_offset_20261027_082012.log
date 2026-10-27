@@ -1,0 +1,546 @@
+===== kdiag offset panel + clean | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d3608521 | git=f3eb722 | --model n1500_s0_ep2=pz_epoch/n1500_s0_ep2@2 --model n1500_s1_ep2=pz_cleandev/cleandev_n1500_s1@2 --model n1500_s2_ep2=pz_v2/badnet_s2@2 --model n1500_s3_ep2=pz_cleandev/cleandev_n1500_s3@2 --model n1500_s4_ep2=pz_epoch/n1500_s4_ep2@2 --model clean_n0_s0_ep0=old_models_v1/clean_roberta_large_imdb =====
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[PLAN] n1500_s0_ep2 <- pz_epoch/n1500_s0_ep2/pytorch_model.bin  epoch_saved=2  kdiag reference: logs/kdiag/n1500_s0_ep2.npz
+[PLAN] n1500_s1_ep2 <- pz_cleandev/cleandev_n1500_s1/pytorch_model.bin  epoch_saved=2  kdiag reference: logs/kdiag/n1500_s1_ep2.npz
+[PLAN] n1500_s2_ep2 <- pz_v2/badnet_s2/pytorch_model.bin  epoch_saved=2  kdiag reference: logs/kdiag/n1500_s2_ep2.npz
+[PLAN] n1500_s3_ep2 <- pz_cleandev/cleandev_n1500_s3/pytorch_model.bin  epoch_saved=2  kdiag reference: logs/kdiag/n1500_s3_ep2.npz
+[PLAN] n1500_s4_ep2 <- pz_epoch/n1500_s4_ep2/pytorch_model.bin  epoch_saved=2  kdiag reference: logs/kdiag/n1500_s4_ep2.npz
+[PLAN] clean_n0_s0_ep0 <- old_models_v1/clean_roberta_large_imdb/pytorch_model.bin  epoch_saved=None  kdiag reference: logs/kdiag/clean_n0_s0_ep0.npz
+[CHECK] all 6 models and kdiag references found; r grid [0.9999, 0.999, 0.995, 0.99, 0.98, 0.95, 0.9, 0.8, 0.7, 0.5]
+[DATA] SST-2 train 3610/3310 (labels unused); SST-2 dev not used
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:   5%|▍         | 18/389 [00:00<00:02, 135.60it/s]Loading weights:   8%|▊         | 32/389 [00:00<00:04, 77.27it/s] Loading weights:  11%|█         | 41/389 [00:00<00:05, 63.77it/s]Loading weights:  12%|█▏        | 48/389 [00:00<00:07, 48.38it/s]Loading weights:  14%|█▍        | 54/389 [00:01<00:09, 36.37it/s]Loading weights:  16%|█▌        | 61/389 [00:01<00:09, 35.50it/s]Loading weights:  20%|█▉        | 77/389 [00:01<00:05, 52.15it/s]Loading weights:  24%|██▎       | 92/389 [00:01<00:04, 67.70it/s]Loading weights:  26%|██▌       | 101/389 [00:01<00:04, 65.69it/s]Loading weights:  34%|███▍      | 132/389 [00:01<00:02, 108.34it/s]Loading weights:  39%|███▉      | 153/389 [00:02<00:02, 113.52it/s]Loading weights:  43%|████▎     | 166/389 [00:02<00:02, 107.91it/s]Loading weights:  47%|████▋     | 184/389 [00:02<00:01, 111.21it/s]Loading weights:  51%|█████     | 198/389 [00:02<00:01, 114.84it/s]Loading weights:  57%|█████▋    | 222/389 [00:02<00:01, 139.10it/s]Loading weights:  61%|██████    | 237/389 [00:02<00:01, 135.92it/s]Loading weights:  65%|██████▍   | 252/389 [00:02<00:01, 132.82it/s]Loading weights:  68%|██████▊   | 266/389 [00:02<00:00, 128.46it/s]Loading weights:  72%|███████▏  | 280/389 [00:03<00:00, 113.14it/s]Loading weights:  76%|███████▌  | 296/389 [00:03<00:00, 123.83it/s]Loading weights:  85%|████████▌ | 331/389 [00:03<00:00, 181.00it/s]Loading weights: 100%|██████████| 389/389 [00:03<00:00, 117.89it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[OFFSET] n1500_s0_ep2 C and sum x collected from 173151 SST-2 train tokens  1.0 min
+[CHECK] n1500_s0_ep2 token count 173151 vs kdiag 173151: same
+[OFFSET] n1500_s0_ep2 layer 0: constant part 13.1% of input energy; top direction 14.6% (of which constant 87.2%, cos with mean 0.988); after removing the mean, top direction 5.8% of the varying part; cos(mean, LayerNorm bias) -0.234, |bias|^2/|mean|^2 0.476; largest mean coordinates [981, 673, 8] (24.6%, 21.3%, 2.2%)
+[OFFSET] n1500_s0_ep2 layer 1: constant part 45.7% of input energy; top direction 47.4% (of which constant 96.3%, cos with mean 0.999); after removing the mean, top direction 6.0% of the varying part; cos(mean, LayerNorm bias) -0.183, |bias|^2/|mean|^2 0.110; largest mean coordinates [981, 673, 106] (41.4%, 41.3%, 3.8%)
+[OFFSET] n1500_s0_ep2 layer 2: constant part 53.2% of input energy; top direction 54.1% (of which constant 98.3%, cos with mean 1.000); after removing the mean, top direction 6.7% of the varying part; cos(mean, LayerNorm bias) -0.163, |bias|^2/|mean|^2 0.066; largest mean coordinates [673, 981, 106] (45.1%, 22.0%, 18.1%)
+[OFFSET] n1500_s0_ep2 layer 3: constant part 55.0% of input energy; top direction 55.7% (of which constant 98.8%, cos with mean 1.000); after removing the mean, top direction 5.4% of the varying part; cos(mean, LayerNorm bias) -0.108, |bias|^2/|mean|^2 0.040; largest mean coordinates [673, 106, 981] (54.4%, 19.0%, 15.3%)
+[OFFSET] n1500_s0_ep2 layer 4: constant part 53.8% of input energy; top direction 54.6% (of which constant 98.5%, cos with mean 1.000); after removing the mean, top direction 4.7% of the varying part; cos(mean, LayerNorm bias) -0.182, |bias|^2/|mean|^2 0.027; largest mean coordinates [673, 106, 981] (71.6%, 11.5%, 7.4%)
+[OFFSET] n1500_s0_ep2 layer 5: constant part 55.9% of input energy; top direction 56.7% (of which constant 98.7%, cos with mean 1.000); after removing the mean, top direction 4.3% of the varying part; cos(mean, LayerNorm bias) 0.098, |bias|^2/|mean|^2 0.023; largest mean coordinates [673, 106, 981] (79.1%, 10.1%, 2.8%)
+[OFFSET] n1500_s0_ep2 layer 6: constant part 62.8% of input energy; top direction 63.5% (of which constant 98.8%, cos with mean 1.000); after removing the mean, top direction 4.3% of the varying part; cos(mean, LayerNorm bias) 0.107, |bias|^2/|mean|^2 0.020; largest mean coordinates [673, 106, 981] (84.3%, 7.6%, 1.1%)
+[OFFSET] n1500_s0_ep2 layer 7: constant part 66.9% of input energy; top direction 67.5% (of which constant 99.1%, cos with mean 1.000); after removing the mean, top direction 4.7% of the varying part; cos(mean, LayerNorm bias) 0.154, |bias|^2/|mean|^2 0.014; largest mean coordinates [673, 106, 412] (88.9%, 4.1%, 0.9%)
+[OFFSET] n1500_s0_ep2 layer 8: constant part 70.7% of input energy; top direction 71.1% (of which constant 99.4%, cos with mean 1.000); after removing the mean, top direction 5.5% of the varying part; cos(mean, LayerNorm bias) 0.146, |bias|^2/|mean|^2 0.013; largest mean coordinates [673, 106, 412] (90.9%, 1.6%, 1.3%)
+[OFFSET] n1500_s0_ep2 layer 9: constant part 71.4% of input energy; top direction 71.8% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 6.2% of the varying part; cos(mean, LayerNorm bias) 0.199, |bias|^2/|mean|^2 0.011; largest mean coordinates [673, 412, 2] (91.4%, 1.4%, 0.8%)
+[OFFSET] n1500_s0_ep2 layer 10: constant part 74.6% of input energy; top direction 74.9% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 6.6% of the varying part; cos(mean, LayerNorm bias) 0.257, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 412, 2] (91.4%, 1.2%, 0.9%)
+[OFFSET] n1500_s0_ep2 layer 11: constant part 70.8% of input energy; top direction 71.1% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 6.3% of the varying part; cos(mean, LayerNorm bias) 0.204, |bias|^2/|mean|^2 0.008; largest mean coordinates [673, 2, 474] (89.8%, 1.2%, 1.2%)
+[OFFSET] n1500_s0_ep2 layer 12: constant part 71.1% of input energy; top direction 71.4% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 6.3% of the varying part; cos(mean, LayerNorm bias) 0.176, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 474, 547] (90.2%, 1.3%, 1.0%)
+[OFFSET] n1500_s0_ep2 layer 13: constant part 70.9% of input energy; top direction 71.2% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 6.0% of the varying part; cos(mean, LayerNorm bias) 0.177, |bias|^2/|mean|^2 0.007; largest mean coordinates [673, 547, 474] (91.0%, 1.2%, 0.8%)
+[OFFSET] n1500_s0_ep2 layer 14: constant part 70.6% of input energy; top direction 71.0% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 6.2% of the varying part; cos(mean, LayerNorm bias) 0.144, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 547, 631] (90.8%, 1.3%, 0.8%)
+[OFFSET] n1500_s0_ep2 layer 15: constant part 68.6% of input energy; top direction 69.0% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 13.5% of the varying part; cos(mean, LayerNorm bias) 0.250, |bias|^2/|mean|^2 0.007; largest mean coordinates [673, 631, 547] (62.2%, 29.9%, 1.1%)
+[OFFSET] n1500_s0_ep2 layer 16: constant part 71.0% of input energy; top direction 71.3% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 15.9% of the varying part; cos(mean, LayerNorm bias) 0.270, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (52.9%, 40.1%, 0.8%)
+[OFFSET] n1500_s0_ep2 layer 17: constant part 70.6% of input energy; top direction 70.9% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 14.4% of the varying part; cos(mean, LayerNorm bias) 0.156, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (62.8%, 28.9%, 0.7%)
+[OFFSET] n1500_s0_ep2 layer 18: constant part 71.8% of input energy; top direction 72.0% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 11.2% of the varying part; cos(mean, LayerNorm bias) 0.178, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (73.8%, 17.4%, 0.5%)
+[OFFSET] n1500_s0_ep2 layer 19: constant part 69.3% of input energy; top direction 69.5% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 8.9% of the varying part; cos(mean, LayerNorm bias) 0.323, |bias|^2/|mean|^2 0.003; largest mean coordinates [631, 673, 547] (74.6%, 13.4%, 0.5%)
+[OFFSET] n1500_s0_ep2 layer 20: constant part 61.5% of input energy; top direction 61.7% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 8.9% of the varying part; cos(mean, LayerNorm bias) 0.336, |bias|^2/|mean|^2 0.003; largest mean coordinates [631, 673, 547] (66.8%, 14.0%, 0.8%)
+[OFFSET] n1500_s0_ep2 layer 21: constant part 62.7% of input energy; top direction 62.9% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 9.5% of the varying part; cos(mean, LayerNorm bias) 0.537, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (70.4%, 9.5%, 1.0%)
+[OFFSET] n1500_s0_ep2 layer 22: constant part 59.0% of input energy; top direction 59.3% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 13.4% of the varying part; cos(mean, LayerNorm bias) 0.478, |bias|^2/|mean|^2 0.006; largest mean coordinates [631, 673, 547] (65.0%, 7.9%, 1.2%)
+[OFFSET] n1500_s0_ep2 layer 23: constant part 55.2% of input energy; top direction 55.6% (of which constant 99.2%, cos with mean 1.000); after removing the mean, top direction 19.5% of the varying part; cos(mean, LayerNorm bias) 0.329, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (53.8%, 6.2%, 1.4%)
+[CHECK] n1500_s0_ep2 eigenvalues of C vs kdiag: max |difference| / largest eigenvalue 0.0e+00
+[OFFSET] n1500_s0_ep2 sigma r=0.9999 kept rank mean 976.3; outside the row space (median over 48 modules): all energy 0.224, varying part 0.064, constant part 0.325
+[OFFSET] n1500_s0_ep2 sigma r=0.999 kept rank mean 908.7; outside the row space (median over 48 modules): all energy 0.394, varying part 0.136, constant part 0.521
+[OFFSET] n1500_s0_ep2 sigma r=0.995 kept rank mean 811.5; outside the row space (median over 48 modules): all energy 0.525, varying part 0.231, constant part 0.693
+[OFFSET] n1500_s0_ep2 sigma r=0.99 kept rank mean 751.9; outside the row space (median over 48 modules): all energy 0.583, varying part 0.290, constant part 0.757
+[OFFSET] n1500_s0_ep2 sigma r=0.98 kept rank mean 673.5; outside the row space (median over 48 modules): all energy 0.638, varying part 0.357, constant part 0.804
+[OFFSET] n1500_s0_ep2 sigma r=0.95 kept rank mean 537.1; outside the row space (median over 48 modules): all energy 0.727, varying part 0.468, constant part 0.873
+[OFFSET] n1500_s0_ep2 sigma r=0.9 kept rank mean 403.4; outside the row space (median over 48 modules): all energy 0.799, varying part 0.589, constant part 0.914
+[OFFSET] n1500_s0_ep2 sigma r=0.8 kept rank mean 254.9; outside the row space (median over 48 modules): all energy 0.868, varying part 0.718, constant part 0.943
+[OFFSET] n1500_s0_ep2 sigma r=0.7 kept rank mean 166.6; outside the row space (median over 48 modules): all energy 0.908, varying part 0.801, constant part 0.955
+[OFFSET] n1500_s0_ep2 sigma r=0.5 kept rank mean 72.9; outside the row space (median over 48 modules): all energy 0.952, varying part 0.896, constant part 0.971
+[CHECK] n1500_s0_ep2 sigma: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 2.6e-15
+[OFFSET] n1500_s0_ep2 vote_in r=0.9999 kept rank mean 1023.8; outside the row space (median over 48 modules): all energy -0.000, varying part 0.000, constant part 0.000
+[OFFSET] n1500_s0_ep2 vote_in r=0.999 kept rank mean 1020.3; outside the row space (median over 48 modules): all energy 0.000, varying part 0.001, constant part 0.000
+[OFFSET] n1500_s0_ep2 vote_in r=0.995 kept rank mean 1005.8; outside the row space (median over 48 modules): all energy 0.003, varying part 0.010, constant part 0.000
+[OFFSET] n1500_s0_ep2 vote_in r=0.99 kept rank mean 988.3; outside the row space (median over 48 modules): all energy 0.007, varying part 0.021, constant part 0.000
+[OFFSET] n1500_s0_ep2 vote_in r=0.98 kept rank mean 955.6; outside the row space (median over 48 modules): all energy 0.015, varying part 0.047, constant part 0.001
+[OFFSET] n1500_s0_ep2 vote_in r=0.95 kept rank mean 871.0; outside the row space (median over 48 modules): all energy 0.038, varying part 0.116, constant part 0.003
+[OFFSET] n1500_s0_ep2 vote_in r=0.9 kept rank mean 764.0; outside the row space (median over 48 modules): all energy 0.071, varying part 0.212, constant part 0.007
+[OFFSET] n1500_s0_ep2 vote_in r=0.8 kept rank mean 605.8; outside the row space (median over 48 modules): all energy 0.127, varying part 0.367, constant part 0.022
+[OFFSET] n1500_s0_ep2 vote_in r=0.7 kept rank mean 481.8; outside the row space (median over 48 modules): all energy 0.175, varying part 0.480, constant part 0.040
+[OFFSET] n1500_s0_ep2 vote_in r=0.5 kept rank mean 293.1; outside the row space (median over 48 modules): all energy 0.302, varying part 0.669, constant part 0.106
+[CHECK] n1500_s0_ep2 vote_in: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 3.7e-15
+[OFFSET] n1500_s0_ep2 vote_out r=0.9999 kept rank mean 962.6; outside the row space (median over 48 modules): all energy 0.166, varying part 0.071, constant part 0.215
+[OFFSET] n1500_s0_ep2 vote_out r=0.999 kept rank mean 886.9; outside the row space (median over 48 modules): all energy 0.300, varying part 0.148, constant part 0.379
+[OFFSET] n1500_s0_ep2 vote_out r=0.995 kept rank mean 784.4; outside the row space (median over 48 modules): all energy 0.463, varying part 0.246, constant part 0.550
+[OFFSET] n1500_s0_ep2 vote_out r=0.99 kept rank mean 720.4; outside the row space (median over 48 modules): all energy 0.519, varying part 0.305, constant part 0.624
+[OFFSET] n1500_s0_ep2 vote_out r=0.98 kept rank mean 640.6; outside the row space (median over 48 modules): all energy 0.586, varying part 0.376, constant part 0.690
+[OFFSET] n1500_s0_ep2 vote_out r=0.95 kept rank mean 505.6; outside the row space (median over 48 modules): all energy 0.700, varying part 0.495, constant part 0.798
+[OFFSET] n1500_s0_ep2 vote_out r=0.9 kept rank mean 380.9; outside the row space (median over 48 modules): all energy 0.761, varying part 0.601, constant part 0.856
+[OFFSET] n1500_s0_ep2 vote_out r=0.8 kept rank mean 241.3; outside the row space (median over 48 modules): all energy 0.849, varying part 0.723, constant part 0.909
+[OFFSET] n1500_s0_ep2 vote_out r=0.7 kept rank mean 158.1; outside the row space (median over 48 modules): all energy 0.898, varying part 0.804, constant part 0.942
+[OFFSET] n1500_s0_ep2 vote_out r=0.5 kept rank mean 68.0; outside the row space (median over 48 modules): all energy 0.951, varying part 0.897, constant part 0.965
+[CHECK] n1500_s0_ep2 vote_out: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 2.6e-15
+[OFFSET] n1500_s0_ep2 whiten r=0.9999 kept rank mean 898.1; outside the row space (median over 48 modules): all energy 0.426, varying part 0.131, constant part 0.568
+[OFFSET] n1500_s0_ep2 whiten r=0.999 kept rank mean 773.8; outside the row space (median over 48 modules): all energy 0.525, varying part 0.233, constant part 0.711
+[OFFSET] n1500_s0_ep2 whiten r=0.995 kept rank mean 624.2; outside the row space (median over 48 modules): all energy 0.619, varying part 0.347, constant part 0.779
+[OFFSET] n1500_s0_ep2 whiten r=0.99 kept rank mean 538.9; outside the row space (median over 48 modules): all energy 0.660, varying part 0.407, constant part 0.813
+[OFFSET] n1500_s0_ep2 whiten r=0.98 kept rank mean 440.5; outside the row space (median over 48 modules): all energy 0.706, varying part 0.478, constant part 0.836
+[OFFSET] n1500_s0_ep2 whiten r=0.95 kept rank mean 295.0; outside the row space (median over 48 modules): all energy 0.772, varying part 0.580, constant part 0.865
+[OFFSET] n1500_s0_ep2 whiten r=0.9 kept rank mean 183.0; outside the row space (median over 48 modules): all energy 0.818, varying part 0.666, constant part 0.886
+[OFFSET] n1500_s0_ep2 whiten r=0.8 kept rank mean 86.7; outside the row space (median over 48 modules): all energy 0.869, varying part 0.766, constant part 0.908
+[OFFSET] n1500_s0_ep2 whiten r=0.7 kept rank mean 45.2; outside the row space (median over 48 modules): all energy 0.902, varying part 0.823, constant part 0.923
+[OFFSET] n1500_s0_ep2 whiten r=0.5 kept rank mean 12.6; outside the row space (median over 48 modules): all energy 0.938, varying part 0.906, constant part 0.935
+[CHECK] n1500_s0_ep2 whiten: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 2.7e-15
+[SAVE] logs/kdiag_offset/n1500_s0_ep2.npz  missing=0 unexpected=0  2.2 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  94%|█████████▍| 365/389 [00:00<00:00, 3643.20it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3635.45it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[OFFSET] n1500_s1_ep2 C and sum x collected from 173151 SST-2 train tokens  0.6 min
+[CHECK] n1500_s1_ep2 token count 173151 vs kdiag 173151: same
+[OFFSET] n1500_s1_ep2 layer 0: constant part 13.1% of input energy; top direction 14.6% (of which constant 87.2%, cos with mean 0.988); after removing the mean, top direction 5.8% of the varying part; cos(mean, LayerNorm bias) -0.234, |bias|^2/|mean|^2 0.477; largest mean coordinates [981, 673, 8] (24.6%, 21.2%, 2.2%)
+[OFFSET] n1500_s1_ep2 layer 1: constant part 44.9% of input energy; top direction 46.7% (of which constant 96.1%, cos with mean 0.999); after removing the mean, top direction 6.1% of the varying part; cos(mean, LayerNorm bias) -0.181, |bias|^2/|mean|^2 0.111; largest mean coordinates [673, 981, 106] (42.0%, 40.8%, 4.2%)
+[OFFSET] n1500_s1_ep2 layer 2: constant part 52.4% of input energy; top direction 53.3% (of which constant 98.2%, cos with mean 1.000); after removing the mean, top direction 6.7% of the varying part; cos(mean, LayerNorm bias) -0.167, |bias|^2/|mean|^2 0.067; largest mean coordinates [673, 981, 106] (46.9%, 20.9%, 18.5%)
+[OFFSET] n1500_s1_ep2 layer 3: constant part 54.8% of input energy; top direction 55.5% (of which constant 98.7%, cos with mean 1.000); after removing the mean, top direction 5.4% of the varying part; cos(mean, LayerNorm bias) -0.118, |bias|^2/|mean|^2 0.040; largest mean coordinates [673, 106, 981] (57.2%, 18.9%, 14.0%)
+[OFFSET] n1500_s1_ep2 layer 4: constant part 53.9% of input energy; top direction 54.7% (of which constant 98.6%, cos with mean 1.000); after removing the mean, top direction 5.2% of the varying part; cos(mean, LayerNorm bias) -0.191, |bias|^2/|mean|^2 0.027; largest mean coordinates [673, 106, 981] (71.7%, 12.2%, 7.4%)
+[OFFSET] n1500_s1_ep2 layer 5: constant part 55.3% of input energy; top direction 56.0% (of which constant 98.7%, cos with mean 1.000); after removing the mean, top direction 4.8% of the varying part; cos(mean, LayerNorm bias) 0.072, |bias|^2/|mean|^2 0.024; largest mean coordinates [673, 106, 981] (79.3%, 8.4%, 3.4%)
+[OFFSET] n1500_s1_ep2 layer 6: constant part 59.9% of input energy; top direction 60.6% (of which constant 98.8%, cos with mean 1.000); after removing the mean, top direction 5.1% of the varying part; cos(mean, LayerNorm bias) 0.098, |bias|^2/|mean|^2 0.021; largest mean coordinates [673, 106, 981] (84.5%, 5.9%, 1.5%)
+[OFFSET] n1500_s1_ep2 layer 7: constant part 64.6% of input energy; top direction 65.1% (of which constant 99.2%, cos with mean 1.000); after removing the mean, top direction 4.8% of the varying part; cos(mean, LayerNorm bias) 0.135, |bias|^2/|mean|^2 0.015; largest mean coordinates [673, 106, 412] (88.0%, 3.3%, 1.0%)
+[OFFSET] n1500_s1_ep2 layer 8: constant part 67.7% of input energy; top direction 68.1% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 5.6% of the varying part; cos(mean, LayerNorm bias) 0.141, |bias|^2/|mean|^2 0.013; largest mean coordinates [673, 106, 412] (89.9%, 1.4%, 1.3%)
+[OFFSET] n1500_s1_ep2 layer 9: constant part 70.7% of input energy; top direction 71.0% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 7.0% of the varying part; cos(mean, LayerNorm bias) 0.192, |bias|^2/|mean|^2 0.011; largest mean coordinates [673, 412, 2] (90.5%, 1.3%, 1.1%)
+[OFFSET] n1500_s1_ep2 layer 10: constant part 74.3% of input energy; top direction 74.5% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.5% of the varying part; cos(mean, LayerNorm bias) 0.254, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 412, 2] (90.4%, 1.2%, 1.1%)
+[OFFSET] n1500_s1_ep2 layer 11: constant part 71.8% of input energy; top direction 72.0% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.3% of the varying part; cos(mean, LayerNorm bias) 0.208, |bias|^2/|mean|^2 0.008; largest mean coordinates [673, 2, 412] (89.3%, 1.2%, 0.9%)
+[OFFSET] n1500_s1_ep2 layer 12: constant part 71.8% of input energy; top direction 72.0% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.7% of the varying part; cos(mean, LayerNorm bias) 0.174, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 474, 547] (89.7%, 1.1%, 0.9%)
+[OFFSET] n1500_s1_ep2 layer 13: constant part 71.4% of input energy; top direction 71.6% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 6.7% of the varying part; cos(mean, LayerNorm bias) 0.175, |bias|^2/|mean|^2 0.007; largest mean coordinates [673, 547, 51] (90.4%, 1.2%, 0.7%)
+[OFFSET] n1500_s1_ep2 layer 14: constant part 70.6% of input energy; top direction 70.9% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 8.3% of the varying part; cos(mean, LayerNorm bias) 0.145, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 547, 631] (90.1%, 1.4%, 0.9%)
+[OFFSET] n1500_s1_ep2 layer 15: constant part 69.9% of input energy; top direction 70.2% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 8.6% of the varying part; cos(mean, LayerNorm bias) 0.253, |bias|^2/|mean|^2 0.007; largest mean coordinates [673, 631, 547] (65.1%, 26.8%, 1.3%)
+[OFFSET] n1500_s1_ep2 layer 16: constant part 73.6% of input energy; top direction 73.9% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 9.8% of the varying part; cos(mean, LayerNorm bias) 0.282, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (51.3%, 41.2%, 1.4%)
+[OFFSET] n1500_s1_ep2 layer 17: constant part 74.1% of input energy; top direction 74.3% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 9.2% of the varying part; cos(mean, LayerNorm bias) 0.172, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (61.6%, 29.5%, 1.5%)
+[OFFSET] n1500_s1_ep2 layer 18: constant part 74.2% of input energy; top direction 74.4% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 9.3% of the varying part; cos(mean, LayerNorm bias) 0.199, |bias|^2/|mean|^2 0.003; largest mean coordinates [631, 673, 547] (72.8%, 17.9%, 1.2%)
+[OFFSET] n1500_s1_ep2 layer 19: constant part 70.4% of input energy; top direction 70.6% (of which constant 99.8%, cos with mean 1.000); after removing the mean, top direction 7.1% of the varying part; cos(mean, LayerNorm bias) 0.341, |bias|^2/|mean|^2 0.003; largest mean coordinates [631, 673, 547] (73.4%, 14.4%, 1.1%)
+[OFFSET] n1500_s1_ep2 layer 20: constant part 64.0% of input energy; top direction 64.2% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.3% of the varying part; cos(mean, LayerNorm bias) 0.350, |bias|^2/|mean|^2 0.003; largest mean coordinates [631, 673, 547] (67.6%, 15.3%, 1.5%)
+[OFFSET] n1500_s1_ep2 layer 21: constant part 65.4% of input energy; top direction 65.6% (of which constant 99.8%, cos with mean 1.000); after removing the mean, top direction 6.8% of the varying part; cos(mean, LayerNorm bias) 0.555, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (72.7%, 11.0%, 1.5%)
+[OFFSET] n1500_s1_ep2 layer 22: constant part 65.2% of input energy; top direction 65.4% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 8.1% of the varying part; cos(mean, LayerNorm bias) 0.512, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (74.8%, 7.8%, 1.4%)
+[OFFSET] n1500_s1_ep2 layer 23: constant part 58.9% of input energy; top direction 59.3% (of which constant 99.3%, cos with mean 1.000); after removing the mean, top direction 12.3% of the varying part; cos(mean, LayerNorm bias) 0.376, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (67.0%, 7.1%, 1.7%)
+[CHECK] n1500_s1_ep2 eigenvalues of C vs kdiag: max |difference| / largest eigenvalue 0.0e+00
+[OFFSET] n1500_s1_ep2 sigma r=0.9999 kept rank mean 976.6; outside the row space (median over 48 modules): all energy 0.222, varying part 0.063, constant part 0.315
+[OFFSET] n1500_s1_ep2 sigma r=0.999 kept rank mean 909.9; outside the row space (median over 48 modules): all energy 0.388, varying part 0.133, constant part 0.509
+[OFFSET] n1500_s1_ep2 sigma r=0.995 kept rank mean 813.8; outside the row space (median over 48 modules): all energy 0.542, varying part 0.228, constant part 0.691
+[OFFSET] n1500_s1_ep2 sigma r=0.99 kept rank mean 754.4; outside the row space (median over 48 modules): all energy 0.595, varying part 0.286, constant part 0.766
+[OFFSET] n1500_s1_ep2 sigma r=0.98 kept rank mean 676.4; outside the row space (median over 48 modules): all energy 0.658, varying part 0.352, constant part 0.828
+[OFFSET] n1500_s1_ep2 sigma r=0.95 kept rank mean 540.1; outside the row space (median over 48 modules): all energy 0.738, varying part 0.466, constant part 0.885
+[OFFSET] n1500_s1_ep2 sigma r=0.9 kept rank mean 406.5; outside the row space (median over 48 modules): all energy 0.799, varying part 0.585, constant part 0.913
+[OFFSET] n1500_s1_ep2 sigma r=0.8 kept rank mean 256.7; outside the row space (median over 48 modules): all energy 0.869, varying part 0.713, constant part 0.942
+[OFFSET] n1500_s1_ep2 sigma r=0.7 kept rank mean 167.5; outside the row space (median over 48 modules): all energy 0.908, varying part 0.792, constant part 0.956
+[OFFSET] n1500_s1_ep2 sigma r=0.5 kept rank mean 73.1; outside the row space (median over 48 modules): all energy 0.951, varying part 0.897, constant part 0.973
+[CHECK] n1500_s1_ep2 sigma: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 2.8e-15
+[OFFSET] n1500_s1_ep2 vote_in r=0.9999 kept rank mean 1023.6; outside the row space (median over 48 modules): all energy 0.000, varying part 0.000, constant part 0.000
+[OFFSET] n1500_s1_ep2 vote_in r=0.999 kept rank mean 1020.7; outside the row space (median over 48 modules): all energy 0.000, varying part 0.001, constant part 0.000
+[OFFSET] n1500_s1_ep2 vote_in r=0.995 kept rank mean 1006.5; outside the row space (median over 48 modules): all energy 0.003, varying part 0.008, constant part 0.000
+[OFFSET] n1500_s1_ep2 vote_in r=0.99 kept rank mean 988.6; outside the row space (median over 48 modules): all energy 0.007, varying part 0.019, constant part 0.000
+[OFFSET] n1500_s1_ep2 vote_in r=0.98 kept rank mean 956.0; outside the row space (median over 48 modules): all energy 0.014, varying part 0.042, constant part 0.001
+[OFFSET] n1500_s1_ep2 vote_in r=0.95 kept rank mean 876.7; outside the row space (median over 48 modules): all energy 0.035, varying part 0.108, constant part 0.003
+[OFFSET] n1500_s1_ep2 vote_in r=0.9 kept rank mean 771.1; outside the row space (median over 48 modules): all energy 0.073, varying part 0.209, constant part 0.008
+[OFFSET] n1500_s1_ep2 vote_in r=0.8 kept rank mean 611.9; outside the row space (median over 48 modules): all energy 0.134, varying part 0.366, constant part 0.023
+[OFFSET] n1500_s1_ep2 vote_in r=0.7 kept rank mean 486.1; outside the row space (median over 48 modules): all energy 0.185, varying part 0.492, constant part 0.045
+[OFFSET] n1500_s1_ep2 vote_in r=0.5 kept rank mean 302.4; outside the row space (median over 48 modules): all energy 0.304, varying part 0.669, constant part 0.111
+[CHECK] n1500_s1_ep2 vote_in: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 4.1e-15
+[OFFSET] n1500_s1_ep2 vote_out r=0.9999 kept rank mean 962.9; outside the row space (median over 48 modules): all energy 0.167, varying part 0.069, constant part 0.225
+[OFFSET] n1500_s1_ep2 vote_out r=0.999 kept rank mean 887.2; outside the row space (median over 48 modules): all energy 0.313, varying part 0.148, constant part 0.407
+[OFFSET] n1500_s1_ep2 vote_out r=0.995 kept rank mean 786.2; outside the row space (median over 48 modules): all energy 0.466, varying part 0.246, constant part 0.548
+[OFFSET] n1500_s1_ep2 vote_out r=0.99 kept rank mean 722.7; outside the row space (median over 48 modules): all energy 0.526, varying part 0.305, constant part 0.611
+[OFFSET] n1500_s1_ep2 vote_out r=0.98 kept rank mean 643.2; outside the row space (median over 48 modules): all energy 0.600, varying part 0.375, constant part 0.692
+[OFFSET] n1500_s1_ep2 vote_out r=0.95 kept rank mean 508.9; outside the row space (median over 48 modules): all energy 0.707, varying part 0.494, constant part 0.793
+[OFFSET] n1500_s1_ep2 vote_out r=0.9 kept rank mean 384.0; outside the row space (median over 48 modules): all energy 0.779, varying part 0.601, constant part 0.880
+[OFFSET] n1500_s1_ep2 vote_out r=0.8 kept rank mean 243.4; outside the row space (median over 48 modules): all energy 0.848, varying part 0.720, constant part 0.919
+[OFFSET] n1500_s1_ep2 vote_out r=0.7 kept rank mean 159.7; outside the row space (median over 48 modules): all energy 0.900, varying part 0.803, constant part 0.948
+[OFFSET] n1500_s1_ep2 vote_out r=0.5 kept rank mean 68.9; outside the row space (median over 48 modules): all energy 0.949, varying part 0.898, constant part 0.967
+[CHECK] n1500_s1_ep2 vote_out: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 3.1e-15
+[OFFSET] n1500_s1_ep2 whiten r=0.9999 kept rank mean 898.7; outside the row space (median over 48 modules): all energy 0.431, varying part 0.128, constant part 0.563
+[OFFSET] n1500_s1_ep2 whiten r=0.999 kept rank mean 774.9; outside the row space (median over 48 modules): all energy 0.542, varying part 0.231, constant part 0.736
+[OFFSET] n1500_s1_ep2 whiten r=0.995 kept rank mean 625.7; outside the row space (median over 48 modules): all energy 0.630, varying part 0.345, constant part 0.808
+[OFFSET] n1500_s1_ep2 whiten r=0.99 kept rank mean 540.6; outside the row space (median over 48 modules): all energy 0.669, varying part 0.407, constant part 0.833
+[OFFSET] n1500_s1_ep2 whiten r=0.98 kept rank mean 442.4; outside the row space (median over 48 modules): all energy 0.713, varying part 0.475, constant part 0.852
+[OFFSET] n1500_s1_ep2 whiten r=0.95 kept rank mean 296.9; outside the row space (median over 48 modules): all energy 0.767, varying part 0.577, constant part 0.872
+[OFFSET] n1500_s1_ep2 whiten r=0.9 kept rank mean 184.5; outside the row space (median over 48 modules): all energy 0.818, varying part 0.664, constant part 0.891
+[OFFSET] n1500_s1_ep2 whiten r=0.8 kept rank mean 87.7; outside the row space (median over 48 modules): all energy 0.867, varying part 0.764, constant part 0.916
+[OFFSET] n1500_s1_ep2 whiten r=0.7 kept rank mean 46.0; outside the row space (median over 48 modules): all energy 0.902, varying part 0.823, constant part 0.927
+[OFFSET] n1500_s1_ep2 whiten r=0.5 kept rank mean 12.8; outside the row space (median over 48 modules): all energy 0.937, varying part 0.906, constant part 0.938
+[CHECK] n1500_s1_ep2 whiten: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 2.4e-15
+[SAVE] logs/kdiag_offset/n1500_s1_ep2.npz  missing=0 unexpected=0  1.7 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|█████████▉| 388/389 [00:00<00:00, 3875.96it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3861.97it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[OFFSET] n1500_s2_ep2 C and sum x collected from 173151 SST-2 train tokens  0.6 min
+[CHECK] n1500_s2_ep2 token count 173151 vs kdiag 173151: same
+[OFFSET] n1500_s2_ep2 layer 0: constant part 13.1% of input energy; top direction 14.6% (of which constant 87.2%, cos with mean 0.988); after removing the mean, top direction 5.8% of the varying part; cos(mean, LayerNorm bias) -0.234, |bias|^2/|mean|^2 0.477; largest mean coordinates [981, 673, 8] (24.7%, 21.3%, 2.2%)
+[OFFSET] n1500_s2_ep2 layer 1: constant part 45.8% of input energy; top direction 47.5% (of which constant 96.4%, cos with mean 0.999); after removing the mean, top direction 6.0% of the varying part; cos(mean, LayerNorm bias) -0.183, |bias|^2/|mean|^2 0.110; largest mean coordinates [673, 981, 106] (42.0%, 41.2%, 3.9%)
+[OFFSET] n1500_s2_ep2 layer 2: constant part 53.6% of input energy; top direction 54.4% (of which constant 98.4%, cos with mean 1.000); after removing the mean, top direction 6.6% of the varying part; cos(mean, LayerNorm bias) -0.160, |bias|^2/|mean|^2 0.066; largest mean coordinates [673, 981, 106] (49.1%, 19.3%, 18.1%)
+[OFFSET] n1500_s2_ep2 layer 3: constant part 57.0% of input energy; top direction 57.6% (of which constant 98.9%, cos with mean 1.000); after removing the mean, top direction 5.5% of the varying part; cos(mean, LayerNorm bias) -0.119, |bias|^2/|mean|^2 0.038; largest mean coordinates [673, 106, 981] (58.7%, 17.6%, 13.6%)
+[OFFSET] n1500_s2_ep2 layer 4: constant part 56.3% of input energy; top direction 56.9% (of which constant 98.8%, cos with mean 1.000); after removing the mean, top direction 5.0% of the varying part; cos(mean, LayerNorm bias) -0.190, |bias|^2/|mean|^2 0.026; largest mean coordinates [673, 106, 981] (72.3%, 11.7%, 7.3%)
+[OFFSET] n1500_s2_ep2 layer 5: constant part 58.1% of input energy; top direction 58.6% (of which constant 99.0%, cos with mean 1.000); after removing the mean, top direction 4.8% of the varying part; cos(mean, LayerNorm bias) 0.063, |bias|^2/|mean|^2 0.022; largest mean coordinates [673, 106, 981] (79.4%, 7.9%, 3.8%)
+[OFFSET] n1500_s2_ep2 layer 6: constant part 62.6% of input energy; top direction 63.2% (of which constant 99.1%, cos with mean 1.000); after removing the mean, top direction 5.1% of the varying part; cos(mean, LayerNorm bias) 0.085, |bias|^2/|mean|^2 0.020; largest mean coordinates [673, 106, 981] (82.6%, 6.4%, 1.7%)
+[OFFSET] n1500_s2_ep2 layer 7: constant part 66.1% of input energy; top direction 66.5% (of which constant 99.3%, cos with mean 1.000); after removing the mean, top direction 4.9% of the varying part; cos(mean, LayerNorm bias) 0.138, |bias|^2/|mean|^2 0.014; largest mean coordinates [673, 106, 412] (87.5%, 3.9%, 0.9%)
+[OFFSET] n1500_s2_ep2 layer 8: constant part 69.2% of input energy; top direction 69.5% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 5.5% of the varying part; cos(mean, LayerNorm bias) 0.135, |bias|^2/|mean|^2 0.013; largest mean coordinates [673, 106, 412] (90.2%, 1.6%, 1.2%)
+[OFFSET] n1500_s2_ep2 layer 9: constant part 69.8% of input energy; top direction 70.1% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 6.7% of the varying part; cos(mean, LayerNorm bias) 0.191, |bias|^2/|mean|^2 0.012; largest mean coordinates [673, 412, 2] (90.4%, 1.3%, 1.1%)
+[OFFSET] n1500_s2_ep2 layer 10: constant part 73.6% of input energy; top direction 73.8% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.5% of the varying part; cos(mean, LayerNorm bias) 0.252, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 412, 2] (90.6%, 1.2%, 1.1%)
+[OFFSET] n1500_s2_ep2 layer 11: constant part 71.0% of input energy; top direction 71.2% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.2% of the varying part; cos(mean, LayerNorm bias) 0.202, |bias|^2/|mean|^2 0.008; largest mean coordinates [673, 2, 412] (89.1%, 1.3%, 1.0%)
+[OFFSET] n1500_s2_ep2 layer 12: constant part 70.1% of input energy; top direction 70.4% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.3% of the varying part; cos(mean, LayerNorm bias) 0.164, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 547, 474] (88.9%, 1.3%, 1.1%)
+[OFFSET] n1500_s2_ep2 layer 13: constant part 69.3% of input energy; top direction 69.6% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 6.2% of the varying part; cos(mean, LayerNorm bias) 0.172, |bias|^2/|mean|^2 0.008; largest mean coordinates [673, 547, 2] (90.0%, 1.4%, 0.8%)
+[OFFSET] n1500_s2_ep2 layer 14: constant part 68.9% of input energy; top direction 69.2% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 7.9% of the varying part; cos(mean, LayerNorm bias) 0.146, |bias|^2/|mean|^2 0.010; largest mean coordinates [673, 547, 631] (90.2%, 1.6%, 0.8%)
+[OFFSET] n1500_s2_ep2 layer 15: constant part 67.6% of input energy; top direction 67.9% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 10.4% of the varying part; cos(mean, LayerNorm bias) 0.254, |bias|^2/|mean|^2 0.007; largest mean coordinates [673, 631, 547] (66.1%, 25.6%, 1.6%)
+[OFFSET] n1500_s2_ep2 layer 16: constant part 69.0% of input energy; top direction 69.3% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 12.1% of the varying part; cos(mean, LayerNorm bias) 0.278, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (48.1%, 44.3%, 1.3%)
+[OFFSET] n1500_s2_ep2 layer 17: constant part 70.0% of input energy; top direction 70.3% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 10.6% of the varying part; cos(mean, LayerNorm bias) 0.169, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (61.9%, 29.6%, 1.3%)
+[OFFSET] n1500_s2_ep2 layer 18: constant part 70.5% of input energy; top direction 70.8% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 10.0% of the varying part; cos(mean, LayerNorm bias) 0.187, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (73.5%, 17.8%, 1.1%)
+[OFFSET] n1500_s2_ep2 layer 19: constant part 67.7% of input energy; top direction 67.9% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.5% of the varying part; cos(mean, LayerNorm bias) 0.334, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (75.7%, 13.2%, 1.1%)
+[OFFSET] n1500_s2_ep2 layer 20: constant part 61.7% of input energy; top direction 61.9% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.4% of the varying part; cos(mean, LayerNorm bias) 0.350, |bias|^2/|mean|^2 0.003; largest mean coordinates [631, 673, 547] (70.2%, 13.4%, 1.7%)
+[OFFSET] n1500_s2_ep2 layer 21: constant part 63.1% of input energy; top direction 63.3% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 6.6% of the varying part; cos(mean, LayerNorm bias) 0.556, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (74.3%, 9.5%, 1.7%)
+[OFFSET] n1500_s2_ep2 layer 22: constant part 62.8% of input energy; top direction 63.2% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 8.4% of the varying part; cos(mean, LayerNorm bias) 0.520, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (74.5%, 6.8%, 1.7%)
+[OFFSET] n1500_s2_ep2 layer 23: constant part 57.5% of input energy; top direction 57.9% (of which constant 99.2%, cos with mean 1.000); after removing the mean, top direction 11.5% of the varying part; cos(mean, LayerNorm bias) 0.389, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (65.3%, 5.7%, 2.1%)
+[CHECK] n1500_s2_ep2 eigenvalues of C vs kdiag: max |difference| / largest eigenvalue 0.0e+00
+[OFFSET] n1500_s2_ep2 sigma r=0.9999 kept rank mean 976.0; outside the row space (median over 48 modules): all energy 0.230, varying part 0.064, constant part 0.334
+[OFFSET] n1500_s2_ep2 sigma r=0.999 kept rank mean 908.9; outside the row space (median over 48 modules): all energy 0.394, varying part 0.135, constant part 0.523
+[OFFSET] n1500_s2_ep2 sigma r=0.995 kept rank mean 812.3; outside the row space (median over 48 modules): all energy 0.541, varying part 0.229, constant part 0.697
+[OFFSET] n1500_s2_ep2 sigma r=0.99 kept rank mean 752.9; outside the row space (median over 48 modules): all energy 0.591, varying part 0.287, constant part 0.771
+[OFFSET] n1500_s2_ep2 sigma r=0.98 kept rank mean 673.9; outside the row space (median over 48 modules): all energy 0.642, varying part 0.353, constant part 0.829
+[OFFSET] n1500_s2_ep2 sigma r=0.95 kept rank mean 537.5; outside the row space (median over 48 modules): all energy 0.732, varying part 0.472, constant part 0.874
+[OFFSET] n1500_s2_ep2 sigma r=0.9 kept rank mean 404.3; outside the row space (median over 48 modules): all energy 0.796, varying part 0.590, constant part 0.910
+[OFFSET] n1500_s2_ep2 sigma r=0.8 kept rank mean 254.6; outside the row space (median over 48 modules): all energy 0.862, varying part 0.716, constant part 0.939
+[OFFSET] n1500_s2_ep2 sigma r=0.7 kept rank mean 165.8; outside the row space (median over 48 modules): all energy 0.907, varying part 0.802, constant part 0.952
+[OFFSET] n1500_s2_ep2 sigma r=0.5 kept rank mean 72.1; outside the row space (median over 48 modules): all energy 0.951, varying part 0.900, constant part 0.970
+[CHECK] n1500_s2_ep2 sigma: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 2.9e-15
+[OFFSET] n1500_s2_ep2 vote_in r=0.9999 kept rank mean 1023.7; outside the row space (median over 48 modules): all energy 0.000, varying part 0.000, constant part 0.000
+[OFFSET] n1500_s2_ep2 vote_in r=0.999 kept rank mean 1020.5; outside the row space (median over 48 modules): all energy 0.000, varying part 0.001, constant part 0.000
+[OFFSET] n1500_s2_ep2 vote_in r=0.995 kept rank mean 1005.4; outside the row space (median over 48 modules): all energy 0.003, varying part 0.010, constant part 0.000
+[OFFSET] n1500_s2_ep2 vote_in r=0.99 kept rank mean 989.0; outside the row space (median over 48 modules): all energy 0.007, varying part 0.021, constant part 0.000
+[OFFSET] n1500_s2_ep2 vote_in r=0.98 kept rank mean 956.5; outside the row space (median over 48 modules): all energy 0.016, varying part 0.046, constant part 0.001
+[OFFSET] n1500_s2_ep2 vote_in r=0.95 kept rank mean 878.6; outside the row space (median over 48 modules): all energy 0.039, varying part 0.112, constant part 0.003
+[OFFSET] n1500_s2_ep2 vote_in r=0.9 kept rank mean 772.5; outside the row space (median over 48 modules): all energy 0.077, varying part 0.205, constant part 0.008
+[OFFSET] n1500_s2_ep2 vote_in r=0.8 kept rank mean 616.2; outside the row space (median over 48 modules): all energy 0.133, varying part 0.353, constant part 0.023
+[OFFSET] n1500_s2_ep2 vote_in r=0.7 kept rank mean 494.3; outside the row space (median over 48 modules): all energy 0.194, varying part 0.476, constant part 0.046
+[OFFSET] n1500_s2_ep2 vote_in r=0.5 kept rank mean 303.5; outside the row space (median over 48 modules): all energy 0.308, varying part 0.671, constant part 0.118
+[CHECK] n1500_s2_ep2 vote_in: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 5.5e-15
+[OFFSET] n1500_s2_ep2 vote_out r=0.9999 kept rank mean 962.3; outside the row space (median over 48 modules): all energy 0.171, varying part 0.071, constant part 0.214
+[OFFSET] n1500_s2_ep2 vote_out r=0.999 kept rank mean 887.2; outside the row space (median over 48 modules): all energy 0.320, varying part 0.150, constant part 0.419
+[OFFSET] n1500_s2_ep2 vote_out r=0.995 kept rank mean 785.9; outside the row space (median over 48 modules): all energy 0.461, varying part 0.247, constant part 0.552
+[OFFSET] n1500_s2_ep2 vote_out r=0.99 kept rank mean 722.2; outside the row space (median over 48 modules): all energy 0.526, varying part 0.304, constant part 0.637
+[OFFSET] n1500_s2_ep2 vote_out r=0.98 kept rank mean 642.5; outside the row space (median over 48 modules): all energy 0.607, varying part 0.377, constant part 0.713
+[OFFSET] n1500_s2_ep2 vote_out r=0.95 kept rank mean 507.9; outside the row space (median over 48 modules): all energy 0.704, varying part 0.498, constant part 0.806
+[OFFSET] n1500_s2_ep2 vote_out r=0.9 kept rank mean 383.2; outside the row space (median over 48 modules): all energy 0.770, varying part 0.606, constant part 0.871
+[OFFSET] n1500_s2_ep2 vote_out r=0.8 kept rank mean 242.2; outside the row space (median over 48 modules): all energy 0.848, varying part 0.730, constant part 0.913
+[OFFSET] n1500_s2_ep2 vote_out r=0.7 kept rank mean 158.3; outside the row space (median over 48 modules): all energy 0.897, varying part 0.809, constant part 0.944
+[OFFSET] n1500_s2_ep2 vote_out r=0.5 kept rank mean 67.9; outside the row space (median over 48 modules): all energy 0.950, varying part 0.901, constant part 0.965
+[CHECK] n1500_s2_ep2 vote_out: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 2.8e-15
+[OFFSET] n1500_s2_ep2 whiten r=0.9999 kept rank mean 899.4; outside the row space (median over 48 modules): all energy 0.428, varying part 0.129, constant part 0.573
+[OFFSET] n1500_s2_ep2 whiten r=0.999 kept rank mean 776.2; outside the row space (median over 48 modules): all energy 0.530, varying part 0.233, constant part 0.733
+[OFFSET] n1500_s2_ep2 whiten r=0.995 kept rank mean 627.7; outside the row space (median over 48 modules): all energy 0.628, varying part 0.351, constant part 0.803
+[OFFSET] n1500_s2_ep2 whiten r=0.99 kept rank mean 543.0; outside the row space (median over 48 modules): all energy 0.670, varying part 0.411, constant part 0.822
+[OFFSET] n1500_s2_ep2 whiten r=0.98 kept rank mean 445.0; outside the row space (median over 48 modules): all energy 0.708, varying part 0.479, constant part 0.839
+[OFFSET] n1500_s2_ep2 whiten r=0.95 kept rank mean 299.3; outside the row space (median over 48 modules): all energy 0.767, varying part 0.580, constant part 0.865
+[OFFSET] n1500_s2_ep2 whiten r=0.9 kept rank mean 186.2; outside the row space (median over 48 modules): all energy 0.811, varying part 0.671, constant part 0.884
+[OFFSET] n1500_s2_ep2 whiten r=0.8 kept rank mean 88.8; outside the row space (median over 48 modules): all energy 0.865, varying part 0.767, constant part 0.913
+[OFFSET] n1500_s2_ep2 whiten r=0.7 kept rank mean 47.0; outside the row space (median over 48 modules): all energy 0.899, varying part 0.826, constant part 0.927
+[OFFSET] n1500_s2_ep2 whiten r=0.5 kept rank mean 13.1; outside the row space (median over 48 modules): all energy 0.939, varying part 0.908, constant part 0.937
+[CHECK] n1500_s2_ep2 whiten: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 3.6e-15
+[SAVE] logs/kdiag_offset/n1500_s2_ep2.npz  missing=0 unexpected=0  1.7 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  86%|████████▋ | 336/389 [00:00<00:00, 3349.65it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3535.59it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[OFFSET] n1500_s3_ep2 C and sum x collected from 173151 SST-2 train tokens  0.6 min
+[CHECK] n1500_s3_ep2 token count 173151 vs kdiag 173151: same
+[OFFSET] n1500_s3_ep2 layer 0: constant part 13.1% of input energy; top direction 14.6% (of which constant 87.2%, cos with mean 0.987); after removing the mean, top direction 5.8% of the varying part; cos(mean, LayerNorm bias) -0.234, |bias|^2/|mean|^2 0.478; largest mean coordinates [981, 673, 8] (24.7%, 21.3%, 2.1%)
+[OFFSET] n1500_s3_ep2 layer 1: constant part 44.8% of input energy; top direction 46.5% (of which constant 96.1%, cos with mean 0.999); after removing the mean, top direction 6.0% of the varying part; cos(mean, LayerNorm bias) -0.181, |bias|^2/|mean|^2 0.112; largest mean coordinates [673, 981, 106] (41.8%, 41.4%, 4.0%)
+[OFFSET] n1500_s3_ep2 layer 2: constant part 50.3% of input energy; top direction 51.3% (of which constant 98.0%, cos with mean 1.000); after removing the mean, top direction 6.6% of the varying part; cos(mean, LayerNorm bias) -0.156, |bias|^2/|mean|^2 0.070; largest mean coordinates [673, 981, 106] (48.0%, 21.0%, 17.4%)
+[OFFSET] n1500_s3_ep2 layer 3: constant part 51.8% of input energy; top direction 52.6% (of which constant 98.4%, cos with mean 1.000); after removing the mean, top direction 5.3% of the varying part; cos(mean, LayerNorm bias) -0.113, |bias|^2/|mean|^2 0.042; largest mean coordinates [673, 106, 981] (57.8%, 18.0%, 13.9%)
+[OFFSET] n1500_s3_ep2 layer 4: constant part 52.7% of input energy; top direction 53.6% (of which constant 98.3%, cos with mean 1.000); after removing the mean, top direction 4.9% of the varying part; cos(mean, LayerNorm bias) -0.197, |bias|^2/|mean|^2 0.027; largest mean coordinates [673, 106, 981] (72.4%, 11.6%, 6.7%)
+[OFFSET] n1500_s3_ep2 layer 5: constant part 56.9% of input energy; top direction 57.6% (of which constant 98.8%, cos with mean 1.000); after removing the mean, top direction 4.9% of the varying part; cos(mean, LayerNorm bias) 0.060, |bias|^2/|mean|^2 0.023; largest mean coordinates [673, 106, 981] (76.9%, 8.7%, 3.1%)
+[OFFSET] n1500_s3_ep2 layer 6: constant part 64.8% of input energy; top direction 65.5% (of which constant 98.9%, cos with mean 1.000); after removing the mean, top direction 5.8% of the varying part; cos(mean, LayerNorm bias) 0.081, |bias|^2/|mean|^2 0.019; largest mean coordinates [673, 106, 981] (81.7%, 7.7%, 1.2%)
+[OFFSET] n1500_s3_ep2 layer 7: constant part 69.6% of input energy; top direction 70.1% (of which constant 99.2%, cos with mean 1.000); after removing the mean, top direction 5.5% of the varying part; cos(mean, LayerNorm bias) 0.131, |bias|^2/|mean|^2 0.014; largest mean coordinates [673, 106, 981] (86.8%, 4.2%, 0.7%)
+[OFFSET] n1500_s3_ep2 layer 8: constant part 72.9% of input energy; top direction 73.3% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 6.0% of the varying part; cos(mean, LayerNorm bias) 0.123, |bias|^2/|mean|^2 0.012; largest mean coordinates [673, 106, 412] (88.9%, 2.0%, 1.0%)
+[OFFSET] n1500_s3_ep2 layer 9: constant part 70.6% of input energy; top direction 70.9% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 6.8% of the varying part; cos(mean, LayerNorm bias) 0.183, |bias|^2/|mean|^2 0.011; largest mean coordinates [673, 2, 412] (88.7%, 1.5%, 1.3%)
+[OFFSET] n1500_s3_ep2 layer 10: constant part 74.1% of input energy; top direction 74.3% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.3% of the varying part; cos(mean, LayerNorm bias) 0.241, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 2, 412] (89.0%, 1.5%, 1.3%)
+[OFFSET] n1500_s3_ep2 layer 11: constant part 71.1% of input energy; top direction 71.3% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.0% of the varying part; cos(mean, LayerNorm bias) 0.194, |bias|^2/|mean|^2 0.008; largest mean coordinates [673, 2, 412] (87.1%, 2.1%, 1.1%)
+[OFFSET] n1500_s3_ep2 layer 12: constant part 69.8% of input energy; top direction 70.0% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 6.9% of the varying part; cos(mean, LayerNorm bias) 0.159, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 2, 474] (87.0%, 1.9%, 1.3%)
+[OFFSET] n1500_s3_ep2 layer 13: constant part 69.6% of input energy; top direction 69.9% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 5.8% of the varying part; cos(mean, LayerNorm bias) 0.168, |bias|^2/|mean|^2 0.007; largest mean coordinates [673, 547, 2] (88.8%, 1.4%, 1.3%)
+[OFFSET] n1500_s3_ep2 layer 14: constant part 69.7% of input energy; top direction 70.0% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 7.6% of the varying part; cos(mean, LayerNorm bias) 0.140, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 547, 2] (89.4%, 1.6%, 0.9%)
+[OFFSET] n1500_s3_ep2 layer 15: constant part 67.7% of input energy; top direction 68.1% (of which constant 99.4%, cos with mean 1.000); after removing the mean, top direction 10.1% of the varying part; cos(mean, LayerNorm bias) 0.249, |bias|^2/|mean|^2 0.007; largest mean coordinates [673, 631, 547] (65.1%, 25.3%, 1.8%)
+[OFFSET] n1500_s3_ep2 layer 16: constant part 70.0% of input energy; top direction 70.3% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 11.0% of the varying part; cos(mean, LayerNorm bias) 0.268, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (47.5%, 43.2%, 1.7%)
+[OFFSET] n1500_s3_ep2 layer 17: constant part 68.5% of input energy; top direction 68.9% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 10.6% of the varying part; cos(mean, LayerNorm bias) 0.145, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (55.5%, 33.0%, 1.7%)
+[OFFSET] n1500_s3_ep2 layer 18: constant part 68.7% of input energy; top direction 69.0% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 9.6% of the varying part; cos(mean, LayerNorm bias) 0.181, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (69.3%, 19.2%, 1.3%)
+[OFFSET] n1500_s3_ep2 layer 19: constant part 65.7% of input energy; top direction 65.8% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 8.9% of the varying part; cos(mean, LayerNorm bias) 0.319, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (70.4%, 13.9%, 1.0%)
+[OFFSET] n1500_s3_ep2 layer 20: constant part 62.0% of input energy; top direction 62.2% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 10.1% of the varying part; cos(mean, LayerNorm bias) 0.339, |bias|^2/|mean|^2 0.003; largest mean coordinates [631, 673, 547] (66.8%, 12.2%, 1.2%)
+[OFFSET] n1500_s3_ep2 layer 21: constant part 61.1% of input energy; top direction 61.4% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 11.9% of the varying part; cos(mean, LayerNorm bias) 0.529, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (66.2%, 9.3%, 1.5%)
+[OFFSET] n1500_s3_ep2 layer 22: constant part 63.9% of input energy; top direction 64.1% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 13.4% of the varying part; cos(mean, LayerNorm bias) 0.484, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (68.1%, 6.2%, 1.3%)
+[OFFSET] n1500_s3_ep2 layer 23: constant part 59.9% of input energy; top direction 60.2% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 19.6% of the varying part; cos(mean, LayerNorm bias) 0.343, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (58.3%, 5.0%, 1.4%)
+[CHECK] n1500_s3_ep2 eigenvalues of C vs kdiag: max |difference| / largest eigenvalue 0.0e+00
+[OFFSET] n1500_s3_ep2 sigma r=0.9999 kept rank mean 975.2; outside the row space (median over 48 modules): all energy 0.223, varying part 0.064, constant part 0.329
+[OFFSET] n1500_s3_ep2 sigma r=0.999 kept rank mean 907.3; outside the row space (median over 48 modules): all energy 0.390, varying part 0.139, constant part 0.515
+[OFFSET] n1500_s3_ep2 sigma r=0.995 kept rank mean 809.5; outside the row space (median over 48 modules): all energy 0.526, varying part 0.231, constant part 0.690
+[OFFSET] n1500_s3_ep2 sigma r=0.99 kept rank mean 750.1; outside the row space (median over 48 modules): all energy 0.575, varying part 0.288, constant part 0.761
+[OFFSET] n1500_s3_ep2 sigma r=0.98 kept rank mean 671.1; outside the row space (median over 48 modules): all energy 0.630, varying part 0.356, constant part 0.804
+[OFFSET] n1500_s3_ep2 sigma r=0.95 kept rank mean 533.2; outside the row space (median over 48 modules): all energy 0.722, varying part 0.476, constant part 0.865
+[OFFSET] n1500_s3_ep2 sigma r=0.9 kept rank mean 401.5; outside the row space (median over 48 modules): all energy 0.793, varying part 0.592, constant part 0.902
+[OFFSET] n1500_s3_ep2 sigma r=0.8 kept rank mean 251.9; outside the row space (median over 48 modules): all energy 0.861, varying part 0.716, constant part 0.932
+[OFFSET] n1500_s3_ep2 sigma r=0.7 kept rank mean 163.5; outside the row space (median over 48 modules): all energy 0.902, varying part 0.806, constant part 0.946
+[OFFSET] n1500_s3_ep2 sigma r=0.5 kept rank mean 71.0; outside the row space (median over 48 modules): all energy 0.950, varying part 0.897, constant part 0.965
+[CHECK] n1500_s3_ep2 sigma: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 3.3e-15
+[OFFSET] n1500_s3_ep2 vote_in r=0.9999 kept rank mean 1023.6; outside the row space (median over 48 modules): all energy 0.000, varying part 0.000, constant part 0.000
+[OFFSET] n1500_s3_ep2 vote_in r=0.999 kept rank mean 1020.2; outside the row space (median over 48 modules): all energy 0.000, varying part 0.001, constant part 0.000
+[OFFSET] n1500_s3_ep2 vote_in r=0.995 kept rank mean 1005.1; outside the row space (median over 48 modules): all energy 0.003, varying part 0.010, constant part 0.000
+[OFFSET] n1500_s3_ep2 vote_in r=0.99 kept rank mean 987.2; outside the row space (median over 48 modules): all energy 0.008, varying part 0.019, constant part 0.000
+[OFFSET] n1500_s3_ep2 vote_in r=0.98 kept rank mean 955.5; outside the row space (median over 48 modules): all energy 0.016, varying part 0.044, constant part 0.001
+[OFFSET] n1500_s3_ep2 vote_in r=0.95 kept rank mean 871.8; outside the row space (median over 48 modules): all energy 0.040, varying part 0.114, constant part 0.003
+[OFFSET] n1500_s3_ep2 vote_in r=0.9 kept rank mean 765.4; outside the row space (median over 48 modules): all energy 0.072, varying part 0.208, constant part 0.009
+[OFFSET] n1500_s3_ep2 vote_in r=0.8 kept rank mean 602.6; outside the row space (median over 48 modules): all energy 0.133, varying part 0.360, constant part 0.026
+[OFFSET] n1500_s3_ep2 vote_in r=0.7 kept rank mean 478.0; outside the row space (median over 48 modules): all energy 0.192, varying part 0.484, constant part 0.048
+[OFFSET] n1500_s3_ep2 vote_in r=0.5 kept rank mean 287.2; outside the row space (median over 48 modules): all energy 0.317, varying part 0.690, constant part 0.142
+[CHECK] n1500_s3_ep2 vote_in: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 4.7e-15
+[OFFSET] n1500_s3_ep2 vote_out r=0.9999 kept rank mean 961.7; outside the row space (median over 48 modules): all energy 0.171, varying part 0.072, constant part 0.217
+[OFFSET] n1500_s3_ep2 vote_out r=0.999 kept rank mean 885.6; outside the row space (median over 48 modules): all energy 0.323, varying part 0.152, constant part 0.425
+[OFFSET] n1500_s3_ep2 vote_out r=0.995 kept rank mean 783.1; outside the row space (median over 48 modules): all energy 0.453, varying part 0.247, constant part 0.542
+[OFFSET] n1500_s3_ep2 vote_out r=0.99 kept rank mean 718.9; outside the row space (median over 48 modules): all energy 0.528, varying part 0.305, constant part 0.618
+[OFFSET] n1500_s3_ep2 vote_out r=0.98 kept rank mean 638.4; outside the row space (median over 48 modules): all energy 0.600, varying part 0.377, constant part 0.696
+[OFFSET] n1500_s3_ep2 vote_out r=0.95 kept rank mean 503.0; outside the row space (median over 48 modules): all energy 0.693, varying part 0.498, constant part 0.799
+[OFFSET] n1500_s3_ep2 vote_out r=0.9 kept rank mean 378.1; outside the row space (median over 48 modules): all energy 0.764, varying part 0.606, constant part 0.848
+[OFFSET] n1500_s3_ep2 vote_out r=0.8 kept rank mean 237.8; outside the row space (median over 48 modules): all energy 0.846, varying part 0.732, constant part 0.911
+[OFFSET] n1500_s3_ep2 vote_out r=0.7 kept rank mean 154.5; outside the row space (median over 48 modules): all energy 0.890, varying part 0.810, constant part 0.935
+[OFFSET] n1500_s3_ep2 vote_out r=0.5 kept rank mean 65.4; outside the row space (median over 48 modules): all energy 0.948, varying part 0.897, constant part 0.957
+[CHECK] n1500_s3_ep2 vote_out: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 3.4e-15
+[OFFSET] n1500_s3_ep2 whiten r=0.9999 kept rank mean 896.2; outside the row space (median over 48 modules): all energy 0.411, varying part 0.135, constant part 0.567
+[OFFSET] n1500_s3_ep2 whiten r=0.999 kept rank mean 769.9; outside the row space (median over 48 modules): all energy 0.512, varying part 0.238, constant part 0.720
+[OFFSET] n1500_s3_ep2 whiten r=0.995 kept rank mean 618.2; outside the row space (median over 48 modules): all energy 0.615, varying part 0.356, constant part 0.776
+[OFFSET] n1500_s3_ep2 whiten r=0.99 kept rank mean 531.9; outside the row space (median over 48 modules): all energy 0.660, varying part 0.416, constant part 0.802
+[OFFSET] n1500_s3_ep2 whiten r=0.98 kept rank mean 432.6; outside the row space (median over 48 modules): all energy 0.698, varying part 0.483, constant part 0.824
+[OFFSET] n1500_s3_ep2 whiten r=0.95 kept rank mean 286.3; outside the row space (median over 48 modules): all energy 0.761, varying part 0.586, constant part 0.861
+[OFFSET] n1500_s3_ep2 whiten r=0.9 kept rank mean 174.3; outside the row space (median over 48 modules): all energy 0.808, varying part 0.679, constant part 0.882
+[OFFSET] n1500_s3_ep2 whiten r=0.8 kept rank mean 79.9; outside the row space (median over 48 modules): all energy 0.861, varying part 0.773, constant part 0.903
+[OFFSET] n1500_s3_ep2 whiten r=0.7 kept rank mean 40.5; outside the row space (median over 48 modules): all energy 0.896, varying part 0.829, constant part 0.918
+[OFFSET] n1500_s3_ep2 whiten r=0.5 kept rank mean 10.6; outside the row space (median over 48 modules): all energy 0.935, varying part 0.904, constant part 0.927
+[CHECK] n1500_s3_ep2 whiten: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 3.3e-15
+[SAVE] logs/kdiag_offset/n1500_s3_ep2.npz  missing=0 unexpected=0  1.8 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  92%|█████████▏| 358/389 [00:00<00:00, 3570.44it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3679.50it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[OFFSET] n1500_s4_ep2 C and sum x collected from 173151 SST-2 train tokens  0.6 min
+[CHECK] n1500_s4_ep2 token count 173151 vs kdiag 173151: same
+[OFFSET] n1500_s4_ep2 layer 0: constant part 13.1% of input energy; top direction 14.6% (of which constant 87.2%, cos with mean 0.988); after removing the mean, top direction 5.8% of the varying part; cos(mean, LayerNorm bias) -0.233, |bias|^2/|mean|^2 0.477; largest mean coordinates [981, 673, 8] (24.7%, 21.3%, 2.2%)
+[OFFSET] n1500_s4_ep2 layer 1: constant part 45.1% of input energy; top direction 46.8% (of which constant 96.2%, cos with mean 0.999); after removing the mean, top direction 6.0% of the varying part; cos(mean, LayerNorm bias) -0.182, |bias|^2/|mean|^2 0.111; largest mean coordinates [673, 981, 106] (41.7%, 41.5%, 3.8%)
+[OFFSET] n1500_s4_ep2 layer 2: constant part 51.5% of input energy; top direction 52.4% (of which constant 98.1%, cos with mean 1.000); after removing the mean, top direction 6.6% of the varying part; cos(mean, LayerNorm bias) -0.158, |bias|^2/|mean|^2 0.069; largest mean coordinates [673, 981, 106] (48.1%, 20.9%, 17.3%)
+[OFFSET] n1500_s4_ep2 layer 3: constant part 52.8% of input energy; top direction 53.5% (of which constant 98.6%, cos with mean 1.000); after removing the mean, top direction 5.4% of the varying part; cos(mean, LayerNorm bias) -0.112, |bias|^2/|mean|^2 0.041; largest mean coordinates [673, 106, 981] (57.1%, 17.9%, 14.7%)
+[OFFSET] n1500_s4_ep2 layer 4: constant part 52.2% of input energy; top direction 53.0% (of which constant 98.4%, cos with mean 1.000); after removing the mean, top direction 5.1% of the varying part; cos(mean, LayerNorm bias) -0.188, |bias|^2/|mean|^2 0.028; largest mean coordinates [673, 106, 981] (72.6%, 11.7%, 7.0%)
+[OFFSET] n1500_s4_ep2 layer 5: constant part 57.0% of input energy; top direction 57.6% (of which constant 98.9%, cos with mean 1.000); after removing the mean, top direction 4.7% of the varying part; cos(mean, LayerNorm bias) 0.066, |bias|^2/|mean|^2 0.023; largest mean coordinates [673, 106, 981] (80.1%, 7.8%, 3.3%)
+[OFFSET] n1500_s4_ep2 layer 6: constant part 62.2% of input energy; top direction 62.8% (of which constant 99.1%, cos with mean 1.000); after removing the mean, top direction 5.0% of the varying part; cos(mean, LayerNorm bias) 0.091, |bias|^2/|mean|^2 0.020; largest mean coordinates [673, 106, 981] (83.6%, 6.0%, 1.5%)
+[OFFSET] n1500_s4_ep2 layer 7: constant part 66.2% of input energy; top direction 66.7% (of which constant 99.4%, cos with mean 1.000); after removing the mean, top direction 4.9% of the varying part; cos(mean, LayerNorm bias) 0.137, |bias|^2/|mean|^2 0.014; largest mean coordinates [673, 106, 412] (86.9%, 3.7%, 1.0%)
+[OFFSET] n1500_s4_ep2 layer 8: constant part 71.1% of input energy; top direction 71.4% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 5.7% of the varying part; cos(mean, LayerNorm bias) 0.137, |bias|^2/|mean|^2 0.013; largest mean coordinates [673, 106, 412] (89.7%, 1.5%, 1.3%)
+[OFFSET] n1500_s4_ep2 layer 9: constant part 70.0% of input energy; top direction 70.3% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 7.1% of the varying part; cos(mean, LayerNorm bias) 0.184, |bias|^2/|mean|^2 0.012; largest mean coordinates [673, 412, 2] (89.2%, 1.6%, 1.5%)
+[OFFSET] n1500_s4_ep2 layer 10: constant part 73.5% of input energy; top direction 73.7% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.2% of the varying part; cos(mean, LayerNorm bias) 0.246, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 2, 412] (89.7%, 1.5%, 1.4%)
+[OFFSET] n1500_s4_ep2 layer 11: constant part 71.1% of input energy; top direction 71.3% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.0% of the varying part; cos(mean, LayerNorm bias) 0.201, |bias|^2/|mean|^2 0.008; largest mean coordinates [673, 2, 412] (88.3%, 1.8%, 1.1%)
+[OFFSET] n1500_s4_ep2 layer 12: constant part 69.4% of input energy; top direction 69.6% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.4% of the varying part; cos(mean, LayerNorm bias) 0.164, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 2, 474] (88.7%, 1.4%, 1.2%)
+[OFFSET] n1500_s4_ep2 layer 13: constant part 69.4% of input energy; top direction 69.6% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 6.4% of the varying part; cos(mean, LayerNorm bias) 0.172, |bias|^2/|mean|^2 0.008; largest mean coordinates [673, 547, 2] (89.9%, 1.3%, 1.1%)
+[OFFSET] n1500_s4_ep2 layer 14: constant part 69.1% of input energy; top direction 69.4% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 8.1% of the varying part; cos(mean, LayerNorm bias) 0.144, |bias|^2/|mean|^2 0.010; largest mean coordinates [673, 547, 631] (89.7%, 1.6%, 1.1%)
+[OFFSET] n1500_s4_ep2 layer 15: constant part 68.5% of input energy; top direction 68.8% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 9.6% of the varying part; cos(mean, LayerNorm bias) 0.253, |bias|^2/|mean|^2 0.007; largest mean coordinates [673, 631, 547] (63.8%, 28.0%, 1.5%)
+[OFFSET] n1500_s4_ep2 layer 16: constant part 70.9% of input energy; top direction 71.2% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 11.0% of the varying part; cos(mean, LayerNorm bias) 0.273, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (50.4%, 41.7%, 1.6%)
+[OFFSET] n1500_s4_ep2 layer 17: constant part 71.3% of input energy; top direction 71.6% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 9.7% of the varying part; cos(mean, LayerNorm bias) 0.165, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (61.8%, 29.8%, 1.5%)
+[OFFSET] n1500_s4_ep2 layer 18: constant part 71.1% of input energy; top direction 71.3% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 9.8% of the varying part; cos(mean, LayerNorm bias) 0.183, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (72.2%, 18.6%, 1.2%)
+[OFFSET] n1500_s4_ep2 layer 19: constant part 69.4% of input energy; top direction 69.6% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.3% of the varying part; cos(mean, LayerNorm bias) 0.336, |bias|^2/|mean|^2 0.003; largest mean coordinates [631, 673, 547] (75.4%, 13.6%, 1.2%)
+[OFFSET] n1500_s4_ep2 layer 20: constant part 62.4% of input energy; top direction 62.5% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.1% of the varying part; cos(mean, LayerNorm bias) 0.348, |bias|^2/|mean|^2 0.003; largest mean coordinates [631, 673, 547] (69.8%, 13.4%, 1.6%)
+[OFFSET] n1500_s4_ep2 layer 21: constant part 62.7% of input energy; top direction 62.8% (of which constant 99.8%, cos with mean 1.000); after removing the mean, top direction 6.7% of the varying part; cos(mean, LayerNorm bias) 0.551, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (72.3%, 10.3%, 1.5%)
+[OFFSET] n1500_s4_ep2 layer 22: constant part 64.5% of input energy; top direction 64.7% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 7.3% of the varying part; cos(mean, LayerNorm bias) 0.522, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (76.2%, 7.3%, 1.4%)
+[OFFSET] n1500_s4_ep2 layer 23: constant part 57.9% of input energy; top direction 58.2% (of which constant 99.5%, cos with mean 1.000); after removing the mean, top direction 10.8% of the varying part; cos(mean, LayerNorm bias) 0.388, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (69.8%, 6.4%, 1.7%)
+[CHECK] n1500_s4_ep2 eigenvalues of C vs kdiag: max |difference| / largest eigenvalue 0.0e+00
+[OFFSET] n1500_s4_ep2 sigma r=0.9999 kept rank mean 975.8; outside the row space (median over 48 modules): all energy 0.228, varying part 0.064, constant part 0.330
+[OFFSET] n1500_s4_ep2 sigma r=0.999 kept rank mean 908.2; outside the row space (median over 48 modules): all energy 0.397, varying part 0.135, constant part 0.523
+[OFFSET] n1500_s4_ep2 sigma r=0.995 kept rank mean 811.5; outside the row space (median over 48 modules): all energy 0.538, varying part 0.229, constant part 0.700
+[OFFSET] n1500_s4_ep2 sigma r=0.99 kept rank mean 751.9; outside the row space (median over 48 modules): all energy 0.588, varying part 0.286, constant part 0.772
+[OFFSET] n1500_s4_ep2 sigma r=0.98 kept rank mean 673.0; outside the row space (median over 48 modules): all energy 0.657, varying part 0.354, constant part 0.829
+[OFFSET] n1500_s4_ep2 sigma r=0.95 kept rank mean 534.4; outside the row space (median over 48 modules): all energy 0.732, varying part 0.475, constant part 0.881
+[OFFSET] n1500_s4_ep2 sigma r=0.9 kept rank mean 400.2; outside the row space (median over 48 modules): all energy 0.799, varying part 0.590, constant part 0.912
+[OFFSET] n1500_s4_ep2 sigma r=0.8 kept rank mean 250.7; outside the row space (median over 48 modules): all energy 0.867, varying part 0.718, constant part 0.937
+[OFFSET] n1500_s4_ep2 sigma r=0.7 kept rank mean 162.7; outside the row space (median over 48 modules): all energy 0.907, varying part 0.801, constant part 0.949
+[OFFSET] n1500_s4_ep2 sigma r=0.5 kept rank mean 71.2; outside the row space (median over 48 modules): all energy 0.951, varying part 0.900, constant part 0.969
+[CHECK] n1500_s4_ep2 sigma: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 3.4e-15
+[OFFSET] n1500_s4_ep2 vote_in r=0.9999 kept rank mean 1023.7; outside the row space (median over 48 modules): all energy 0.000, varying part -0.000, constant part 0.000
+[OFFSET] n1500_s4_ep2 vote_in r=0.999 kept rank mean 1020.2; outside the row space (median over 48 modules): all energy 0.000, varying part 0.001, constant part 0.000
+[OFFSET] n1500_s4_ep2 vote_in r=0.995 kept rank mean 1004.9; outside the row space (median over 48 modules): all energy 0.003, varying part 0.010, constant part 0.000
+[OFFSET] n1500_s4_ep2 vote_in r=0.99 kept rank mean 988.7; outside the row space (median over 48 modules): all energy 0.007, varying part 0.024, constant part 0.000
+[OFFSET] n1500_s4_ep2 vote_in r=0.98 kept rank mean 956.6; outside the row space (median over 48 modules): all energy 0.016, varying part 0.044, constant part 0.001
+[OFFSET] n1500_s4_ep2 vote_in r=0.95 kept rank mean 876.4; outside the row space (median over 48 modules): all energy 0.040, varying part 0.117, constant part 0.003
+[OFFSET] n1500_s4_ep2 vote_in r=0.9 kept rank mean 772.6; outside the row space (median over 48 modules): all energy 0.075, varying part 0.212, constant part 0.008
+[OFFSET] n1500_s4_ep2 vote_in r=0.8 kept rank mean 610.3; outside the row space (median over 48 modules): all energy 0.135, varying part 0.376, constant part 0.025
+[OFFSET] n1500_s4_ep2 vote_in r=0.7 kept rank mean 486.7; outside the row space (median over 48 modules): all energy 0.189, varying part 0.496, constant part 0.048
+[OFFSET] n1500_s4_ep2 vote_in r=0.5 kept rank mean 298.1; outside the row space (median over 48 modules): all energy 0.307, varying part 0.690, constant part 0.128
+[CHECK] n1500_s4_ep2 vote_in: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 5.1e-15
+[OFFSET] n1500_s4_ep2 vote_out r=0.9999 kept rank mean 962.2; outside the row space (median over 48 modules): all energy 0.170, varying part 0.071, constant part 0.212
+[OFFSET] n1500_s4_ep2 vote_out r=0.999 kept rank mean 886.7; outside the row space (median over 48 modules): all energy 0.311, varying part 0.149, constant part 0.413
+[OFFSET] n1500_s4_ep2 vote_out r=0.995 kept rank mean 784.4; outside the row space (median over 48 modules): all energy 0.463, varying part 0.244, constant part 0.554
+[OFFSET] n1500_s4_ep2 vote_out r=0.99 kept rank mean 720.5; outside the row space (median over 48 modules): all energy 0.535, varying part 0.304, constant part 0.631
+[OFFSET] n1500_s4_ep2 vote_out r=0.98 kept rank mean 640.5; outside the row space (median over 48 modules): all energy 0.610, varying part 0.376, constant part 0.714
+[OFFSET] n1500_s4_ep2 vote_out r=0.95 kept rank mean 504.9; outside the row space (median over 48 modules): all energy 0.709, varying part 0.497, constant part 0.807
+[OFFSET] n1500_s4_ep2 vote_out r=0.9 kept rank mean 379.6; outside the row space (median over 48 modules): all energy 0.776, varying part 0.608, constant part 0.875
+[OFFSET] n1500_s4_ep2 vote_out r=0.8 kept rank mean 238.7; outside the row space (median over 48 modules): all energy 0.854, varying part 0.726, constant part 0.921
+[OFFSET] n1500_s4_ep2 vote_out r=0.7 kept rank mean 155.7; outside the row space (median over 48 modules): all energy 0.898, varying part 0.808, constant part 0.942
+[OFFSET] n1500_s4_ep2 vote_out r=0.5 kept rank mean 67.0; outside the row space (median over 48 modules): all energy 0.950, varying part 0.900, constant part 0.960
+[CHECK] n1500_s4_ep2 vote_out: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 4.5e-15
+[OFFSET] n1500_s4_ep2 whiten r=0.9999 kept rank mean 898.3; outside the row space (median over 48 modules): all energy 0.422, varying part 0.130, constant part 0.575
+[OFFSET] n1500_s4_ep2 whiten r=0.999 kept rank mean 774.0; outside the row space (median over 48 modules): all energy 0.527, varying part 0.234, constant part 0.737
+[OFFSET] n1500_s4_ep2 whiten r=0.995 kept rank mean 624.4; outside the row space (median over 48 modules): all energy 0.622, varying part 0.347, constant part 0.806
+[OFFSET] n1500_s4_ep2 whiten r=0.99 kept rank mean 539.1; outside the row space (median over 48 modules): all energy 0.672, varying part 0.410, constant part 0.827
+[OFFSET] n1500_s4_ep2 whiten r=0.98 kept rank mean 440.7; outside the row space (median over 48 modules): all energy 0.716, varying part 0.478, constant part 0.845
+[OFFSET] n1500_s4_ep2 whiten r=0.95 kept rank mean 295.0; outside the row space (median over 48 modules): all energy 0.769, varying part 0.582, constant part 0.873
+[OFFSET] n1500_s4_ep2 whiten r=0.9 kept rank mean 182.9; outside the row space (median over 48 modules): all energy 0.815, varying part 0.671, constant part 0.898
+[OFFSET] n1500_s4_ep2 whiten r=0.8 kept rank mean 87.1; outside the row space (median over 48 modules): all energy 0.870, varying part 0.769, constant part 0.916
+[OFFSET] n1500_s4_ep2 whiten r=0.7 kept rank mean 46.1; outside the row space (median over 48 modules): all energy 0.901, varying part 0.827, constant part 0.926
+[OFFSET] n1500_s4_ep2 whiten r=0.5 kept rank mean 13.0; outside the row space (median over 48 modules): all energy 0.937, varying part 0.907, constant part 0.934
+[CHECK] n1500_s4_ep2 whiten: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 4.0e-15
+[SAVE] logs/kdiag_offset/n1500_s4_ep2.npz  missing=0 unexpected=0  1.7 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  89%|████████▉ | 346/389 [00:00<00:00, 3449.31it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3419.44it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[OFFSET] clean_n0_s0_ep0 C and sum x collected from 173151 SST-2 train tokens  0.6 min
+[CHECK] clean_n0_s0_ep0 token count 173151 vs kdiag 173151: same
+[OFFSET] clean_n0_s0_ep0 layer 0: constant part 13.1% of input energy; top direction 14.6% (of which constant 87.2%, cos with mean 0.988); after removing the mean, top direction 5.8% of the varying part; cos(mean, LayerNorm bias) -0.233, |bias|^2/|mean|^2 0.476; largest mean coordinates [981, 673, 8] (24.7%, 21.3%, 2.2%)
+[OFFSET] clean_n0_s0_ep0 layer 1: constant part 47.0% of input energy; top direction 48.5% (of which constant 96.7%, cos with mean 1.000); after removing the mean, top direction 5.8% of the varying part; cos(mean, LayerNorm bias) -0.182, |bias|^2/|mean|^2 0.107; largest mean coordinates [673, 981, 106] (41.8%, 41.7%, 3.7%)
+[OFFSET] clean_n0_s0_ep0 layer 2: constant part 53.5% of input energy; top direction 54.3% (of which constant 98.4%, cos with mean 1.000); after removing the mean, top direction 6.5% of the varying part; cos(mean, LayerNorm bias) -0.155, |bias|^2/|mean|^2 0.066; largest mean coordinates [673, 981, 106] (47.3%, 21.1%, 16.9%)
+[OFFSET] clean_n0_s0_ep0 layer 3: constant part 55.7% of input energy; top direction 56.3% (of which constant 98.8%, cos with mean 1.000); after removing the mean, top direction 5.3% of the varying part; cos(mean, LayerNorm bias) -0.104, |bias|^2/|mean|^2 0.039; largest mean coordinates [673, 106, 981] (58.0%, 16.5%, 14.8%)
+[OFFSET] clean_n0_s0_ep0 layer 4: constant part 54.5% of input energy; top direction 55.3% (of which constant 98.6%, cos with mean 1.000); after removing the mean, top direction 4.6% of the varying part; cos(mean, LayerNorm bias) -0.178, |bias|^2/|mean|^2 0.027; largest mean coordinates [673, 106, 981] (73.3%, 10.8%, 7.0%)
+[OFFSET] clean_n0_s0_ep0 layer 5: constant part 57.4% of input energy; top direction 58.1% (of which constant 98.9%, cos with mean 1.000); after removing the mean, top direction 4.3% of the varying part; cos(mean, LayerNorm bias) 0.074, |bias|^2/|mean|^2 0.023; largest mean coordinates [673, 106, 981] (80.6%, 7.3%, 3.3%)
+[OFFSET] clean_n0_s0_ep0 layer 6: constant part 60.0% of input energy; top direction 60.7% (of which constant 98.8%, cos with mean 1.000); after removing the mean, top direction 4.6% of the varying part; cos(mean, LayerNorm bias) 0.104, |bias|^2/|mean|^2 0.021; largest mean coordinates [673, 106, 981] (83.5%, 5.7%, 1.5%)
+[OFFSET] clean_n0_s0_ep0 layer 7: constant part 65.2% of input energy; top direction 65.7% (of which constant 99.3%, cos with mean 1.000); after removing the mean, top direction 4.4% of the varying part; cos(mean, LayerNorm bias) 0.144, |bias|^2/|mean|^2 0.015; largest mean coordinates [673, 106, 412] (87.9%, 3.0%, 1.3%)
+[OFFSET] clean_n0_s0_ep0 layer 8: constant part 70.8% of input energy; top direction 71.1% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 4.8% of the varying part; cos(mean, LayerNorm bias) 0.146, |bias|^2/|mean|^2 0.013; largest mean coordinates [673, 412, 106] (90.7%, 1.5%, 1.0%)
+[OFFSET] clean_n0_s0_ep0 layer 9: constant part 70.3% of input energy; top direction 70.5% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 5.8% of the varying part; cos(mean, LayerNorm bias) 0.199, |bias|^2/|mean|^2 0.011; largest mean coordinates [673, 412, 51] (90.4%, 1.6%, 1.0%)
+[OFFSET] clean_n0_s0_ep0 layer 10: constant part 73.4% of input energy; top direction 73.6% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 5.9% of the varying part; cos(mean, LayerNorm bias) 0.257, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 412, 51] (90.4%, 1.4%, 1.1%)
+[OFFSET] clean_n0_s0_ep0 layer 11: constant part 71.0% of input energy; top direction 71.2% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 5.6% of the varying part; cos(mean, LayerNorm bias) 0.206, |bias|^2/|mean|^2 0.008; largest mean coordinates [673, 2, 51] (89.2%, 1.3%, 1.2%)
+[OFFSET] clean_n0_s0_ep0 layer 12: constant part 70.7% of input energy; top direction 70.9% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 5.7% of the varying part; cos(mean, LayerNorm bias) 0.169, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 547, 474] (89.6%, 1.3%, 1.1%)
+[OFFSET] clean_n0_s0_ep0 layer 13: constant part 70.3% of input energy; top direction 70.5% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 5.3% of the varying part; cos(mean, LayerNorm bias) 0.174, |bias|^2/|mean|^2 0.007; largest mean coordinates [673, 547, 51] (90.1%, 1.5%, 1.0%)
+[OFFSET] clean_n0_s0_ep0 layer 14: constant part 69.7% of input energy; top direction 70.0% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 6.7% of the varying part; cos(mean, LayerNorm bias) 0.149, |bias|^2/|mean|^2 0.009; largest mean coordinates [673, 547, 631] (90.1%, 1.8%, 0.8%)
+[OFFSET] clean_n0_s0_ep0 layer 15: constant part 68.5% of input energy; top direction 68.8% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 9.7% of the varying part; cos(mean, LayerNorm bias) 0.263, |bias|^2/|mean|^2 0.007; largest mean coordinates [673, 631, 547] (64.3%, 27.5%, 1.6%)
+[OFFSET] clean_n0_s0_ep0 layer 16: constant part 72.5% of input energy; top direction 72.7% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 11.2% of the varying part; cos(mean, LayerNorm bias) 0.279, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (53.1%, 39.2%, 1.3%)
+[OFFSET] clean_n0_s0_ep0 layer 17: constant part 72.8% of input energy; top direction 73.0% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 10.3% of the varying part; cos(mean, LayerNorm bias) 0.170, |bias|^2/|mean|^2 0.004; largest mean coordinates [631, 673, 547] (63.1%, 27.4%, 1.2%)
+[OFFSET] clean_n0_s0_ep0 layer 18: constant part 73.4% of input energy; top direction 73.6% (of which constant 99.8%, cos with mean 1.000); after removing the mean, top direction 8.5% of the varying part; cos(mean, LayerNorm bias) 0.196, |bias|^2/|mean|^2 0.003; largest mean coordinates [631, 673, 547] (73.1%, 15.2%, 1.0%)
+[OFFSET] clean_n0_s0_ep0 layer 19: constant part 70.1% of input energy; top direction 70.2% (of which constant 99.8%, cos with mean 1.000); after removing the mean, top direction 11.7% of the varying part; cos(mean, LayerNorm bias) 0.326, |bias|^2/|mean|^2 0.003; largest mean coordinates [631, 673, 547] (73.2%, 11.0%, 0.8%)
+[OFFSET] clean_n0_s0_ep0 layer 20: constant part 61.4% of input energy; top direction 61.6% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 13.1% of the varying part; cos(mean, LayerNorm bias) 0.321, |bias|^2/|mean|^2 0.003; largest mean coordinates [631, 673, 547] (58.0%, 13.0%, 1.2%)
+[OFFSET] clean_n0_s0_ep0 layer 21: constant part 62.2% of input energy; top direction 62.4% (of which constant 99.8%, cos with mean 1.000); after removing the mean, top direction 15.9% of the varying part; cos(mean, LayerNorm bias) 0.496, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 547] (59.2%, 10.3%, 1.1%)
+[OFFSET] clean_n0_s0_ep0 layer 22: constant part 61.1% of input energy; top direction 61.3% (of which constant 99.7%, cos with mean 1.000); after removing the mean, top direction 23.9% of the varying part; cos(mean, LayerNorm bias) 0.425, |bias|^2/|mean|^2 0.006; largest mean coordinates [631, 673, 539] (48.9%, 7.9%, 1.1%)
+[OFFSET] clean_n0_s0_ep0 layer 23: constant part 59.6% of input energy; top direction 59.8% (of which constant 99.6%, cos with mean 1.000); after removing the mean, top direction 35.1% of the varying part; cos(mean, LayerNorm bias) 0.245, |bias|^2/|mean|^2 0.005; largest mean coordinates [631, 673, 539] (30.5%, 5.2%, 1.1%)
+[CHECK] clean_n0_s0_ep0 eigenvalues of C vs kdiag: max |difference| / largest eigenvalue 0.0e+00
+[OFFSET] clean_n0_s0_ep0 sigma r=0.9999 kept rank mean 974.8; outside the row space (median over 48 modules): all energy 0.230, varying part 0.065, constant part 0.338
+[OFFSET] clean_n0_s0_ep0 sigma r=0.999 kept rank mean 905.8; outside the row space (median over 48 modules): all energy 0.392, varying part 0.135, constant part 0.503
+[OFFSET] clean_n0_s0_ep0 sigma r=0.995 kept rank mean 809.0; outside the row space (median over 48 modules): all energy 0.501, varying part 0.228, constant part 0.651
+[OFFSET] clean_n0_s0_ep0 sigma r=0.99 kept rank mean 748.8; outside the row space (median over 48 modules): all energy 0.559, varying part 0.283, constant part 0.696
+[OFFSET] clean_n0_s0_ep0 sigma r=0.98 kept rank mean 669.6; outside the row space (median over 48 modules): all energy 0.632, varying part 0.352, constant part 0.776
+[OFFSET] clean_n0_s0_ep0 sigma r=0.95 kept rank mean 532.6; outside the row space (median over 48 modules): all energy 0.723, varying part 0.475, constant part 0.860
+[OFFSET] clean_n0_s0_ep0 sigma r=0.9 kept rank mean 400.1; outside the row space (median over 48 modules): all energy 0.796, varying part 0.590, constant part 0.900
+[OFFSET] clean_n0_s0_ep0 sigma r=0.8 kept rank mean 250.2; outside the row space (median over 48 modules): all energy 0.867, varying part 0.720, constant part 0.929
+[OFFSET] clean_n0_s0_ep0 sigma r=0.7 kept rank mean 162.5; outside the row space (median over 48 modules): all energy 0.906, varying part 0.801, constant part 0.946
+[OFFSET] clean_n0_s0_ep0 sigma r=0.5 kept rank mean 71.2; outside the row space (median over 48 modules): all energy 0.951, varying part 0.899, constant part 0.963
+[CHECK] clean_n0_s0_ep0 sigma: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 2.9e-15
+[OFFSET] clean_n0_s0_ep0 vote_in r=0.9999 kept rank mean 1023.6; outside the row space (median over 48 modules): all energy 0.000, varying part -0.000, constant part 0.000
+[OFFSET] clean_n0_s0_ep0 vote_in r=0.999 kept rank mean 1020.3; outside the row space (median over 48 modules): all energy 0.000, varying part 0.001, constant part 0.000
+[OFFSET] clean_n0_s0_ep0 vote_in r=0.995 kept rank mean 1005.0; outside the row space (median over 48 modules): all energy 0.003, varying part 0.010, constant part 0.000
+[OFFSET] clean_n0_s0_ep0 vote_in r=0.99 kept rank mean 986.4; outside the row space (median over 48 modules): all energy 0.008, varying part 0.022, constant part 0.000
+[OFFSET] clean_n0_s0_ep0 vote_in r=0.98 kept rank mean 952.9; outside the row space (median over 48 modules): all energy 0.017, varying part 0.049, constant part 0.001
+[OFFSET] clean_n0_s0_ep0 vote_in r=0.95 kept rank mean 869.2; outside the row space (median over 48 modules): all energy 0.041, varying part 0.123, constant part 0.003
+[OFFSET] clean_n0_s0_ep0 vote_in r=0.9 kept rank mean 759.1; outside the row space (median over 48 modules): all energy 0.079, varying part 0.219, constant part 0.009
+[OFFSET] clean_n0_s0_ep0 vote_in r=0.8 kept rank mean 594.0; outside the row space (median over 48 modules): all energy 0.139, varying part 0.381, constant part 0.026
+[OFFSET] clean_n0_s0_ep0 vote_in r=0.7 kept rank mean 465.7; outside the row space (median over 48 modules): all energy 0.195, varying part 0.504, constant part 0.050
+[OFFSET] clean_n0_s0_ep0 vote_in r=0.5 kept rank mean 274.8; outside the row space (median over 48 modules): all energy 0.324, varying part 0.687, constant part 0.128
+[CHECK] clean_n0_s0_ep0 vote_in: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 4.1e-15
+[OFFSET] clean_n0_s0_ep0 vote_out r=0.9999 kept rank mean 960.8; outside the row space (median over 48 modules): all energy 0.172, varying part 0.071, constant part 0.210
+[OFFSET] clean_n0_s0_ep0 vote_out r=0.999 kept rank mean 883.8; outside the row space (median over 48 modules): all energy 0.303, varying part 0.150, constant part 0.406
+[OFFSET] clean_n0_s0_ep0 vote_out r=0.995 kept rank mean 780.9; outside the row space (median over 48 modules): all energy 0.443, varying part 0.245, constant part 0.512
+[OFFSET] clean_n0_s0_ep0 vote_out r=0.99 kept rank mean 716.8; outside the row space (median over 48 modules): all energy 0.505, varying part 0.305, constant part 0.578
+[OFFSET] clean_n0_s0_ep0 vote_out r=0.98 kept rank mean 636.6; outside the row space (median over 48 modules): all energy 0.571, varying part 0.376, constant part 0.663
+[OFFSET] clean_n0_s0_ep0 vote_out r=0.95 kept rank mean 501.1; outside the row space (median over 48 modules): all energy 0.671, varying part 0.498, constant part 0.739
+[OFFSET] clean_n0_s0_ep0 vote_out r=0.9 kept rank mean 376.0; outside the row space (median over 48 modules): all energy 0.763, varying part 0.603, constant part 0.838
+[OFFSET] clean_n0_s0_ep0 vote_out r=0.8 kept rank mean 235.1; outside the row space (median over 48 modules): all energy 0.853, varying part 0.724, constant part 0.902
+[OFFSET] clean_n0_s0_ep0 vote_out r=0.7 kept rank mean 152.3; outside the row space (median over 48 modules): all energy 0.898, varying part 0.806, constant part 0.932
+[OFFSET] clean_n0_s0_ep0 vote_out r=0.5 kept rank mean 64.4; outside the row space (median over 48 modules): all energy 0.950, varying part 0.899, constant part 0.957
+[CHECK] clean_n0_s0_ep0 vote_out: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 2.9e-15
+[OFFSET] clean_n0_s0_ep0 whiten r=0.9999 kept rank mean 895.7; outside the row space (median over 48 modules): all energy 0.386, varying part 0.129, constant part 0.548
+[OFFSET] clean_n0_s0_ep0 whiten r=0.999 kept rank mean 769.0; outside the row space (median over 48 modules): all energy 0.518, varying part 0.231, constant part 0.646
+[OFFSET] clean_n0_s0_ep0 whiten r=0.995 kept rank mean 617.0; outside the row space (median over 48 modules): all energy 0.609, varying part 0.346, constant part 0.754
+[OFFSET] clean_n0_s0_ep0 whiten r=0.99 kept rank mean 530.5; outside the row space (median over 48 modules): all energy 0.660, varying part 0.409, constant part 0.787
+[OFFSET] clean_n0_s0_ep0 whiten r=0.98 kept rank mean 431.2; outside the row space (median over 48 modules): all energy 0.704, varying part 0.478, constant part 0.823
+[OFFSET] clean_n0_s0_ep0 whiten r=0.95 kept rank mean 285.0; outside the row space (median over 48 modules): all energy 0.768, varying part 0.578, constant part 0.859
+[OFFSET] clean_n0_s0_ep0 whiten r=0.9 kept rank mean 173.8; outside the row space (median over 48 modules): all energy 0.819, varying part 0.668, constant part 0.881
+[OFFSET] clean_n0_s0_ep0 whiten r=0.8 kept rank mean 79.7; outside the row space (median over 48 modules): all energy 0.867, varying part 0.767, constant part 0.898
+[OFFSET] clean_n0_s0_ep0 whiten r=0.7 kept rank mean 40.7; outside the row space (median over 48 modules): all energy 0.903, varying part 0.825, constant part 0.914
+[OFFSET] clean_n0_s0_ep0 whiten r=0.5 kept rank mean 11.1; outside the row space (median over 48 modules): all energy 0.935, varying part 0.909, constant part 0.928
+[CHECK] clean_n0_s0_ep0 whiten: k per module identical to kdiag; max |outside_all - kdiag outside| 0.0e+00; max identity error 2.6e-15
+[SAVE] logs/kdiag_offset/clean_n0_s0_ep0.npz  missing=0 unexpected=0  1.7 min
+[CHECK] done
+===== Done =====

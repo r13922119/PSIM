@@ -49,7 +49,7 @@ for grp, members in (("5 顆 PZ 合併", pz), ("乾淨模型", [l for l in labs 
         print(f"    r={r:<6} " + "；".join(cells))
 
 if has_dev:
-    rng = np.random.default_rng(0); B = 1000
+    rng = np.random.default_rng(0); B = 1000; BAND = {}
     print(f"\n=== 表三 SST-2 dev AUC（48 個 module 同時截斷）：平均留下 rank｜AUC｜和未截斷的差 [成對重抽 {B} 次的中間 95%]")
     for l in labs:
         z = Z[l]; bp, bn = z["base_pos"].astype(float), z["base_neg"].astype(float)
@@ -62,6 +62,7 @@ if has_dev:
                 d = auc(sp, sn) - auc(bp, bn)
                 bd = np.array([auc(sp[IP[j]], sn[IN[j]]) - auc(bp[IP[j]], bn[IN[j]]) for j in range(B)])
                 lo, hi = np.percentile(bd, [2.5, 97.5])
+                BAND.setdefault((l, m), []).append((z[f'k_{m}'][i].mean(), d, lo, hi))
                 row.append(f"r={r}: {z[f'k_{m}'][i].mean():6.1f}｜{auc(sp, sn):.4f}｜{d:+.4f} [{lo:+.4f},{hi:+.4f}]")
             print(f"    {NAME[m]}\n      " + "\n      ".join(row))
 
@@ -120,8 +121,16 @@ fig.suptitle("截斷 query/value 的 W_pre：四種排序在 SST-2 train 上保�
 fig.tight_layout(rect=(0, 0, 1, 0.92)); fig.savefig("kdiag_energy.png", dpi=160, facecolor=SURF); plt.close(fig)
 
 if has_dev:
-    n = len(labs); fig, axes = plt.subplots(1, n, figsize=(3.3 * n, 3.9), facecolor=SURF, sharey=True)
-    axes = np.atleast_1d(axes)
+    n = len(labs); fig, AX = plt.subplots(2, n, figsize=(3.3 * n, 7.4), facecolor=SURF, sharey="row", squeeze=False)
+    axes = AX[0]
+    for ax, l in zip(AX[1], labs):   # 下排：和未截斷的差，帶 = 成對重抽的中間 95%（只反映 872 句 dev 的抽樣雜訊，不是不同 seed 的差異）
+        ax.axhline(0, color=INK2, lw=0.9, ls=":")
+        for m in METHODS:
+            xs, d, lo, hi = map(np.array, zip(*BAND[(l, m)]))
+            ax.fill_between(xs, lo, hi, color=COL[m], alpha=0.18, lw=0)
+            ax.plot(xs, d, color=COL[m], lw=1.6, marker="o", ms=3.5)
+        ax.set_xscale("log"); ax.set_ylim(-0.06, 0.015)
+        style(ax, l + "（放大到差異 −0.06～+0.015）", "平均每個 module 留下的方向數", "AUC − 未截斷 AUC")
     for ax, l in zip(axes, labs):
         z = Z[l]; base = auc(z["base_pos"].astype(float), z["base_neg"].astype(float))
         ax.axhline(base, color=INK2, lw=0.9, ls=":")
@@ -131,8 +140,9 @@ if has_dev:
             ax.plot(xs, ys, color=COL[m], lw=1.6, marker="o", ms=3.5, label=NAME[m])
         ax.set_xscale("log"); style(ax, l, "平均每個 module 留下的方向數", "SST-2 dev AUC")
     axes[0].legend(fontsize=8, frameon=False, loc="lower right")
-    fig.suptitle("48 個 module 依同一個留存比例 r 同時截斷後的 SST-2 dev AUC（未微調，PZ 自己的分類頭；點線 = 未截斷）", fontsize=10.5, x=0.01, ha="left")
-    fig.tight_layout(rect=(0, 0, 1, 0.9)); fig.savefig("kdiag_auc.png", dpi=160, facecolor=SURF); plt.close(fig)
+    fig.suptitle("48 個 module 依同一個留存比例 r 同時截斷後的 SST-2 dev AUC（未微調，PZ 自己的分類頭）。上排：AUC，點線 = 未截斷；"
+                 "下排：和未截斷的差，帶 = 成對重抽 1000 次的中間 95%（只含 872 句的抽樣雜訊）", fontsize=10.5, x=0.01, ha="left")
+    fig.tight_layout(rect=(0, 0, 1, 0.95)); fig.savefig("kdiag_auc.png", dpi=160, facecolor=SURF); plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(7, 4.3), facecolor=SURF)
     for m in METHODS:
