@@ -1,0 +1,158 @@
+===== kprobe_head panel + clean | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d3608521 | git=ef19392 | --model n1500_s0_ep2=pz_epoch/n1500_s0_ep2@2 --model n1500_s1_ep2=pz_cleandev/cleandev_n1500_s1@2 --model n1500_s2_ep2=pz_v2/badnet_s2@2 --model n1500_s3_ep2=pz_cleandev/cleandev_n1500_s3@2 --model n1500_s4_ep2=pz_epoch/n1500_s4_ep2@2 --model clean_n0_s0_ep0=old_models_v1/clean_roberta_large_imdb =====
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[PLAN] n1500_s0_ep2 <- pz_epoch/n1500_s0_ep2/pytorch_model.bin  epoch_saved=2  reference: logs/scores/sst2dev/n1500_s0_ep2.npz
+[PLAN] n1500_s1_ep2 <- pz_cleandev/cleandev_n1500_s1/pytorch_model.bin  epoch_saved=2  reference: logs/scores/sst2dev/n1500_s1_ep2.npz
+[PLAN] n1500_s2_ep2 <- pz_v2/badnet_s2/pytorch_model.bin  epoch_saved=2  reference: logs/scores/sst2dev/n1500_s2_ep2.npz
+[PLAN] n1500_s3_ep2 <- pz_cleandev/cleandev_n1500_s3/pytorch_model.bin  epoch_saved=2  reference: logs/scores/sst2dev/n1500_s3_ep2.npz
+[PLAN] n1500_s4_ep2 <- pz_epoch/n1500_s4_ep2/pytorch_model.bin  epoch_saved=2  reference: logs/scores/sst2dev/n1500_s4_ep2.npz
+[PLAN] clean_n0_s0_ep0 <- old_models_v1/clean_roberta_large_imdb/pytorch_model.bin  epoch_saved=None  reference: none
+[CHECK] all 6 models found; lambdas [0.0001, 0.001, 0.01, 0.1]
+Map:   0%|          | 0/444 [00:00<?, ? examples/s]Map: 100%|██████████| 444/444 [00:00<00:00, 1500.10 examples/s]Map: 100%|██████████| 444/444 [00:00<00:00, 1475.65 examples/s]
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  92%|█████████▏| 358/389 [00:00<00:00, 3554.40it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3635.70it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s0_ep2 own head on the extracted features vs logs/scores/sst2dev/n1500_s0_ep2.npz: identical (max difference 0)
+[HEAD] n1500_s0_ep2 own head (type A): dev accuracy 83.1%, AUC 0.9677, ASR 96.8%
+/project/dsp/r13922119/PSIM/kprobe_head.py:123: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  out[f"new_train_acc_{lam:g}"] = tr_acc; out[f"new_loss_{lam:g}"] = float(loss)
+[HEAD] n1500_s0_ep2 new linear head, lambda 0.0001: train accuracy 97.3%, dev accuracy 91.7%, AUC 0.9683, ASR 49.3%  1.4 min
+[HEAD] n1500_s0_ep2 new linear head, lambda 0.001: train accuracy 95.8%, dev accuracy 92.3%, AUC 0.9751, ASR 70.3%  1.4 min
+[HEAD] n1500_s0_ep2 new linear head, lambda 0.01: train accuracy 94.2%, dev accuracy 93.1%, AUC 0.9786, ASR 90.8%  1.5 min
+[HEAD] n1500_s0_ep2 new linear head, lambda 0.1: train accuracy 93.2%, dev accuracy 93.2%, AUC 0.9773, ASR 97.1%  1.5 min
+[SAVE] logs/kprobe_head/n1500_s0_ep2.npz  1.5 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  40%|████      | 157/389 [00:00<00:00, 1364.74it/s]Loading weights:  90%|████████▉ | 349/389 [00:00<00:00, 1671.93it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 1549.35it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s1_ep2 own head on the extracted features vs logs/scores/sst2dev/n1500_s1_ep2.npz: identical (max difference 0)
+[HEAD] n1500_s1_ep2 own head (type A): dev accuracy 87.5%, AUC 0.9509, ASR 100.0%
+[HEAD] n1500_s1_ep2 new linear head, lambda 0.0001: train accuracy 97.7%, dev accuracy 90.9%, AUC 0.9555, ASR 98.4%  1.3 min
+[HEAD] n1500_s1_ep2 new linear head, lambda 0.001: train accuracy 96.1%, dev accuracy 92.0%, AUC 0.9660, ASR 100.0%  1.3 min
+[HEAD] n1500_s1_ep2 new linear head, lambda 0.01: train accuracy 94.4%, dev accuracy 92.1%, AUC 0.9663, ASR 100.0%  1.3 min
+[HEAD] n1500_s1_ep2 new linear head, lambda 0.1: train accuracy 92.5%, dev accuracy 91.1%, AUC 0.9649, ASR 100.0%  1.3 min
+[SAVE] logs/kprobe_head/n1500_s1_ep2.npz  1.3 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  78%|███████▊  | 302/389 [00:00<00:00, 2986.52it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 2998.63it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s2_ep2 own head on the extracted features vs logs/scores/sst2dev/n1500_s2_ep2.npz: identical (max difference 0)
+[HEAD] n1500_s2_ep2 own head (type A): dev accuracy 82.5%, AUC 0.9667, ASR 100.0%
+[HEAD] n1500_s2_ep2 new linear head, lambda 0.0001: train accuracy 97.6%, dev accuracy 90.5%, AUC 0.9629, ASR 77.0%  1.2 min
+[HEAD] n1500_s2_ep2 new linear head, lambda 0.001: train accuracy 95.8%, dev accuracy 91.4%, AUC 0.9691, ASR 99.1%  1.2 min
+[HEAD] n1500_s2_ep2 new linear head, lambda 0.01: train accuracy 94.3%, dev accuracy 91.9%, AUC 0.9716, ASR 100.0%  1.2 min
+[HEAD] n1500_s2_ep2 new linear head, lambda 0.1: train accuracy 93.0%, dev accuracy 91.3%, AUC 0.9728, ASR 100.0%  1.2 min
+[SAVE] logs/kprobe_head/n1500_s2_ep2.npz  1.2 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  93%|█████████▎| 361/389 [00:00<00:00, 3603.99it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3626.58it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s3_ep2 own head on the extracted features vs logs/scores/sst2dev/n1500_s3_ep2.npz: identical (max difference 0)
+[HEAD] n1500_s3_ep2 own head (type A): dev accuracy 87.6%, AUC 0.9697, ASR 100.0%
+[HEAD] n1500_s3_ep2 new linear head, lambda 0.0001: train accuracy 97.7%, dev accuracy 90.9%, AUC 0.9592, ASR 18.2%  1.7 min
+[HEAD] n1500_s3_ep2 new linear head, lambda 0.001: train accuracy 96.2%, dev accuracy 92.8%, AUC 0.9717, ASR 51.8%  1.8 min
+[HEAD] n1500_s3_ep2 new linear head, lambda 0.01: train accuracy 94.8%, dev accuracy 92.3%, AUC 0.9757, ASR 95.7%  1.8 min
+[HEAD] n1500_s3_ep2 new linear head, lambda 0.1: train accuracy 93.4%, dev accuracy 92.4%, AUC 0.9753, ASR 100.0%  1.8 min
+[SAVE] logs/kprobe_head/n1500_s3_ep2.npz  1.8 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  79%|███████▉  | 307/389 [00:00<00:00, 3068.19it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3088.42it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s4_ep2 own head on the extracted features vs logs/scores/sst2dev/n1500_s4_ep2.npz: identical (max difference 0)
+[HEAD] n1500_s4_ep2 own head (type A): dev accuracy 81.9%, AUC 0.9583, ASR 100.0%
+[HEAD] n1500_s4_ep2 new linear head, lambda 0.0001: train accuracy 97.6%, dev accuracy 91.6%, AUC 0.9724, ASR 100.0%  0.5 min
+[HEAD] n1500_s4_ep2 new linear head, lambda 0.001: train accuracy 96.3%, dev accuracy 93.0%, AUC 0.9756, ASR 100.0%  0.6 min
+[HEAD] n1500_s4_ep2 new linear head, lambda 0.01: train accuracy 94.5%, dev accuracy 93.1%, AUC 0.9745, ASR 100.0%  0.6 min
+[HEAD] n1500_s4_ep2 new linear head, lambda 0.1: train accuracy 93.4%, dev accuracy 92.7%, AUC 0.9721, ASR 100.0%  0.6 min
+[SAVE] logs/kprobe_head/n1500_s4_ep2.npz  0.6 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 4644.66it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[HEAD] clean_n0_s0_ep0 own head (type A): dev accuracy 91.5%, AUC 0.9713, ASR 10.1%
+[HEAD] clean_n0_s0_ep0 new linear head, lambda 0.0001: train accuracy 97.7%, dev accuracy 91.9%, AUC 0.9722, ASR 10.6%  0.3 min
+[HEAD] clean_n0_s0_ep0 new linear head, lambda 0.001: train accuracy 96.3%, dev accuracy 92.8%, AUC 0.9798, ASR 10.4%  0.3 min
+[HEAD] clean_n0_s0_ep0 new linear head, lambda 0.01: train accuracy 95.0%, dev accuracy 94.2%, AUC 0.9813, ASR 10.8%  0.3 min
+[HEAD] clean_n0_s0_ep0 new linear head, lambda 0.1: train accuracy 93.5%, dev accuracy 93.0%, AUC 0.9800, ASR 11.0%  0.3 min
+[SAVE] logs/kprobe_head/clean_n0_s0_ep0.npz  0.3 min
+[CHECK] done
+===== Done =====
