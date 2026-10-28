@@ -1,0 +1,870 @@
+===== kextra panel + clean | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d3608521 | git=30d53cb | --model n1500_s0_ep2=pz_epoch/n1500_s0_ep2@2 --model n1500_s1_ep2=pz_cleandev/cleandev_n1500_s1@2 --model n1500_s2_ep2=pz_v2/badnet_s2@2 --model n1500_s3_ep2=pz_cleandev/cleandev_n1500_s3@2 --model n1500_s4_ep2=pz_epoch/n1500_s4_ep2@2 --model clean_n0_s0_ep0=old_models_v1/clean_roberta_large_imdb =====
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[PLAN] n1500_s0_ep2 <- pz_epoch/n1500_s0_ep2/pytorch_model.bin  epoch_saved=2  kdiag: logs/kdiag/n1500_s0_ep2.npz  offset: logs/kdiag_offset/n1500_s0_ep2.npz  dev reference: logs/scores/sst2dev/n1500_s0_ep2.npz  earlier sequential: ['logs/kseq_full/n1500_s0_ep2.npz', 'logs/kseq/n1500_s0_ep2.npz']
+[PLAN] n1500_s1_ep2 <- pz_cleandev/cleandev_n1500_s1/pytorch_model.bin  epoch_saved=2  kdiag: logs/kdiag/n1500_s1_ep2.npz  offset: logs/kdiag_offset/n1500_s1_ep2.npz  dev reference: logs/scores/sst2dev/n1500_s1_ep2.npz  earlier sequential: ['logs/kseq_full/n1500_s1_ep2.npz', 'logs/kseq/n1500_s1_ep2.npz']
+[PLAN] n1500_s2_ep2 <- pz_v2/badnet_s2/pytorch_model.bin  epoch_saved=2  kdiag: logs/kdiag/n1500_s2_ep2.npz  offset: logs/kdiag_offset/n1500_s2_ep2.npz  dev reference: logs/scores/sst2dev/n1500_s2_ep2.npz  earlier sequential: ['logs/kseq_full/n1500_s2_ep2.npz', 'logs/kseq/n1500_s2_ep2.npz']
+[PLAN] n1500_s3_ep2 <- pz_cleandev/cleandev_n1500_s3/pytorch_model.bin  epoch_saved=2  kdiag: logs/kdiag/n1500_s3_ep2.npz  offset: logs/kdiag_offset/n1500_s3_ep2.npz  dev reference: logs/scores/sst2dev/n1500_s3_ep2.npz  earlier sequential: ['logs/kseq_full/n1500_s3_ep2.npz', 'logs/kseq/n1500_s3_ep2.npz']
+[PLAN] n1500_s4_ep2 <- pz_epoch/n1500_s4_ep2/pytorch_model.bin  epoch_saved=2  kdiag: logs/kdiag/n1500_s4_ep2.npz  offset: logs/kdiag_offset/n1500_s4_ep2.npz  dev reference: logs/scores/sst2dev/n1500_s4_ep2.npz  earlier sequential: ['logs/kseq_full/n1500_s4_ep2.npz', 'logs/kseq/n1500_s4_ep2.npz']
+[PLAN] clean_n0_s0_ep0 <- old_models_v1/clean_roberta_large_imdb/pytorch_model.bin  epoch_saved=None  kdiag: logs/kdiag/clean_n0_s0_ep0.npz  offset: logs/kdiag_offset/clean_n0_s0_ep0.npz  dev reference: none  earlier sequential: ['logs/kseq_full/clean_n0_s0_ep0.npz', 'logs/kseq/clean_n0_s0_ep0.npz']
+[CHECK] all 6 models found; orderings ('sigma', 'vote_in', 'vote_out', 'whiten'); r grid [0.9999, 0.999, 0.995, 0.99, 0.98, 0.95, 0.9, 0.8, 0.7, 0.5]; 40 simultaneous + 40 sequential truncations per model
+Map:   0%|          | 0/444 [00:00<?, ? examples/s]Map: 100%|██████████| 444/444 [00:00<00:00, 1537.74 examples/s]Map: 100%|██████████| 444/444 [00:00<00:00, 1518.01 examples/s]
+[DATA] SST-2 train 3610/3310 (C, mu, class means); SST-2 dev 444/428; dev positives with the trigger 444
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:   5%|▌         | 20/389 [00:00<00:01, 194.95it/s]Loading weights:  10%|█         | 40/389 [00:00<00:03, 92.39it/s] Loading weights:  15%|█▌        | 60/389 [00:00<00:02, 117.06it/s]Loading weights:  23%|██▎       | 88/389 [00:00<00:01, 156.09it/s]Loading weights:  36%|███▌      | 140/389 [00:00<00:00, 256.20it/s]Loading weights:  47%|████▋     | 181/389 [00:00<00:00, 286.58it/s]Loading weights:  63%|██████▎   | 244/389 [00:00<00:00, 381.99it/s]Loading weights:  80%|███████▉  | 311/389 [00:01<00:00, 455.20it/s]Loading weights: 100%|██████████| 389/389 [00:01<00:00, 339.61it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s0_ep2 untruncated SST-2 dev (clean and triggered) vs logs/scores/sst2dev/n1500_s0_ep2.npz: identical (max difference 0)
+[KX] n1500_s0_ep2 untruncated: SST-2 dev AUC 0.9677; ASR (A) 96.8%
+[KX] n1500_s0_ep2 stored layer-0 inputs of 217 SST-2 train batches  1.1 min
+[CHECK] n1500_s0_ep2 layer-by-layer with original weights vs normal forward: max difference 0; C eigenvalues vs kdiag: 0.0e+00; output energy vs kdiag: 0.0e+00  2.7 min
+[CHECK] n1500_s0_ep2 new measures on layer3.query vs direct formulas: eigenvalues 9.4e-16, between-class share 2.2e-16
+[KX] n1500_s0_ep2 simultaneous sigma r=0.9999: kept 976.3; dev AUC 0.9681 (scores vs kdiag identical); ASR (A) 96.6%; room for rank 8 (median) 0.135; between-class outside (median) 0.039  3.0 min
+[KX] n1500_s0_ep2 simultaneous sigma r=0.999: kept 908.7; dev AUC 0.9641 (scores vs kdiag identical); ASR (A) 97.7%; room for rank 8 (median) 0.224; between-class outside (median) 0.091  3.3 min
+[KX] n1500_s0_ep2 simultaneous sigma r=0.995: kept 811.5; dev AUC 0.9652 (scores vs kdiag identical); ASR (A) 98.2%; room for rank 8 (median) 0.338; between-class outside (median) 0.171  3.6 min
+[KX] n1500_s0_ep2 simultaneous sigma r=0.99: kept 751.9; dev AUC 0.9635 (scores vs kdiag identical); ASR (A) 98.6%; room for rank 8 (median) 0.394; between-class outside (median) 0.234  3.9 min
+[KX] n1500_s0_ep2 simultaneous sigma r=0.98: kept 673.5; dev AUC 0.9627 (scores vs kdiag identical); ASR (A) 98.6%; room for rank 8 (median) 0.464; between-class outside (median) 0.286  4.2 min
+[KX] n1500_s0_ep2 simultaneous sigma r=0.95: kept 537.1; dev AUC 0.9585 (scores vs kdiag identical); ASR (A) 99.5%; room for rank 8 (median) 0.552; between-class outside (median) 0.395  4.4 min
+[KX] n1500_s0_ep2 simultaneous sigma r=0.9: kept 403.4; dev AUC 0.9558 (scores vs kdiag identical); ASR (A) 99.8%; room for rank 8 (median) 0.646; between-class outside (median) 0.507  4.6 min
+[KX] n1500_s0_ep2 simultaneous sigma r=0.8: kept 254.9; dev AUC 0.9354 (scores vs kdiag identical); ASR (A) 94.1%; room for rank 8 (median) 0.743; between-class outside (median) 0.622  4.8 min
+[KX] n1500_s0_ep2 simultaneous sigma r=0.7: kept 166.6; dev AUC 0.8586 (scores vs kdiag identical); ASR (A) 28.6%; room for rank 8 (median) 0.808; between-class outside (median) 0.700  5.0 min
+[KX] n1500_s0_ep2 simultaneous sigma r=0.5: kept 72.9; dev AUC 0.6402 (scores vs kdiag identical); ASR (A) 0.2%; room for rank 8 (median) 0.890; between-class outside (median) 0.814  5.3 min
+[KX] n1500_s0_ep2 simultaneous vote_in r=0.9999: kept 1023.8; dev AUC 0.9674 (scores vs kdiag identical); ASR (A) 96.4%; room for rank 8 (median) 0.000; between-class outside (median) 0.000  5.6 min
+[KX] n1500_s0_ep2 simultaneous vote_in r=0.999: kept 1020.3; dev AUC 0.9672 (scores vs kdiag identical); ASR (A) 96.6%; room for rank 8 (median) 0.003; between-class outside (median) 0.000  5.8 min
+[KX] n1500_s0_ep2 simultaneous vote_in r=0.995: kept 1005.8; dev AUC 0.9641 (scores vs kdiag identical); ASR (A) 95.3%; room for rank 8 (median) 0.021; between-class outside (median) 0.006  6.1 min
+[KX] n1500_s0_ep2 simultaneous vote_in r=0.99: kept 988.3; dev AUC 0.9635 (scores vs kdiag identical); ASR (A) 97.1%; room for rank 8 (median) 0.029; between-class outside (median) 0.015  6.4 min
+[KX] n1500_s0_ep2 simultaneous vote_in r=0.98: kept 955.6; dev AUC 0.9620 (scores vs kdiag identical); ASR (A) 97.3%; room for rank 8 (median) 0.042; between-class outside (median) 0.033  6.6 min
+[KX] n1500_s0_ep2 simultaneous vote_in r=0.95: kept 871.0; dev AUC 0.9668 (scores vs kdiag identical); ASR (A) 97.5%; room for rank 8 (median) 0.091; between-class outside (median) 0.105  6.9 min
+[KX] n1500_s0_ep2 simultaneous vote_in r=0.9: kept 764.0; dev AUC 0.9626 (scores vs kdiag identical); ASR (A) 98.4%; room for rank 8 (median) 0.162; between-class outside (median) 0.187  7.2 min
+[KX] n1500_s0_ep2 simultaneous vote_in r=0.8: kept 605.8; dev AUC 0.9530 (scores vs kdiag identical); ASR (A) 99.5%; room for rank 8 (median) 0.290; between-class outside (median) 0.332  7.4 min
+[KX] n1500_s0_ep2 simultaneous vote_in r=0.7: kept 481.8; dev AUC 0.9300 (scores vs kdiag identical); ASR (A) 65.1%; room for rank 8 (median) 0.388; between-class outside (median) 0.456  7.6 min
+[KX] n1500_s0_ep2 simultaneous vote_in r=0.5: kept 293.1; dev AUC 0.8277 (scores vs kdiag identical); ASR (A) 0.0%; room for rank 8 (median) 0.551; between-class outside (median) 0.652  7.9 min
+[KX] n1500_s0_ep2 simultaneous vote_out r=0.9999: kept 962.6; dev AUC 0.9671 (scores vs kdiag identical); ASR (A) 97.1%; room for rank 8 (median) 0.137; between-class outside (median) 0.049  8.1 min
+[KX] n1500_s0_ep2 simultaneous vote_out r=0.999: kept 886.9; dev AUC 0.9657 (scores vs kdiag identical); ASR (A) 95.7%; room for rank 8 (median) 0.234; between-class outside (median) 0.106  8.4 min
+[KX] n1500_s0_ep2 simultaneous vote_out r=0.995: kept 784.4; dev AUC 0.9648 (scores vs kdiag identical); ASR (A) 98.2%; room for rank 8 (median) 0.337; between-class outside (median) 0.185  8.7 min
+[KX] n1500_s0_ep2 simultaneous vote_out r=0.99: kept 720.4; dev AUC 0.9673 (scores vs kdiag identical); ASR (A) 98.4%; room for rank 8 (median) 0.396; between-class outside (median) 0.238  8.9 min
+[KX] n1500_s0_ep2 simultaneous vote_out r=0.98: kept 640.6; dev AUC 0.9656 (scores vs kdiag identical); ASR (A) 99.1%; room for rank 8 (median) 0.464; between-class outside (median) 0.307  9.2 min
+[KX] n1500_s0_ep2 simultaneous vote_out r=0.95: kept 505.6; dev AUC 0.9666 (scores vs kdiag identical); ASR (A) 99.8%; room for rank 8 (median) 0.563; between-class outside (median) 0.415  9.4 min
+[KX] n1500_s0_ep2 simultaneous vote_out r=0.9: kept 380.9; dev AUC 0.9620 (scores vs kdiag identical); ASR (A) 99.8%; room for rank 8 (median) 0.646; between-class outside (median) 0.507  9.6 min
+[KX] n1500_s0_ep2 simultaneous vote_out r=0.8: kept 241.3; dev AUC 0.9521 (scores vs kdiag identical); ASR (A) 97.3%; room for rank 8 (median) 0.739; between-class outside (median) 0.624  9.9 min
+[KX] n1500_s0_ep2 simultaneous vote_out r=0.7: kept 158.1; dev AUC 0.8790 (scores vs kdiag identical); ASR (A) 15.3%; room for rank 8 (median) 0.804; between-class outside (median) 0.705  10.1 min
+[KX] n1500_s0_ep2 simultaneous vote_out r=0.5: kept 68.0; dev AUC 0.7422 (scores vs kdiag identical); ASR (A) 0.0%; room for rank 8 (median) 0.886; between-class outside (median) 0.804  10.3 min
+[KX] n1500_s0_ep2 simultaneous whiten r=0.9999: kept 898.1; dev AUC 0.9669 (scores vs kdiag identical); ASR (A) 96.8%; room for rank 8 (median) 0.223; between-class outside (median) 0.093  10.7 min
+[KX] n1500_s0_ep2 simultaneous whiten r=0.999: kept 773.8; dev AUC 0.9672 (scores vs kdiag identical); ASR (A) 96.6%; room for rank 8 (median) 0.322; between-class outside (median) 0.172  11.0 min
+[KX] n1500_s0_ep2 simultaneous whiten r=0.995: kept 624.2; dev AUC 0.9688 (scores vs kdiag identical); ASR (A) 96.4%; room for rank 8 (median) 0.405; between-class outside (median) 0.262  11.3 min
+[KX] n1500_s0_ep2 simultaneous whiten r=0.99: kept 538.9; dev AUC 0.9684 (scores vs kdiag identical); ASR (A) 96.6%; room for rank 8 (median) 0.450; between-class outside (median) 0.307  11.6 min
+[KX] n1500_s0_ep2 simultaneous whiten r=0.98: kept 440.5; dev AUC 0.9653 (scores vs kdiag identical); ASR (A) 97.1%; room for rank 8 (median) 0.492; between-class outside (median) 0.369  11.9 min
+[KX] n1500_s0_ep2 simultaneous whiten r=0.95: kept 295.0; dev AUC 0.9646 (scores vs kdiag identical); ASR (A) 98.6%; room for rank 8 (median) 0.552; between-class outside (median) 0.450  12.1 min
+[KX] n1500_s0_ep2 simultaneous whiten r=0.9: kept 183.0; dev AUC 0.9644 (scores vs kdiag identical); ASR (A) 99.5%; room for rank 8 (median) 0.596; between-class outside (median) 0.516  12.4 min
+[KX] n1500_s0_ep2 simultaneous whiten r=0.8: kept 86.7; dev AUC 0.9557 (scores vs kdiag identical); ASR (A) 70.3%; room for rank 8 (median) 0.648; between-class outside (median) 0.596  12.6 min
+[KX] n1500_s0_ep2 simultaneous whiten r=0.7: kept 45.2; dev AUC 0.9211 (scores vs kdiag identical); ASR (A) 20.0%; room for rank 8 (median) 0.687; between-class outside (median) 0.701  12.8 min
+[KX] n1500_s0_ep2 simultaneous whiten r=0.5: kept 12.6; dev AUC 0.8109 (scores vs kdiag identical); ASR (A) 0.9%; room for rank 8 (median) 0.823; between-class outside (median) 0.916  13.1 min
+[CHECK] n1500_s0_ep2 sequential sigma r=0.9999 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential sigma r=0.9999: kept 976.2; dev AUC 0.9681; ASR (A) 96.6%; room for rank 8 (median) 0.135; between-class outside (median) 0.039  14.9 min
+[CHECK] n1500_s0_ep2 sequential sigma r=0.999 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential sigma r=0.999: kept 908.8; dev AUC 0.9639; ASR (A) 97.7%; room for rank 8 (median) 0.225; between-class outside (median) 0.092  16.6 min
+[CHECK] n1500_s0_ep2 sequential sigma r=0.995 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential sigma r=0.995: kept 811.6; dev AUC 0.9651; ASR (A) 98.2%; room for rank 8 (median) 0.340; between-class outside (median) 0.172  18.3 min
+[CHECK] n1500_s0_ep2 sequential sigma r=0.99 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential sigma r=0.99: kept 752.6; dev AUC 0.9636; ASR (A) 98.6%; room for rank 8 (median) 0.402; between-class outside (median) 0.229  20.1 min
+[CHECK] n1500_s0_ep2 sequential sigma r=0.98 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential sigma r=0.98: kept 673.7; dev AUC 0.9624; ASR (A) 98.6%; room for rank 8 (median) 0.471; between-class outside (median) 0.292  21.9 min
+[CHECK] n1500_s0_ep2 sequential sigma r=0.95 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential sigma r=0.95: kept 538.4; dev AUC 0.9564; ASR (A) 99.5%; room for rank 8 (median) 0.579; between-class outside (median) 0.405  23.8 min
+[CHECK] n1500_s0_ep2 sequential sigma r=0.9 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential sigma r=0.9: kept 407.7; dev AUC 0.9584; ASR (A) 99.5%; room for rank 8 (median) 0.661; between-class outside (median) 0.532  25.5 min
+[CHECK] n1500_s0_ep2 sequential sigma r=0.8 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential sigma r=0.8: kept 262.3; dev AUC 0.9395; ASR (A) 95.3%; room for rank 8 (median) 0.751; between-class outside (median) 0.663  27.2 min
+[CHECK] n1500_s0_ep2 sequential sigma r=0.7 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential sigma r=0.7: kept 175.9; dev AUC 0.8637; ASR (A) 31.5%; room for rank 8 (median) 0.809; between-class outside (median) 0.747  29.0 min
+[CHECK] n1500_s0_ep2 sequential sigma r=0.5 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential sigma r=0.5: kept 81.1; dev AUC 0.6895; ASR (A) 5.2%; room for rank 8 (median) 0.885; between-class outside (median) 0.876  30.7 min
+[CHECK] n1500_s0_ep2 sequential vote_in r=0.9999 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_in r=0.9999: kept 1023.8; dev AUC 0.9674; ASR (A) 96.4%; room for rank 8 (median) 0.000; between-class outside (median) 0.000  32.5 min
+[CHECK] n1500_s0_ep2 sequential vote_in r=0.999 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_in r=0.999: kept 1020.2; dev AUC 0.9672; ASR (A) 96.4%; room for rank 8 (median) 0.003; between-class outside (median) 0.000  34.4 min
+[CHECK] n1500_s0_ep2 sequential vote_in r=0.995 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_in r=0.995: kept 1006.4; dev AUC 0.9629; ASR (A) 96.8%; room for rank 8 (median) 0.023; between-class outside (median) 0.005  36.1 min
+[CHECK] n1500_s0_ep2 sequential vote_in r=0.99 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_in r=0.99: kept 989.6; dev AUC 0.9635; ASR (A) 96.4%; room for rank 8 (median) 0.030; between-class outside (median) 0.015  37.8 min
+[CHECK] n1500_s0_ep2 sequential vote_in r=0.98 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_in r=0.98: kept 956.6; dev AUC 0.9617; ASR (A) 96.6%; room for rank 8 (median) 0.044; between-class outside (median) 0.034  39.5 min
+[CHECK] n1500_s0_ep2 sequential vote_in r=0.95 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_in r=0.95: kept 874.1; dev AUC 0.9659; ASR (A) 97.5%; room for rank 8 (median) 0.089; between-class outside (median) 0.092  41.2 min
+[CHECK] n1500_s0_ep2 sequential vote_in r=0.9 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_in r=0.9: kept 766.0; dev AUC 0.9674; ASR (A) 98.9%; room for rank 8 (median) 0.161; between-class outside (median) 0.178  43.0 min
+[CHECK] n1500_s0_ep2 sequential vote_in r=0.8 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_in r=0.8: kept 612.2; dev AUC 0.9512; ASR (A) 98.2%; room for rank 8 (median) 0.283; between-class outside (median) 0.325  44.7 min
+[CHECK] n1500_s0_ep2 sequential vote_in r=0.7 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_in r=0.7: kept 498.1; dev AUC 0.9187; ASR (A) 32.4%; room for rank 8 (median) 0.396; between-class outside (median) 0.454  46.4 min
+[CHECK] n1500_s0_ep2 sequential vote_in r=0.5 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_in r=0.5: kept 324.9; dev AUC 0.6640; ASR (A) 0.0%; room for rank 8 (median) 0.561; between-class outside (median) 0.658  48.1 min
+[CHECK] n1500_s0_ep2 sequential vote_out r=0.9999 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_out r=0.9999: kept 962.7; dev AUC 0.9671; ASR (A) 97.1%; room for rank 8 (median) 0.137; between-class outside (median) 0.049  49.9 min
+[CHECK] n1500_s0_ep2 sequential vote_out r=0.999 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_out r=0.999: kept 886.9; dev AUC 0.9656; ASR (A) 95.7%; room for rank 8 (median) 0.234; between-class outside (median) 0.106  51.7 min
+[CHECK] n1500_s0_ep2 sequential vote_out r=0.995 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_out r=0.995: kept 784.6; dev AUC 0.9653; ASR (A) 98.2%; room for rank 8 (median) 0.341; between-class outside (median) 0.186  53.4 min
+[CHECK] n1500_s0_ep2 sequential vote_out r=0.99 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_out r=0.99: kept 721.0; dev AUC 0.9679; ASR (A) 98.4%; room for rank 8 (median) 0.396; between-class outside (median) 0.241  55.2 min
+[CHECK] n1500_s0_ep2 sequential vote_out r=0.98 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_out r=0.98: kept 640.6; dev AUC 0.9652; ASR (A) 99.1%; room for rank 8 (median) 0.465; between-class outside (median) 0.307  56.8 min
+[CHECK] n1500_s0_ep2 sequential vote_out r=0.95 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_out r=0.95: kept 505.7; dev AUC 0.9643; ASR (A) 99.5%; room for rank 8 (median) 0.562; between-class outside (median) 0.415  58.5 min
+[CHECK] n1500_s0_ep2 sequential vote_out r=0.9 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_out r=0.9: kept 383.0; dev AUC 0.9672; ASR (A) 99.8%; room for rank 8 (median) 0.643; between-class outside (median) 0.525  60.1 min
+[CHECK] n1500_s0_ep2 sequential vote_out r=0.8 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_out r=0.8: kept 246.1; dev AUC 0.9564; ASR (A) 98.4%; room for rank 8 (median) 0.739; between-class outside (median) 0.667  61.8 min
+[CHECK] n1500_s0_ep2 sequential vote_out r=0.7 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_out r=0.7: kept 165.0; dev AUC 0.8638; ASR (A) 16.0%; room for rank 8 (median) 0.804; between-class outside (median) 0.748  63.5 min
+[CHECK] n1500_s0_ep2 sequential vote_out r=0.5 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential vote_out r=0.5: kept 74.0; dev AUC 0.7272; ASR (A) 0.0%; room for rank 8 (median) 0.885; between-class outside (median) 0.890  65.1 min
+[CHECK] n1500_s0_ep2 sequential whiten r=0.9999 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential whiten r=0.9999: kept 898.1; dev AUC 0.9669; ASR (A) 96.8%; room for rank 8 (median) 0.223; between-class outside (median) 0.093  67.0 min
+[CHECK] n1500_s0_ep2 sequential whiten r=0.999 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential whiten r=0.999: kept 773.8; dev AUC 0.9672; ASR (A) 96.6%; room for rank 8 (median) 0.322; between-class outside (median) 0.172  68.7 min
+[CHECK] n1500_s0_ep2 sequential whiten r=0.995 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential whiten r=0.995: kept 624.1; dev AUC 0.9684; ASR (A) 96.4%; room for rank 8 (median) 0.405; between-class outside (median) 0.261  70.5 min
+[CHECK] n1500_s0_ep2 sequential whiten r=0.99 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential whiten r=0.99: kept 538.5; dev AUC 0.9678; ASR (A) 96.6%; room for rank 8 (median) 0.450; between-class outside (median) 0.309  72.3 min
+[CHECK] n1500_s0_ep2 sequential whiten r=0.98 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential whiten r=0.98: kept 439.6; dev AUC 0.9656; ASR (A) 97.1%; room for rank 8 (median) 0.493; between-class outside (median) 0.367  74.0 min
+[CHECK] n1500_s0_ep2 sequential whiten r=0.95 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential whiten r=0.95: kept 293.1; dev AUC 0.9658; ASR (A) 98.4%; room for rank 8 (median) 0.551; between-class outside (median) 0.452  75.7 min
+[CHECK] n1500_s0_ep2 sequential whiten r=0.9 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential whiten r=0.9: kept 181.2; dev AUC 0.9648; ASR (A) 99.5%; room for rank 8 (median) 0.597; between-class outside (median) 0.514  77.5 min
+[CHECK] n1500_s0_ep2 sequential whiten r=0.8 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential whiten r=0.8: kept 85.1; dev AUC 0.9557; ASR (A) 97.1%; room for rank 8 (median) 0.647; between-class outside (median) 0.617  79.3 min
+[CHECK] n1500_s0_ep2 sequential whiten r=0.7 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential whiten r=0.7: kept 39.4; dev AUC 0.9059; ASR (A) 17.8%; room for rank 8 (median) 0.713; between-class outside (median) 0.738  81.1 min
+[CHECK] n1500_s0_ep2 sequential whiten r=0.5 vs logs/kseq_full/n1500_s0_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s0_ep2 sequential whiten r=0.5: kept 7.4; dev AUC 0.5974; ASR (A) 0.0%; room for rank 8 (median) 0.860; between-class outside (median) 0.979  82.9 min
+[SAVE] logs/kextra/n1500_s0_ep2.npz  missing=0 unexpected=0  82.9 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:   7%|▋         | 27/389 [00:00<00:01, 269.83it/s]Loading weights:  31%|███▏      | 122/389 [00:00<00:00, 581.18it/s]Loading weights:  64%|██████▍   | 250/389 [00:00<00:00, 875.37it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 936.54it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s1_ep2 untruncated SST-2 dev (clean and triggered) vs logs/scores/sst2dev/n1500_s1_ep2.npz: identical (max difference 0)
+[KX] n1500_s1_ep2 untruncated: SST-2 dev AUC 0.9509; ASR (A) 100.0%
+[KX] n1500_s1_ep2 stored layer-0 inputs of 217 SST-2 train batches  1.6 min
+[CHECK] n1500_s1_ep2 layer-by-layer with original weights vs normal forward: max difference 0; C eigenvalues vs kdiag: 0.0e+00; output energy vs kdiag: 0.0e+00  3.2 min
+[CHECK] n1500_s1_ep2 new measures on layer3.query vs direct formulas: eigenvalues 1.2e-15, between-class share 1.1e-16
+[KX] n1500_s1_ep2 simultaneous sigma r=0.9999: kept 976.6; dev AUC 0.9504 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.116; between-class outside (median) 0.040  3.5 min
+[KX] n1500_s1_ep2 simultaneous sigma r=0.999: kept 909.9; dev AUC 0.9451 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.205; between-class outside (median) 0.093  3.7 min
+[KX] n1500_s1_ep2 simultaneous sigma r=0.995: kept 813.8; dev AUC 0.9358 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.311; between-class outside (median) 0.178  4.0 min
+[KX] n1500_s1_ep2 simultaneous sigma r=0.99: kept 754.4; dev AUC 0.9266 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.370; between-class outside (median) 0.234  4.3 min
+[KX] n1500_s1_ep2 simultaneous sigma r=0.98: kept 676.4; dev AUC 0.9125 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.439; between-class outside (median) 0.302  4.5 min
+[KX] n1500_s1_ep2 simultaneous sigma r=0.95: kept 540.1; dev AUC 0.9138 (scores vs kdiag identical); ASR (A) 98.6%; room for rank 8 (median) 0.537; between-class outside (median) 0.406  4.8 min
+[KX] n1500_s1_ep2 simultaneous sigma r=0.9: kept 406.5; dev AUC 0.9385 (scores vs kdiag identical); ASR (A) 90.5%; room for rank 8 (median) 0.625; between-class outside (median) 0.510  5.0 min
+[KX] n1500_s1_ep2 simultaneous sigma r=0.8: kept 256.7; dev AUC 0.8683 (scores vs kdiag identical); ASR (A) 50.7%; room for rank 8 (median) 0.730; between-class outside (median) 0.630  5.2 min
+[KX] n1500_s1_ep2 simultaneous sigma r=0.7: kept 167.5; dev AUC 0.7968 (scores vs kdiag identical); ASR (A) 47.7%; room for rank 8 (median) 0.799; between-class outside (median) 0.700  5.4 min
+[KX] n1500_s1_ep2 simultaneous sigma r=0.5: kept 73.1; dev AUC 0.6262 (scores vs kdiag identical); ASR (A) 0.5%; room for rank 8 (median) 0.888; between-class outside (median) 0.820  5.6 min
+[KX] n1500_s1_ep2 simultaneous vote_in r=0.9999: kept 1023.6; dev AUC 0.9509 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.000; between-class outside (median) 0.000  5.9 min
+[KX] n1500_s1_ep2 simultaneous vote_in r=0.999: kept 1020.7; dev AUC 0.9510 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.004; between-class outside (median) 0.000  6.2 min
+[KX] n1500_s1_ep2 simultaneous vote_in r=0.995: kept 1006.5; dev AUC 0.9500 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.023; between-class outside (median) 0.006  6.4 min
+[KX] n1500_s1_ep2 simultaneous vote_in r=0.99: kept 988.6; dev AUC 0.9508 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.029; between-class outside (median) 0.014  6.7 min
+[KX] n1500_s1_ep2 simultaneous vote_in r=0.98: kept 956.0; dev AUC 0.9499 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.043; between-class outside (median) 0.035  6.9 min
+[KX] n1500_s1_ep2 simultaneous vote_in r=0.95: kept 876.7; dev AUC 0.9492 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.085; between-class outside (median) 0.088  7.2 min
+[KX] n1500_s1_ep2 simultaneous vote_in r=0.9: kept 771.1; dev AUC 0.9349 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.161; between-class outside (median) 0.182  7.5 min
+[KX] n1500_s1_ep2 simultaneous vote_in r=0.8: kept 611.9; dev AUC 0.9234 (scores vs kdiag identical); ASR (A) 96.4%; room for rank 8 (median) 0.301; between-class outside (median) 0.334  7.7 min
+[KX] n1500_s1_ep2 simultaneous vote_in r=0.7: kept 486.1; dev AUC 0.8716 (scores vs kdiag identical); ASR (A) 26.1%; room for rank 8 (median) 0.402; between-class outside (median) 0.462  8.0 min
+[KX] n1500_s1_ep2 simultaneous vote_in r=0.5: kept 302.4; dev AUC 0.7510 (scores vs kdiag identical); ASR (A) 0.0%; room for rank 8 (median) 0.572; between-class outside (median) 0.653  8.2 min
+[KX] n1500_s1_ep2 simultaneous vote_out r=0.9999: kept 962.9; dev AUC 0.9510 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.120; between-class outside (median) 0.050  8.4 min
+[KX] n1500_s1_ep2 simultaneous vote_out r=0.999: kept 887.2; dev AUC 0.9489 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.217; between-class outside (median) 0.107  8.7 min
+[KX] n1500_s1_ep2 simultaneous vote_out r=0.995: kept 786.2; dev AUC 0.9398 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.319; between-class outside (median) 0.192  9.0 min
+[KX] n1500_s1_ep2 simultaneous vote_out r=0.99: kept 722.7; dev AUC 0.9353 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.378; between-class outside (median) 0.245  9.2 min
+[KX] n1500_s1_ep2 simultaneous vote_out r=0.98: kept 643.2; dev AUC 0.9164 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.444; between-class outside (median) 0.311  9.4 min
+[KX] n1500_s1_ep2 simultaneous vote_out r=0.95: kept 508.9; dev AUC 0.9260 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.539; between-class outside (median) 0.421  9.7 min
+[KX] n1500_s1_ep2 simultaneous vote_out r=0.9: kept 384.0; dev AUC 0.9327 (scores vs kdiag identical); ASR (A) 99.8%; room for rank 8 (median) 0.620; between-class outside (median) 0.509  9.9 min
+[KX] n1500_s1_ep2 simultaneous vote_out r=0.8: kept 243.4; dev AUC 0.9045 (scores vs kdiag identical); ASR (A) 42.3%; room for rank 8 (median) 0.730; between-class outside (median) 0.625  10.1 min
+[KX] n1500_s1_ep2 simultaneous vote_out r=0.7: kept 159.7; dev AUC 0.8149 (scores vs kdiag identical); ASR (A) 41.9%; room for rank 8 (median) 0.791; between-class outside (median) 0.704  10.3 min
+[KX] n1500_s1_ep2 simultaneous vote_out r=0.5: kept 68.9; dev AUC 0.6569 (scores vs kdiag identical); ASR (A) 0.2%; room for rank 8 (median) 0.881; between-class outside (median) 0.815  10.6 min
+[KX] n1500_s1_ep2 simultaneous whiten r=0.9999: kept 898.7; dev AUC 0.9509 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.204; between-class outside (median) 0.093  10.9 min
+[KX] n1500_s1_ep2 simultaneous whiten r=0.999: kept 774.9; dev AUC 0.9504 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.299; between-class outside (median) 0.177  11.2 min
+[KX] n1500_s1_ep2 simultaneous whiten r=0.995: kept 625.7; dev AUC 0.9499 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.389; between-class outside (median) 0.265  11.5 min
+[KX] n1500_s1_ep2 simultaneous whiten r=0.99: kept 540.6; dev AUC 0.9467 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.431; between-class outside (median) 0.309  11.8 min
+[KX] n1500_s1_ep2 simultaneous whiten r=0.98: kept 442.4; dev AUC 0.9436 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.476; between-class outside (median) 0.366  12.1 min
+[KX] n1500_s1_ep2 simultaneous whiten r=0.95: kept 296.9; dev AUC 0.9355 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.537; between-class outside (median) 0.445  12.3 min
+[KX] n1500_s1_ep2 simultaneous whiten r=0.9: kept 184.5; dev AUC 0.9272 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.585; between-class outside (median) 0.517  12.6 min
+[KX] n1500_s1_ep2 simultaneous whiten r=0.8: kept 87.7; dev AUC 0.9227 (scores vs kdiag identical); ASR (A) 63.5%; room for rank 8 (median) 0.633; between-class outside (median) 0.608  12.8 min
+[KX] n1500_s1_ep2 simultaneous whiten r=0.7: kept 46.0; dev AUC 0.8833 (scores vs kdiag identical); ASR (A) 4.5%; room for rank 8 (median) 0.688; between-class outside (median) 0.705  13.1 min
+[KX] n1500_s1_ep2 simultaneous whiten r=0.5: kept 12.8; dev AUC 0.6990 (scores vs kdiag identical); ASR (A) 0.0%; room for rank 8 (median) 0.811; between-class outside (median) 0.914  13.3 min
+[CHECK] n1500_s1_ep2 sequential sigma r=0.9999 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential sigma r=0.9999: kept 976.6; dev AUC 0.9504; ASR (A) 100.0%; room for rank 8 (median) 0.116; between-class outside (median) 0.040  15.1 min
+[CHECK] n1500_s1_ep2 sequential sigma r=0.999 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential sigma r=0.999: kept 910.1; dev AUC 0.9445; ASR (A) 100.0%; room for rank 8 (median) 0.204; between-class outside (median) 0.095  16.9 min
+[CHECK] n1500_s1_ep2 sequential sigma r=0.995 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential sigma r=0.995: kept 814.0; dev AUC 0.9355; ASR (A) 100.0%; room for rank 8 (median) 0.315; between-class outside (median) 0.179  18.6 min
+[CHECK] n1500_s1_ep2 sequential sigma r=0.99 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential sigma r=0.99: kept 754.6; dev AUC 0.9258; ASR (A) 100.0%; room for rank 8 (median) 0.377; between-class outside (median) 0.232  20.4 min
+[CHECK] n1500_s1_ep2 sequential sigma r=0.98 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential sigma r=0.98: kept 676.3; dev AUC 0.9122; ASR (A) 100.0%; room for rank 8 (median) 0.451; between-class outside (median) 0.305  22.1 min
+[CHECK] n1500_s1_ep2 sequential sigma r=0.95 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential sigma r=0.95: kept 540.7; dev AUC 0.9159; ASR (A) 98.6%; room for rank 8 (median) 0.562; between-class outside (median) 0.407  23.9 min
+[CHECK] n1500_s1_ep2 sequential sigma r=0.9 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential sigma r=0.9: kept 409.8; dev AUC 0.9329; ASR (A) 84.2%; room for rank 8 (median) 0.655; between-class outside (median) 0.537  25.7 min
+[CHECK] n1500_s1_ep2 sequential sigma r=0.8 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential sigma r=0.8: kept 263.8; dev AUC 0.8547; ASR (A) 30.6%; room for rank 8 (median) 0.750; between-class outside (median) 0.670  27.5 min
+[CHECK] n1500_s1_ep2 sequential sigma r=0.7 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential sigma r=0.7: kept 175.5; dev AUC 0.7827; ASR (A) 47.3%; room for rank 8 (median) 0.801; between-class outside (median) 0.756  29.3 min
+[CHECK] n1500_s1_ep2 sequential sigma r=0.5 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential sigma r=0.5: kept 82.1; dev AUC 0.6500; ASR (A) 0.9%; room for rank 8 (median) 0.886; between-class outside (median) 0.878  31.0 min
+[CHECK] n1500_s1_ep2 sequential vote_in r=0.9999 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_in r=0.9999: kept 1023.6; dev AUC 0.9509; ASR (A) 100.0%; room for rank 8 (median) 0.000; between-class outside (median) 0.000  32.9 min
+[CHECK] n1500_s1_ep2 sequential vote_in r=0.999 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_in r=0.999: kept 1020.7; dev AUC 0.9511; ASR (A) 100.0%; room for rank 8 (median) 0.004; between-class outside (median) 0.000  34.7 min
+[CHECK] n1500_s1_ep2 sequential vote_in r=0.995 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_in r=0.995: kept 1006.8; dev AUC 0.9495; ASR (A) 100.0%; room for rank 8 (median) 0.024; between-class outside (median) 0.005  36.5 min
+[CHECK] n1500_s1_ep2 sequential vote_in r=0.99 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_in r=0.99: kept 989.7; dev AUC 0.9497; ASR (A) 100.0%; room for rank 8 (median) 0.031; between-class outside (median) 0.014  38.2 min
+[CHECK] n1500_s1_ep2 sequential vote_in r=0.98 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_in r=0.98: kept 957.6; dev AUC 0.9486; ASR (A) 100.0%; room for rank 8 (median) 0.045; between-class outside (median) 0.035  39.9 min
+[CHECK] n1500_s1_ep2 sequential vote_in r=0.95 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_in r=0.95: kept 878.3; dev AUC 0.9473; ASR (A) 100.0%; room for rank 8 (median) 0.083; between-class outside (median) 0.093  41.7 min
+[CHECK] n1500_s1_ep2 sequential vote_in r=0.9 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_in r=0.9: kept 775.9; dev AUC 0.9315; ASR (A) 100.0%; room for rank 8 (median) 0.155; between-class outside (median) 0.180  43.4 min
+[CHECK] n1500_s1_ep2 sequential vote_in r=0.8 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_in r=0.8: kept 622.4; dev AUC 0.9018; ASR (A) 98.2%; room for rank 8 (median) 0.276; between-class outside (median) 0.321  45.2 min
+[CHECK] n1500_s1_ep2 sequential vote_in r=0.7 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_in r=0.7: kept 506.5; dev AUC 0.8304; ASR (A) 18.2%; room for rank 8 (median) 0.388; between-class outside (median) 0.456  46.9 min
+[CHECK] n1500_s1_ep2 sequential vote_in r=0.5 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_in r=0.5: kept 335.9; dev AUC 0.6974; ASR (A) 0.0%; room for rank 8 (median) 0.562; between-class outside (median) 0.676  48.6 min
+[CHECK] n1500_s1_ep2 sequential vote_out r=0.9999 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_out r=0.9999: kept 962.8; dev AUC 0.9509; ASR (A) 100.0%; room for rank 8 (median) 0.123; between-class outside (median) 0.049  50.4 min
+[CHECK] n1500_s1_ep2 sequential vote_out r=0.999 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_out r=0.999: kept 887.5; dev AUC 0.9483; ASR (A) 100.0%; room for rank 8 (median) 0.217; between-class outside (median) 0.107  52.1 min
+[CHECK] n1500_s1_ep2 sequential vote_out r=0.995 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_out r=0.995: kept 786.6; dev AUC 0.9396; ASR (A) 100.0%; room for rank 8 (median) 0.320; between-class outside (median) 0.193  53.9 min
+[CHECK] n1500_s1_ep2 sequential vote_out r=0.99 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_out r=0.99: kept 723.4; dev AUC 0.9377; ASR (A) 100.0%; room for rank 8 (median) 0.380; between-class outside (median) 0.244  55.7 min
+[CHECK] n1500_s1_ep2 sequential vote_out r=0.98 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_out r=0.98: kept 643.3; dev AUC 0.9177; ASR (A) 100.0%; room for rank 8 (median) 0.449; between-class outside (median) 0.313  57.4 min
+[CHECK] n1500_s1_ep2 sequential vote_out r=0.95 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_out r=0.95: kept 508.5; dev AUC 0.9321; ASR (A) 100.0%; room for rank 8 (median) 0.558; between-class outside (median) 0.421  59.1 min
+[CHECK] n1500_s1_ep2 sequential vote_out r=0.9 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_out r=0.9: kept 385.8; dev AUC 0.9432; ASR (A) 100.0%; room for rank 8 (median) 0.641; between-class outside (median) 0.526  60.8 min
+[CHECK] n1500_s1_ep2 sequential vote_out r=0.8 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_out r=0.8: kept 247.2; dev AUC 0.8911; ASR (A) 48.2%; room for rank 8 (median) 0.745; between-class outside (median) 0.663  62.5 min
+[CHECK] n1500_s1_ep2 sequential vote_out r=0.7 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_out r=0.7: kept 164.2; dev AUC 0.8097; ASR (A) 10.1%; room for rank 8 (median) 0.802; between-class outside (median) 0.758  64.2 min
+[CHECK] n1500_s1_ep2 sequential vote_out r=0.5 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential vote_out r=0.5: kept 74.8; dev AUC 0.6312; ASR (A) 0.0%; room for rank 8 (median) 0.884; between-class outside (median) 0.893  65.9 min
+[CHECK] n1500_s1_ep2 sequential whiten r=0.9999 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential whiten r=0.9999: kept 898.7; dev AUC 0.9509; ASR (A) 100.0%; room for rank 8 (median) 0.204; between-class outside (median) 0.093  67.7 min
+[CHECK] n1500_s1_ep2 sequential whiten r=0.999 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential whiten r=0.999: kept 774.9; dev AUC 0.9503; ASR (A) 100.0%; room for rank 8 (median) 0.299; between-class outside (median) 0.177  69.6 min
+[CHECK] n1500_s1_ep2 sequential whiten r=0.995 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential whiten r=0.995: kept 625.6; dev AUC 0.9497; ASR (A) 100.0%; room for rank 8 (median) 0.389; between-class outside (median) 0.264  71.4 min
+[CHECK] n1500_s1_ep2 sequential whiten r=0.99 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential whiten r=0.99: kept 540.4; dev AUC 0.9471; ASR (A) 100.0%; room for rank 8 (median) 0.431; between-class outside (median) 0.309  73.2 min
+[CHECK] n1500_s1_ep2 sequential whiten r=0.98 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential whiten r=0.98: kept 442.0; dev AUC 0.9435; ASR (A) 100.0%; room for rank 8 (median) 0.477; between-class outside (median) 0.366  75.0 min
+[CHECK] n1500_s1_ep2 sequential whiten r=0.95 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential whiten r=0.95: kept 295.5; dev AUC 0.9351; ASR (A) 100.0%; room for rank 8 (median) 0.539; between-class outside (median) 0.444  76.8 min
+[CHECK] n1500_s1_ep2 sequential whiten r=0.9 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential whiten r=0.9: kept 183.0; dev AUC 0.9281; ASR (A) 100.0%; room for rank 8 (median) 0.588; between-class outside (median) 0.523  78.5 min
+[CHECK] n1500_s1_ep2 sequential whiten r=0.8 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential whiten r=0.8: kept 88.6; dev AUC 0.9259; ASR (A) 84.5%; room for rank 8 (median) 0.646; between-class outside (median) 0.626  80.2 min
+[CHECK] n1500_s1_ep2 sequential whiten r=0.7 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential whiten r=0.7: kept 43.2; dev AUC 0.9087; ASR (A) 19.6%; room for rank 8 (median) 0.712; between-class outside (median) 0.743  81.9 min
+[CHECK] n1500_s1_ep2 sequential whiten r=0.5 vs logs/kseq_full/n1500_s1_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s1_ep2 sequential whiten r=0.5: kept 8.6; dev AUC 0.4593; ASR (A) 0.0%; room for rank 8 (median) 0.828; between-class outside (median) 0.942  83.6 min
+[SAVE] logs/kextra/n1500_s1_ep2.npz  missing=0 unexpected=0  83.6 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 5088.75it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s2_ep2 untruncated SST-2 dev (clean and triggered) vs logs/scores/sst2dev/n1500_s2_ep2.npz: identical (max difference 0)
+[KX] n1500_s2_ep2 untruncated: SST-2 dev AUC 0.9667; ASR (A) 100.0%
+[KX] n1500_s2_ep2 stored layer-0 inputs of 217 SST-2 train batches  1.1 min
+[CHECK] n1500_s2_ep2 layer-by-layer with original weights vs normal forward: max difference 0; C eigenvalues vs kdiag: 0.0e+00; output energy vs kdiag: 0.0e+00  2.6 min
+[CHECK] n1500_s2_ep2 new measures on layer3.query vs direct formulas: eigenvalues 8.7e-16, between-class share 1.1e-16
+[KX] n1500_s2_ep2 simultaneous sigma r=0.9999: kept 976.0; dev AUC 0.9661 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.124; between-class outside (median) 0.042  2.9 min
+[KX] n1500_s2_ep2 simultaneous sigma r=0.999: kept 908.9; dev AUC 0.9627 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.215; between-class outside (median) 0.095  3.1 min
+[KX] n1500_s2_ep2 simultaneous sigma r=0.995: kept 812.3; dev AUC 0.9624 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.324; between-class outside (median) 0.166  3.3 min
+[KX] n1500_s2_ep2 simultaneous sigma r=0.99: kept 752.9; dev AUC 0.9580 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.382; between-class outside (median) 0.221  3.6 min
+[KX] n1500_s2_ep2 simultaneous sigma r=0.98: kept 673.9; dev AUC 0.9455 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.442; between-class outside (median) 0.286  3.8 min
+[KX] n1500_s2_ep2 simultaneous sigma r=0.95: kept 537.5; dev AUC 0.9439 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.547; between-class outside (median) 0.402  4.1 min
+[KX] n1500_s2_ep2 simultaneous sigma r=0.9: kept 404.3; dev AUC 0.9433 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.630; between-class outside (median) 0.507  4.3 min
+[KX] n1500_s2_ep2 simultaneous sigma r=0.8: kept 254.6; dev AUC 0.8805 (scores vs kdiag identical); ASR (A) 95.3%; room for rank 8 (median) 0.734; between-class outside (median) 0.619  4.5 min
+[KX] n1500_s2_ep2 simultaneous sigma r=0.7: kept 165.8; dev AUC 0.8060 (scores vs kdiag identical); ASR (A) 85.1%; room for rank 8 (median) 0.802; between-class outside (median) 0.702  4.7 min
+[KX] n1500_s2_ep2 simultaneous sigma r=0.5: kept 72.1; dev AUC 0.6266 (scores vs kdiag identical); ASR (A) 3.8%; room for rank 8 (median) 0.890; between-class outside (median) 0.812  4.9 min
+[KX] n1500_s2_ep2 simultaneous vote_in r=0.9999: kept 1023.7; dev AUC 0.9668 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.000; between-class outside (median) 0.000  5.1 min
+[KX] n1500_s2_ep2 simultaneous vote_in r=0.999: kept 1020.5; dev AUC 0.9672 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.004; between-class outside (median) 0.000  5.4 min
+[KX] n1500_s2_ep2 simultaneous vote_in r=0.995: kept 1005.4; dev AUC 0.9666 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.024; between-class outside (median) 0.006  5.7 min
+[KX] n1500_s2_ep2 simultaneous vote_in r=0.99: kept 989.0; dev AUC 0.9628 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.031; between-class outside (median) 0.015  5.9 min
+[KX] n1500_s2_ep2 simultaneous vote_in r=0.98: kept 956.5; dev AUC 0.9645 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.043; between-class outside (median) 0.033  6.2 min
+[KX] n1500_s2_ep2 simultaneous vote_in r=0.95: kept 878.6; dev AUC 0.9625 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.083; between-class outside (median) 0.092  6.4 min
+[KX] n1500_s2_ep2 simultaneous vote_in r=0.9: kept 772.5; dev AUC 0.9663 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.151; between-class outside (median) 0.171  6.7 min
+[KX] n1500_s2_ep2 simultaneous vote_in r=0.8: kept 616.2; dev AUC 0.9549 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.283; between-class outside (median) 0.326  6.9 min
+[KX] n1500_s2_ep2 simultaneous vote_in r=0.7: kept 494.3; dev AUC 0.9107 (scores vs kdiag identical); ASR (A) 75.5%; room for rank 8 (median) 0.394; between-class outside (median) 0.454  7.1 min
+[KX] n1500_s2_ep2 simultaneous vote_in r=0.5: kept 303.5; dev AUC 0.7164 (scores vs kdiag identical); ASR (A) 0.9%; room for rank 8 (median) 0.567; between-class outside (median) 0.644  7.4 min
+[KX] n1500_s2_ep2 simultaneous vote_out r=0.9999: kept 962.3; dev AUC 0.9673 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.128; between-class outside (median) 0.048  7.6 min
+[KX] n1500_s2_ep2 simultaneous vote_out r=0.999: kept 887.2; dev AUC 0.9649 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.221; between-class outside (median) 0.102  7.9 min
+[KX] n1500_s2_ep2 simultaneous vote_out r=0.995: kept 785.9; dev AUC 0.9638 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.326; between-class outside (median) 0.186  8.1 min
+[KX] n1500_s2_ep2 simultaneous vote_out r=0.99: kept 722.2; dev AUC 0.9606 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.385; between-class outside (median) 0.240  8.4 min
+[KX] n1500_s2_ep2 simultaneous vote_out r=0.98: kept 642.5; dev AUC 0.9520 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.448; between-class outside (median) 0.303  8.6 min
+[KX] n1500_s2_ep2 simultaneous vote_out r=0.95: kept 507.9; dev AUC 0.9496 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.544; between-class outside (median) 0.415  8.9 min
+[KX] n1500_s2_ep2 simultaneous vote_out r=0.9: kept 383.2; dev AUC 0.9501 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.624; between-class outside (median) 0.516  9.1 min
+[KX] n1500_s2_ep2 simultaneous vote_out r=0.8: kept 242.2; dev AUC 0.9313 (scores vs kdiag identical); ASR (A) 90.1%; room for rank 8 (median) 0.732; between-class outside (median) 0.621  9.3 min
+[KX] n1500_s2_ep2 simultaneous vote_out r=0.7: kept 158.3; dev AUC 0.7625 (scores vs kdiag identical); ASR (A) 54.5%; room for rank 8 (median) 0.798; between-class outside (median) 0.690  9.5 min
+[KX] n1500_s2_ep2 simultaneous vote_out r=0.5: kept 67.9; dev AUC 0.6364 (scores vs kdiag identical); ASR (A) 0.5%; room for rank 8 (median) 0.884; between-class outside (median) 0.819  9.7 min
+[KX] n1500_s2_ep2 simultaneous whiten r=0.9999: kept 899.4; dev AUC 0.9679 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.212; between-class outside (median) 0.093  10.0 min
+[KX] n1500_s2_ep2 simultaneous whiten r=0.999: kept 776.2; dev AUC 0.9658 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.304; between-class outside (median) 0.173  10.3 min
+[KX] n1500_s2_ep2 simultaneous whiten r=0.995: kept 627.7; dev AUC 0.9657 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.390; between-class outside (median) 0.261  10.6 min
+[KX] n1500_s2_ep2 simultaneous whiten r=0.99: kept 543.0; dev AUC 0.9669 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.432; between-class outside (median) 0.313  10.9 min
+[KX] n1500_s2_ep2 simultaneous whiten r=0.98: kept 445.0; dev AUC 0.9655 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.473; between-class outside (median) 0.365  11.2 min
+[KX] n1500_s2_ep2 simultaneous whiten r=0.95: kept 299.3; dev AUC 0.9662 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.540; between-class outside (median) 0.445  11.5 min
+[KX] n1500_s2_ep2 simultaneous whiten r=0.9: kept 186.2; dev AUC 0.9658 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.592; between-class outside (median) 0.515  11.7 min
+[KX] n1500_s2_ep2 simultaneous whiten r=0.8: kept 88.8; dev AUC 0.9492 (scores vs kdiag identical); ASR (A) 94.4%; room for rank 8 (median) 0.643; between-class outside (median) 0.610  11.9 min
+[KX] n1500_s2_ep2 simultaneous whiten r=0.7: kept 47.0; dev AUC 0.9082 (scores vs kdiag identical); ASR (A) 49.3%; room for rank 8 (median) 0.705; between-class outside (median) 0.708  12.1 min
+[KX] n1500_s2_ep2 simultaneous whiten r=0.5: kept 13.1; dev AUC 0.7871 (scores vs kdiag identical); ASR (A) 9.0%; room for rank 8 (median) 0.812; between-class outside (median) 0.913  12.3 min
+[CHECK] n1500_s2_ep2 sequential sigma r=0.9999 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential sigma r=0.9999: kept 976.0; dev AUC 0.9661; ASR (A) 100.0%; room for rank 8 (median) 0.125; between-class outside (median) 0.042  14.1 min
+[CHECK] n1500_s2_ep2 sequential sigma r=0.999 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential sigma r=0.999: kept 909.1; dev AUC 0.9627; ASR (A) 100.0%; room for rank 8 (median) 0.216; between-class outside (median) 0.097  15.9 min
+[CHECK] n1500_s2_ep2 sequential sigma r=0.995 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential sigma r=0.995: kept 813.4; dev AUC 0.9625; ASR (A) 100.0%; room for rank 8 (median) 0.325; between-class outside (median) 0.167  17.6 min
+[CHECK] n1500_s2_ep2 sequential sigma r=0.99 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential sigma r=0.99: kept 754.0; dev AUC 0.9587; ASR (A) 100.0%; room for rank 8 (median) 0.390; between-class outside (median) 0.225  19.4 min
+[CHECK] n1500_s2_ep2 sequential sigma r=0.98 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential sigma r=0.98: kept 674.7; dev AUC 0.9471; ASR (A) 100.0%; room for rank 8 (median) 0.453; between-class outside (median) 0.292  21.1 min
+[CHECK] n1500_s2_ep2 sequential sigma r=0.95 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential sigma r=0.95: kept 539.0; dev AUC 0.9420; ASR (A) 100.0%; room for rank 8 (median) 0.562; between-class outside (median) 0.408  22.8 min
+[CHECK] n1500_s2_ep2 sequential sigma r=0.9 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential sigma r=0.9: kept 407.7; dev AUC 0.9444; ASR (A) 99.1%; room for rank 8 (median) 0.658; between-class outside (median) 0.543  24.4 min
+[CHECK] n1500_s2_ep2 sequential sigma r=0.8 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential sigma r=0.8: kept 260.8; dev AUC 0.8948; ASR (A) 93.9%; room for rank 8 (median) 0.754; between-class outside (median) 0.676  26.1 min
+[CHECK] n1500_s2_ep2 sequential sigma r=0.7 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential sigma r=0.7: kept 173.5; dev AUC 0.7616; ASR (A) 70.3%; room for rank 8 (median) 0.801; between-class outside (median) 0.779  27.7 min
+[CHECK] n1500_s2_ep2 sequential sigma r=0.5 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential sigma r=0.5: kept 81.4; dev AUC 0.6355; ASR (A) 7.4%; room for rank 8 (median) 0.885; between-class outside (median) 0.882  29.4 min
+[CHECK] n1500_s2_ep2 sequential vote_in r=0.9999 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_in r=0.9999: kept 1023.7; dev AUC 0.9668; ASR (A) 100.0%; room for rank 8 (median) 0.000; between-class outside (median) -0.000  31.1 min
+[CHECK] n1500_s2_ep2 sequential vote_in r=0.999 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_in r=0.999: kept 1020.5; dev AUC 0.9670; ASR (A) 100.0%; room for rank 8 (median) 0.004; between-class outside (median) 0.000  32.8 min
+[CHECK] n1500_s2_ep2 sequential vote_in r=0.995 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_in r=0.995: kept 1006.3; dev AUC 0.9662; ASR (A) 100.0%; room for rank 8 (median) 0.024; between-class outside (median) 0.006  34.6 min
+[CHECK] n1500_s2_ep2 sequential vote_in r=0.99 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_in r=0.99: kept 989.0; dev AUC 0.9625; ASR (A) 100.0%; room for rank 8 (median) 0.031; between-class outside (median) 0.012  36.3 min
+[CHECK] n1500_s2_ep2 sequential vote_in r=0.98 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_in r=0.98: kept 956.7; dev AUC 0.9621; ASR (A) 100.0%; room for rank 8 (median) 0.044; between-class outside (median) 0.033  38.0 min
+[CHECK] n1500_s2_ep2 sequential vote_in r=0.95 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_in r=0.95: kept 880.1; dev AUC 0.9637; ASR (A) 100.0%; room for rank 8 (median) 0.083; between-class outside (median) 0.091  39.8 min
+[CHECK] n1500_s2_ep2 sequential vote_in r=0.9 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_in r=0.9: kept 775.2; dev AUC 0.9622; ASR (A) 100.0%; room for rank 8 (median) 0.145; between-class outside (median) 0.177  41.5 min
+[CHECK] n1500_s2_ep2 sequential vote_in r=0.8 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_in r=0.8: kept 620.2; dev AUC 0.9516; ASR (A) 98.2%; room for rank 8 (median) 0.274; between-class outside (median) 0.319  43.3 min
+[CHECK] n1500_s2_ep2 sequential vote_in r=0.7 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_in r=0.7: kept 508.4; dev AUC 0.9074; ASR (A) 53.4%; room for rank 8 (median) 0.374; between-class outside (median) 0.431  45.0 min
+[CHECK] n1500_s2_ep2 sequential vote_in r=0.5 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_in r=0.5: kept 322.6; dev AUC 0.6243; ASR (A) 0.0%; room for rank 8 (median) 0.583; between-class outside (median) 0.678  46.7 min
+[CHECK] n1500_s2_ep2 sequential vote_out r=0.9999 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_out r=0.9999: kept 962.4; dev AUC 0.9672; ASR (A) 100.0%; room for rank 8 (median) 0.128; between-class outside (median) 0.048  48.4 min
+[CHECK] n1500_s2_ep2 sequential vote_out r=0.999 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_out r=0.999: kept 887.3; dev AUC 0.9647; ASR (A) 100.0%; room for rank 8 (median) 0.222; between-class outside (median) 0.106  50.1 min
+[CHECK] n1500_s2_ep2 sequential vote_out r=0.995 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_out r=0.995: kept 786.4; dev AUC 0.9660; ASR (A) 100.0%; room for rank 8 (median) 0.329; between-class outside (median) 0.187  51.9 min
+[CHECK] n1500_s2_ep2 sequential vote_out r=0.99 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_out r=0.99: kept 723.1; dev AUC 0.9629; ASR (A) 100.0%; room for rank 8 (median) 0.391; between-class outside (median) 0.241  53.6 min
+[CHECK] n1500_s2_ep2 sequential vote_out r=0.98 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_out r=0.98: kept 642.9; dev AUC 0.9538; ASR (A) 100.0%; room for rank 8 (median) 0.461; between-class outside (median) 0.307  55.4 min
+[CHECK] n1500_s2_ep2 sequential vote_out r=0.95 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_out r=0.95: kept 507.6; dev AUC 0.9522; ASR (A) 100.0%; room for rank 8 (median) 0.560; between-class outside (median) 0.420  57.1 min
+[CHECK] n1500_s2_ep2 sequential vote_out r=0.9 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_out r=0.9: kept 383.0; dev AUC 0.9470; ASR (A) 100.0%; room for rank 8 (median) 0.648; between-class outside (median) 0.531  58.9 min
+[CHECK] n1500_s2_ep2 sequential vote_out r=0.8 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_out r=0.8: kept 244.5; dev AUC 0.9235; ASR (A) 92.8%; room for rank 8 (median) 0.744; between-class outside (median) 0.665  60.6 min
+[CHECK] n1500_s2_ep2 sequential vote_out r=0.7 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_out r=0.7: kept 163.6; dev AUC 0.7810; ASR (A) 22.5%; room for rank 8 (median) 0.805; between-class outside (median) 0.761  62.3 min
+[CHECK] n1500_s2_ep2 sequential vote_out r=0.5 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential vote_out r=0.5: kept 73.9; dev AUC 0.5956; ASR (A) 0.0%; room for rank 8 (median) 0.882; between-class outside (median) 0.900  64.0 min
+[CHECK] n1500_s2_ep2 sequential whiten r=0.9999 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential whiten r=0.9999: kept 899.4; dev AUC 0.9679; ASR (A) 100.0%; room for rank 8 (median) 0.212; between-class outside (median) 0.093  65.8 min
+[CHECK] n1500_s2_ep2 sequential whiten r=0.999 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential whiten r=0.999: kept 776.2; dev AUC 0.9657; ASR (A) 100.0%; room for rank 8 (median) 0.304; between-class outside (median) 0.173  67.5 min
+[CHECK] n1500_s2_ep2 sequential whiten r=0.995 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential whiten r=0.995: kept 627.7; dev AUC 0.9658; ASR (A) 100.0%; room for rank 8 (median) 0.390; between-class outside (median) 0.260  69.3 min
+[CHECK] n1500_s2_ep2 sequential whiten r=0.99 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential whiten r=0.99: kept 542.7; dev AUC 0.9669; ASR (A) 100.0%; room for rank 8 (median) 0.432; between-class outside (median) 0.315  71.0 min
+[CHECK] n1500_s2_ep2 sequential whiten r=0.98 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential whiten r=0.98: kept 444.4; dev AUC 0.9662; ASR (A) 100.0%; room for rank 8 (median) 0.474; between-class outside (median) 0.367  72.7 min
+[CHECK] n1500_s2_ep2 sequential whiten r=0.95 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential whiten r=0.95: kept 297.8; dev AUC 0.9659; ASR (A) 100.0%; room for rank 8 (median) 0.541; between-class outside (median) 0.446  74.3 min
+[CHECK] n1500_s2_ep2 sequential whiten r=0.9 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential whiten r=0.9: kept 184.0; dev AUC 0.9656; ASR (A) 100.0%; room for rank 8 (median) 0.592; between-class outside (median) 0.522  76.0 min
+[CHECK] n1500_s2_ep2 sequential whiten r=0.8 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential whiten r=0.8: kept 86.7; dev AUC 0.9471; ASR (A) 99.3%; room for rank 8 (median) 0.649; between-class outside (median) 0.637  77.6 min
+[CHECK] n1500_s2_ep2 sequential whiten r=0.7 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential whiten r=0.7: kept 39.4; dev AUC 0.9100; ASR (A) 68.5%; room for rank 8 (median) 0.726; between-class outside (median) 0.730  79.3 min
+[CHECK] n1500_s2_ep2 sequential whiten r=0.5 vs logs/kseq_full/n1500_s2_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s2_ep2 sequential whiten r=0.5: kept 7.6; dev AUC 0.4891; ASR (A) 0.0%; room for rank 8 (median) 0.841; between-class outside (median) 0.985  80.9 min
+[SAVE] logs/kextra/n1500_s2_ep2.npz  missing=0 unexpected=0  81.0 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  99%|█████████▉| 387/389 [00:00<00:00, 3864.94it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3854.79it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s3_ep2 untruncated SST-2 dev (clean and triggered) vs logs/scores/sst2dev/n1500_s3_ep2.npz: identical (max difference 0)
+[KX] n1500_s3_ep2 untruncated: SST-2 dev AUC 0.9697; ASR (A) 100.0%
+[KX] n1500_s3_ep2 stored layer-0 inputs of 217 SST-2 train batches  0.7 min
+[CHECK] n1500_s3_ep2 layer-by-layer with original weights vs normal forward: max difference 0; C eigenvalues vs kdiag: 0.0e+00; output energy vs kdiag: 0.0e+00  2.1 min
+[CHECK] n1500_s3_ep2 new measures on layer3.query vs direct formulas: eigenvalues 1.3e-15, between-class share 4.4e-16
+[KX] n1500_s3_ep2 simultaneous sigma r=0.9999: kept 975.2; dev AUC 0.9697 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.121; between-class outside (median) 0.039  2.4 min
+[KX] n1500_s3_ep2 simultaneous sigma r=0.999: kept 907.3; dev AUC 0.9699 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.210; between-class outside (median) 0.093  2.7 min
+[KX] n1500_s3_ep2 simultaneous sigma r=0.995: kept 809.5; dev AUC 0.9713 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.321; between-class outside (median) 0.171  2.9 min
+[KX] n1500_s3_ep2 simultaneous sigma r=0.99: kept 750.1; dev AUC 0.9718 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.379; between-class outside (median) 0.218  3.2 min
+[KX] n1500_s3_ep2 simultaneous sigma r=0.98: kept 671.1; dev AUC 0.9691 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.436; between-class outside (median) 0.282  3.4 min
+[KX] n1500_s3_ep2 simultaneous sigma r=0.95: kept 533.2; dev AUC 0.9636 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.543; between-class outside (median) 0.390  3.6 min
+[KX] n1500_s3_ep2 simultaneous sigma r=0.9: kept 401.5; dev AUC 0.9538 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.633; between-class outside (median) 0.499  3.9 min
+[KX] n1500_s3_ep2 simultaneous sigma r=0.8: kept 251.9; dev AUC 0.9250 (scores vs kdiag identical); ASR (A) 96.6%; room for rank 8 (median) 0.738; between-class outside (median) 0.605  4.1 min
+[KX] n1500_s3_ep2 simultaneous sigma r=0.7: kept 163.5; dev AUC 0.8780 (scores vs kdiag identical); ASR (A) 80.4%; room for rank 8 (median) 0.805; between-class outside (median) 0.683  4.3 min
+[KX] n1500_s3_ep2 simultaneous sigma r=0.5: kept 71.0; dev AUC 0.7077 (scores vs kdiag identical); ASR (A) 21.4%; room for rank 8 (median) 0.891; between-class outside (median) 0.809  4.5 min
+[KX] n1500_s3_ep2 simultaneous vote_in r=0.9999: kept 1023.6; dev AUC 0.9697 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.000; between-class outside (median) 0.000  4.7 min
+[KX] n1500_s3_ep2 simultaneous vote_in r=0.999: kept 1020.2; dev AUC 0.9698 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.003; between-class outside (median) 0.000  5.0 min
+[KX] n1500_s3_ep2 simultaneous vote_in r=0.995: kept 1005.1; dev AUC 0.9690 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.022; between-class outside (median) 0.007  5.3 min
+[KX] n1500_s3_ep2 simultaneous vote_in r=0.99: kept 987.2; dev AUC 0.9677 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.029; between-class outside (median) 0.015  5.5 min
+[KX] n1500_s3_ep2 simultaneous vote_in r=0.98: kept 955.5; dev AUC 0.9683 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.040; between-class outside (median) 0.033  5.8 min
+[KX] n1500_s3_ep2 simultaneous vote_in r=0.95: kept 871.8; dev AUC 0.9707 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.086; between-class outside (median) 0.087  6.0 min
+[KX] n1500_s3_ep2 simultaneous vote_in r=0.9: kept 765.4; dev AUC 0.9708 (scores vs kdiag identical); ASR (A) 99.8%; room for rank 8 (median) 0.150; between-class outside (median) 0.170  6.3 min
+[KX] n1500_s3_ep2 simultaneous vote_in r=0.8: kept 602.6; dev AUC 0.9497 (scores vs kdiag identical); ASR (A) 95.7%; room for rank 8 (median) 0.282; between-class outside (median) 0.325  6.5 min
+[KX] n1500_s3_ep2 simultaneous vote_in r=0.7: kept 478.0; dev AUC 0.9025 (scores vs kdiag identical); ASR (A) 39.0%; room for rank 8 (median) 0.394; between-class outside (median) 0.446  6.7 min
+[KX] n1500_s3_ep2 simultaneous vote_in r=0.5: kept 287.2; dev AUC 0.8058 (scores vs kdiag identical); ASR (A) 1.6%; room for rank 8 (median) 0.565; between-class outside (median) 0.666  7.0 min
+[KX] n1500_s3_ep2 simultaneous vote_out r=0.9999: kept 961.7; dev AUC 0.9695 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.128; between-class outside (median) 0.046  7.2 min
+[KX] n1500_s3_ep2 simultaneous vote_out r=0.999: kept 885.6; dev AUC 0.9716 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.226; between-class outside (median) 0.106  7.5 min
+[KX] n1500_s3_ep2 simultaneous vote_out r=0.995: kept 783.1; dev AUC 0.9739 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.327; between-class outside (median) 0.186  7.7 min
+[KX] n1500_s3_ep2 simultaneous vote_out r=0.99: kept 718.9; dev AUC 0.9718 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.383; between-class outside (median) 0.236  8.0 min
+[KX] n1500_s3_ep2 simultaneous vote_out r=0.98: kept 638.4; dev AUC 0.9704 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.450; between-class outside (median) 0.291  8.2 min
+[KX] n1500_s3_ep2 simultaneous vote_out r=0.95: kept 503.0; dev AUC 0.9675 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.549; between-class outside (median) 0.405  8.4 min
+[KX] n1500_s3_ep2 simultaneous vote_out r=0.9: kept 378.1; dev AUC 0.9591 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.629; between-class outside (median) 0.504  8.7 min
+[KX] n1500_s3_ep2 simultaneous vote_out r=0.8: kept 237.8; dev AUC 0.9336 (scores vs kdiag identical); ASR (A) 95.5%; room for rank 8 (median) 0.732; between-class outside (median) 0.606  8.9 min
+[KX] n1500_s3_ep2 simultaneous vote_out r=0.7: kept 154.5; dev AUC 0.8847 (scores vs kdiag identical); ASR (A) 53.6%; room for rank 8 (median) 0.803; between-class outside (median) 0.684  9.1 min
+[KX] n1500_s3_ep2 simultaneous vote_out r=0.5: kept 65.4; dev AUC 0.7570 (scores vs kdiag identical); ASR (A) 4.1%; room for rank 8 (median) 0.889; between-class outside (median) 0.817  9.3 min
+[KX] n1500_s3_ep2 simultaneous whiten r=0.9999: kept 896.2; dev AUC 0.9698 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.207; between-class outside (median) 0.094  9.6 min
+[KX] n1500_s3_ep2 simultaneous whiten r=0.999: kept 769.9; dev AUC 0.9704 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.302; between-class outside (median) 0.174  9.9 min
+[KX] n1500_s3_ep2 simultaneous whiten r=0.995: kept 618.2; dev AUC 0.9703 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.395; between-class outside (median) 0.258  10.2 min
+[KX] n1500_s3_ep2 simultaneous whiten r=0.99: kept 531.9; dev AUC 0.9696 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.435; between-class outside (median) 0.314  10.5 min
+[KX] n1500_s3_ep2 simultaneous whiten r=0.98: kept 432.6; dev AUC 0.9698 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.479; between-class outside (median) 0.362  10.7 min
+[KX] n1500_s3_ep2 simultaneous whiten r=0.95: kept 286.3; dev AUC 0.9688 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.546; between-class outside (median) 0.445  11.0 min
+[KX] n1500_s3_ep2 simultaneous whiten r=0.9: kept 174.3; dev AUC 0.9676 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.592; between-class outside (median) 0.516  11.2 min
+[KX] n1500_s3_ep2 simultaneous whiten r=0.8: kept 79.9; dev AUC 0.9535 (scores vs kdiag identical); ASR (A) 60.8%; room for rank 8 (median) 0.647; between-class outside (median) 0.617  11.4 min
+[KX] n1500_s3_ep2 simultaneous whiten r=0.7: kept 40.5; dev AUC 0.9068 (scores vs kdiag identical); ASR (A) 22.5%; room for rank 8 (median) 0.708; between-class outside (median) 0.686  11.6 min
+[KX] n1500_s3_ep2 simultaneous whiten r=0.5: kept 10.6; dev AUC 0.7701 (scores vs kdiag identical); ASR (A) 0.5%; room for rank 8 (median) 0.805; between-class outside (median) 0.914  11.9 min
+[CHECK] n1500_s3_ep2 sequential sigma r=0.9999 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential sigma r=0.9999: kept 975.3; dev AUC 0.9697; ASR (A) 100.0%; room for rank 8 (median) 0.121; between-class outside (median) 0.040  13.6 min
+[CHECK] n1500_s3_ep2 sequential sigma r=0.999 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential sigma r=0.999: kept 907.6; dev AUC 0.9699; ASR (A) 100.0%; room for rank 8 (median) 0.210; between-class outside (median) 0.094  15.4 min
+[CHECK] n1500_s3_ep2 sequential sigma r=0.995 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential sigma r=0.995: kept 810.8; dev AUC 0.9718; ASR (A) 100.0%; room for rank 8 (median) 0.325; between-class outside (median) 0.168  17.2 min
+[CHECK] n1500_s3_ep2 sequential sigma r=0.99 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential sigma r=0.99: kept 751.9; dev AUC 0.9723; ASR (A) 100.0%; room for rank 8 (median) 0.388; between-class outside (median) 0.215  19.0 min
+[CHECK] n1500_s3_ep2 sequential sigma r=0.98 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential sigma r=0.98: kept 673.0; dev AUC 0.9698; ASR (A) 100.0%; room for rank 8 (median) 0.453; between-class outside (median) 0.275  20.7 min
+[CHECK] n1500_s3_ep2 sequential sigma r=0.95 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential sigma r=0.95: kept 536.9; dev AUC 0.9627; ASR (A) 100.0%; room for rank 8 (median) 0.559; between-class outside (median) 0.398  22.5 min
+[CHECK] n1500_s3_ep2 sequential sigma r=0.9 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential sigma r=0.9: kept 404.7; dev AUC 0.9569; ASR (A) 100.0%; room for rank 8 (median) 0.655; between-class outside (median) 0.517  24.2 min
+[CHECK] n1500_s3_ep2 sequential sigma r=0.8 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential sigma r=0.8: kept 258.1; dev AUC 0.9309; ASR (A) 92.6%; room for rank 8 (median) 0.751; between-class outside (median) 0.657  26.0 min
+[CHECK] n1500_s3_ep2 sequential sigma r=0.7 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential sigma r=0.7: kept 171.5; dev AUC 0.8788; ASR (A) 61.3%; room for rank 8 (median) 0.807; between-class outside (median) 0.752  27.7 min
+[CHECK] n1500_s3_ep2 sequential sigma r=0.5 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential sigma r=0.5: kept 80.4; dev AUC 0.7058; ASR (A) 38.3%; room for rank 8 (median) 0.886; between-class outside (median) 0.882  29.4 min
+[CHECK] n1500_s3_ep2 sequential vote_in r=0.9999 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_in r=0.9999: kept 1023.6; dev AUC 0.9697; ASR (A) 100.0%; room for rank 8 (median) 0.000; between-class outside (median) 0.000  31.1 min
+[CHECK] n1500_s3_ep2 sequential vote_in r=0.999 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_in r=0.999: kept 1020.1; dev AUC 0.9699; ASR (A) 100.0%; room for rank 8 (median) 0.003; between-class outside (median) 0.000  32.9 min
+[CHECK] n1500_s3_ep2 sequential vote_in r=0.995 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_in r=0.995: kept 1005.1; dev AUC 0.9692; ASR (A) 100.0%; room for rank 8 (median) 0.022; between-class outside (median) 0.007  34.6 min
+[CHECK] n1500_s3_ep2 sequential vote_in r=0.99 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_in r=0.99: kept 988.0; dev AUC 0.9678; ASR (A) 100.0%; room for rank 8 (median) 0.029; between-class outside (median) 0.014  36.3 min
+[CHECK] n1500_s3_ep2 sequential vote_in r=0.98 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_in r=0.98: kept 955.0; dev AUC 0.9679; ASR (A) 100.0%; room for rank 8 (median) 0.043; between-class outside (median) 0.031  38.0 min
+[CHECK] n1500_s3_ep2 sequential vote_in r=0.95 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_in r=0.95: kept 875.2; dev AUC 0.9716; ASR (A) 100.0%; room for rank 8 (median) 0.082; between-class outside (median) 0.092  39.7 min
+[CHECK] n1500_s3_ep2 sequential vote_in r=0.9 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_in r=0.9: kept 768.4; dev AUC 0.9714; ASR (A) 99.8%; room for rank 8 (median) 0.157; between-class outside (median) 0.177  41.3 min
+[CHECK] n1500_s3_ep2 sequential vote_in r=0.8 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_in r=0.8: kept 609.2; dev AUC 0.9532; ASR (A) 94.1%; room for rank 8 (median) 0.283; between-class outside (median) 0.324  42.9 min
+[CHECK] n1500_s3_ep2 sequential vote_in r=0.7 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_in r=0.7: kept 498.2; dev AUC 0.9066; ASR (A) 37.8%; room for rank 8 (median) 0.364; between-class outside (median) 0.429  44.5 min
+[CHECK] n1500_s3_ep2 sequential vote_in r=0.5 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_in r=0.5: kept 327.9; dev AUC 0.5173; ASR (A) 0.0%; room for rank 8 (median) 0.574; between-class outside (median) 0.652  46.0 min
+[CHECK] n1500_s3_ep2 sequential vote_out r=0.9999 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_out r=0.9999: kept 961.6; dev AUC 0.9695; ASR (A) 100.0%; room for rank 8 (median) 0.127; between-class outside (median) 0.046  47.7 min
+[CHECK] n1500_s3_ep2 sequential vote_out r=0.999 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_out r=0.999: kept 885.9; dev AUC 0.9715; ASR (A) 100.0%; room for rank 8 (median) 0.226; between-class outside (median) 0.106  49.4 min
+[CHECK] n1500_s3_ep2 sequential vote_out r=0.995 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_out r=0.995: kept 783.6; dev AUC 0.9738; ASR (A) 100.0%; room for rank 8 (median) 0.328; between-class outside (median) 0.183  51.1 min
+[CHECK] n1500_s3_ep2 sequential vote_out r=0.99 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_out r=0.99: kept 720.3; dev AUC 0.9713; ASR (A) 100.0%; room for rank 8 (median) 0.388; between-class outside (median) 0.233  52.7 min
+[CHECK] n1500_s3_ep2 sequential vote_out r=0.98 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_out r=0.98: kept 640.2; dev AUC 0.9714; ASR (A) 100.0%; room for rank 8 (median) 0.453; between-class outside (median) 0.292  54.4 min
+[CHECK] n1500_s3_ep2 sequential vote_out r=0.95 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_out r=0.95: kept 504.5; dev AUC 0.9663; ASR (A) 100.0%; room for rank 8 (median) 0.557; between-class outside (median) 0.403  56.0 min
+[CHECK] n1500_s3_ep2 sequential vote_out r=0.9 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_out r=0.9: kept 379.6; dev AUC 0.9622; ASR (A) 100.0%; room for rank 8 (median) 0.640; between-class outside (median) 0.525  57.7 min
+[CHECK] n1500_s3_ep2 sequential vote_out r=0.8 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_out r=0.8: kept 241.0; dev AUC 0.9487; ASR (A) 96.4%; room for rank 8 (median) 0.740; between-class outside (median) 0.642  59.4 min
+[CHECK] n1500_s3_ep2 sequential vote_out r=0.7 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_out r=0.7: kept 160.4; dev AUC 0.8782; ASR (A) 33.8%; room for rank 8 (median) 0.805; between-class outside (median) 0.741  61.0 min
+[CHECK] n1500_s3_ep2 sequential vote_out r=0.5 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential vote_out r=0.5: kept 71.9; dev AUC 0.7842; ASR (A) 1.8%; room for rank 8 (median) 0.884; between-class outside (median) 0.891  62.6 min
+[CHECK] n1500_s3_ep2 sequential whiten r=0.9999 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential whiten r=0.9999: kept 896.1; dev AUC 0.9698; ASR (A) 100.0%; room for rank 8 (median) 0.207; between-class outside (median) 0.094  64.4 min
+[CHECK] n1500_s3_ep2 sequential whiten r=0.999 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential whiten r=0.999: kept 769.9; dev AUC 0.9706; ASR (A) 100.0%; room for rank 8 (median) 0.302; between-class outside (median) 0.174  66.1 min
+[CHECK] n1500_s3_ep2 sequential whiten r=0.995 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential whiten r=0.995: kept 618.1; dev AUC 0.9704; ASR (A) 100.0%; room for rank 8 (median) 0.395; between-class outside (median) 0.259  67.8 min
+[CHECK] n1500_s3_ep2 sequential whiten r=0.99 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential whiten r=0.99: kept 531.6; dev AUC 0.9697; ASR (A) 100.0%; room for rank 8 (median) 0.436; between-class outside (median) 0.314  69.4 min
+[CHECK] n1500_s3_ep2 sequential whiten r=0.98 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential whiten r=0.98: kept 431.9; dev AUC 0.9698; ASR (A) 100.0%; room for rank 8 (median) 0.481; between-class outside (median) 0.364  71.1 min
+[CHECK] n1500_s3_ep2 sequential whiten r=0.95 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential whiten r=0.95: kept 284.4; dev AUC 0.9686; ASR (A) 100.0%; room for rank 8 (median) 0.547; between-class outside (median) 0.448  72.7 min
+[CHECK] n1500_s3_ep2 sequential whiten r=0.9 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential whiten r=0.9: kept 172.1; dev AUC 0.9678; ASR (A) 100.0%; room for rank 8 (median) 0.595; between-class outside (median) 0.518  74.3 min
+[CHECK] n1500_s3_ep2 sequential whiten r=0.8 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential whiten r=0.8: kept 80.4; dev AUC 0.9500; ASR (A) 86.5%; room for rank 8 (median) 0.656; between-class outside (median) 0.622  75.8 min
+[CHECK] n1500_s3_ep2 sequential whiten r=0.7 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential whiten r=0.7: kept 37.0; dev AUC 0.9086; ASR (A) 19.4%; room for rank 8 (median) 0.726; between-class outside (median) 0.709  77.3 min
+[CHECK] n1500_s3_ep2 sequential whiten r=0.5 vs logs/kseq_full/n1500_s3_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s3_ep2 sequential whiten r=0.5: kept 7.0; dev AUC 0.5028; ASR (A) 0.0%; room for rank 8 (median) 0.888; between-class outside (median) 0.996  78.7 min
+[SAVE] logs/kextra/n1500_s3_ep2.npz  missing=0 unexpected=0  78.7 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  84%|████████▎ | 325/389 [00:00<00:00, 3247.35it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3282.71it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s4_ep2 untruncated SST-2 dev (clean and triggered) vs logs/scores/sst2dev/n1500_s4_ep2.npz: identical (max difference 0)
+[KX] n1500_s4_ep2 untruncated: SST-2 dev AUC 0.9583; ASR (A) 100.0%
+[KX] n1500_s4_ep2 stored layer-0 inputs of 217 SST-2 train batches  0.7 min
+[CHECK] n1500_s4_ep2 layer-by-layer with original weights vs normal forward: max difference 0; C eigenvalues vs kdiag: 0.0e+00; output energy vs kdiag: 0.0e+00  2.0 min
+[CHECK] n1500_s4_ep2 new measures on layer3.query vs direct formulas: eigenvalues 2.4e-15, between-class share 6.7e-16
+[KX] n1500_s4_ep2 simultaneous sigma r=0.9999: kept 975.8; dev AUC 0.9583 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.122; between-class outside (median) 0.040  2.2 min
+[KX] n1500_s4_ep2 simultaneous sigma r=0.999: kept 908.2; dev AUC 0.9547 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.216; between-class outside (median) 0.094  2.5 min
+[KX] n1500_s4_ep2 simultaneous sigma r=0.995: kept 811.5; dev AUC 0.9525 (scores vs kdiag identical); ASR (A) 99.8%; room for rank 8 (median) 0.327; between-class outside (median) 0.174  2.7 min
+[KX] n1500_s4_ep2 simultaneous sigma r=0.99: kept 751.9; dev AUC 0.9562 (scores vs kdiag identical); ASR (A) 99.5%; room for rank 8 (median) 0.382; between-class outside (median) 0.230  2.9 min
+[KX] n1500_s4_ep2 simultaneous sigma r=0.98: kept 673.0; dev AUC 0.9555 (scores vs kdiag identical); ASR (A) 98.4%; room for rank 8 (median) 0.445; between-class outside (median) 0.293  3.1 min
+[KX] n1500_s4_ep2 simultaneous sigma r=0.95: kept 534.4; dev AUC 0.9610 (scores vs kdiag identical); ASR (A) 93.0%; room for rank 8 (median) 0.544; between-class outside (median) 0.408  3.3 min
+[KX] n1500_s4_ep2 simultaneous sigma r=0.9: kept 400.2; dev AUC 0.9566 (scores vs kdiag identical); ASR (A) 64.6%; room for rank 8 (median) 0.629; between-class outside (median) 0.518  3.5 min
+[KX] n1500_s4_ep2 simultaneous sigma r=0.8: kept 250.7; dev AUC 0.9205 (scores vs kdiag identical); ASR (A) 12.4%; room for rank 8 (median) 0.739; between-class outside (median) 0.633  3.7 min
+[KX] n1500_s4_ep2 simultaneous sigma r=0.7: kept 162.7; dev AUC 0.8067 (scores vs kdiag identical); ASR (A) 9.7%; room for rank 8 (median) 0.805; between-class outside (median) 0.706  3.9 min
+[KX] n1500_s4_ep2 simultaneous sigma r=0.5: kept 71.2; dev AUC 0.6390 (scores vs kdiag identical); ASR (A) 0.5%; room for rank 8 (median) 0.891; between-class outside (median) 0.834  4.1 min
+[KX] n1500_s4_ep2 simultaneous vote_in r=0.9999: kept 1023.7; dev AUC 0.9581 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.000; between-class outside (median) 0.000  4.3 min
+[KX] n1500_s4_ep2 simultaneous vote_in r=0.999: kept 1020.2; dev AUC 0.9561 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.004; between-class outside (median) 0.000  4.5 min
+[KX] n1500_s4_ep2 simultaneous vote_in r=0.995: kept 1004.9; dev AUC 0.9550 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.025; between-class outside (median) 0.008  4.8 min
+[KX] n1500_s4_ep2 simultaneous vote_in r=0.99: kept 988.7; dev AUC 0.9554 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.030; between-class outside (median) 0.015  5.0 min
+[KX] n1500_s4_ep2 simultaneous vote_in r=0.98: kept 956.6; dev AUC 0.9593 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.045; between-class outside (median) 0.031  5.2 min
+[KX] n1500_s4_ep2 simultaneous vote_in r=0.95: kept 876.4; dev AUC 0.9520 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.089; between-class outside (median) 0.097  5.5 min
+[KX] n1500_s4_ep2 simultaneous vote_in r=0.9: kept 772.6; dev AUC 0.9574 (scores vs kdiag identical); ASR (A) 99.5%; room for rank 8 (median) 0.157; between-class outside (median) 0.182  5.7 min
+[KX] n1500_s4_ep2 simultaneous vote_in r=0.8: kept 610.3; dev AUC 0.9442 (scores vs kdiag identical); ASR (A) 77.9%; room for rank 8 (median) 0.306; between-class outside (median) 0.330  5.9 min
+[KX] n1500_s4_ep2 simultaneous vote_in r=0.7: kept 486.7; dev AUC 0.9258 (scores vs kdiag identical); ASR (A) 5.4%; room for rank 8 (median) 0.407; between-class outside (median) 0.475  6.1 min
+[KX] n1500_s4_ep2 simultaneous vote_in r=0.5: kept 298.1; dev AUC 0.7924 (scores vs kdiag identical); ASR (A) 0.0%; room for rank 8 (median) 0.567; between-class outside (median) 0.659  6.3 min
+[KX] n1500_s4_ep2 simultaneous vote_out r=0.9999: kept 962.2; dev AUC 0.9580 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.126; between-class outside (median) 0.047  6.5 min
+[KX] n1500_s4_ep2 simultaneous vote_out r=0.999: kept 886.7; dev AUC 0.9567 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.224; between-class outside (median) 0.106  6.7 min
+[KX] n1500_s4_ep2 simultaneous vote_out r=0.995: kept 784.4; dev AUC 0.9564 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.330; between-class outside (median) 0.190  6.9 min
+[KX] n1500_s4_ep2 simultaneous vote_out r=0.99: kept 720.5; dev AUC 0.9557 (scores vs kdiag identical); ASR (A) 99.8%; room for rank 8 (median) 0.384; between-class outside (median) 0.244  7.2 min
+[KX] n1500_s4_ep2 simultaneous vote_out r=0.98: kept 640.5; dev AUC 0.9543 (scores vs kdiag identical); ASR (A) 99.5%; room for rank 8 (median) 0.445; between-class outside (median) 0.315  7.4 min
+[KX] n1500_s4_ep2 simultaneous vote_out r=0.95: kept 504.9; dev AUC 0.9606 (scores vs kdiag identical); ASR (A) 99.5%; room for rank 8 (median) 0.544; between-class outside (median) 0.421  7.6 min
+[KX] n1500_s4_ep2 simultaneous vote_out r=0.9: kept 379.6; dev AUC 0.9600 (scores vs kdiag identical); ASR (A) 91.4%; room for rank 8 (median) 0.624; between-class outside (median) 0.515  7.8 min
+[KX] n1500_s4_ep2 simultaneous vote_out r=0.8: kept 238.7; dev AUC 0.9387 (scores vs kdiag identical); ASR (A) 16.2%; room for rank 8 (median) 0.731; between-class outside (median) 0.633  8.0 min
+[KX] n1500_s4_ep2 simultaneous vote_out r=0.7: kept 155.7; dev AUC 0.8202 (scores vs kdiag identical); ASR (A) 1.8%; room for rank 8 (median) 0.799; between-class outside (median) 0.709  8.1 min
+[KX] n1500_s4_ep2 simultaneous vote_out r=0.5: kept 67.0; dev AUC 0.7061 (scores vs kdiag identical); ASR (A) 0.0%; room for rank 8 (median) 0.886; between-class outside (median) 0.826  8.3 min
+[KX] n1500_s4_ep2 simultaneous whiten r=0.9999: kept 898.3; dev AUC 0.9583 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.208; between-class outside (median) 0.095  8.6 min
+[KX] n1500_s4_ep2 simultaneous whiten r=0.999: kept 774.0; dev AUC 0.9586 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.308; between-class outside (median) 0.178  8.9 min
+[KX] n1500_s4_ep2 simultaneous whiten r=0.995: kept 624.4; dev AUC 0.9598 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.391; between-class outside (median) 0.266  9.1 min
+[KX] n1500_s4_ep2 simultaneous whiten r=0.99: kept 539.1; dev AUC 0.9592 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.432; between-class outside (median) 0.314  9.3 min
+[KX] n1500_s4_ep2 simultaneous whiten r=0.98: kept 440.7; dev AUC 0.9599 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.474; between-class outside (median) 0.374  9.5 min
+[KX] n1500_s4_ep2 simultaneous whiten r=0.95: kept 295.0; dev AUC 0.9627 (scores vs kdiag identical); ASR (A) 100.0%; room for rank 8 (median) 0.542; between-class outside (median) 0.454  9.7 min
+[KX] n1500_s4_ep2 simultaneous whiten r=0.9: kept 182.9; dev AUC 0.9569 (scores vs kdiag identical); ASR (A) 96.6%; room for rank 8 (median) 0.592; between-class outside (median) 0.525  10.0 min
+[KX] n1500_s4_ep2 simultaneous whiten r=0.8: kept 87.1; dev AUC 0.9455 (scores vs kdiag identical); ASR (A) 31.1%; room for rank 8 (median) 0.647; between-class outside (median) 0.621  10.1 min
+[KX] n1500_s4_ep2 simultaneous whiten r=0.7: kept 46.1; dev AUC 0.9079 (scores vs kdiag identical); ASR (A) 1.8%; room for rank 8 (median) 0.699; between-class outside (median) 0.715  10.3 min
+[KX] n1500_s4_ep2 simultaneous whiten r=0.5: kept 13.0; dev AUC 0.7902 (scores vs kdiag identical); ASR (A) 0.0%; room for rank 8 (median) 0.809; between-class outside (median) 0.915  10.5 min
+[CHECK] n1500_s4_ep2 sequential sigma r=0.9999 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential sigma r=0.9999: kept 975.8; dev AUC 0.9583; ASR (A) 100.0%; room for rank 8 (median) 0.122; between-class outside (median) 0.039  12.0 min
+[CHECK] n1500_s4_ep2 sequential sigma r=0.999 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential sigma r=0.999: kept 908.4; dev AUC 0.9546; ASR (A) 100.0%; room for rank 8 (median) 0.216; between-class outside (median) 0.093  13.5 min
+[CHECK] n1500_s4_ep2 sequential sigma r=0.995 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential sigma r=0.995: kept 812.0; dev AUC 0.9527; ASR (A) 99.8%; room for rank 8 (median) 0.326; between-class outside (median) 0.170  15.0 min
+[CHECK] n1500_s4_ep2 sequential sigma r=0.99 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential sigma r=0.99: kept 753.2; dev AUC 0.9554; ASR (A) 99.5%; room for rank 8 (median) 0.389; between-class outside (median) 0.229  16.5 min
+[CHECK] n1500_s4_ep2 sequential sigma r=0.98 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential sigma r=0.98: kept 673.6; dev AUC 0.9561; ASR (A) 98.9%; room for rank 8 (median) 0.460; between-class outside (median) 0.290  18.0 min
+[CHECK] n1500_s4_ep2 sequential sigma r=0.95 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential sigma r=0.95: kept 536.8; dev AUC 0.9611; ASR (A) 91.0%; room for rank 8 (median) 0.570; between-class outside (median) 0.399  19.6 min
+[CHECK] n1500_s4_ep2 sequential sigma r=0.9 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential sigma r=0.9: kept 404.5; dev AUC 0.9570; ASR (A) 60.6%; room for rank 8 (median) 0.664; between-class outside (median) 0.532  21.2 min
+[CHECK] n1500_s4_ep2 sequential sigma r=0.8 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential sigma r=0.8: kept 258.8; dev AUC 0.9233; ASR (A) 16.9%; room for rank 8 (median) 0.760; between-class outside (median) 0.672  22.8 min
+[CHECK] n1500_s4_ep2 sequential sigma r=0.7 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential sigma r=0.7: kept 173.2; dev AUC 0.7988; ASR (A) 2.5%; room for rank 8 (median) 0.812; between-class outside (median) 0.768  24.3 min
+[CHECK] n1500_s4_ep2 sequential sigma r=0.5 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential sigma r=0.5: kept 80.7; dev AUC 0.6087; ASR (A) 0.0%; room for rank 8 (median) 0.889; between-class outside (median) 0.881  25.8 min
+[CHECK] n1500_s4_ep2 sequential vote_in r=0.9999 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_in r=0.9999: kept 1023.7; dev AUC 0.9581; ASR (A) 100.0%; room for rank 8 (median) 0.000; between-class outside (median) 0.000  27.3 min
+[CHECK] n1500_s4_ep2 sequential vote_in r=0.999 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_in r=0.999: kept 1020.3; dev AUC 0.9561; ASR (A) 100.0%; room for rank 8 (median) 0.004; between-class outside (median) 0.000  28.9 min
+[CHECK] n1500_s4_ep2 sequential vote_in r=0.995 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_in r=0.995: kept 1006.3; dev AUC 0.9564; ASR (A) 100.0%; room for rank 8 (median) 0.024; between-class outside (median) 0.009  30.5 min
+[CHECK] n1500_s4_ep2 sequential vote_in r=0.99 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_in r=0.99: kept 990.0; dev AUC 0.9561; ASR (A) 100.0%; room for rank 8 (median) 0.031; between-class outside (median) 0.014  32.0 min
+[CHECK] n1500_s4_ep2 sequential vote_in r=0.98 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_in r=0.98: kept 958.4; dev AUC 0.9562; ASR (A) 100.0%; room for rank 8 (median) 0.044; between-class outside (median) 0.035  33.5 min
+[CHECK] n1500_s4_ep2 sequential vote_in r=0.95 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_in r=0.95: kept 879.9; dev AUC 0.9538; ASR (A) 100.0%; room for rank 8 (median) 0.082; between-class outside (median) 0.094  34.9 min
+[CHECK] n1500_s4_ep2 sequential vote_in r=0.9 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_in r=0.9: kept 776.8; dev AUC 0.9533; ASR (A) 99.5%; room for rank 8 (median) 0.152; between-class outside (median) 0.178  36.4 min
+[CHECK] n1500_s4_ep2 sequential vote_in r=0.8 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_in r=0.8: kept 623.6; dev AUC 0.9467; ASR (A) 77.9%; room for rank 8 (median) 0.271; between-class outside (median) 0.317  37.8 min
+[CHECK] n1500_s4_ep2 sequential vote_in r=0.7 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_in r=0.7: kept 509.7; dev AUC 0.9179; ASR (A) 0.7%; room for rank 8 (median) 0.381; between-class outside (median) 0.456  39.3 min
+[CHECK] n1500_s4_ep2 sequential vote_in r=0.5 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_in r=0.5: kept 325.8; dev AUC 0.8097; ASR (A) 0.0%; room for rank 8 (median) 0.583; between-class outside (median) 0.657  40.7 min
+[CHECK] n1500_s4_ep2 sequential vote_out r=0.9999 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_out r=0.9999: kept 962.2; dev AUC 0.9580; ASR (A) 100.0%; room for rank 8 (median) 0.126; between-class outside (median) 0.047  42.2 min
+[CHECK] n1500_s4_ep2 sequential vote_out r=0.999 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_out r=0.999: kept 887.0; dev AUC 0.9564; ASR (A) 100.0%; room for rank 8 (median) 0.224; between-class outside (median) 0.105  43.7 min
+[CHECK] n1500_s4_ep2 sequential vote_out r=0.995 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_out r=0.995: kept 784.4; dev AUC 0.9569; ASR (A) 100.0%; room for rank 8 (median) 0.334; between-class outside (median) 0.188  45.2 min
+[CHECK] n1500_s4_ep2 sequential vote_out r=0.99 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_out r=0.99: kept 721.0; dev AUC 0.9566; ASR (A) 99.8%; room for rank 8 (median) 0.390; between-class outside (median) 0.243  46.7 min
+[CHECK] n1500_s4_ep2 sequential vote_out r=0.98 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_out r=0.98: kept 640.8; dev AUC 0.9559; ASR (A) 99.5%; room for rank 8 (median) 0.460; between-class outside (median) 0.309  48.2 min
+[CHECK] n1500_s4_ep2 sequential vote_out r=0.95 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_out r=0.95: kept 505.1; dev AUC 0.9581; ASR (A) 98.6%; room for rank 8 (median) 0.562; between-class outside (median) 0.427  49.6 min
+[CHECK] n1500_s4_ep2 sequential vote_out r=0.9 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_out r=0.9: kept 381.1; dev AUC 0.9621; ASR (A) 95.0%; room for rank 8 (median) 0.651; between-class outside (median) 0.532  51.1 min
+[CHECK] n1500_s4_ep2 sequential vote_out r=0.8 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_out r=0.8: kept 242.0; dev AUC 0.9425; ASR (A) 12.6%; room for rank 8 (median) 0.750; between-class outside (median) 0.668  52.5 min
+[CHECK] n1500_s4_ep2 sequential vote_out r=0.7 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_out r=0.7: kept 161.3; dev AUC 0.8760; ASR (A) 0.2%; room for rank 8 (median) 0.806; between-class outside (median) 0.765  53.9 min
+[CHECK] n1500_s4_ep2 sequential vote_out r=0.5 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential vote_out r=0.5: kept 73.4; dev AUC 0.6491; ASR (A) 0.2%; room for rank 8 (median) 0.883; between-class outside (median) 0.900  55.3 min
+[CHECK] n1500_s4_ep2 sequential whiten r=0.9999 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential whiten r=0.9999: kept 898.3; dev AUC 0.9583; ASR (A) 100.0%; room for rank 8 (median) 0.208; between-class outside (median) 0.095  56.8 min
+[CHECK] n1500_s4_ep2 sequential whiten r=0.999 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential whiten r=0.999: kept 773.9; dev AUC 0.9587; ASR (A) 100.0%; room for rank 8 (median) 0.308; between-class outside (median) 0.178  58.3 min
+[CHECK] n1500_s4_ep2 sequential whiten r=0.995 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential whiten r=0.995: kept 624.2; dev AUC 0.9597; ASR (A) 100.0%; room for rank 8 (median) 0.392; between-class outside (median) 0.266  59.8 min
+[CHECK] n1500_s4_ep2 sequential whiten r=0.99 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential whiten r=0.99: kept 538.8; dev AUC 0.9593; ASR (A) 100.0%; room for rank 8 (median) 0.433; between-class outside (median) 0.312  61.3 min
+[CHECK] n1500_s4_ep2 sequential whiten r=0.98 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential whiten r=0.98: kept 440.0; dev AUC 0.9598; ASR (A) 100.0%; room for rank 8 (median) 0.475; between-class outside (median) 0.375  62.8 min
+[CHECK] n1500_s4_ep2 sequential whiten r=0.95 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential whiten r=0.95: kept 293.4; dev AUC 0.9611; ASR (A) 99.8%; room for rank 8 (median) 0.543; between-class outside (median) 0.450  64.2 min
+[CHECK] n1500_s4_ep2 sequential whiten r=0.9 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential whiten r=0.9: kept 181.5; dev AUC 0.9568; ASR (A) 96.2%; room for rank 8 (median) 0.593; between-class outside (median) 0.528  65.7 min
+[CHECK] n1500_s4_ep2 sequential whiten r=0.8 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential whiten r=0.8: kept 87.4; dev AUC 0.9479; ASR (A) 62.8%; room for rank 8 (median) 0.650; between-class outside (median) 0.644  67.1 min
+[CHECK] n1500_s4_ep2 sequential whiten r=0.7 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential whiten r=0.7: kept 41.7; dev AUC 0.9199; ASR (A) 14.4%; room for rank 8 (median) 0.720; between-class outside (median) 0.753  68.5 min
+[CHECK] n1500_s4_ep2 sequential whiten r=0.5 vs logs/kseq_full/n1500_s4_ep2.npz: k identical, SST-2 dev scores identical
+[KX] n1500_s4_ep2 sequential whiten r=0.5: kept 8.3; dev AUC 0.7051; ASR (A) 0.0%; room for rank 8 (median) 0.842; between-class outside (median) 0.883  69.9 min
+[SAVE] logs/kextra/n1500_s4_ep2.npz  missing=0 unexpected=0  70.0 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  34%|███▍      | 133/389 [00:00<00:00, 1329.22it/s]Loading weights:  74%|███████▍  | 288/389 [00:00<00:00, 1457.88it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 1476.20it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[KX] clean_n0_s0_ep0 untruncated: SST-2 dev AUC 0.9713; ASR (A) 10.1%
+[KX] clean_n0_s0_ep0 stored layer-0 inputs of 217 SST-2 train batches  0.7 min
+[CHECK] clean_n0_s0_ep0 layer-by-layer with original weights vs normal forward: max difference 0; C eigenvalues vs kdiag: 0.0e+00; output energy vs kdiag: 0.0e+00  2.0 min
+[CHECK] clean_n0_s0_ep0 new measures on layer3.query vs direct formulas: eigenvalues 2.4e-15, between-class share 5.6e-16
+[KX] clean_n0_s0_ep0 simultaneous sigma r=0.9999: kept 974.8; dev AUC 0.9711 (scores vs kdiag identical); ASR (A) 10.4%; room for rank 8 (median) 0.122; between-class outside (median) 0.042  2.3 min
+[KX] clean_n0_s0_ep0 simultaneous sigma r=0.999: kept 905.8; dev AUC 0.9697 (scores vs kdiag identical); ASR (A) 9.2%; room for rank 8 (median) 0.211; between-class outside (median) 0.096  2.5 min
+[KX] clean_n0_s0_ep0 simultaneous sigma r=0.995: kept 809.0; dev AUC 0.9625 (scores vs kdiag identical); ASR (A) 8.6%; room for rank 8 (median) 0.316; between-class outside (median) 0.171  2.7 min
+[KX] clean_n0_s0_ep0 simultaneous sigma r=0.99: kept 748.8; dev AUC 0.9615 (scores vs kdiag identical); ASR (A) 7.0%; room for rank 8 (median) 0.377; between-class outside (median) 0.228  2.9 min
+[KX] clean_n0_s0_ep0 simultaneous sigma r=0.98: kept 669.6; dev AUC 0.9551 (scores vs kdiag identical); ASR (A) 5.4%; room for rank 8 (median) 0.439; between-class outside (median) 0.288  3.1 min
+[KX] clean_n0_s0_ep0 simultaneous sigma r=0.95: kept 532.6; dev AUC 0.9595 (scores vs kdiag identical); ASR (A) 4.5%; room for rank 8 (median) 0.535; between-class outside (median) 0.396  3.3 min
+[KX] clean_n0_s0_ep0 simultaneous sigma r=0.9: kept 400.1; dev AUC 0.9580 (scores vs kdiag identical); ASR (A) 2.7%; room for rank 8 (median) 0.628; between-class outside (median) 0.512  3.5 min
+[KX] clean_n0_s0_ep0 simultaneous sigma r=0.8: kept 250.2; dev AUC 0.9261 (scores vs kdiag identical); ASR (A) 1.8%; room for rank 8 (median) 0.731; between-class outside (median) 0.636  3.7 min
+[KX] clean_n0_s0_ep0 simultaneous sigma r=0.7: kept 162.5; dev AUC 0.8294 (scores vs kdiag identical); ASR (A) 0.5%; room for rank 8 (median) 0.797; between-class outside (median) 0.701  3.9 min
+[KX] clean_n0_s0_ep0 simultaneous sigma r=0.5: kept 71.2; dev AUC 0.6672 (scores vs kdiag identical); ASR (A) 0.2%; room for rank 8 (median) 0.884; between-class outside (median) 0.808  4.1 min
+[KX] clean_n0_s0_ep0 simultaneous vote_in r=0.9999: kept 1023.6; dev AUC 0.9713 (scores vs kdiag identical); ASR (A) 10.1%; room for rank 8 (median) 0.000; between-class outside (median) 0.000  4.3 min
+[KX] clean_n0_s0_ep0 simultaneous vote_in r=0.999: kept 1020.3; dev AUC 0.9708 (scores vs kdiag identical); ASR (A) 9.9%; room for rank 8 (median) 0.004; between-class outside (median) 0.000  4.5 min
+[KX] clean_n0_s0_ep0 simultaneous vote_in r=0.995: kept 1005.0; dev AUC 0.9716 (scores vs kdiag identical); ASR (A) 9.7%; room for rank 8 (median) 0.025; between-class outside (median) 0.007  4.8 min
+[KX] clean_n0_s0_ep0 simultaneous vote_in r=0.99: kept 986.4; dev AUC 0.9719 (scores vs kdiag identical); ASR (A) 9.9%; room for rank 8 (median) 0.034; between-class outside (median) 0.017  5.0 min
+[KX] clean_n0_s0_ep0 simultaneous vote_in r=0.98: kept 952.9; dev AUC 0.9707 (scores vs kdiag identical); ASR (A) 11.5%; room for rank 8 (median) 0.046; between-class outside (median) 0.032  5.2 min
+[KX] clean_n0_s0_ep0 simultaneous vote_in r=0.95: kept 869.2; dev AUC 0.9703 (scores vs kdiag identical); ASR (A) 10.8%; room for rank 8 (median) 0.096; between-class outside (median) 0.093  5.4 min
+[KX] clean_n0_s0_ep0 simultaneous vote_in r=0.9: kept 759.1; dev AUC 0.9676 (scores vs kdiag identical); ASR (A) 10.6%; room for rank 8 (median) 0.165; between-class outside (median) 0.180  5.6 min
+[KX] clean_n0_s0_ep0 simultaneous vote_in r=0.8: kept 594.0; dev AUC 0.9590 (scores vs kdiag identical); ASR (A) 10.4%; room for rank 8 (median) 0.318; between-class outside (median) 0.334  5.8 min
+[KX] clean_n0_s0_ep0 simultaneous vote_in r=0.7: kept 465.7; dev AUC 0.9427 (scores vs kdiag identical); ASR (A) 7.9%; room for rank 8 (median) 0.412; between-class outside (median) 0.466  6.0 min
+[KX] clean_n0_s0_ep0 simultaneous vote_in r=0.5: kept 274.8; dev AUC 0.8389 (scores vs kdiag identical); ASR (A) 0.7%; room for rank 8 (median) 0.575; between-class outside (median) 0.652  6.2 min
+[KX] clean_n0_s0_ep0 simultaneous vote_out r=0.9999: kept 960.8; dev AUC 0.9714 (scores vs kdiag identical); ASR (A) 10.1%; room for rank 8 (median) 0.122; between-class outside (median) 0.049  6.5 min
+[KX] clean_n0_s0_ep0 simultaneous vote_out r=0.999: kept 883.8; dev AUC 0.9705 (scores vs kdiag identical); ASR (A) 9.7%; room for rank 8 (median) 0.222; between-class outside (median) 0.106  6.7 min
+[KX] clean_n0_s0_ep0 simultaneous vote_out r=0.995: kept 780.9; dev AUC 0.9665 (scores vs kdiag identical); ASR (A) 9.0%; room for rank 8 (median) 0.321; between-class outside (median) 0.190  6.9 min
+[KX] clean_n0_s0_ep0 simultaneous vote_out r=0.99: kept 716.8; dev AUC 0.9667 (scores vs kdiag identical); ASR (A) 6.8%; room for rank 8 (median) 0.384; between-class outside (median) 0.238  7.1 min
+[KX] clean_n0_s0_ep0 simultaneous vote_out r=0.98: kept 636.6; dev AUC 0.9601 (scores vs kdiag identical); ASR (A) 5.0%; room for rank 8 (median) 0.447; between-class outside (median) 0.306  7.3 min
+[KX] clean_n0_s0_ep0 simultaneous vote_out r=0.95: kept 501.1; dev AUC 0.9588 (scores vs kdiag identical); ASR (A) 6.1%; room for rank 8 (median) 0.543; between-class outside (median) 0.410  7.5 min
+[KX] clean_n0_s0_ep0 simultaneous vote_out r=0.9: kept 376.0; dev AUC 0.9566 (scores vs kdiag identical); ASR (A) 4.7%; room for rank 8 (median) 0.633; between-class outside (median) 0.508  7.7 min
+[KX] clean_n0_s0_ep0 simultaneous vote_out r=0.8: kept 235.1; dev AUC 0.9481 (scores vs kdiag identical); ASR (A) 3.8%; room for rank 8 (median) 0.731; between-class outside (median) 0.629  7.9 min
+[KX] clean_n0_s0_ep0 simultaneous vote_out r=0.7: kept 152.3; dev AUC 0.8903 (scores vs kdiag identical); ASR (A) 0.9%; room for rank 8 (median) 0.794; between-class outside (median) 0.704  8.0 min
+[KX] clean_n0_s0_ep0 simultaneous vote_out r=0.5: kept 64.4; dev AUC 0.7517 (scores vs kdiag identical); ASR (A) 0.0%; room for rank 8 (median) 0.884; between-class outside (median) 0.810  8.2 min
+[KX] clean_n0_s0_ep0 simultaneous whiten r=0.9999: kept 895.7; dev AUC 0.9712 (scores vs kdiag identical); ASR (A) 10.1%; room for rank 8 (median) 0.204; between-class outside (median) 0.098  8.5 min
+[KX] clean_n0_s0_ep0 simultaneous whiten r=0.999: kept 769.0; dev AUC 0.9709 (scores vs kdiag identical); ASR (A) 10.4%; room for rank 8 (median) 0.300; between-class outside (median) 0.175  8.8 min
+[KX] clean_n0_s0_ep0 simultaneous whiten r=0.995: kept 617.0; dev AUC 0.9709 (scores vs kdiag identical); ASR (A) 10.1%; room for rank 8 (median) 0.395; between-class outside (median) 0.264  9.1 min
+[KX] clean_n0_s0_ep0 simultaneous whiten r=0.99: kept 530.5; dev AUC 0.9708 (scores vs kdiag identical); ASR (A) 10.1%; room for rank 8 (median) 0.434; between-class outside (median) 0.310  9.3 min
+[KX] clean_n0_s0_ep0 simultaneous whiten r=0.98: kept 431.2; dev AUC 0.9705 (scores vs kdiag identical); ASR (A) 9.5%; room for rank 8 (median) 0.473; between-class outside (median) 0.363  9.5 min
+[KX] clean_n0_s0_ep0 simultaneous whiten r=0.95: kept 285.0; dev AUC 0.9688 (scores vs kdiag identical); ASR (A) 8.8%; room for rank 8 (median) 0.537; between-class outside (median) 0.442  9.7 min
+[KX] clean_n0_s0_ep0 simultaneous whiten r=0.9: kept 173.8; dev AUC 0.9636 (scores vs kdiag identical); ASR (A) 9.7%; room for rank 8 (median) 0.589; between-class outside (median) 0.511  9.9 min
+[KX] clean_n0_s0_ep0 simultaneous whiten r=0.8: kept 79.7; dev AUC 0.9630 (scores vs kdiag identical); ASR (A) 10.6%; room for rank 8 (median) 0.639; between-class outside (median) 0.599  10.1 min
+[KX] clean_n0_s0_ep0 simultaneous whiten r=0.7: kept 40.7; dev AUC 0.9335 (scores vs kdiag identical); ASR (A) 12.4%; room for rank 8 (median) 0.703; between-class outside (median) 0.701  10.3 min
+[KX] clean_n0_s0_ep0 simultaneous whiten r=0.5: kept 11.1; dev AUC 0.7495 (scores vs kdiag identical); ASR (A) 0.7%; room for rank 8 (median) 0.814; between-class outside (median) 0.914  10.5 min
+[CHECK] clean_n0_s0_ep0 sequential sigma r=0.9999 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential sigma r=0.9999: kept 974.9; dev AUC 0.9711; ASR (A) 10.4%; room for rank 8 (median) 0.122; between-class outside (median) 0.042  12.0 min
+[CHECK] clean_n0_s0_ep0 sequential sigma r=0.999 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential sigma r=0.999: kept 906.2; dev AUC 0.9696; ASR (A) 9.2%; room for rank 8 (median) 0.210; between-class outside (median) 0.096  13.6 min
+[CHECK] clean_n0_s0_ep0 sequential sigma r=0.995 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential sigma r=0.995: kept 810.5; dev AUC 0.9633; ASR (A) 8.3%; room for rank 8 (median) 0.320; between-class outside (median) 0.169  15.1 min
+[CHECK] clean_n0_s0_ep0 sequential sigma r=0.99 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential sigma r=0.99: kept 751.0; dev AUC 0.9617; ASR (A) 7.2%; room for rank 8 (median) 0.386; between-class outside (median) 0.228  16.6 min
+[CHECK] clean_n0_s0_ep0 sequential sigma r=0.98 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential sigma r=0.98: kept 671.3; dev AUC 0.9557; ASR (A) 5.6%; room for rank 8 (median) 0.458; between-class outside (median) 0.286  18.0 min
+[CHECK] clean_n0_s0_ep0 sequential sigma r=0.95 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential sigma r=0.95: kept 535.0; dev AUC 0.9582; ASR (A) 4.1%; room for rank 8 (median) 0.562; between-class outside (median) 0.410  19.4 min
+[CHECK] clean_n0_s0_ep0 sequential sigma r=0.9 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential sigma r=0.9: kept 404.6; dev AUC 0.9580; ASR (A) 2.9%; room for rank 8 (median) 0.647; between-class outside (median) 0.532  20.8 min
+[CHECK] clean_n0_s0_ep0 sequential sigma r=0.8 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential sigma r=0.8: kept 257.9; dev AUC 0.9329; ASR (A) 3.6%; room for rank 8 (median) 0.745; between-class outside (median) 0.668  22.1 min
+[CHECK] clean_n0_s0_ep0 sequential sigma r=0.7 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential sigma r=0.7: kept 172.9; dev AUC 0.8791; ASR (A) 0.5%; room for rank 8 (median) 0.799; between-class outside (median) 0.756  23.5 min
+[CHECK] clean_n0_s0_ep0 sequential sigma r=0.5 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential sigma r=0.5: kept 82.0; dev AUC 0.7002; ASR (A) 1.6%; room for rank 8 (median) 0.887; between-class outside (median) 0.884  24.8 min
+[CHECK] clean_n0_s0_ep0 sequential vote_in r=0.9999 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_in r=0.9999: kept 1023.6; dev AUC 0.9713; ASR (A) 10.1%; room for rank 8 (median) 0.000; between-class outside (median) 0.000  26.2 min
+[CHECK] clean_n0_s0_ep0 sequential vote_in r=0.999 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_in r=0.999: kept 1020.3; dev AUC 0.9708; ASR (A) 9.9%; room for rank 8 (median) 0.004; between-class outside (median) 0.000  27.6 min
+[CHECK] clean_n0_s0_ep0 sequential vote_in r=0.995 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_in r=0.995: kept 1005.8; dev AUC 0.9715; ASR (A) 10.4%; room for rank 8 (median) 0.023; between-class outside (median) 0.006  28.9 min
+[CHECK] clean_n0_s0_ep0 sequential vote_in r=0.99 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_in r=0.99: kept 988.0; dev AUC 0.9711; ASR (A) 10.4%; room for rank 8 (median) 0.033; between-class outside (median) 0.016  30.3 min
+[CHECK] clean_n0_s0_ep0 sequential vote_in r=0.98 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_in r=0.98: kept 954.0; dev AUC 0.9714; ASR (A) 10.8%; room for rank 8 (median) 0.047; between-class outside (median) 0.033  31.8 min
+[CHECK] clean_n0_s0_ep0 sequential vote_in r=0.95 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_in r=0.95: kept 873.3; dev AUC 0.9704; ASR (A) 11.5%; room for rank 8 (median) 0.092; between-class outside (median) 0.088  33.2 min
+[CHECK] clean_n0_s0_ep0 sequential vote_in r=0.9 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_in r=0.9: kept 762.7; dev AUC 0.9670; ASR (A) 11.0%; room for rank 8 (median) 0.164; between-class outside (median) 0.184  34.6 min
+[CHECK] clean_n0_s0_ep0 sequential vote_in r=0.8 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_in r=0.8: kept 602.5; dev AUC 0.9584; ASR (A) 9.2%; room for rank 8 (median) 0.298; between-class outside (median) 0.334  36.1 min
+[CHECK] clean_n0_s0_ep0 sequential vote_in r=0.7 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_in r=0.7: kept 483.3; dev AUC 0.9432; ASR (A) 7.7%; room for rank 8 (median) 0.403; between-class outside (median) 0.468  37.6 min
+[CHECK] clean_n0_s0_ep0 sequential vote_in r=0.5 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_in r=0.5: kept 319.4; dev AUC 0.8083; ASR (A) 0.0%; room for rank 8 (median) 0.592; between-class outside (median) 0.678  39.1 min
+[CHECK] clean_n0_s0_ep0 sequential vote_out r=0.9999 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_out r=0.9999: kept 960.9; dev AUC 0.9713; ASR (A) 10.1%; room for rank 8 (median) 0.123; between-class outside (median) 0.049  40.5 min
+[CHECK] clean_n0_s0_ep0 sequential vote_out r=0.999 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_out r=0.999: kept 884.1; dev AUC 0.9703; ASR (A) 9.9%; room for rank 8 (median) 0.223; between-class outside (median) 0.105  42.0 min
+[CHECK] clean_n0_s0_ep0 sequential vote_out r=0.995 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_out r=0.995: kept 782.0; dev AUC 0.9669; ASR (A) 9.5%; room for rank 8 (median) 0.325; between-class outside (median) 0.190  43.5 min
+[CHECK] clean_n0_s0_ep0 sequential vote_out r=0.99 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_out r=0.99: kept 718.7; dev AUC 0.9666; ASR (A) 7.0%; room for rank 8 (median) 0.385; between-class outside (median) 0.239  44.9 min
+[CHECK] clean_n0_s0_ep0 sequential vote_out r=0.98 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_out r=0.98: kept 638.9; dev AUC 0.9611; ASR (A) 5.2%; room for rank 8 (median) 0.457; between-class outside (median) 0.309  46.4 min
+[CHECK] clean_n0_s0_ep0 sequential vote_out r=0.95 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_out r=0.95: kept 503.9; dev AUC 0.9602; ASR (A) 5.2%; room for rank 8 (median) 0.555; between-class outside (median) 0.410  47.8 min
+[CHECK] clean_n0_s0_ep0 sequential vote_out r=0.9 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_out r=0.9: kept 379.2; dev AUC 0.9628; ASR (A) 4.3%; room for rank 8 (median) 0.641; between-class outside (median) 0.520  49.1 min
+[CHECK] clean_n0_s0_ep0 sequential vote_out r=0.8 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_out r=0.8: kept 240.6; dev AUC 0.9505; ASR (A) 1.6%; room for rank 8 (median) 0.741; between-class outside (median) 0.655  50.4 min
+[CHECK] clean_n0_s0_ep0 sequential vote_out r=0.7 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_out r=0.7: kept 160.8; dev AUC 0.8878; ASR (A) 0.0%; room for rank 8 (median) 0.803; between-class outside (median) 0.750  51.8 min
+[CHECK] clean_n0_s0_ep0 sequential vote_out r=0.5 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential vote_out r=0.5: kept 72.2; dev AUC 0.6923; ASR (A) 0.0%; room for rank 8 (median) 0.883; between-class outside (median) 0.896  53.1 min
+[CHECK] clean_n0_s0_ep0 sequential whiten r=0.9999 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential whiten r=0.9999: kept 895.7; dev AUC 0.9712; ASR (A) 10.1%; room for rank 8 (median) 0.204; between-class outside (median) 0.097  54.6 min
+[CHECK] clean_n0_s0_ep0 sequential whiten r=0.999 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential whiten r=0.999: kept 769.0; dev AUC 0.9709; ASR (A) 10.4%; room for rank 8 (median) 0.300; between-class outside (median) 0.175  56.0 min
+[CHECK] clean_n0_s0_ep0 sequential whiten r=0.995 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential whiten r=0.995: kept 616.8; dev AUC 0.9710; ASR (A) 10.4%; room for rank 8 (median) 0.396; between-class outside (median) 0.264  57.4 min
+[CHECK] clean_n0_s0_ep0 sequential whiten r=0.99 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential whiten r=0.99: kept 530.2; dev AUC 0.9710; ASR (A) 9.9%; room for rank 8 (median) 0.434; between-class outside (median) 0.310  58.8 min
+[CHECK] clean_n0_s0_ep0 sequential whiten r=0.98 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential whiten r=0.98: kept 430.1; dev AUC 0.9706; ASR (A) 9.5%; room for rank 8 (median) 0.474; between-class outside (median) 0.363  60.2 min
+[CHECK] clean_n0_s0_ep0 sequential whiten r=0.95 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential whiten r=0.95: kept 282.8; dev AUC 0.9686; ASR (A) 9.7%; room for rank 8 (median) 0.539; between-class outside (median) 0.445  61.6 min
+[CHECK] clean_n0_s0_ep0 sequential whiten r=0.9 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential whiten r=0.9: kept 171.4; dev AUC 0.9628; ASR (A) 10.1%; room for rank 8 (median) 0.590; between-class outside (median) 0.503  63.0 min
+[CHECK] clean_n0_s0_ep0 sequential whiten r=0.8 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential whiten r=0.8: kept 78.5; dev AUC 0.9590; ASR (A) 9.0%; room for rank 8 (median) 0.648; between-class outside (median) 0.624  64.4 min
+[CHECK] clean_n0_s0_ep0 sequential whiten r=0.7 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential whiten r=0.7: kept 36.0; dev AUC 0.9282; ASR (A) 11.0%; room for rank 8 (median) 0.725; between-class outside (median) 0.723  65.9 min
+[CHECK] clean_n0_s0_ep0 sequential whiten r=0.5 vs logs/kseq_full/clean_n0_s0_ep0.npz: k identical, SST-2 dev scores identical
+[KX] clean_n0_s0_ep0 sequential whiten r=0.5: kept 7.1; dev AUC 0.4977; ASR (A) 0.0%; room for rank 8 (median) 0.893; between-class outside (median) 0.988  67.4 min
+[SAVE] logs/kextra/clean_n0_s0_ep0.npz  missing=0 unexpected=0  67.4 min
+[CHECK] done
+===== Done =====
