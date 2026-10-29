@@ -1,0 +1,30 @@
+psel n1500_s0_ep2 wh0.8 p0 ft0 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s1_ep2 wh0.995 p0 ft0 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s2_ep2 wh0.9 p0 ft0 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s3_ep2 wh0.9 p0 ft0 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s4_ep2 wh0.8 p0 ft0 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s0_ep2 wh0.8 ft0 konly lr2e-4|764abc3d
+psel n1500_s1_ep2 wh0.995 ft0 konly lr2e-4|764abc3d
+psel n1500_s2_ep2 wh0.9 ft0 konly lr2e-4|764abc3d
+psel n1500_s3_ep2 wh0.9 ft0 konly lr2e-4|764abc3d
+psel n1500_s4_ep2 wh0.8 ft0 konly lr2e-4|764abc3d
+psel n1500_s0_ep2 wh0.8 p0 ft1 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s1_ep2 wh0.995 p0 ft1 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s2_ep2 wh0.9 p0 ft1 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s3_ep2 wh0.9 p0 ft1 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s4_ep2 wh0.8 p0 ft1 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s0_ep2 wh0.8 ft1 konly lr2e-4|764abc3d
+psel n1500_s1_ep2 wh0.995 ft1 konly lr2e-4|764abc3d
+psel n1500_s2_ep2 wh0.9 ft1 konly lr2e-4|764abc3d
+psel n1500_s3_ep2 wh0.9 ft1 konly lr2e-4|764abc3d
+psel n1500_s4_ep2 wh0.8 ft1 konly lr2e-4|764abc3d
+psel n1500_s0_ep2 wh0.8 p0 ft2 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s1_ep2 wh0.995 p0 ft2 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s2_ep2 wh0.9 p0 ft2 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s3_ep2 wh0.9 p0 ft2 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s4_ep2 wh0.8 p0 ft2 tr lam10 kauto lr2e-4|764abc3d
+psel n1500_s0_ep2 wh0.8 ft2 konly lr2e-4|764abc3d
+psel n1500_s1_ep2 wh0.995 ft2 konly lr2e-4|764abc3d
+psel n1500_s2_ep2 wh0.9 ft2 konly lr2e-4|764abc3d
+psel n1500_s3_ep2 wh0.9 ft2 konly lr2e-4|764abc3d
+psel n1500_s4_ep2 wh0.8 ft2 konly lr2e-4|764abc3d
