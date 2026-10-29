@@ -32,6 +32,9 @@ def parse_args():
     # ===== 會影響結果、要進檔名的超參數 =====
     parser.add_argument("--lr", type=float, default=2e-4)           # learning rate（grid: {2e-5, 2e-4, 2e-3}）
     parser.add_argument("--cl_dropout_p", type=float, default=0.1)  # 機制 1 的 dropout rate（只有 args.use_pretrained_dropout=True 時才有意義）（grid: {0.05,0.1,0.15,0.2,0.3}）
+    parser.add_argument("--cl_form", type=str, default="coord", choices=["coord", "svd"],
+                        help="Cl form (cl_utils.py): coord = dropout on every output coordinate of W_pre x + b (RoRA main text, default, unchanged); "
+                             "svd = dropout on the components of W_pre x along W_pre's own left singular directions (the k kept ones for a W_pre,K)")
     parser.add_argument("--tr_lambda", type=float, default=10)      # 機制 2 的懲罰強度（只有 args.use_orthogonal_penalty=True 時才有意義）（grid: {1,5,10,15,20}）
     parser.add_argument("--svd_k", type=int, default=32)            # 機制 2 的 Eq.10 的截斷秩，借用 Figure 2 caption 的數字（你自己的實作選擇，論文未明確指定給這個式子）
     parser.add_argument("--tr_layers", type=str, default="all", choices=["all", "top3"],
@@ -53,7 +56,9 @@ def parse_args():
     # None = 不動（與之前所有 v2 run 完全相同）
     parser.add_argument("--wpre_rank", type=int, default=None, help="replace W_pre of the 48 query/value modules by its best rank-k approximation before LoRA (one k for all)")
     parser.add_argument("--wpre_kjson", type=str, default=None, help="per-module k written by kfinder.py for this PZ (instead of --wpre_rank)")
-    parser.add_argument("--svd_k_auto", action="store_true", help="Tr: each module's svd_k = the rank of its W_pre,k (needs --wpre_rank or --wpre_kjson)")
+    parser.add_argument("--wpre_file", type=str, default=None, help="the .json written by make_wpre.py for this PZ: replace the 48 query/value W_pre by that saved W_pre,K "
+                        "(e.g. whiten truncation) before LoRA; refuses a file made from another PZ (path and weight hashes are checked)")
+    parser.add_argument("--svd_k_auto", action="store_true", help="Tr: each module's svd_k = the rank of its W_pre,k (needs --wpre_rank, --wpre_kjson or --wpre_file)")
 
     # ===== read-only per-module observer (obs_log.py); off unless --obs_log is given =====
     parser.add_argument("--obs_log", type=str, default=None, help="directory for per-module/per-step logs (written to <dir>/<experiment_name>/)")
@@ -63,6 +68,11 @@ def parse_args():
     return parser.parse_args()
 
 args = parse_args()
+
+if args.cl_form != "coord" and not args.use_pretrained_dropout:
+    raise ValueError("--cl_form only matters with --use_pretrained_dropout")
+if args.cl_form == "svd":
+    import cl_utils
 
 if args.use_spectral_rescaling:
     if args.no_save:
@@ -121,6 +131,14 @@ if args.pz_path:
 
 dataset_dir = os.path.join('./data', args.dataset_tag)
 
+# --wpre_file (2026-10-28): W_pre,K made by make_wpre.py; read its json now so its files are hashed into [ENV] and meta.json
+WMETA, WPRE_FILES = None, {}
+if args.wpre_file:
+    import wpre_utils
+    WMETA = wpre_utils.load_meta(args.wpre_file)
+    WPRE_FILES = {"wpre_json": args.wpre_file, "wpre_pt": os.path.join(os.path.dirname(args.wpre_file), WMETA["weights_file"]),
+                  "wpre_utils": wpre_utils.__file__}
+
 ENV = log_env(__file__, {
     "pz": poisoned_model_path,
     "attack_utils": attack_utils.__file__,
@@ -128,6 +146,7 @@ ENV = log_env(__file__, {
     "train": f"{dataset_dir}/train.json",
     "dev": f"{dataset_dir}/dev.json",
     "test": f"{dataset_dir}/test.json",
+    **WPRE_FILES,
 })
 
 if args.attack_tag == "badnet":
@@ -162,8 +181,10 @@ peft_config = LoraConfig(
 # ===== 自動組名 =====
 if args.wpre_rank and args.wpre_kjson:
     raise ValueError("use either --wpre_rank or --wpre_kjson, not both")
-if args.svd_k_auto and not (args.wpre_rank or args.wpre_kjson):
-    raise ValueError("--svd_k_auto needs --wpre_rank or --wpre_kjson")
+if args.wpre_file and (args.wpre_rank or args.wpre_kjson):
+    raise ValueError("use --wpre_file alone, not with --wpre_rank or --wpre_kjson")
+if args.svd_k_auto and not (args.wpre_rank or args.wpre_kjson or args.wpre_file):
+    raise ValueError("--svd_k_auto needs --wpre_rank, --wpre_kjson or --wpre_file")
 KJSON = None
 if args.wpre_kjson:
     import json
@@ -173,8 +194,10 @@ if args.wpre_rank:
     mechanism_tags.append(f'wk{args.wpre_rank}')        # 例如 wk896：base 已換成 W_pre,896（重新評量時必須用同一個 k 截斷 base）
 if KJSON:
     mechanism_tags.append(f'wkf{KJSON["tag"]}')         # 例如 wkfgrp6：base 已換成 kfinder.py 找到的每模組 W_pre,k（重新評量時需同一個 json）
+if WMETA:
+    mechanism_tags.append(f'wk{WMETA["tag"]}')          # 例如 wkwh0.9：base 已換成 make_wpre.py 存的 W_pre,K（換基底、r* = 0.9；重新評量時需同一個檔）
 if args.use_pretrained_dropout:
-    mechanism_tags.append(f'cl{args.cl_dropout_p}')      # 例如 cl0.1
+    mechanism_tags.append(('clsvd' if args.cl_form == 'svd' else 'cl') + f'{args.cl_dropout_p}')      # 例如 cl0.1（逐座標，名字和以前一樣）、clsvd0.1（SVD 方向）
 if args.use_orthogonal_penalty:
     mechanism_tags.append(f'tr{args.tr_lambda:g}_k' + ('auto' if args.svd_k_auto else f'{args.svd_k}')
                           + ('_top3' if args.tr_layers == 'top3' else ''))   # 例如 tr10_k32、tr10_kauto、tr10_k8_top3
@@ -275,7 +298,14 @@ print("Unexpected keys:", unexpected)
 # Pt 的 σmax（get_base_model() 裡的 base_layer.weight）、每個 epoch 的 dev/test/ASR 評量，用的都是這個截斷後的矩陣。
 # 截斷方式與 eval_probes.py 相同：U[:, :k] diag(S[:k]) Vh[:k]，在 float32 上算再轉回原 dtype。
 KMAP = {}   # {"roberta.encoder.layer.0.attention.self.query": k, ...}；Tr 的 --svd_k_auto 也用它
-if args.wpre_rank or KJSON:
+if WMETA:
+    # --wpre_file：直接換成 make_wpre.py 存好的 W_pre,K（例如換基底截斷，不是 σ 截斷）。wpre_utils.apply 檢查：PZ 路徑相同、
+    # 48 個原始權重的 hash 和做檔時相同、每個存好的權重 hash 相同；之後 Cl、Tr、Pt、評量全以它為準，和上面 σ 截斷的情形一樣。
+    KMAP, _ = wpre_utils.apply_file(model, args.wpre_file, poisoned_model_path)
+    _kv = np.array(list(KMAP.values()))
+    print(f"[W_pre,K] replaced 48 query/value W_pre from {args.wpre_file} ({WMETA['method']}, r={WMETA['r']:g}, {WMETA['how']}); "
+          f"k mean {_kv.mean():.1f} min {_kv.min()} max {_kv.max()}; PZ and weight hashes checked")
+elif args.wpre_rank or KJSON:
     if KJSON:
         assert os.path.realpath(KJSON["pz"]) == os.path.realpath(poisoned_model_path), \
             f"k json was made for {KJSON['pz']}, not for {poisoned_model_path}"
@@ -317,9 +347,12 @@ start_time = time.time()
 
 dropout_hook_call_count = [0]  # 用 list 包起來方便在閉包內修改
 
+CL_U = {}   # --cl_form svd：每個 base_layer 的左奇異方向（W_pre,K 時是它留下的 k 個；和 Tr 的 U 用同一個 float32 SVD）
 def dropout_hook(module, input, output):
     dropout_hook_call_count[0] += 1
-    return torch.nn.functional.dropout(output, p=args.cl_dropout_p, training=module.training)   # 跟論文 p=0.1 一致；攔截輸出，套上 dropout 再放行   # 攔截輸出，套上 dropout 再放行
+    if args.cl_form == "coord":   # 和以前完全相同的呼叫
+        return torch.nn.functional.dropout(output, p=args.cl_dropout_p, training=module.training)   # 跟論文 p=0.1 一致；攔截輸出，套上 dropout 再放行
+    return cl_utils.svd_dropout(output, module.bias, CL_U[module], args.cl_dropout_p, training=module.training)
 
 hook_handles = []
 if args.use_pretrained_dropout:
@@ -329,8 +362,14 @@ if args.use_pretrained_dropout:
             # 假設 some_linear_layer 是 query 或 value 那個線性層
             handle = module.base_layer.register_forward_hook(dropout_hook)
             hook_handles.append(handle)
+            if args.cl_form == "svd":
+                k_cl = KMAP.get(name.split("base_model.model.")[-1])   # 有 W_pre,K 時用它的 k；完整 W_pre 時是 None = 全部 1024 個方向
+                CL_U[module.base_layer] = cl_utils.left_basis(module.base_layer.weight.data, k_cl).to(device)
 
     print(f"Hooked {len(hook_handles)} base_layer modules with dropout")  # 應該印出 2 × 層數（query + value 各一）
+    if args.cl_form == "svd":
+        _ks = sorted(set(U.shape[1] for U in CL_U.values()))
+        print(f"[Cl svd] dropout on the left singular directions of {len(CL_U)} base_layer weights; directions per module: min {_ks[0]} max {_ks[-1]}")
 else:
     print("Mechanism 1 (pretrained dropout) is OFF — running baseline")
 ## 

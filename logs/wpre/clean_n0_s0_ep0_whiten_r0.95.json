@@ -1,0 +1,716 @@
+{
+ "label": "clean_n0_s0_ep0",
+ "pz": "old_models_v1/clean_roberta_large_imdb/pytorch_model.bin",
+ "method": "whiten",
+ "ordering": "SVD-LLM whitening, C = sum over SST-2 train tokens of x x^T",
+ "truncation": "simultaneous (C from the untruncated PZ), one r for all 48 query/value modules",
+ "r": 0.95,
+ "tag": "wh0.95",
+ "how": "rule level=bonf walk=stepwise",
+ "rule": {
+  "level": "bonf",
+  "walk": "stepwise",
+  "B": 100000,
+  "seed": 0,
+  "table": [
+   {
+    "r": 0.9999,
+    "k_mean": 895.6666666666666,
+    "k_min": 818,
+    "k_max": 932,
+    "d": -7.893407426118326e-05,
+    "auc": 0.9712311610676096,
+    "p2_5": -0.0003367853835143375,
+    "p97_5": 0.00017365496337451436,
+    "p_bonf": 0.00025258903763580864,
+    "p97_5_halves": [
+     0.00017365496337462538,
+     0.00016839269175716876
+    ],
+    "p_bonf_halves": [
+     0.0002631135808706109,
+     0.000247326766018352
+    ]
+   },
+   {
+    "r": 0.999,
+    "k_mean": 769.0416666666666,
+    "k_min": 641,
+    "k_max": 834,
+    "d": -0.0003999326429232619,
+    "auc": 0.9709101624989476,
+    "p2_5": -0.0013839774353793244,
+    "p97_5": 0.0004788667171844452,
+    "p_bonf": 0.000741980298055056,
+    "p97_5_halves": [
+     0.0004788667171844452,
+     0.0004788667171844452
+    ],
+    "p_bonf_halves": [
+     0.0007525048412898583,
+     0.0007367180264375994
+    ]
+   },
+   {
+    "r": 0.995,
+    "k_mean": 617.0,
+    "k_min": 440,
+    "k_max": 712,
+    "d": -0.0003894080996884597,
+    "auc": 0.9709206870421824,
+    "p2_5": -0.001841795066094165,
+    "p97_5": 0.0010103561505430125,
+    "p_bonf": 0.0014734360528753099,
+    "p97_5_halves": [
+     0.00099996316409876,
+     0.0010156184221604692
+    ],
+    "p_bonf_halves": [
+     0.0014629115096405076,
+     0.001483960596110112
+    ]
+   },
+   {
+    "r": 0.99,
+    "k_mean": 530.5208333333334,
+    "k_min": 332,
+    "k_max": 638,
+    "d": -0.0004788667171844452,
+    "auc": 0.9708312284246864,
+    "p2_5": -0.0023469731413656714,
+    "p97_5": 0.0012629451881788212,
+    "p_bonf": 0.001773385535067784,
+    "p97_5_halves": [
+     0.001252420644944019,
+     0.0012682074597962778
+    ],
+    "p_bonf_halves": [
+     0.0017418382167214504,
+     0.0018102214363896474
+    ]
+   },
+   {
+    "r": 0.98,
+    "k_mean": 431.2083333333333,
+    "k_min": 217,
+    "k_max": 550,
+    "d": -0.0008577502736381026,
+    "auc": 0.9704523448682327,
+    "p2_5": -0.0028100530436978577,
+    "p97_5": 0.001057716595099789,
+    "p_bonf": 0.0016523532878672809,
+    "p97_5_halves": [
+     0.0010524543234823325,
+     0.0010629788667171375
+    ],
+    "p_bonf_halves": [
+     0.001615543697903601,
+     0.0016734286856950693
+    ]
+   },
+   {
+    "r": 0.95,
+    "k_mean": 285.0,
+    "k_min": 76,
+    "k_max": 407,
+    "d": -0.0024680053885661746,
+    "auc": 0.9688420897533047,
+    "p2_5": -0.00574113833459633,
+    "p97_5": 0.0006209480508546639,
+    "p_bonf": 0.0015681569419886416,
+    "p97_5_halves": [
+     0.0006104235076198616,
+     0.0006367348657068117
+    ],
+    "p_bonf_halves": [
+     0.0015471078555190372,
+     0.0016049928433106153
+    ]
+   },
+   {
+    "r": 0.9,
+    "k_mean": 173.83333333333334,
+    "k_min": 17,
+    "k_max": 279,
+    "d": -0.007667129746569024,
+    "auc": 0.9636429653953018,
+    "p2_5": -0.013708217563357716,
+    "p97_5": -0.0021680559063737004,
+    "p_bonf": -0.0005893744211501462,
+    "p97_5_halves": [
+     -0.0021837111644354068,
+     -0.002157531363138787
+    ],
+    "p_bonf_halves": [
+     -0.0006156068451629873,
+     -0.0005735876062978873
+    ]
+   },
+   {
+    "r": 0.8,
+    "k_mean": 79.72916666666667,
+    "k_min": 2,
+    "k_max": 163,
+    "d": -0.008356487328449957,
+    "auc": 0.9629536078134209,
+    "p2_5": -0.017212890460554076,
+    "p97_5": -4.2098172939319944e-05,
+    "p_bonf": 0.0024259072156268546,
+    "p97_5_halves": [
+     -5.24911593836781e-05,
+     -3.670434453142202e-05
+    ],
+    "p_bonf_halves": [
+     0.0025153921444809138,
+     0.002331212637871486
+    ]
+   },
+   {
+    "r": 0.7,
+    "k_mean": 40.666666666666664,
+    "k_min": 1,
+    "k_max": 100,
+    "d": -0.0378409952008083,
+    "auc": 0.9334690999410625,
+    "p2_5": -0.0527279616064662,
+    "p97_5": -0.02376441862423173,
+    "p_bonf": -0.019638771364822817,
+    "p97_5_halves": [
+     -0.02372232045129241,
+     -0.023817041340405853
+    ],
+    "p_bonf_halves": [
+     -0.019738780836911718,
+     -0.019538761892733885
+    ]
+   },
+   {
+    "r": 0.5,
+    "k_mean": 11.125,
+    "k_min": 1,
+    "k_max": 37,
+    "d": -0.22182579776037714,
+    "auc": 0.7494842973814937,
+    "p2_5": -0.25410996568998906,
+    "p97_5": -0.19025743032752374,
+    "p_bonf": -0.18023277658499623,
+    "p97_5_halves": [
+     -0.19021533215458453,
+     -0.1902942662288457
+    ],
+    "p_bonf_halves": [
+     -0.18022748800202074,
+     -0.18023803885661363
+    ]
+   }
+  ],
+  "auc_untruncated": 0.9713100951418708
+ },
+ "weights_file": "clean_n0_s0_ep0_whiten_r0.95.pt",
+ "per_module_k": {
+  "roberta.encoder.layer.0.attention.self.query": 394,
+  "roberta.encoder.layer.0.attention.self.value": 383,
+  "roberta.encoder.layer.1.attention.self.query": 254,
+  "roberta.encoder.layer.1.attention.self.value": 324,
+  "roberta.encoder.layer.2.attention.self.query": 165,
+  "roberta.encoder.layer.2.attention.self.value": 316,
+  "roberta.encoder.layer.3.attention.self.query": 204,
+  "roberta.encoder.layer.3.attention.self.value": 336,
+  "roberta.encoder.layer.4.attention.self.query": 290,
+  "roberta.encoder.layer.4.attention.self.value": 361,
+  "roberta.encoder.layer.5.attention.self.query": 294,
+  "roberta.encoder.layer.5.attention.self.value": 394,
+  "roberta.encoder.layer.6.attention.self.query": 277,
+  "roberta.encoder.layer.6.attention.self.value": 378,
+  "roberta.encoder.layer.7.attention.self.query": 302,
+  "roberta.encoder.layer.7.attention.self.value": 383,
+  "roberta.encoder.layer.8.attention.self.query": 263,
+  "roberta.encoder.layer.8.attention.self.value": 355,
+  "roberta.encoder.layer.9.attention.self.query": 254,
+  "roberta.encoder.layer.9.attention.self.value": 339,
+  "roberta.encoder.layer.10.attention.self.query": 213,
+  "roberta.encoder.layer.10.attention.self.value": 307,
+  "roberta.encoder.layer.11.attention.self.query": 205,
+  "roberta.encoder.layer.11.attention.self.value": 330,
+  "roberta.encoder.layer.12.attention.self.query": 185,
+  "roberta.encoder.layer.12.attention.self.value": 347,
+  "roberta.encoder.layer.13.attention.self.query": 221,
+  "roberta.encoder.layer.13.attention.self.value": 338,
+  "roberta.encoder.layer.14.attention.self.query": 229,
+  "roberta.encoder.layer.14.attention.self.value": 363,
+  "roberta.encoder.layer.15.attention.self.query": 266,
+  "roberta.encoder.layer.15.attention.self.value": 363,
+  "roberta.encoder.layer.16.attention.self.query": 233,
+  "roberta.encoder.layer.16.attention.self.value": 351,
+  "roberta.encoder.layer.17.attention.self.query": 215,
+  "roberta.encoder.layer.17.attention.self.value": 339,
+  "roberta.encoder.layer.18.attention.self.query": 203,
+  "roberta.encoder.layer.18.attention.self.value": 322,
+  "roberta.encoder.layer.19.attention.self.query": 198,
+  "roberta.encoder.layer.19.attention.self.value": 319,
+  "roberta.encoder.layer.20.attention.self.query": 173,
+  "roberta.encoder.layer.20.attention.self.value": 377,
+  "roberta.encoder.layer.21.attention.self.query": 126,
+  "roberta.encoder.layer.21.attention.self.value": 407,
+  "roberta.encoder.layer.22.attention.self.query": 76,
+  "roberta.encoder.layer.22.attention.self.value": 344,
+  "roberta.encoder.layer.23.attention.self.query": 89,
+  "roberta.encoder.layer.23.attention.self.value": 275
+ },
+ "w0_sha256": {
+  "roberta.encoder.layer.0.attention.self.query": "53ddbfad7f4fe80a",
+  "roberta.encoder.layer.0.attention.self.value": "33591e044df8d2fd",
+  "roberta.encoder.layer.1.attention.self.query": "73fe806bd7f1c2da",
+  "roberta.encoder.layer.1.attention.self.value": "d5f56ee4a935c78b",
+  "roberta.encoder.layer.2.attention.self.query": "3f39c432ffe5213f",
+  "roberta.encoder.layer.2.attention.self.value": "4e5e4ea7c42366c7",
+  "roberta.encoder.layer.3.attention.self.query": "60139a650353f878",
+  "roberta.encoder.layer.3.attention.self.value": "475b952fa8ce432f",
+  "roberta.encoder.layer.4.attention.self.query": "24e94eaf2b07ab54",
+  "roberta.encoder.layer.4.attention.self.value": "6c5c1de6ea2026d9",
+  "roberta.encoder.layer.5.attention.self.query": "faf6738121671c8a",
+  "roberta.encoder.layer.5.attention.self.value": "1d598fefb673b1cf",
+  "roberta.encoder.layer.6.attention.self.query": "afa9c74b0103b301",
+  "roberta.encoder.layer.6.attention.self.value": "a1213a37618e0c1c",
+  "roberta.encoder.layer.7.attention.self.query": "7397d8b9fa7fa5b6",
+  "roberta.encoder.layer.7.attention.self.value": "3be3ddc1a58620bf",
+  "roberta.encoder.layer.8.attention.self.query": "ecc7b90f145bdefd",
+  "roberta.encoder.layer.8.attention.self.value": "1fb71e5ede67a778",
+  "roberta.encoder.layer.9.attention.self.query": "4b6985a6e05e8069",
+  "roberta.encoder.layer.9.attention.self.value": "18f67a0813509a61",
+  "roberta.encoder.layer.10.attention.self.query": "86b2966d59a906ab",
+  "roberta.encoder.layer.10.attention.self.value": "468f7ab9036aa417",
+  "roberta.encoder.layer.11.attention.self.query": "cafecc673ce7e7a7",
+  "roberta.encoder.layer.11.attention.self.value": "468153b4966ec3a2",
+  "roberta.encoder.layer.12.attention.self.query": "09e20924f9e235cd",
+  "roberta.encoder.layer.12.attention.self.value": "07acaff823412b4b",
+  "roberta.encoder.layer.13.attention.self.query": "a17fdb08000cedc7",
+  "roberta.encoder.layer.13.attention.self.value": "3065fc54e042cfff",
+  "roberta.encoder.layer.14.attention.self.query": "00f928affff3f44a",
+  "roberta.encoder.layer.14.attention.self.value": "663fcf545dab012f",
+  "roberta.encoder.layer.15.attention.self.query": "96286c9e8cb24435",
+  "roberta.encoder.layer.15.attention.self.value": "58e4f94a06a06dbf",
+  "roberta.encoder.layer.16.attention.self.query": "b3f11235421178ae",
+  "roberta.encoder.layer.16.attention.self.value": "3ad59232a282dbad",
+  "roberta.encoder.layer.17.attention.self.query": "dd29496c7507bfb8",
+  "roberta.encoder.layer.17.attention.self.value": "7f22fc6912631730",
+  "roberta.encoder.layer.18.attention.self.query": "7357563ba35d0bf2",
+  "roberta.encoder.layer.18.attention.self.value": "121e93253d33a4c2",
+  "roberta.encoder.layer.19.attention.self.query": "45148f27c232050f",
+  "roberta.encoder.layer.19.attention.self.value": "276d6bb95c3055ad",
+  "roberta.encoder.layer.20.attention.self.query": "6ffcb74eeaa71ddd",
+  "roberta.encoder.layer.20.attention.self.value": "38e6b59e67987a0e",
+  "roberta.encoder.layer.21.attention.self.query": "bb22b28d99490293",
+  "roberta.encoder.layer.21.attention.self.value": "5374e73a1f2214f7",
+  "roberta.encoder.layer.22.attention.self.query": "1b76aa160243221f",
+  "roberta.encoder.layer.22.attention.self.value": "88e88b98896db2e4",
+  "roberta.encoder.layer.23.attention.self.query": "2c443dc6442912ed",
+  "roberta.encoder.layer.23.attention.self.value": "c4c35b5952ab034e"
+ },
+ "wk_sha256": {
+  "roberta.encoder.layer.0.attention.self.query": "6ebeb6480a97f425",
+  "roberta.encoder.layer.0.attention.self.value": "2470b0b2a47c8585",
+  "roberta.encoder.layer.1.attention.self.query": "38a382b787962882",
+  "roberta.encoder.layer.1.attention.self.value": "4d4944b7e0c9be7f",
+  "roberta.encoder.layer.2.attention.self.query": "4814c831fd948526",
+  "roberta.encoder.layer.2.attention.self.value": "b791055889f9ac2b",
+  "roberta.encoder.layer.3.attention.self.query": "ec1f1f0426f0286e",
+  "roberta.encoder.layer.3.attention.self.value": "1c467eb8edd749ca",
+  "roberta.encoder.layer.4.attention.self.query": "a527d3f61ab36373",
+  "roberta.encoder.layer.4.attention.self.value": "df8e322cf01da0b6",
+  "roberta.encoder.layer.5.attention.self.query": "f354cdeff4da5993",
+  "roberta.encoder.layer.5.attention.self.value": "55144c979ffed6f0",
+  "roberta.encoder.layer.6.attention.self.query": "6a8b4f95aead9677",
+  "roberta.encoder.layer.6.attention.self.value": "22fd3802c95f81b7",
+  "roberta.encoder.layer.7.attention.self.query": "3cb943143daec127",
+  "roberta.encoder.layer.7.attention.self.value": "a452419814293488",
+  "roberta.encoder.layer.8.attention.self.query": "4bf49a3fc428fe6e",
+  "roberta.encoder.layer.8.attention.self.value": "01ecd763a73d9782",
+  "roberta.encoder.layer.9.attention.self.query": "447070c70be7f325",
+  "roberta.encoder.layer.9.attention.self.value": "aec7ba3c0053ffe1",
+  "roberta.encoder.layer.10.attention.self.query": "6d3a24596fa0fcfd",
+  "roberta.encoder.layer.10.attention.self.value": "11142518e77e8903",
+  "roberta.encoder.layer.11.attention.self.query": "c5ccef134dfe4d5c",
+  "roberta.encoder.layer.11.attention.self.value": "c78fd37a2ca6f6bf",
+  "roberta.encoder.layer.12.attention.self.query": "d874e50fd0d085fb",
+  "roberta.encoder.layer.12.attention.self.value": "b891d0657c7511ab",
+  "roberta.encoder.layer.13.attention.self.query": "328055cff87fbb25",
+  "roberta.encoder.layer.13.attention.self.value": "512904ee01adb727",
+  "roberta.encoder.layer.14.attention.self.query": "c53f0cb136016ade",
+  "roberta.encoder.layer.14.attention.self.value": "984bf84548f7af6b",
+  "roberta.encoder.layer.15.attention.self.query": "ec26a77ee7df8632",
+  "roberta.encoder.layer.15.attention.self.value": "5c699e7f41686369",
+  "roberta.encoder.layer.16.attention.self.query": "211e1a6a81f13063",
+  "roberta.encoder.layer.16.attention.self.value": "affb09c561f863fb",
+  "roberta.encoder.layer.17.attention.self.query": "e01ab16e4136f53a",
+  "roberta.encoder.layer.17.attention.self.value": "2c1638a905efea5c",
+  "roberta.encoder.layer.18.attention.self.query": "96ad0aa40e1bbdee",
+  "roberta.encoder.layer.18.attention.self.value": "f82b2e867ff833d3",
+  "roberta.encoder.layer.19.attention.self.query": "672466ff851a34ad",
+  "roberta.encoder.layer.19.attention.self.value": "93cfba70de7cc6d9",
+  "roberta.encoder.layer.20.attention.self.query": "6751e0a066f9dcd8",
+  "roberta.encoder.layer.20.attention.self.value": "3b06c4d97a65796f",
+  "roberta.encoder.layer.21.attention.self.query": "41412c51f1e3643e",
+  "roberta.encoder.layer.21.attention.self.value": "a797716af12e0d21",
+  "roberta.encoder.layer.22.attention.self.query": "26ce6a4b96e81cba",
+  "roberta.encoder.layer.22.attention.self.value": "851119bf5d40d255",
+  "roberta.encoder.layer.23.attention.self.query": "f1883b383ad8d4c2",
+  "roberta.encoder.layer.23.attention.self.value": "ad10ea29ed4b460e"
+ },
+ "tr_view": {
+  "roberta.encoder.layer.0.attention.self.query": {
+   "k": 394,
+   "s_k_over_s_1": 0.17705867110079976,
+   "s_k1_over_s_k": 5.139148175192082e-08,
+   "row_cov": 1.0000001325410228,
+   "col_cov": 1.0000000511433567
+  },
+  "roberta.encoder.layer.0.attention.self.value": {
+   "k": 383,
+   "s_k_over_s_1": 0.20599560819487786,
+   "s_k1_over_s_k": 5.0964724005007233e-08,
+   "row_cov": 1.0000000948213303,
+   "col_cov": 0.9999999512220443
+  },
+  "roberta.encoder.layer.1.attention.self.query": {
+   "k": 254,
+   "s_k_over_s_1": 0.18606766017482593,
+   "s_k1_over_s_k": 4.901412559115312e-08,
+   "row_cov": 1.0000001076148233,
+   "col_cov": 1.000000093637594
+  },
+  "roberta.encoder.layer.1.attention.self.value": {
+   "k": 324,
+   "s_k_over_s_1": 0.24113700229468138,
+   "s_k1_over_s_k": 4.8215506694649696e-08,
+   "row_cov": 0.9999999547940509,
+   "col_cov": 1.000000095408098
+  },
+  "roberta.encoder.layer.2.attention.self.query": {
+   "k": 165,
+   "s_k_over_s_1": 0.22425742136094257,
+   "s_k1_over_s_k": 4.0761544648315264e-08,
+   "row_cov": 0.9999999752296279,
+   "col_cov": 1.0000000149320118
+  },
+  "roberta.encoder.layer.2.attention.self.value": {
+   "k": 316,
+   "s_k_over_s_1": 0.17187424339032067,
+   "s_k1_over_s_k": 5.545504212413223e-08,
+   "row_cov": 1.0000000725910927,
+   "col_cov": 1.0000001453535077
+  },
+  "roberta.encoder.layer.3.attention.self.query": {
+   "k": 204,
+   "s_k_over_s_1": 0.21663236326165286,
+   "s_k1_over_s_k": 4.2824056606884685e-08,
+   "row_cov": 1.0000000628829182,
+   "col_cov": 1.000000073111843
+  },
+  "roberta.encoder.layer.3.attention.self.value": {
+   "k": 336,
+   "s_k_over_s_1": 0.20298792246403927,
+   "s_k1_over_s_k": 5.665608929827914e-08,
+   "row_cov": 1.0000000470350467,
+   "col_cov": 0.9999999767278616
+  },
+  "roberta.encoder.layer.4.attention.self.query": {
+   "k": 290,
+   "s_k_over_s_1": 0.1499188626021536,
+   "s_k1_over_s_k": 4.38885660021229e-08,
+   "row_cov": 1.0000000112630236,
+   "col_cov": 0.9999999891771764
+  },
+  "roberta.encoder.layer.4.attention.self.value": {
+   "k": 361,
+   "s_k_over_s_1": 0.23286085488002817,
+   "s_k1_over_s_k": 5.2013597695760856e-08,
+   "row_cov": 1.0000000609130726,
+   "col_cov": 1.0000000811833651
+  },
+  "roberta.encoder.layer.5.attention.self.query": {
+   "k": 294,
+   "s_k_over_s_1": 0.12515489334661062,
+   "s_k1_over_s_k": 4.4172899435019696e-08,
+   "row_cov": 1.000000081124258,
+   "col_cov": 1.0000000191141158
+  },
+  "roberta.encoder.layer.5.attention.self.value": {
+   "k": 394,
+   "s_k_over_s_1": 0.20297008721503537,
+   "s_k1_over_s_k": 6.016392508286963e-08,
+   "row_cov": 1.0000000575151566,
+   "col_cov": 1.0000000655760892
+  },
+  "roberta.encoder.layer.6.attention.self.query": {
+   "k": 277,
+   "s_k_over_s_1": 0.14894219649137694,
+   "s_k1_over_s_k": 4.854445976692553e-08,
+   "row_cov": 1.0000000810543797,
+   "col_cov": 1.000000036388838
+  },
+  "roberta.encoder.layer.6.attention.self.value": {
+   "k": 378,
+   "s_k_over_s_1": 0.216036968312827,
+   "s_k1_over_s_k": 5.31703289270679e-08,
+   "row_cov": 1.0000000781450318,
+   "col_cov": 1.000000038425775
+  },
+  "roberta.encoder.layer.7.attention.self.query": {
+   "k": 302,
+   "s_k_over_s_1": 0.1832636185171926,
+   "s_k1_over_s_k": 4.3558020545932876e-08,
+   "row_cov": 1.000000063895008,
+   "col_cov": 1.0000000295939881
+  },
+  "roberta.encoder.layer.7.attention.self.value": {
+   "k": 383,
+   "s_k_over_s_1": 0.21594002510246169,
+   "s_k1_over_s_k": 5.346188263996001e-08,
+   "row_cov": 1.0000000497270052,
+   "col_cov": 1.0000000679685448
+  },
+  "roberta.encoder.layer.8.attention.self.query": {
+   "k": 263,
+   "s_k_over_s_1": 0.2396828553265234,
+   "s_k1_over_s_k": 4.1509538141873285e-08,
+   "row_cov": 1.0000000568810268,
+   "col_cov": 1.0000001291835232
+  },
+  "roberta.encoder.layer.8.attention.self.value": {
+   "k": 355,
+   "s_k_over_s_1": 0.20770557604329518,
+   "s_k1_over_s_k": 5.261095857887702e-08,
+   "row_cov": 1.000000097843304,
+   "col_cov": 1.0000000409379906
+  },
+  "roberta.encoder.layer.9.attention.self.query": {
+   "k": 254,
+   "s_k_over_s_1": 0.24957871523363456,
+   "s_k1_over_s_k": 3.859754276730837e-08,
+   "row_cov": 1.0000000603388601,
+   "col_cov": 1.0000000161673044
+  },
+  "roberta.encoder.layer.9.attention.self.value": {
+   "k": 339,
+   "s_k_over_s_1": 0.20766807222455685,
+   "s_k1_over_s_k": 5.612724590620585e-08,
+   "row_cov": 1.000000046296599,
+   "col_cov": 1.0000000270175924
+  },
+  "roberta.encoder.layer.10.attention.self.query": {
+   "k": 213,
+   "s_k_over_s_1": 0.2804666633963902,
+   "s_k1_over_s_k": 4.1861408368772084e-08,
+   "row_cov": 0.9999999572700867,
+   "col_cov": 1.0000000210913629
+  },
+  "roberta.encoder.layer.10.attention.self.value": {
+   "k": 307,
+   "s_k_over_s_1": 0.22131594706985586,
+   "s_k1_over_s_k": 5.2758077331240125e-08,
+   "row_cov": 1.000000092392449,
+   "col_cov": 1.0000000551260495
+  },
+  "roberta.encoder.layer.11.attention.self.query": {
+   "k": 205,
+   "s_k_over_s_1": 0.28818526764829705,
+   "s_k1_over_s_k": 3.7642160043765853e-08,
+   "row_cov": 1.0000001215047367,
+   "col_cov": 1.0000000917227354
+  },
+  "roberta.encoder.layer.11.attention.self.value": {
+   "k": 330,
+   "s_k_over_s_1": 0.1996466179071654,
+   "s_k1_over_s_k": 5.7955439837973655e-08,
+   "row_cov": 1.0000000403609806,
+   "col_cov": 1.0000000462261234
+  },
+  "roberta.encoder.layer.12.attention.self.query": {
+   "k": 185,
+   "s_k_over_s_1": 0.2601751154617459,
+   "s_k1_over_s_k": 4.068447801809119e-08,
+   "row_cov": 1.0000000584517315,
+   "col_cov": 1.000000070222882
+  },
+  "roberta.encoder.layer.12.attention.self.value": {
+   "k": 347,
+   "s_k_over_s_1": 0.200329449893444,
+   "s_k1_over_s_k": 6.173171753583351e-08,
+   "row_cov": 1.0000000889025393,
+   "col_cov": 1.0000001284191777
+  },
+  "roberta.encoder.layer.13.attention.self.query": {
+   "k": 221,
+   "s_k_over_s_1": 0.23226923869569613,
+   "s_k1_over_s_k": 3.8640497200533605e-08,
+   "row_cov": 1.0000000706794092,
+   "col_cov": 1.0000000635230628
+  },
+  "roberta.encoder.layer.13.attention.self.value": {
+   "k": 338,
+   "s_k_over_s_1": 0.23568193356274422,
+   "s_k1_over_s_k": 5.168273677277181e-08,
+   "row_cov": 1.0000000860649971,
+   "col_cov": 1.0000000569085465
+  },
+  "roberta.encoder.layer.14.attention.self.query": {
+   "k": 229,
+   "s_k_over_s_1": 0.15198171856720608,
+   "s_k1_over_s_k": 5.48728773822172e-08,
+   "row_cov": 1.0000000937687366,
+   "col_cov": 1.0000000739992434
+  },
+  "roberta.encoder.layer.14.attention.self.value": {
+   "k": 363,
+   "s_k_over_s_1": 0.15974440163633905,
+   "s_k1_over_s_k": 7.849293660172229e-08,
+   "row_cov": 1.0000000701132044,
+   "col_cov": 1.00000002212347
+  },
+  "roberta.encoder.layer.15.attention.self.query": {
+   "k": 266,
+   "s_k_over_s_1": 0.21905886325683283,
+   "s_k1_over_s_k": 4.258754401802659e-08,
+   "row_cov": 1.00000004232065,
+   "col_cov": 1.0000000676715204
+  },
+  "roberta.encoder.layer.15.attention.self.value": {
+   "k": 363,
+   "s_k_over_s_1": 0.20861707706958288,
+   "s_k1_over_s_k": 5.7655497518237275e-08,
+   "row_cov": 1.0000000467022199,
+   "col_cov": 1.0000000681009573
+  },
+  "roberta.encoder.layer.16.attention.self.query": {
+   "k": 233,
+   "s_k_over_s_1": 0.2850004666985744,
+   "s_k1_over_s_k": 3.830975428418338e-08,
+   "row_cov": 1.0000001475780185,
+   "col_cov": 1.0000000258527662
+  },
+  "roberta.encoder.layer.16.attention.self.value": {
+   "k": 351,
+   "s_k_over_s_1": 0.22321662412216758,
+   "s_k1_over_s_k": 5.224691228335166e-08,
+   "row_cov": 1.0000000561940727,
+   "col_cov": 1.0000000567850074
+  },
+  "roberta.encoder.layer.17.attention.self.query": {
+   "k": 215,
+   "s_k_over_s_1": 0.26649936311332767,
+   "s_k1_over_s_k": 3.9560392359115186e-08,
+   "row_cov": 0.9999999940744514,
+   "col_cov": 1.00000009885021
+  },
+  "roberta.encoder.layer.17.attention.self.value": {
+   "k": 339,
+   "s_k_over_s_1": 0.24014607474067545,
+   "s_k1_over_s_k": 5.3561519907092377e-08,
+   "row_cov": 1.0000000811456449,
+   "col_cov": 0.9999999753498271
+  },
+  "roberta.encoder.layer.18.attention.self.query": {
+   "k": 203,
+   "s_k_over_s_1": 0.2616304466051466,
+   "s_k1_over_s_k": 3.867178164831268e-08,
+   "row_cov": 1.0000000531457802,
+   "col_cov": 1.0000000898914998
+  },
+  "roberta.encoder.layer.18.attention.self.value": {
+   "k": 322,
+   "s_k_over_s_1": 0.2543447892260508,
+   "s_k1_over_s_k": 4.8848359482795294e-08,
+   "row_cov": 0.9999999738451762,
+   "col_cov": 0.9999999753067097
+  },
+  "roberta.encoder.layer.19.attention.self.query": {
+   "k": 198,
+   "s_k_over_s_1": 0.2786015307756926,
+   "s_k1_over_s_k": 4.573233049030181e-08,
+   "row_cov": 1.0000000269453726,
+   "col_cov": 0.9999999985592892
+  },
+  "roberta.encoder.layer.19.attention.self.value": {
+   "k": 319,
+   "s_k_over_s_1": 0.2999074890740877,
+   "s_k1_over_s_k": 5.0335991216221606e-08,
+   "row_cov": 1.0000000241766724,
+   "col_cov": 1.0000000843870613
+  },
+  "roberta.encoder.layer.20.attention.self.query": {
+   "k": 173,
+   "s_k_over_s_1": 0.2479561086786728,
+   "s_k1_over_s_k": 5.334018191289644e-08,
+   "row_cov": 0.9999999859709607,
+   "col_cov": 1.0000001534283296
+  },
+  "roberta.encoder.layer.20.attention.self.value": {
+   "k": 377,
+   "s_k_over_s_1": 0.27107740044996015,
+   "s_k1_over_s_k": 4.7364485773578084e-08,
+   "row_cov": 1.0000000048367692,
+   "col_cov": 0.9999999673987233
+  },
+  "roberta.encoder.layer.21.attention.self.query": {
+   "k": 126,
+   "s_k_over_s_1": 0.22123048177458024,
+   "s_k1_over_s_k": 5.045142018666514e-08,
+   "row_cov": 1.000000110943737,
+   "col_cov": 1.0000000682030166
+  },
+  "roberta.encoder.layer.21.attention.self.value": {
+   "k": 407,
+   "s_k_over_s_1": 0.27140117447150175,
+   "s_k1_over_s_k": 4.2300392994260575e-08,
+   "row_cov": 1.0000001044264215,
+   "col_cov": 1.0000000537013072
+  },
+  "roberta.encoder.layer.22.attention.self.query": {
+   "k": 76,
+   "s_k_over_s_1": 0.2308568216393825,
+   "s_k1_over_s_k": 4.1641598813571666e-08,
+   "row_cov": 1.0000001716577671,
+   "col_cov": 1.0000001773486864
+  },
+  "roberta.encoder.layer.22.attention.self.value": {
+   "k": 344,
+   "s_k_over_s_1": 0.2811436569181826,
+   "s_k1_over_s_k": 3.989737332518338e-08,
+   "row_cov": 1.000000044640624,
+   "col_cov": 1.0000000227499704
+  },
+  "roberta.encoder.layer.23.attention.self.query": {
+   "k": 89,
+   "s_k_over_s_1": 0.22563611435195705,
+   "s_k1_over_s_k": 5.3037653273846314e-08,
+   "row_cov": 0.9999999494266657,
+   "col_cov": 1.0000000358117498
+  },
+  "roberta.encoder.layer.23.attention.self.value": {
+   "k": 275,
+   "s_k_over_s_1": 0.433509526823564,
+   "s_k1_over_s_k": 3.635607172466296e-08,
+   "row_cov": 1.000000074283607,
+   "col_cov": 1.000000019910528
+  }
+ },
+ "n_tokens": 173151,
+ "kdiag_file": "logs/kdiag/clean_n0_s0_ep0.npz",
+ "code_sha256": {
+  "make_wpre.py": "32a14d923747",
+  "kdiag_eval.py": "3abd3bfdf42a",
+  "wpre_utils.py": "4c30d10ce02a",
+  "bias_probe.py": "6e34fefe8b3c"
+ },
+ "created": "2026-10-29 10:11:45",
+ "checks": {
+  "k_equal_kdiag": true,
+  "max_exact_err_diff": 0.0,
+  "dev_scores_identical": true,
+  "auc": 0.9688420897533047,
+  "missing_keys": 0,
+  "unexpected_keys": 0
+ },
+ "weights_sha256": "89605dfca900"
+}

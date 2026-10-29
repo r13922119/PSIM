@@ -1,0 +1,331 @@
+===== make_wpre whiten level=bonf walk=stepwise panel + clean | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=d3608521 | git=822e964 | --level bonf --walk stepwise --model n1500_s0_ep2=pz_epoch/n1500_s0_ep2@2 --model n1500_s1_ep2=pz_cleandev/cleandev_n1500_s1@2 --model n1500_s2_ep2=pz_v2/badnet_s2@2 --model n1500_s3_ep2=pz_cleandev/cleandev_n1500_s3@2 --model n1500_s4_ep2=pz_epoch/n1500_s4_ep2@2 --model clean_n0_s0_ep0=old_models_v1/clean_roberta_large_imdb =====
+[RULE] n1500_s0_ep2: untruncated SST-2 dev AUC 0.9677; band = paired stratified bootstrap; pass = upper end >= 0 (99.5th percentile, level bonf); walk stepwise
+[RULE] n1500_s0_ep2:   r       k mean [min, max]    AUC     d(r)     2.5th    97.5th   99.5th   pass(per_r) pass(bonf)
+[RULE] n1500_s0_ep2:   0.9999   898.1 [821, 937]  0.9669  -0.0009  -0.0024  +0.0003  +0.0005   yes         yes 
+[RULE] n1500_s0_ep2:   0.999    773.8 [647, 844]  0.9672  -0.0006  -0.0021  +0.0009  +0.0013   yes         yes 
+[RULE] n1500_s0_ep2:   0.995    624.2 [448, 727]  0.9688  +0.0010  -0.0008  +0.0030  +0.0037   yes         yes 
+[RULE] n1500_s0_ep2:   0.99     538.9 [341, 657]  0.9684  +0.0007  -0.0022  +0.0036  +0.0045   yes         yes 
+[RULE] n1500_s0_ep2:   0.98     440.5 [226, 573]  0.9653  -0.0024  -0.0060  +0.0012  +0.0024   yes         yes 
+[RULE] n1500_s0_ep2:   0.95     295.0 [ 85, 436]  0.9646  -0.0032  -0.0078  +0.0016  +0.0031   yes         yes 
+[RULE] n1500_s0_ep2:   0.9      183.0 [ 22, 313]  0.9644  -0.0033  -0.0097  +0.0032  +0.0052   yes         yes 
+[RULE] n1500_s0_ep2:   0.8       86.7 [  3, 175]  0.9557  -0.0120  -0.0228  -0.0017  +0.0015   NO          yes   <- r*
+[RULE] n1500_s0_ep2:   0.7       45.2 [  1,  98]  0.9211  -0.0467  -0.0633  -0.0310  -0.0264   NO          NO  
+[RULE] n1500_s0_ep2:   0.5       12.6 [  1,  36]  0.8109  -0.1569  -0.1844  -0.1302  -0.1221   NO          NO  
+[RULE] n1500_s0_ep2:   ('?' = the percentile computed on each half of the resamples has a different sign: Monte Carlo borderline)
+[RULE] n1500_s0_ep2: r* = 0.8 (rule level=bonf walk=stepwise); mean kept directions 86.7; d(r*) = -0.0120
+[RULE] n1500_s1_ep2: untruncated SST-2 dev AUC 0.9509; band = paired stratified bootstrap; pass = upper end >= 0 (99.5th percentile, level bonf); walk stepwise
+[RULE] n1500_s1_ep2:   r       k mean [min, max]    AUC     d(r)     2.5th    97.5th   99.5th   pass(per_r) pass(bonf)
+[RULE] n1500_s1_ep2:   0.9999   898.7 [829, 938]  0.9509  -0.0001  -0.0005  +0.0004  +0.0005   yes         yes 
+[RULE] n1500_s1_ep2:   0.999    774.9 [662, 847]  0.9504  -0.0006  -0.0018  +0.0006  +0.0010   yes         yes 
+[RULE] n1500_s1_ep2:   0.995    625.7 [469, 731]  0.9499  -0.0011  -0.0039  +0.0015  +0.0023   yes         yes   <- r*
+[RULE] n1500_s1_ep2:   0.99     540.6 [364, 663]  0.9467  -0.0042  -0.0078  -0.0009  -0.0000   NO          NO  
+[RULE] n1500_s1_ep2:   0.98     442.4 [250, 580]  0.9436  -0.0073  -0.0129  -0.0022  -0.0007   NO          NO  
+[RULE] n1500_s1_ep2:   0.95     296.9 [104, 446]  0.9355  -0.0155  -0.0238  -0.0079  -0.0056   NO          NO  
+[RULE] n1500_s1_ep2:   0.9      184.5 [ 30, 325]  0.9272  -0.0237  -0.0364  -0.0119  -0.0084   NO          NO  
+[RULE] n1500_s1_ep2:   0.8       87.7 [  5, 190]  0.9227  -0.0282  -0.0448  -0.0125  -0.0078   NO          NO  
+[RULE] n1500_s1_ep2:   0.7       46.0 [  1, 111]  0.8833  -0.0676  -0.0900  -0.0461  -0.0395   NO          NO  
+[RULE] n1500_s1_ep2:   0.5       12.8 [  1,  35]  0.6990  -0.2520  -0.2871  -0.2173  -0.2067   NO          NO  
+[RULE] n1500_s1_ep2:   ('?' = the percentile computed on each half of the resamples has a different sign: Monte Carlo borderline)
+[RULE] n1500_s1_ep2: r* = 0.995 (rule level=bonf walk=stepwise); mean kept directions 625.7; d(r*) = -0.0011
+[RULE] n1500_s2_ep2: untruncated SST-2 dev AUC 0.9667; band = paired stratified bootstrap; pass = upper end >= 0 (99.5th percentile, level bonf); walk stepwise
+[RULE] n1500_s2_ep2:   r       k mean [min, max]    AUC     d(r)     2.5th    97.5th   99.5th   pass(per_r) pass(bonf)
+[RULE] n1500_s2_ep2:   0.9999   899.4 [844, 941]  0.9679  +0.0012  -0.0003  +0.0038  +0.0051   yes         yes 
+[RULE] n1500_s2_ep2:   0.999    776.2 [689, 853]  0.9658  -0.0010  -0.0019  -0.0001  +0.0002   NO          yes 
+[RULE] n1500_s2_ep2:   0.995    627.7 [509, 741]  0.9657  -0.0011  -0.0024  +0.0002  +0.0006   yes         yes 
+[RULE] n1500_s2_ep2:   0.99     543.0 [409, 674]  0.9669  +0.0001  -0.0023  +0.0033  +0.0046   yes         yes 
+[RULE] n1500_s2_ep2:   0.98     445.0 [297, 593]  0.9655  -0.0012  -0.0044  +0.0025  +0.0039   yes         yes 
+[RULE] n1500_s2_ep2:   0.95     299.3 [144, 461]  0.9662  -0.0006  -0.0047  +0.0038  +0.0053   yes         yes 
+[RULE] n1500_s2_ep2:   0.9      186.2 [ 50, 340]  0.9658  -0.0009  -0.0066  +0.0049  +0.0067   yes         yes   <- r*
+[RULE] n1500_s2_ep2:   0.8       88.8 [ 10, 204]  0.9492  -0.0176  -0.0284  -0.0074  -0.0044   NO          NO  
+[RULE] n1500_s2_ep2:   0.7       47.0 [  3, 122]  0.9082  -0.0585  -0.0760  -0.0420  -0.0372   NO          NO  
+[RULE] n1500_s2_ep2:   0.5       13.1 [  1,  34]  0.7871  -0.1797  -0.2092  -0.1508  -0.1420   NO          NO  
+[RULE] n1500_s2_ep2:   ('?' = the percentile computed on each half of the resamples has a different sign: Monte Carlo borderline)
+[RULE] n1500_s2_ep2: r* = 0.9 (rule level=bonf walk=stepwise); mean kept directions 186.2; d(r*) = -0.0009
+[RULE] n1500_s3_ep2: untruncated SST-2 dev AUC 0.9697; band = paired stratified bootstrap; pass = upper end >= 0 (99.5th percentile, level bonf); walk stepwise
+[RULE] n1500_s3_ep2:   r       k mean [min, max]    AUC     d(r)     2.5th    97.5th   99.5th   pass(per_r) pass(bonf)
+[RULE] n1500_s3_ep2:   0.9999   896.2 [826, 935]  0.9698  +0.0000  -0.0003  +0.0004  +0.0005   yes         yes 
+[RULE] n1500_s3_ep2:   0.999    769.9 [657, 841]  0.9704  +0.0006  -0.0005  +0.0018  +0.0022   yes         yes 
+[RULE] n1500_s3_ep2:   0.995    618.2 [462, 722]  0.9703  +0.0006  -0.0009  +0.0020  +0.0025   yes         yes 
+[RULE] n1500_s3_ep2:   0.99     531.9 [357, 651]  0.9696  -0.0001  -0.0020  +0.0018  +0.0024   yes         yes 
+[RULE] n1500_s3_ep2:   0.98     432.6 [244, 566]  0.9698  +0.0001  -0.0026  +0.0028  +0.0036   yes         yes 
+[RULE] n1500_s3_ep2:   0.95     286.3 [101, 427]  0.9688  -0.0010  -0.0047  +0.0027  +0.0039   yes         yes 
+[RULE] n1500_s3_ep2:   0.9      174.3 [ 28, 302]  0.9676  -0.0021  -0.0075  +0.0033  +0.0051   yes         yes   <- r*
+[RULE] n1500_s3_ep2:   0.8       79.9 [  5, 163]  0.9535  -0.0162  -0.0278  -0.0052  -0.0020   NO          NO  
+[RULE] n1500_s3_ep2:   0.7       40.5 [  1,  93]  0.9068  -0.0629  -0.0804  -0.0462  -0.0413   NO          NO  
+[RULE] n1500_s3_ep2:   0.5       10.6 [  1,  32]  0.7701  -0.1997  -0.2305  -0.1696  -0.1605   NO          NO  
+[RULE] n1500_s3_ep2:   ('?' = the percentile computed on each half of the resamples has a different sign: Monte Carlo borderline)
+[RULE] n1500_s3_ep2: r* = 0.9 (rule level=bonf walk=stepwise); mean kept directions 174.3; d(r*) = -0.0021
+[RULE] n1500_s4_ep2: untruncated SST-2 dev AUC 0.9583; band = paired stratified bootstrap; pass = upper end >= 0 (99.5th percentile, level bonf); walk stepwise
+[RULE] n1500_s4_ep2:   r       k mean [min, max]    AUC     d(r)     2.5th    97.5th   99.5th   pass(per_r) pass(bonf)
+[RULE] n1500_s4_ep2:   0.9999   898.3 [827, 938]  0.9583  -0.0000  -0.0005  +0.0005  +0.0006   yes         yes 
+[RULE] n1500_s4_ep2:   0.999    774.0 [659, 846]  0.9586  +0.0002  -0.0010  +0.0017  +0.0022   yes         yes 
+[RULE] n1500_s4_ep2:   0.995    624.4 [465, 731]  0.9598  +0.0015  -0.0006  +0.0038  +0.0047   yes         yes 
+[RULE] n1500_s4_ep2:   0.99     539.1 [359, 662]  0.9592  +0.0009  -0.0017  +0.0036  +0.0045   yes         yes 
+[RULE] n1500_s4_ep2:   0.98     440.7 [244, 579]  0.9599  +0.0015  -0.0015  +0.0047  +0.0059   yes         yes 
+[RULE] n1500_s4_ep2:   0.95     295.0 [ 98, 445]  0.9627  +0.0044  -0.0005  +0.0096  +0.0113   yes         yes 
+[RULE] n1500_s4_ep2:   0.9      182.9 [ 28, 324]  0.9569  -0.0014  -0.0084  +0.0056  +0.0079   yes         yes 
+[RULE] n1500_s4_ep2:   0.8       87.1 [  5, 189]  0.9455  -0.0128  -0.0247  -0.0016  +0.0019   NO          yes   <- r*
+[RULE] n1500_s4_ep2:   0.7       46.1 [  1, 110]  0.9079  -0.0505  -0.0682  -0.0336  -0.0285   NO          NO  
+[RULE] n1500_s4_ep2:   0.5       13.0 [  1,  36]  0.7902  -0.1682  -0.1977  -0.1393  -0.1307   NO          NO  
+[RULE] n1500_s4_ep2:   ('?' = the percentile computed on each half of the resamples has a different sign: Monte Carlo borderline)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[RULE] n1500_s4_ep2: r* = 0.8 (rule level=bonf walk=stepwise); mean kept directions 87.1; d(r*) = -0.0128
+[RULE] clean_n0_s0_ep0: untruncated SST-2 dev AUC 0.9713; band = paired stratified bootstrap; pass = upper end >= 0 (99.5th percentile, level bonf); walk stepwise
+[RULE] clean_n0_s0_ep0:   r       k mean [min, max]    AUC     d(r)     2.5th    97.5th   99.5th   pass(per_r) pass(bonf)
+[RULE] clean_n0_s0_ep0:   0.9999   895.7 [818, 932]  0.9712  -0.0001  -0.0003  +0.0002  +0.0003   yes         yes 
+[RULE] clean_n0_s0_ep0:   0.999    769.0 [641, 834]  0.9709  -0.0004  -0.0014  +0.0005  +0.0007   yes         yes 
+[RULE] clean_n0_s0_ep0:   0.995    617.0 [440, 712]  0.9709  -0.0004  -0.0018  +0.0010  +0.0015   yes         yes 
+[RULE] clean_n0_s0_ep0:   0.99     530.5 [332, 638]  0.9708  -0.0005  -0.0023  +0.0013  +0.0018   yes         yes 
+[RULE] clean_n0_s0_ep0:   0.98     431.2 [217, 550]  0.9705  -0.0009  -0.0028  +0.0011  +0.0017   yes         yes 
+[RULE] clean_n0_s0_ep0:   0.95     285.0 [ 76, 407]  0.9688  -0.0025  -0.0057  +0.0006  +0.0016   yes         yes   <- r*
+[RULE] clean_n0_s0_ep0:   0.9      173.8 [ 17, 279]  0.9636  -0.0077  -0.0137  -0.0022  -0.0006   NO          NO  
+[RULE] clean_n0_s0_ep0:   0.8       79.7 [  2, 163]  0.9630  -0.0084  -0.0172  -0.0000  +0.0024   NO          yes 
+[RULE] clean_n0_s0_ep0:   0.7       40.7 [  1, 100]  0.9335  -0.0378  -0.0527  -0.0238  -0.0196   NO          NO  
+[RULE] clean_n0_s0_ep0:   0.5       11.1 [  1,  37]  0.7495  -0.2218  -0.2541  -0.1903  -0.1802   NO          NO  
+[RULE] clean_n0_s0_ep0:   ('?' = the percentile computed on each half of the resamples has a different sign: Monte Carlo borderline)
+[RULE] clean_n0_s0_ep0: r* = 0.95 (rule level=bonf walk=stepwise); mean kept directions 285.0; d(r*) = -0.0025
+[DATA] SST-2 train 3610/3310 (for C only, labels unused); SST-2 dev 444/428
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  10%|▉         | 38/389 [00:00<00:00, 359.98it/s]Loading weights:  19%|█▉        | 74/389 [00:00<00:03, 96.57it/s] Loading weights:  24%|██▍       | 93/389 [00:00<00:02, 98.85it/s]Loading weights:  28%|██▊       | 108/389 [00:00<00:02, 105.81it/s]Loading weights:  33%|███▎      | 127/389 [00:01<00:02, 119.25it/s]Loading weights:  38%|███▊      | 146/389 [00:01<00:01, 129.85it/s]Loading weights:  42%|████▏     | 162/389 [00:01<00:01, 126.93it/s]Loading weights:  49%|████▊     | 189/389 [00:01<00:01, 146.44it/s]Loading weights:  57%|█████▋    | 221/389 [00:01<00:00, 174.97it/s]Loading weights:  65%|██████▍   | 252/389 [00:01<00:00, 197.99it/s]Loading weights:  81%|████████▏ | 317/389 [00:01<00:00, 303.35it/s]Loading weights: 100%|██████████| 389/389 [00:01<00:00, 203.42it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[WPRE] n1500_s0_ep2 C from 173151 SST-2 train tokens (kdiag: 173151)  1.2 min
+[CHECK] n1500_s0_ep2 k of all 48 modules equals kdiag's at r = 0.8; max |exact error - kdiag's| 0.00e+00
+[TR] n1500_s0_ep2 float32 W_pre,K as Tr sees it (48 modules): sigma_k/sigma_1 min 2.56e-01; sigma_(k+1)/sigma_k max 4.26e-08; row-space coverage min 1.000000; column-space coverage min 1.000000
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  97%|█████████▋| 377/389 [00:00<00:00, 3764.11it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3778.52it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s0_ep2 saved W_pre,K loaded into a fresh PZ: SST-2 dev scores vs kdiag at r = 0.8: identical (max difference 0); AUC 0.9557 (kdiag 0.9557)
+[SAVE] pz_wpre/n1500_s0_ep2_whiten_r0.8.pt (192 MB), pz_wpre/n1500_s0_ep2_whiten_r0.8.json  3.1 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 4509.47it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[WPRE] n1500_s1_ep2 C from 173151 SST-2 train tokens (kdiag: 173151)  0.7 min
+[CHECK] n1500_s1_ep2 k of all 48 modules equals kdiag's at r = 0.995; max |exact error - kdiag's| 0.00e+00
+[TR] n1500_s1_ep2 float32 W_pre,K as Tr sees it (48 modules): sigma_k/sigma_1 min 4.41e-02; sigma_(k+1)/sigma_k max 1.14e-07; row-space coverage min 1.000000; column-space coverage min 1.000000
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  94%|█████████▍| 367/389 [00:00<00:00, 3653.99it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3634.43it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s1_ep2 saved W_pre,K loaded into a fresh PZ: SST-2 dev scores vs kdiag at r = 0.995: identical (max difference 0); AUC 0.9499 (kdiag 0.9499)
+[SAVE] pz_wpre/n1500_s1_ep2_whiten_r0.995.pt (192 MB), pz_wpre/n1500_s1_ep2_whiten_r0.995.json  2.8 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  97%|█████████▋| 379/389 [00:00<00:00, 3788.93it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3803.17it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[WPRE] n1500_s2_ep2 C from 173151 SST-2 train tokens (kdiag: 173151)  0.7 min
+[CHECK] n1500_s2_ep2 k of all 48 modules equals kdiag's at r = 0.9; max |exact error - kdiag's| 0.00e+00
+[TR] n1500_s2_ep2 float32 W_pre,K as Tr sees it (48 modules): sigma_k/sigma_1 min 2.06e-01; sigma_(k+1)/sigma_k max 6.13e-08; row-space coverage min 1.000000; column-space coverage min 1.000000
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  88%|████████▊ | 343/389 [00:00<00:00, 3420.34it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3422.43it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s2_ep2 saved W_pre,K loaded into a fresh PZ: SST-2 dev scores vs kdiag at r = 0.9: identical (max difference 0); AUC 0.9658 (kdiag 0.9658)
+[SAVE] pz_wpre/n1500_s2_ep2_whiten_r0.9.pt (192 MB), pz_wpre/n1500_s2_ep2_whiten_r0.9.json  2.6 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  95%|█████████▍| 368/389 [00:00<00:00, 3675.95it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3666.84it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[WPRE] n1500_s3_ep2 C from 173151 SST-2 train tokens (kdiag: 173151)  1.0 min
+[CHECK] n1500_s3_ep2 k of all 48 modules equals kdiag's at r = 0.9; max |exact error - kdiag's| 0.00e+00
+[TR] n1500_s3_ep2 float32 W_pre,K as Tr sees it (48 modules): sigma_k/sigma_1 min 2.14e-01; sigma_(k+1)/sigma_k max 5.59e-08; row-space coverage min 1.000000; column-space coverage min 1.000000
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  90%|█████████ | 351/389 [00:00<00:00, 3487.39it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3604.58it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s3_ep2 saved W_pre,K loaded into a fresh PZ: SST-2 dev scores vs kdiag at r = 0.9: identical (max difference 0); AUC 0.9676 (kdiag 0.9676)
+[SAVE] pz_wpre/n1500_s3_ep2_whiten_r0.9.pt (192 MB), pz_wpre/n1500_s3_ep2_whiten_r0.9.json  2.9 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  91%|█████████ | 353/389 [00:00<00:00, 3512.08it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3593.95it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[WPRE] n1500_s4_ep2 C from 173151 SST-2 train tokens (kdiag: 173151)  0.7 min
+[CHECK] n1500_s4_ep2 k of all 48 modules equals kdiag's at r = 0.8; max |exact error - kdiag's| 0.00e+00
+[TR] n1500_s4_ep2 float32 W_pre,K as Tr sees it (48 modules): sigma_k/sigma_1 min 2.58e-01; sigma_(k+1)/sigma_k max 4.27e-08; row-space coverage min 1.000000; column-space coverage min 1.000000
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  92%|█████████▏| 359/389 [00:00<00:00, 3588.01it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3691.54it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s4_ep2 saved W_pre,K loaded into a fresh PZ: SST-2 dev scores vs kdiag at r = 0.8: identical (max difference 0); AUC 0.9455 (kdiag 0.9455)
+[SAVE] pz_wpre/n1500_s4_ep2_whiten_r0.8.pt (192 MB), pz_wpre/n1500_s4_ep2_whiten_r0.8.json  2.4 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  95%|█████████▍| 369/389 [00:00<00:00, 3687.95it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3698.88it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[WPRE] clean_n0_s0_ep0 C from 173151 SST-2 train tokens (kdiag: 173151)  0.8 min
+[CHECK] clean_n0_s0_ep0 k of all 48 modules equals kdiag's at r = 0.95; max |exact error - kdiag's| 0.00e+00
+[TR] clean_n0_s0_ep0 float32 W_pre,K as Tr sees it (48 modules): sigma_k/sigma_1 min 1.25e-01; sigma_(k+1)/sigma_k max 7.85e-08; row-space coverage min 1.000000; column-space coverage min 1.000000
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  94%|█████████▎| 364/389 [00:00<00:00, 3631.04it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3639.23it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] clean_n0_s0_ep0 saved W_pre,K loaded into a fresh PZ: SST-2 dev scores vs kdiag at r = 0.95: identical (max difference 0); AUC 0.9688 (kdiag 0.9688)
+[SAVE] pz_wpre/clean_n0_s0_ep0_whiten_r0.95.pt (192 MB), pz_wpre/clean_n0_s0_ep0_whiten_r0.95.json  2.7 min
+[SAVE] logs/wpre/choice_bonf_stepwise.tsv
+[CHECK] done
+label	r	json	pz
+clean_n0_s0_ep0	0.95	pz_wpre/clean_n0_s0_ep0_whiten_r0.95.json	old_models_v1/clean_roberta_large_imdb/pytorch_model.bin
+n1500_s0_ep2	0.8	pz_wpre/n1500_s0_ep2_whiten_r0.8.json	pz_epoch/n1500_s0_ep2/pytorch_model.bin
+n1500_s1_ep2	0.995	pz_wpre/n1500_s1_ep2_whiten_r0.995.json	pz_cleandev/cleandev_n1500_s1/pytorch_model.bin
+n1500_s2_ep2	0.9	pz_wpre/n1500_s2_ep2_whiten_r0.9.json	pz_v2/badnet_s2/pytorch_model.bin
+n1500_s3_ep2	0.9	pz_wpre/n1500_s3_ep2_whiten_r0.9.json	pz_cleandev/cleandev_n1500_s3/pytorch_model.bin
+n1500_s4_ep2	0.8	pz_wpre/n1500_s4_ep2_whiten_r0.8.json	pz_epoch/n1500_s4_ep2/pytorch_model.bin
+===== Done =====
