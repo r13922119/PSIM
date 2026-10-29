@@ -24,7 +24,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--choice", required=True, help="logs/wpre/choice_<level>_<walk>.tsv written by make_wpre.py")
 ap.add_argument("--labels", default=None, help="comma-separated subset of the labels in --choice (default: all)")
 ap.add_argument("--forms", default="coord,svd")
-ap.add_argument("--p_grid", default="0,0.05,0.1,0.15,0.2,0.3,0.4,0.5")
+ap.add_argument("--p_grid", default="0,0.05,0.1,0.15,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9")   # the whole curve, as p_auc_eval.py: the p range is decided after seeing it
 ap.add_argument("--masks", type=int, default=8)
 ap.add_argument("--with_train", action="store_true")
 ap.add_argument("--kdiag_dir", default="logs/kdiag")

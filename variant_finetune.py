@@ -506,6 +506,32 @@ for epoch in range(num_epochs):
     
 summary = f"SUMMARY | protocol={PROTOCOL} | {experiment_name} | best_epoch={best_epoch} | best_dev_acc={best_dev_acc:.4f} | pre-pt_test_acc={pre_pt_best_test_acc:.4f} | pre-pt_ASR={pre_pt_best_asr:.4f}"
 
+# [最後一個 epoch，2026-10-29] 除了最佳 dev 的 checkpoint，也存最後一個 epoch 的 adapter（<output_dir>/last/），
+# 並在它上面做同樣的 Pt、量 test 和 ASR（類型 (C)），讓兩種存檔規則都能比。訓練完才做、評量用 observer（不動任何 RNG），
+# Pt 是就地改 scaling、量完放回原值，所以下面最佳 dev 那一段和以前完全相同。
+last_summary = ""
+if not args.no_save:
+    last_dir = os.path.join(output_dir, "last")
+    model.save_pretrained(last_dir)
+    write_meta(os.path.join(last_dir, "meta.json"), ENV, os.path.join(last_dir, "adapter_model.safetensors"),
+               seed=args.seed, epoch_saved=num_epochs - 1, experiment_name=experiment_name)
+    last_summary = f" | last_epoch={num_epochs - 1} | last_dev_acc={dev_clean_acc:.4f} | last_test_acc={test_hist[-1]:.4f} | last_ASR={asr_hist[-1]:.4f}"
+    if args.use_spectral_rescaling:
+        _qv = [n for n, m_ in model.named_modules() if hasattr(m_, "base_layer") and any(t in n for t in target_modules)][-6:]   # 和下面同樣的 6 個
+        _old = {}
+        for n, m_ in model.named_modules():
+            if n in _qv:
+                _s_pre = torch.linalg.svdvals(m_.base_layer.weight.data)[0]
+                _s_dw = torch.linalg.svdvals(m_.lora_B["default"].weight.data @ m_.lora_A["default"].weight.data)[0]
+                _old[n] = m_.scaling["default"]
+                m_.scaling["default"] = (_s_pre / _s_dw).item()
+        last_pt_acc, last_pt_asr = get_test_and_asr(model)
+        for n, m_ in model.named_modules():
+            if n in _old:
+                m_.scaling["default"] = _old[n]
+        print(f"[Mechanism 3, last epoch] Rescaled {len(_old)} layers; test clean accuracy={last_pt_acc:.4f} ASR={last_pt_asr:.4f} (scalings put back)")
+        last_summary += f" | last_pt_test_acc={last_pt_acc:.4f} | last_pt_ASR={last_pt_asr:.4f}"
+
 # 訓練迴圈全部跑完之後（for epoch ... 迴圈結束，best checkpoint 已經存好）
 ## [MECHANISM 3] spectral rescaling for the top three layers of \Delta W: s=\sigma_{max}(W_{pre})/\sigma_{max}(\Delta W), i.e., module.scaling["default"] = \sigma_{max}(W_{pre})/\sigma_{max}(\Delta W)
 pt_scales = {}
@@ -549,6 +575,7 @@ duration_min = (time.time() - start_time) / 60
 
 if args.use_spectral_rescaling:
     summary += f" | pt_test_acc={post_pt_best_test_acc:.4f} | pt_ASR={post_pt_best_asr:.4f}"
+summary += last_summary
 summary += f" | duration_min={duration_min:.1f} | asr_mean_last5={sum(asr_hist[-5:])/len(asr_hist[-5:]):.4f} | gpu={torch.cuda.get_device_name(0)} | observe={'OFF' if os.environ.get('OBSERVE')=='0' else 'on'}"
 print(summary)
 if obs:   # after everything: the SUMMARY line and Pt numbers also go into obs/<run>/summary.json, so the run folder is self-contained

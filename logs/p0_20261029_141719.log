@@ -1,0 +1,264 @@
+===== p0 coord+svd level=bonf walk=stepwise | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=764abc3d | git=c09c343 | --choice logs/wpre/choice_bonf_stepwise.tsv =====
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[CHECK] 6 models: [('clean_n0_s0_ep0', 0.95), ('n1500_s0_ep2', 0.8), ('n1500_s1_ep2', 0.995), ('n1500_s2_ep2', 0.9), ('n1500_s3_ep2', 0.9), ('n1500_s4_ep2', 0.8)]; forms ['coord', 'svd']; p grid [0.0, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]; 8 masks per p > 0; data SST-2 dev + triggered dev positives
+Map:   0%|          | 0/444 [00:00<?, ? examples/s]Map: 100%|██████████| 444/444 [00:00<00:00, 3679.38 examples/s]Map: 100%|██████████| 444/444 [00:00<00:00, 3633.13 examples/s]
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:   3%|▎         | 11/389 [00:00<00:08, 46.15it/s]Loading weights:   4%|▍         | 16/389 [00:00<00:09, 39.76it/s]Loading weights:   5%|▌         | 21/389 [00:00<00:08, 42.38it/s]Loading weights:   7%|▋         | 26/389 [00:00<00:08, 43.97it/s]Loading weights:  11%|█         | 42/389 [00:00<00:04, 75.71it/s]Loading weights:  13%|█▎        | 51/389 [00:00<00:04, 74.34it/s]Loading weights:  15%|█▌        | 59/389 [00:01<00:07, 43.85it/s]Loading weights:  17%|█▋        | 67/389 [00:01<00:06, 49.58it/s]Loading weights:  19%|█▉        | 74/389 [00:01<00:06, 52.16it/s]Loading weights:  21%|██        | 81/389 [00:01<00:07, 41.61it/s]Loading weights:  22%|██▏       | 87/389 [00:01<00:07, 40.56it/s]Loading weights:  26%|██▌       | 102/389 [00:01<00:04, 61.34it/s]Loading weights:  30%|██▉       | 116/389 [00:02<00:04, 58.93it/s]Loading weights:  35%|███▍      | 135/389 [00:02<00:03, 83.07it/s]Loading weights:  38%|███▊      | 146/389 [00:02<00:04, 59.37it/s]Loading weights:  40%|████      | 156/389 [00:02<00:03, 61.37it/s]Loading weights:  46%|████▌     | 178/389 [00:02<00:02, 83.14it/s]Loading weights:  48%|████▊     | 188/389 [00:03<00:02, 86.10it/s]Loading weights:  57%|█████▋    | 220/389 [00:03<00:01, 120.46it/s]Loading weights:  64%|██████▍   | 250/389 [00:03<00:00, 158.84it/s]Loading weights:  69%|██████▉   | 269/389 [00:03<00:00, 152.71it/s]Loading weights:  77%|███████▋  | 299/389 [00:03<00:00, 171.53it/s]Loading weights:  82%|████████▏ | 318/389 [00:03<00:00, 157.59it/s]Loading weights:  90%|█████████ | 352/389 [00:03<00:00, 181.82it/s]Loading weights: 100%|██████████| 389/389 [00:03<00:00, 100.09it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] clean_n0_s0_ep0 W_pre,K (whiten r=0.95) p=0 SST-2 dev vs logs/kdiag/clean_n0_s0_ep0.npz: identical (max difference 0); AUC 0.9688
+[P0] clean_n0_s0_ep0 coord p=0.00 dev_auc_single=0.9688 [0.9688,0.9688] dev_auc_avg8=0.9688 trigger_auc_single=0.5055 asr=8.8 elapsed_min=4.5
+[P0] clean_n0_s0_ep0 coord p=0.05 dev_auc_single=0.9640 [0.9606,0.9698] dev_auc_avg8=0.9697 trigger_auc_single=0.5054 asr=9.0 elapsed_min=5.3
+[P0] clean_n0_s0_ep0 coord p=0.10 dev_auc_single=0.9585 [0.9565,0.9626] dev_auc_avg8=0.9696 trigger_auc_single=0.5069 asr=9.5 elapsed_min=6.0
+[P0] clean_n0_s0_ep0 coord p=0.15 dev_auc_single=0.9439 [0.9369,0.9496] dev_auc_avg8=0.9633 trigger_auc_single=0.5075 asr=9.6 elapsed_min=6.9
+[P0] clean_n0_s0_ep0 coord p=0.20 dev_auc_single=0.9196 [0.9085,0.9287] dev_auc_avg8=0.9539 trigger_auc_single=0.5082 asr=8.8 elapsed_min=7.6
+[P0] clean_n0_s0_ep0 coord p=0.30 dev_auc_single=0.7935 [0.7829,0.8074] dev_auc_avg8=0.9016 trigger_auc_single=0.5110 asr=5.7 elapsed_min=8.5
+[P0] clean_n0_s0_ep0 coord p=0.40 dev_auc_single=0.5980 [0.5772,0.6164] dev_auc_avg8=0.7086 trigger_auc_single=0.4980 asr=3.1 elapsed_min=9.2
+[P0] clean_n0_s0_ep0 coord p=0.50 dev_auc_single=0.5370 [0.5022,0.5658] dev_auc_avg8=0.5786 trigger_auc_single=0.4995 asr=5.1 elapsed_min=10.0
+[P0] clean_n0_s0_ep0 coord p=0.60 dev_auc_single=0.5115 [0.4853,0.5286] dev_auc_avg8=0.5339 trigger_auc_single=0.4864 asr=9.0 elapsed_min=10.8
+[P0] clean_n0_s0_ep0 coord p=0.70 dev_auc_single=0.5144 [0.4764,0.5529] dev_auc_avg8=0.5513 trigger_auc_single=0.4897 asr=14.8 elapsed_min=11.6
+[P0] clean_n0_s0_ep0 coord p=0.80 dev_auc_single=0.4996 [0.4826,0.5262] dev_auc_avg8=0.4836 trigger_auc_single=0.5043 asr=8.8 elapsed_min=12.5
+[P0] clean_n0_s0_ep0 coord p=0.90 dev_auc_single=0.4961 [0.4693,0.5262] dev_auc_avg8=0.4960 trigger_auc_single=0.4899 asr=23.2 elapsed_min=13.2
+[P0] clean_n0_s0_ep0 svd p=0.00 dev_auc_single=0.9688 [0.9688,0.9688] dev_auc_avg8=0.9688 trigger_auc_single=0.5055 asr=8.8 elapsed_min=13.2
+[P0] clean_n0_s0_ep0 svd p=0.05 dev_auc_single=0.9652 [0.9623,0.9694] dev_auc_avg8=0.9693 trigger_auc_single=0.5128 asr=9.1 elapsed_min=14.1
+[P0] clean_n0_s0_ep0 svd p=0.10 dev_auc_single=0.9623 [0.9577,0.9687] dev_auc_avg8=0.9689 trigger_auc_single=0.5169 asr=8.9 elapsed_min=15.0
+[P0] clean_n0_s0_ep0 svd p=0.15 dev_auc_single=0.9585 [0.9562,0.9622] dev_auc_avg8=0.9691 trigger_auc_single=0.5167 asr=9.3 elapsed_min=15.9
+[P0] clean_n0_s0_ep0 svd p=0.20 dev_auc_single=0.9508 [0.9440,0.9570] dev_auc_avg8=0.9666 trigger_auc_single=0.5112 asr=9.5 elapsed_min=16.8
+[P0] clean_n0_s0_ep0 svd p=0.30 dev_auc_single=0.9252 [0.9130,0.9337] dev_auc_avg8=0.9573 trigger_auc_single=0.5183 asr=10.0 elapsed_min=17.7
+[P0] clean_n0_s0_ep0 svd p=0.40 dev_auc_single=0.8430 [0.8332,0.8560] dev_auc_avg8=0.9215 trigger_auc_single=0.5163 asr=9.9 elapsed_min=18.5
+[P0] clean_n0_s0_ep0 svd p=0.50 dev_auc_single=0.6930 [0.6750,0.7251] dev_auc_avg8=0.8283 trigger_auc_single=0.5005 asr=7.1 elapsed_min=19.5
+[P0] clean_n0_s0_ep0 svd p=0.60 dev_auc_single=0.5420 [0.5147,0.5786] dev_auc_avg8=0.6091 trigger_auc_single=0.4801 asr=8.3 elapsed_min=20.3
+[P0] clean_n0_s0_ep0 svd p=0.70 dev_auc_single=0.5111 [0.4777,0.5368] dev_auc_avg8=0.5294 trigger_auc_single=0.4956 asr=16.5 elapsed_min=21.2
+[P0] clean_n0_s0_ep0 svd p=0.80 dev_auc_single=0.5025 [0.4871,0.5325] dev_auc_avg8=0.5019 trigger_auc_single=0.4995 asr=5.9 elapsed_min=22.1
+[P0] clean_n0_s0_ep0 svd p=0.90 dev_auc_single=0.5040 [0.4782,0.5263] dev_auc_avg8=0.5238 trigger_auc_single=0.5001 asr=16.0 elapsed_min=22.9
+[SAVE] logs/p0/clean_n0_s0_ep0.npz  23.0 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:   5%|▌         | 20/389 [00:00<00:02, 144.29it/s]Loading weights:   9%|▉         | 35/389 [00:00<00:08, 41.25it/s] Loading weights:  11%|█         | 43/389 [00:00<00:08, 38.49it/s]Loading weights:  13%|█▎        | 49/389 [00:01<00:15, 21.71it/s]Loading weights:  14%|█▍        | 56/389 [00:01<00:12, 25.86it/s]Loading weights:  16%|█▌        | 63/389 [00:01<00:10, 30.33it/s]Loading weights:  21%|██        | 80/389 [00:02<00:07, 43.17it/s]Loading weights:  23%|██▎       | 89/389 [00:02<00:06, 48.38it/s]Loading weights:  25%|██▍       | 96/389 [00:02<00:05, 51.24it/s]Loading weights:  26%|██▋       | 103/389 [00:02<00:05, 49.71it/s]Loading weights:  34%|███▍      | 133/389 [00:02<00:02, 86.33it/s]Loading weights:  37%|███▋      | 145/389 [00:02<00:03, 71.19it/s]Loading weights:  42%|████▏     | 163/389 [00:03<00:02, 89.20it/s]Loading weights:  45%|████▍     | 174/389 [00:03<00:02, 86.65it/s]Loading weights:  48%|████▊     | 185/389 [00:03<00:02, 89.66it/s]Loading weights:  50%|█████     | 195/389 [00:03<00:02, 87.17it/s]Loading weights:  57%|█████▋    | 223/389 [00:03<00:01, 112.54it/s]Loading weights:  73%|███████▎  | 283/389 [00:03<00:00, 220.71it/s]Loading weights:  91%|█████████ | 353/389 [00:03<00:00, 323.52it/s]Loading weights: 100%|██████████| 389/389 [00:03<00:00, 99.68it/s] 
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s0_ep2 W_pre,K (whiten r=0.8) p=0 SST-2 dev vs logs/kdiag/n1500_s0_ep2.npz: identical (max difference 0); AUC 0.9557
+[P0] n1500_s0_ep2 coord p=0.00 dev_auc_single=0.9557 [0.9557,0.9557] dev_auc_avg8=0.9557 trigger_auc_single=0.9785 asr=70.3 elapsed_min=1.1
+[P0] n1500_s0_ep2 coord p=0.05 dev_auc_single=0.9466 [0.9430,0.9493] dev_auc_avg8=0.9537 trigger_auc_single=0.9611 asr=59.8 elapsed_min=1.9
+[P0] n1500_s0_ep2 coord p=0.10 dev_auc_single=0.9341 [0.9254,0.9414] dev_auc_avg8=0.9489 trigger_auc_single=0.9376 asr=50.0 elapsed_min=2.7
+[P0] n1500_s0_ep2 coord p=0.15 dev_auc_single=0.9116 [0.9029,0.9164] dev_auc_avg8=0.9386 trigger_auc_single=0.9034 asr=41.6 elapsed_min=3.5
+[P0] n1500_s0_ep2 coord p=0.20 dev_auc_single=0.8781 [0.8696,0.8870] dev_auc_avg8=0.9220 trigger_auc_single=0.8649 asr=34.7 elapsed_min=4.4
+[P0] n1500_s0_ep2 coord p=0.30 dev_auc_single=0.7644 [0.7351,0.7832] dev_auc_avg8=0.8667 trigger_auc_single=0.8050 asr=17.6 elapsed_min=5.1
+[P0] n1500_s0_ep2 coord p=0.40 dev_auc_single=0.6188 [0.5978,0.6391] dev_auc_avg8=0.7326 trigger_auc_single=0.7222 asr=4.8 elapsed_min=5.9
+[P0] n1500_s0_ep2 coord p=0.50 dev_auc_single=0.5435 [0.5141,0.5797] dev_auc_avg8=0.6030 trigger_auc_single=0.6059 asr=1.0 elapsed_min=6.6
+[P0] n1500_s0_ep2 coord p=0.60 dev_auc_single=0.5270 [0.5039,0.5421] dev_auc_avg8=0.5641 trigger_auc_single=0.5189 asr=1.5 elapsed_min=7.1
+[P0] n1500_s0_ep2 coord p=0.70 dev_auc_single=0.5138 [0.4901,0.5404] dev_auc_avg8=0.5349 trigger_auc_single=0.4913 asr=5.8 elapsed_min=7.6
+[P0] n1500_s0_ep2 coord p=0.80 dev_auc_single=0.5062 [0.4893,0.5419] dev_auc_avg8=0.5215 trigger_auc_single=0.4890 asr=26.6 elapsed_min=8.1
+[P0] n1500_s0_ep2 coord p=0.90 dev_auc_single=0.5043 [0.4813,0.5315] dev_auc_avg8=0.5061 trigger_auc_single=0.5045 asr=11.7 elapsed_min=8.7
+[P0] n1500_s0_ep2 svd p=0.00 dev_auc_single=0.9557 [0.9557,0.9557] dev_auc_avg8=0.9557 trigger_auc_single=0.9785 asr=70.3 elapsed_min=8.7
+[P0] n1500_s0_ep2 svd p=0.05 dev_auc_single=0.9491 [0.9464,0.9538] dev_auc_avg8=0.9554 trigger_auc_single=0.9716 asr=64.4 elapsed_min=9.4
+[P0] n1500_s0_ep2 svd p=0.10 dev_auc_single=0.9426 [0.9368,0.9490] dev_auc_avg8=0.9551 trigger_auc_single=0.9579 asr=58.6 elapsed_min=10.2
+[P0] n1500_s0_ep2 svd p=0.15 dev_auc_single=0.9293 [0.9214,0.9355] dev_auc_avg8=0.9491 trigger_auc_single=0.9376 asr=51.3 elapsed_min=11.1
+[P0] n1500_s0_ep2 svd p=0.20 dev_auc_single=0.9128 [0.9039,0.9209] dev_auc_avg8=0.9425 trigger_auc_single=0.9147 asr=45.4 elapsed_min=11.9
+[P0] n1500_s0_ep2 svd p=0.30 dev_auc_single=0.8640 [0.8537,0.8708] dev_auc_avg8=0.9182 trigger_auc_single=0.8589 asr=31.7 elapsed_min=12.8
+[P0] n1500_s0_ep2 svd p=0.40 dev_auc_single=0.7821 [0.7702,0.8080] dev_auc_avg8=0.8731 trigger_auc_single=0.7870 asr=19.6 elapsed_min=13.6
+[P0] n1500_s0_ep2 svd p=0.50 dev_auc_single=0.7002 [0.6798,0.7225] dev_auc_avg8=0.8212 trigger_auc_single=0.7108 asr=9.2 elapsed_min=14.4
+[P0] n1500_s0_ep2 svd p=0.60 dev_auc_single=0.6066 [0.5794,0.6280] dev_auc_avg8=0.7150 trigger_auc_single=0.6265 asr=5.0 elapsed_min=15.3
+[P0] n1500_s0_ep2 svd p=0.70 dev_auc_single=0.5424 [0.5221,0.5655] dev_auc_avg8=0.5978 trigger_auc_single=0.5338 asr=5.4 elapsed_min=16.1
+[P0] n1500_s0_ep2 svd p=0.80 dev_auc_single=0.5084 [0.4707,0.5295] dev_auc_avg8=0.5245 trigger_auc_single=0.4955 asr=21.9 elapsed_min=17.0
+[P0] n1500_s0_ep2 svd p=0.90 dev_auc_single=0.4933 [0.4706,0.5159] dev_auc_avg8=0.4900 trigger_auc_single=0.5035 asr=19.7 elapsed_min=17.8
+[SAVE] logs/p0/n1500_s0_ep2.npz  17.8 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  85%|████████▌ | 332/389 [00:00<00:00, 3287.49it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3287.57it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s1_ep2 W_pre,K (whiten r=0.995) p=0 SST-2 dev vs logs/kdiag/n1500_s1_ep2.npz: identical (max difference 0); AUC 0.9499
+[P0] n1500_s1_ep2 coord p=0.00 dev_auc_single=0.9499 [0.9499,0.9499] dev_auc_avg8=0.9499 trigger_auc_single=1.0000 asr=100.0 elapsed_min=1.1
+[P0] n1500_s1_ep2 coord p=0.05 dev_auc_single=0.9461 [0.9407,0.9526] dev_auc_avg8=0.9584 trigger_auc_single=0.9997 asr=100.0 elapsed_min=1.8
+[P0] n1500_s1_ep2 coord p=0.10 dev_auc_single=0.9372 [0.9326,0.9422] dev_auc_avg8=0.9601 trigger_auc_single=0.9981 asr=99.3 elapsed_min=2.7
+[P0] n1500_s1_ep2 coord p=0.15 dev_auc_single=0.9201 [0.9107,0.9334] dev_auc_avg8=0.9560 trigger_auc_single=0.9925 asr=96.2 elapsed_min=3.4
+[P0] n1500_s1_ep2 coord p=0.20 dev_auc_single=0.8858 [0.8747,0.8981] dev_auc_avg8=0.9435 trigger_auc_single=0.9792 asr=85.9 elapsed_min=4.3
+[P0] n1500_s1_ep2 coord p=0.30 dev_auc_single=0.7141 [0.7007,0.7319] dev_auc_avg8=0.8373 trigger_auc_single=0.8721 asr=39.6 elapsed_min=5.1
+[P0] n1500_s1_ep2 coord p=0.40 dev_auc_single=0.5594 [0.5180,0.5867] dev_auc_avg8=0.6162 trigger_auc_single=0.6349 asr=13.0 elapsed_min=5.8
+[P0] n1500_s1_ep2 coord p=0.50 dev_auc_single=0.5128 [0.4712,0.5410] dev_auc_avg8=0.5329 trigger_auc_single=0.5182 asr=16.4 elapsed_min=6.6
+[P0] n1500_s1_ep2 coord p=0.60 dev_auc_single=0.5107 [0.4967,0.5369] dev_auc_avg8=0.5258 trigger_auc_single=0.4961 asr=20.0 elapsed_min=7.4
+[P0] n1500_s1_ep2 coord p=0.70 dev_auc_single=0.4974 [0.4783,0.5265] dev_auc_avg8=0.4849 trigger_auc_single=0.5135 asr=18.8 elapsed_min=8.2
+[P0] n1500_s1_ep2 coord p=0.80 dev_auc_single=0.5031 [0.4700,0.5223] dev_auc_avg8=0.4999 trigger_auc_single=0.5015 asr=16.4 elapsed_min=9.0
+[P0] n1500_s1_ep2 coord p=0.90 dev_auc_single=0.5035 [0.4848,0.5440] dev_auc_avg8=0.5242 trigger_auc_single=0.5059 asr=49.0 elapsed_min=9.8
+[P0] n1500_s1_ep2 svd p=0.00 dev_auc_single=0.9499 [0.9499,0.9499] dev_auc_avg8=0.9499 trigger_auc_single=1.0000 asr=100.0 elapsed_min=9.8
+[P0] n1500_s1_ep2 svd p=0.05 dev_auc_single=0.9462 [0.9394,0.9524] dev_auc_avg8=0.9561 trigger_auc_single=1.0000 asr=100.0 elapsed_min=10.8
+[P0] n1500_s1_ep2 svd p=0.10 dev_auc_single=0.9423 [0.9368,0.9497] dev_auc_avg8=0.9576 trigger_auc_single=0.9996 asr=99.9 elapsed_min=11.7
+[P0] n1500_s1_ep2 svd p=0.15 dev_auc_single=0.9350 [0.9296,0.9406] dev_auc_avg8=0.9572 trigger_auc_single=0.9992 asr=99.6 elapsed_min=12.7
+[P0] n1500_s1_ep2 svd p=0.20 dev_auc_single=0.9247 [0.9213,0.9308] dev_auc_avg8=0.9539 trigger_auc_single=0.9966 asr=98.8 elapsed_min=13.7
+[P0] n1500_s1_ep2 svd p=0.30 dev_auc_single=0.8849 [0.8737,0.9000] dev_auc_avg8=0.9403 trigger_auc_single=0.9865 asr=93.5 elapsed_min=14.6
+[P0] n1500_s1_ep2 svd p=0.40 dev_auc_single=0.7674 [0.7494,0.7852] dev_auc_avg8=0.8808 trigger_auc_single=0.9294 asr=64.8 elapsed_min=15.6
+[P0] n1500_s1_ep2 svd p=0.50 dev_auc_single=0.6129 [0.5990,0.6242] dev_auc_avg8=0.7053 trigger_auc_single=0.7345 asr=22.9 elapsed_min=16.5
+[P0] n1500_s1_ep2 svd p=0.60 dev_auc_single=0.5321 [0.4985,0.5633] dev_auc_avg8=0.5739 trigger_auc_single=0.5375 asr=16.6 elapsed_min=17.1
+[P0] n1500_s1_ep2 svd p=0.70 dev_auc_single=0.5002 [0.4644,0.5389] dev_auc_avg8=0.4986 trigger_auc_single=0.4981 asr=20.2 elapsed_min=17.7
+[P0] n1500_s1_ep2 svd p=0.80 dev_auc_single=0.5034 [0.4921,0.5282] dev_auc_avg8=0.4966 trigger_auc_single=0.4915 asr=12.4 elapsed_min=18.6
+[P0] n1500_s1_ep2 svd p=0.90 dev_auc_single=0.5090 [0.4913,0.5308] dev_auc_avg8=0.5329 trigger_auc_single=0.5050 asr=44.2 elapsed_min=19.5
+[SAVE] logs/p0/n1500_s1_ep2.npz  19.5 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  87%|████████▋ | 339/389 [00:00<00:00, 3387.85it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3512.55it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s2_ep2 W_pre,K (whiten r=0.9) p=0 SST-2 dev vs logs/kdiag/n1500_s2_ep2.npz: identical (max difference 0); AUC 0.9658
+[P0] n1500_s2_ep2 coord p=0.00 dev_auc_single=0.9658 [0.9658,0.9658] dev_auc_avg8=0.9658 trigger_auc_single=1.0000 asr=100.0 elapsed_min=0.7
+[P0] n1500_s2_ep2 coord p=0.05 dev_auc_single=0.9584 [0.9548,0.9642] dev_auc_avg8=0.9676 trigger_auc_single=0.9998 asr=99.9 elapsed_min=1.5
+[P0] n1500_s2_ep2 coord p=0.10 dev_auc_single=0.9442 [0.9363,0.9559] dev_auc_avg8=0.9624 trigger_auc_single=0.9994 asr=99.5 elapsed_min=2.2
+[P0] n1500_s2_ep2 coord p=0.15 dev_auc_single=0.9196 [0.9085,0.9286] dev_auc_avg8=0.9532 trigger_auc_single=0.9988 asr=98.7 elapsed_min=3.1
+[P0] n1500_s2_ep2 coord p=0.20 dev_auc_single=0.8673 [0.8490,0.8835] dev_auc_avg8=0.9280 trigger_auc_single=0.9966 asr=97.3 elapsed_min=3.8
+[P0] n1500_s2_ep2 coord p=0.30 dev_auc_single=0.6833 [0.6585,0.7147] dev_auc_avg8=0.7819 trigger_auc_single=0.9823 asr=86.6 elapsed_min=4.6
+[P0] n1500_s2_ep2 coord p=0.40 dev_auc_single=0.5587 [0.5408,0.6036] dev_auc_avg8=0.6207 trigger_auc_single=0.8930 asr=47.6 elapsed_min=5.4
+[P0] n1500_s2_ep2 coord p=0.50 dev_auc_single=0.5166 [0.4789,0.5435] dev_auc_avg8=0.5290 trigger_auc_single=0.6549 asr=10.5 elapsed_min=6.2
+[P0] n1500_s2_ep2 coord p=0.60 dev_auc_single=0.5141 [0.4830,0.5400] dev_auc_avg8=0.5362 trigger_auc_single=0.5170 asr=7.5 elapsed_min=7.0
+[P0] n1500_s2_ep2 coord p=0.70 dev_auc_single=0.5169 [0.4944,0.5327] dev_auc_avg8=0.5340 trigger_auc_single=0.4910 asr=17.1 elapsed_min=7.8
+[P0] n1500_s2_ep2 coord p=0.80 dev_auc_single=0.4912 [0.4804,0.5101] dev_auc_avg8=0.4860 trigger_auc_single=0.4883 asr=30.1 elapsed_min=8.6
+[P0] n1500_s2_ep2 coord p=0.90 dev_auc_single=0.5010 [0.4797,0.5207] dev_auc_avg8=0.4869 trigger_auc_single=0.5054 asr=36.9 elapsed_min=9.4
+[P0] n1500_s2_ep2 svd p=0.00 dev_auc_single=0.9658 [0.9658,0.9658] dev_auc_avg8=0.9658 trigger_auc_single=1.0000 asr=100.0 elapsed_min=9.4
+[P0] n1500_s2_ep2 svd p=0.05 dev_auc_single=0.9608 [0.9580,0.9632] dev_auc_avg8=0.9665 trigger_auc_single=0.9998 asr=99.8 elapsed_min=10.3
+[P0] n1500_s2_ep2 svd p=0.10 dev_auc_single=0.9571 [0.9504,0.9625] dev_auc_avg8=0.9684 trigger_auc_single=0.9996 asr=99.7 elapsed_min=11.1
+[P0] n1500_s2_ep2 svd p=0.15 dev_auc_single=0.9467 [0.9385,0.9520] dev_auc_avg8=0.9650 trigger_auc_single=0.9986 asr=99.0 elapsed_min=12.0
+[P0] n1500_s2_ep2 svd p=0.20 dev_auc_single=0.9311 [0.9162,0.9427] dev_auc_avg8=0.9591 trigger_auc_single=0.9978 asr=98.4 elapsed_min=12.9
+[P0] n1500_s2_ep2 svd p=0.30 dev_auc_single=0.8796 [0.8664,0.9006] dev_auc_avg8=0.9389 trigger_auc_single=0.9928 asr=95.0 elapsed_min=13.7
+[P0] n1500_s2_ep2 svd p=0.40 dev_auc_single=0.7844 [0.7731,0.8010] dev_auc_avg8=0.8738 trigger_auc_single=0.9814 asr=88.2 elapsed_min=14.6
+[P0] n1500_s2_ep2 svd p=0.50 dev_auc_single=0.6553 [0.6263,0.6748] dev_auc_avg8=0.7491 trigger_auc_single=0.9388 asr=70.6 elapsed_min=15.4
+[P0] n1500_s2_ep2 svd p=0.60 dev_auc_single=0.5526 [0.5270,0.5817] dev_auc_avg8=0.6032 trigger_auc_single=0.7870 asr=34.2 elapsed_min=16.2
+[P0] n1500_s2_ep2 svd p=0.70 dev_auc_single=0.5113 [0.4875,0.5310] dev_auc_avg8=0.5236 trigger_auc_single=0.5233 asr=15.3 elapsed_min=16.9
+[P0] n1500_s2_ep2 svd p=0.80 dev_auc_single=0.4951 [0.4748,0.5110] dev_auc_avg8=0.5018 trigger_auc_single=0.4899 asr=28.4 elapsed_min=17.7
+[P0] n1500_s2_ep2 svd p=0.90 dev_auc_single=0.4930 [0.4549,0.5094] dev_auc_avg8=0.4711 trigger_auc_single=0.4942 asr=27.5 elapsed_min=18.5
+[SAVE] logs/p0/n1500_s2_ep2.npz  18.5 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  45%|████▍     | 174/389 [00:00<00:00, 1585.19it/s]Loading weights:  86%|████████▌ | 333/389 [00:00<00:00, 1185.60it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 1264.68it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s3_ep2 W_pre,K (whiten r=0.9) p=0 SST-2 dev vs logs/kdiag/n1500_s3_ep2.npz: identical (max difference 0); AUC 0.9676
+[P0] n1500_s3_ep2 coord p=0.00 dev_auc_single=0.9676 [0.9676,0.9676] dev_auc_avg8=0.9676 trigger_auc_single=0.9998 asr=100.0 elapsed_min=1.1
+[P0] n1500_s3_ep2 coord p=0.05 dev_auc_single=0.9618 [0.9600,0.9646] dev_auc_avg8=0.9688 trigger_auc_single=0.9988 asr=99.5 elapsed_min=1.9
+[P0] n1500_s3_ep2 coord p=0.10 dev_auc_single=0.9505 [0.9460,0.9565] dev_auc_avg8=0.9645 trigger_auc_single=0.9959 asr=97.5 elapsed_min=2.6
+[P0] n1500_s3_ep2 coord p=0.15 dev_auc_single=0.9277 [0.9210,0.9406] dev_auc_avg8=0.9539 trigger_auc_single=0.9899 asr=94.1 elapsed_min=3.5
+[P0] n1500_s3_ep2 coord p=0.20 dev_auc_single=0.8824 [0.8697,0.9015] dev_auc_avg8=0.9312 trigger_auc_single=0.9774 asr=88.7 elapsed_min=4.2
+[P0] n1500_s3_ep2 coord p=0.30 dev_auc_single=0.7185 [0.7021,0.7454] dev_auc_avg8=0.8291 trigger_auc_single=0.9305 asr=62.9 elapsed_min=4.9
+[P0] n1500_s3_ep2 coord p=0.40 dev_auc_single=0.5854 [0.5439,0.6040] dev_auc_avg8=0.6705 trigger_auc_single=0.7849 asr=21.0 elapsed_min=5.4
+[P0] n1500_s3_ep2 coord p=0.50 dev_auc_single=0.5415 [0.5134,0.5645] dev_auc_avg8=0.5949 trigger_auc_single=0.5870 asr=5.2 elapsed_min=6.0
+[P0] n1500_s3_ep2 coord p=0.60 dev_auc_single=0.5201 [0.4998,0.5381] dev_auc_avg8=0.5393 trigger_auc_single=0.5064 asr=8.9 elapsed_min=6.8
+[P0] n1500_s3_ep2 coord p=0.70 dev_auc_single=0.5157 [0.4857,0.5541] dev_auc_avg8=0.5478 trigger_auc_single=0.4911 asr=20.0 elapsed_min=7.5
+[P0] n1500_s3_ep2 coord p=0.80 dev_auc_single=0.5002 [0.4761,0.5213] dev_auc_avg8=0.4901 trigger_auc_single=0.4949 asr=31.2 elapsed_min=8.4
+[P0] n1500_s3_ep2 coord p=0.90 dev_auc_single=0.4899 [0.4642,0.5457] dev_auc_avg8=0.4841 trigger_auc_single=0.5018 asr=37.6 elapsed_min=9.2
+[P0] n1500_s3_ep2 svd p=0.00 dev_auc_single=0.9676 [0.9676,0.9676] dev_auc_avg8=0.9676 trigger_auc_single=0.9998 asr=100.0 elapsed_min=9.2
+[P0] n1500_s3_ep2 svd p=0.05 dev_auc_single=0.9652 [0.9618,0.9670] dev_auc_avg8=0.9698 trigger_auc_single=0.9994 asr=99.7 elapsed_min=10.0
+[P0] n1500_s3_ep2 svd p=0.10 dev_auc_single=0.9612 [0.9588,0.9632] dev_auc_avg8=0.9702 trigger_auc_single=0.9985 asr=99.3 elapsed_min=10.9
+[P0] n1500_s3_ep2 svd p=0.15 dev_auc_single=0.9553 [0.9468,0.9590] dev_auc_avg8=0.9689 trigger_auc_single=0.9963 asr=97.6 elapsed_min=11.7
+[P0] n1500_s3_ep2 svd p=0.20 dev_auc_single=0.9433 [0.9338,0.9497] dev_auc_avg8=0.9644 trigger_auc_single=0.9917 asr=94.6 elapsed_min=12.6
+[P0] n1500_s3_ep2 svd p=0.30 dev_auc_single=0.9062 [0.8919,0.9143] dev_auc_avg8=0.9489 trigger_auc_single=0.9706 asr=84.4 elapsed_min=13.5
+[P0] n1500_s3_ep2 svd p=0.40 dev_auc_single=0.8216 [0.7924,0.8455] dev_auc_avg8=0.9096 trigger_auc_single=0.9275 asr=66.9 elapsed_min=14.3
+[P0] n1500_s3_ep2 svd p=0.50 dev_auc_single=0.6800 [0.6658,0.6904] dev_auc_avg8=0.8109 trigger_auc_single=0.8438 asr=40.8 elapsed_min=15.1
+[P0] n1500_s3_ep2 svd p=0.60 dev_auc_single=0.5725 [0.5397,0.6042] dev_auc_avg8=0.6555 trigger_auc_single=0.6722 asr=18.2 elapsed_min=16.0
+[P0] n1500_s3_ep2 svd p=0.70 dev_auc_single=0.5191 [0.5006,0.5408] dev_auc_avg8=0.5419 trigger_auc_single=0.5208 asr=16.7 elapsed_min=16.9
+[P0] n1500_s3_ep2 svd p=0.80 dev_auc_single=0.4995 [0.4799,0.5162] dev_auc_avg8=0.4912 trigger_auc_single=0.4983 asr=33.4 elapsed_min=17.7
+[P0] n1500_s3_ep2 svd p=0.90 dev_auc_single=0.5003 [0.4860,0.5202] dev_auc_avg8=0.5079 trigger_auc_single=0.4914 asr=30.1 elapsed_min=18.6
+[SAVE] logs/p0/n1500_s3_ep2.npz  18.6 min
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  75%|███████▍  | 291/389 [00:00<00:00, 2678.45it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 2737.53it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] n1500_s4_ep2 W_pre,K (whiten r=0.8) p=0 SST-2 dev vs logs/kdiag/n1500_s4_ep2.npz: identical (max difference 0); AUC 0.9455
+[P0] n1500_s4_ep2 coord p=0.00 dev_auc_single=0.9455 [0.9455,0.9455] dev_auc_avg8=0.9455 trigger_auc_single=0.8959 asr=31.1 elapsed_min=1.0
+[P0] n1500_s4_ep2 coord p=0.05 dev_auc_single=0.9355 [0.9313,0.9394] dev_auc_avg8=0.9435 trigger_auc_single=0.8457 asr=18.0 elapsed_min=1.8
+[P0] n1500_s4_ep2 coord p=0.10 dev_auc_single=0.9221 [0.9128,0.9305] dev_auc_avg8=0.9385 trigger_auc_single=0.8030 asr=8.5 elapsed_min=2.6
+[P0] n1500_s4_ep2 coord p=0.15 dev_auc_single=0.8964 [0.8810,0.9095] dev_auc_avg8=0.9288 trigger_auc_single=0.7822 asr=3.0 elapsed_min=3.4
+[P0] n1500_s4_ep2 coord p=0.20 dev_auc_single=0.8471 [0.8282,0.8647] dev_auc_avg8=0.9025 trigger_auc_single=0.7703 asr=1.0 elapsed_min=4.2
+[P0] n1500_s4_ep2 coord p=0.30 dev_auc_single=0.6896 [0.6702,0.7121] dev_auc_avg8=0.7779 trigger_auc_single=0.7421 asr=0.2 elapsed_min=4.9
+[P0] n1500_s4_ep2 coord p=0.40 dev_auc_single=0.5736 [0.5527,0.6045] dev_auc_avg8=0.6269 trigger_auc_single=0.6654 asr=0.5 elapsed_min=5.8
+[P0] n1500_s4_ep2 coord p=0.50 dev_auc_single=0.5205 [0.4969,0.5466] dev_auc_avg8=0.5312 trigger_auc_single=0.5872 asr=0.4 elapsed_min=6.6
+[P0] n1500_s4_ep2 coord p=0.60 dev_auc_single=0.5183 [0.4870,0.5430] dev_auc_avg8=0.5572 trigger_auc_single=0.5415 asr=0.8 elapsed_min=7.4
+[P0] n1500_s4_ep2 coord p=0.70 dev_auc_single=0.5149 [0.4764,0.5525] dev_auc_avg8=0.5405 trigger_auc_single=0.5152 asr=1.6 elapsed_min=8.2
+[P0] n1500_s4_ep2 coord p=0.80 dev_auc_single=0.5097 [0.4913,0.5290] dev_auc_avg8=0.5240 trigger_auc_single=0.4894 asr=2.4 elapsed_min=8.9
+[P0] n1500_s4_ep2 coord p=0.90 dev_auc_single=0.4974 [0.4744,0.5300] dev_auc_avg8=0.4815 trigger_auc_single=0.4953 asr=8.8 elapsed_min=9.8
+[P0] n1500_s4_ep2 svd p=0.00 dev_auc_single=0.9455 [0.9455,0.9455] dev_auc_avg8=0.9455 trigger_auc_single=0.8959 asr=31.1 elapsed_min=9.8
+[P0] n1500_s4_ep2 svd p=0.05 dev_auc_single=0.9405 [0.9375,0.9429] dev_auc_avg8=0.9457 trigger_auc_single=0.8702 asr=24.8 elapsed_min=10.6
+[P0] n1500_s4_ep2 svd p=0.10 dev_auc_single=0.9315 [0.9257,0.9366] dev_auc_avg8=0.9425 trigger_auc_single=0.8472 asr=18.2 elapsed_min=11.4
+[P0] n1500_s4_ep2 svd p=0.15 dev_auc_single=0.9173 [0.9139,0.9219] dev_auc_avg8=0.9356 trigger_auc_single=0.8258 asr=12.3 elapsed_min=12.2
+[P0] n1500_s4_ep2 svd p=0.20 dev_auc_single=0.8979 [0.8904,0.9075] dev_auc_avg8=0.9256 trigger_auc_single=0.8073 asr=7.3 elapsed_min=12.9
+[P0] n1500_s4_ep2 svd p=0.30 dev_auc_single=0.8501 [0.8357,0.8669] dev_auc_avg8=0.9066 trigger_auc_single=0.7892 asr=2.5 elapsed_min=13.5
+[P0] n1500_s4_ep2 svd p=0.40 dev_auc_single=0.7620 [0.7403,0.7823] dev_auc_avg8=0.8530 trigger_auc_single=0.7689 asr=1.0 elapsed_min=14.3
+[P0] n1500_s4_ep2 svd p=0.50 dev_auc_single=0.6660 [0.6436,0.6864] dev_auc_avg8=0.7655 trigger_auc_single=0.7325 asr=0.8 elapsed_min=15.1
+[P0] n1500_s4_ep2 svd p=0.60 dev_auc_single=0.5750 [0.5471,0.5991] dev_auc_avg8=0.6487 trigger_auc_single=0.6652 asr=1.7 elapsed_min=15.9
+[P0] n1500_s4_ep2 svd p=0.70 dev_auc_single=0.5246 [0.5134,0.5451] dev_auc_avg8=0.5234 trigger_auc_single=0.5626 asr=2.3 elapsed_min=16.8
+[P0] n1500_s4_ep2 svd p=0.80 dev_auc_single=0.5123 [0.4819,0.5418] dev_auc_avg8=0.5323 trigger_auc_single=0.5147 asr=3.5 elapsed_min=17.6
+[P0] n1500_s4_ep2 svd p=0.90 dev_auc_single=0.5045 [0.4827,0.5208] dev_auc_avg8=0.5160 trigger_auc_single=0.5032 asr=6.9 elapsed_min=18.4
+[SAVE] logs/p0/n1500_s4_ep2.npz  18.4 min
+[CHECK] done
+===== Done =====
