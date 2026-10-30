@@ -7,6 +7,11 @@
 #   coord  Cl coord (dropout on every output coordinate of W_pre,K x + b) at each p of PS, + Tr
 #   svd    Cl svd (dropout on the components along W_pre,K's own left singular directions) at each p of PS, + Tr
 #   konly  plain LoRA on W_pre,K (no Cl, no Tr): what K alone does
+#   cl     Cl coord at each p of PS, NO Tr   (added 10/30: K + Cl, so p's effect is not mixed with Tr's; Tr's form is still open)
+#   clsvd  Cl svd   at each p of PS, NO Tr   (added 10/30)
+# Each queue has its own PS, so the two forms can use different p ranges, e.g.
+#   LEVEL=bonf QUEUE=C ARMS="cl"    PS="0.05 0.1 0.15 0.2 0.3" nohup bash run_psel.sh > /dev/null 2>&1 &
+#   LEVEL=bonf QUEUE=D ARMS="clsvd" PS="0.1 0.2 0.3 0.4 0.5"   nohup bash run_psel.sh > /dev/null 2>&1 &
 # The RoRA arm of the final test is this grid at p = P (seeds 0-2), so no separate final run is needed for it.
 # Order: seed outer (all arms of seed 0, then seed 1, then seed 2), so if it stops early every configuration has the same
 # number of seeds; inside a seed: arm, then p, then PZ; tr goes first, so the first 5 runs show whether Tr + Pt collapses.
@@ -44,7 +49,7 @@ for fs in $SEEDS; do
   for arm in $ARMS; do
     case $arm in
       tr|konly) plist="-" ;;
-      coord|svd) plist="$PS" ;;
+      coord|svd|cl|clsvd) plist="$PS" ;;
       *) echo "unknown arm $arm" | tee -a "$LOGFILE"; exit 1 ;;
     esac
     for p in $plist; do
@@ -58,6 +63,10 @@ for fs in $SEEDS; do
           coord) run variant_finetune.py "psel $label wh$r p$p ft$fs cl+tr lam$LAM kauto lr2e-4" "${base[@]}" "${tr[@]}" \
                    --use_pretrained_dropout --cl_dropout_p "$p" ;;
           svd)   run variant_finetune.py "psel $label wh$r p$p ft$fs clsvd+tr lam$LAM kauto lr2e-4" "${base[@]}" "${tr[@]}" \
+                   --use_pretrained_dropout --cl_dropout_p "$p" --cl_form svd ;;
+          cl)    run variant_finetune.py "psel $label wh$r p$p ft$fs cl lr2e-4" "${base[@]}" \
+                   --use_pretrained_dropout --cl_dropout_p "$p" ;;
+          clsvd) run variant_finetune.py "psel $label wh$r p$p ft$fs clsvd lr2e-4" "${base[@]}" \
                    --use_pretrained_dropout --cl_dropout_p "$p" --cl_form svd ;;
         esac
       done

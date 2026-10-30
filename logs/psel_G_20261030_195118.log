@@ -1,0 +1,54 @@
+label	r	json	pz
+clean_n0_s0_ep0	0.95	pz_wpre/clean_n0_s0_ep0_whiten_r0.95.json	old_models_v1/clean_roberta_large_imdb/pytorch_model.bin
+n1500_s0_ep2	0.8	pz_wpre/n1500_s0_ep2_whiten_r0.8.json	pz_epoch/n1500_s0_ep2/pytorch_model.bin
+n1500_s1_ep2	0.995	pz_wpre/n1500_s1_ep2_whiten_r0.995.json	pz_cleandev/cleandev_n1500_s1/pytorch_model.bin
+n1500_s2_ep2	0.9	pz_wpre/n1500_s2_ep2_whiten_r0.9.json	pz_v2/badnet_s2/pytorch_model.bin
+n1500_s3_ep2	0.9	pz_wpre/n1500_s3_ep2_whiten_r0.9.json	pz_cleandev/cleandev_n1500_s3/pytorch_model.bin
+n1500_s4_ep2	0.8	pz_wpre/n1500_s4_ep2_whiten_r0.8.json	pz_epoch/n1500_s4_ep2/pytorch_model.bin
+queue G: arms [trp], seeds [0 1 2], p [0.05 0.1 0.15 0.2 0.3]
+===== psel n1500_s0_ep2 wh0.8 p0 ft0 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_epoch/n1500_s0_ep2/pytorch_model.bin --wpre_file pz_wpre/n1500_s0_ep2_whiten_r0.8.json --seed 0 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s0_ep2 wh0.8 p0 ft0 trproj kauto lr2e-4
+===== psel n1500_s1_ep2 wh0.995 p0 ft0 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_cleandev/cleandev_n1500_s1/pytorch_model.bin --wpre_file pz_wpre/n1500_s1_ep2_whiten_r0.995.json --seed 0 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s1_ep2 wh0.995 p0 ft0 trproj kauto lr2e-4
+===== psel n1500_s2_ep2 wh0.9 p0 ft0 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_v2/badnet_s2/pytorch_model.bin --wpre_file pz_wpre/n1500_s2_ep2_whiten_r0.9.json --seed 0 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s2_ep2 wh0.9 p0 ft0 trproj kauto lr2e-4
+===== psel n1500_s3_ep2 wh0.9 p0 ft0 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_cleandev/cleandev_n1500_s3/pytorch_model.bin --wpre_file pz_wpre/n1500_s3_ep2_whiten_r0.9.json --seed 0 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s3_ep2 wh0.9 p0 ft0 trproj kauto lr2e-4
+===== psel n1500_s4_ep2 wh0.8 p0 ft0 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_epoch/n1500_s4_ep2/pytorch_model.bin --wpre_file pz_wpre/n1500_s4_ep2_whiten_r0.8.json --seed 0 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s4_ep2 wh0.8 p0 ft0 trproj kauto lr2e-4
+===== psel n1500_s0_ep2 wh0.8 p0 ft1 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_epoch/n1500_s0_ep2/pytorch_model.bin --wpre_file pz_wpre/n1500_s0_ep2_whiten_r0.8.json --seed 1 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s0_ep2 wh0.8 p0 ft1 trproj kauto lr2e-4
+===== psel n1500_s1_ep2 wh0.995 p0 ft1 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_cleandev/cleandev_n1500_s1/pytorch_model.bin --wpre_file pz_wpre/n1500_s1_ep2_whiten_r0.995.json --seed 1 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s1_ep2 wh0.995 p0 ft1 trproj kauto lr2e-4
+===== psel n1500_s2_ep2 wh0.9 p0 ft1 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_v2/badnet_s2/pytorch_model.bin --wpre_file pz_wpre/n1500_s2_ep2_whiten_r0.9.json --seed 1 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s2_ep2 wh0.9 p0 ft1 trproj kauto lr2e-4
+===== psel n1500_s3_ep2 wh0.9 p0 ft1 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_cleandev/cleandev_n1500_s3/pytorch_model.bin --wpre_file pz_wpre/n1500_s3_ep2_whiten_r0.9.json --seed 1 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s3_ep2 wh0.9 p0 ft1 trproj kauto lr2e-4
+===== psel n1500_s4_ep2 wh0.8 p0 ft1 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_epoch/n1500_s4_ep2/pytorch_model.bin --wpre_file pz_wpre/n1500_s4_ep2_whiten_r0.8.json --seed 1 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s4_ep2 wh0.8 p0 ft1 trproj kauto lr2e-4
+===== psel n1500_s0_ep2 wh0.8 p0 ft2 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_epoch/n1500_s0_ep2/pytorch_model.bin --wpre_file pz_wpre/n1500_s0_ep2_whiten_r0.8.json --seed 2 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s0_ep2 wh0.8 p0 ft2 trproj kauto lr2e-4
+===== psel n1500_s1_ep2 wh0.995 p0 ft2 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_cleandev/cleandev_n1500_s1/pytorch_model.bin --wpre_file pz_wpre/n1500_s1_ep2_whiten_r0.995.json --seed 2 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s1_ep2 wh0.995 p0 ft2 trproj kauto lr2e-4
+===== psel n1500_s2_ep2 wh0.9 p0 ft2 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_v2/badnet_s2/pytorch_model.bin --wpre_file pz_wpre/n1500_s2_ep2_whiten_r0.9.json --seed 2 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s2_ep2 wh0.9 p0 ft2 trproj kauto lr2e-4
+===== psel n1500_s3_ep2 wh0.9 p0 ft2 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_cleandev/cleandev_n1500_s3/pytorch_model.bin --wpre_file pz_wpre/n1500_s3_ep2_whiten_r0.9.json --seed 2 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s3_ep2 wh0.9 p0 ft2 trproj kauto lr2e-4
+===== psel n1500_s4_ep2 wh0.8 p0 ft2 trproj kauto lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=nogit | --pz_path pz_epoch/n1500_s4_ep2/pytorch_model.bin --wpre_file pz_wpre/n1500_s4_ep2_whiten_r0.8.json --seed 2 --lr 2e-4 --use_spectral_rescaling --tr_proj --svd_k_auto =====
+./v2_common.sh: line 43: python: command not found
+FAILED: psel n1500_s4_ep2 wh0.8 p0 ft2 trproj kauto lr2e-4
+===== Done =====

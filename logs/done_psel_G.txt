@@ -1,0 +1,15 @@
+psel n1500_s0_ep2 wh0.8 p0 ft0 trproj kauto lr2e-4|efdb065e
+psel n1500_s1_ep2 wh0.995 p0 ft0 trproj kauto lr2e-4|efdb065e
+psel n1500_s2_ep2 wh0.9 p0 ft0 trproj kauto lr2e-4|efdb065e
+psel n1500_s3_ep2 wh0.9 p0 ft0 trproj kauto lr2e-4|efdb065e
+psel n1500_s4_ep2 wh0.8 p0 ft0 trproj kauto lr2e-4|efdb065e
+psel n1500_s0_ep2 wh0.8 p0 ft1 trproj kauto lr2e-4|efdb065e
+psel n1500_s1_ep2 wh0.995 p0 ft1 trproj kauto lr2e-4|efdb065e
+psel n1500_s2_ep2 wh0.9 p0 ft1 trproj kauto lr2e-4|efdb065e
+psel n1500_s3_ep2 wh0.9 p0 ft1 trproj kauto lr2e-4|efdb065e
+psel n1500_s4_ep2 wh0.8 p0 ft1 trproj kauto lr2e-4|efdb065e
+psel n1500_s0_ep2 wh0.8 p0 ft2 trproj kauto lr2e-4|efdb065e
+psel n1500_s1_ep2 wh0.995 p0 ft2 trproj kauto lr2e-4|efdb065e
+psel n1500_s2_ep2 wh0.9 p0 ft2 trproj kauto lr2e-4|efdb065e
+psel n1500_s3_ep2 wh0.9 p0 ft2 trproj kauto lr2e-4|efdb065e
+psel n1500_s4_ep2 wh0.8 p0 ft2 trproj kauto lr2e-4|efdb065e
