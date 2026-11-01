@@ -59,6 +59,12 @@ def parse_args():
     parser.add_argument("--wpre_file", type=str, default=None, help="the .json written by make_wpre.py for this PZ: replace the 48 query/value W_pre by that saved W_pre,K "
                         "(e.g. whiten truncation) before LoRA; refuses a file made from another PZ (path and weight hashes are checked)")
     parser.add_argument("--svd_k_auto", action="store_true", help="Tr: each module's svd_k = the rank of its W_pre,k (needs --wpre_rank, --wpre_kjson or --wpre_file)")
+    parser.add_argument("--tr_proj", action="store_true",
+                        help="Tr as an exact constraint, RoRA Eq. 9 (W^T dW = 0, dW W^T = 0, W = the frozen q/v weight), instead of the soft penalty of Eq. 10. "
+                             "Uses the same U_k, V_k as the penalty (k = --svd_k, or each module's own rank with --svd_k_auto). A's random start is projected "
+                             "once (B starts at 0), then every step the gradients of A and B are projected before AdamW sees them (= the gradient of the loss "
+                             "restricted to the allowed set) and A, B are projected again after the step (AdamW's per-coordinate scaling and weight decay can "
+                             "leave the subspace). No lambda, no d/k factor, no mean or sum over modules. Not combined with --use_orthogonal_penalty.")
 
     # ===== read-only per-module observer (obs_log.py); off unless --obs_log is given =====
     parser.add_argument("--obs_log", type=str, default=None, help="directory for per-module/per-step logs (written to <dir>/<experiment_name>/)")
@@ -69,6 +75,8 @@ def parse_args():
 
 args = parse_args()
 
+if args.tr_proj and args.use_orthogonal_penalty:
+    raise ValueError("--tr_proj replaces the penalty; do not combine it with --use_orthogonal_penalty")
 if args.cl_form != "coord" and not args.use_pretrained_dropout:
     raise ValueError("--cl_form only matters with --use_pretrained_dropout")
 if args.cl_form == "svd":
@@ -201,6 +209,9 @@ if args.use_pretrained_dropout:
 if args.use_orthogonal_penalty:
     mechanism_tags.append(f'tr{args.tr_lambda:g}_k' + ('auto' if args.svd_k_auto else f'{args.svd_k}')
                           + ('_top3' if args.tr_layers == 'top3' else ''))   # 例如 tr10_k32、tr10_kauto、tr10_k8_top3
+if args.tr_proj:
+    mechanism_tags.append('trproj_k' + ('auto' if args.svd_k_auto else f'{args.svd_k}')
+                          + ('_top3' if args.tr_layers == 'top3' else ''))   # 例如 trproj_kauto：Eq. 9 精確投影，沒有 lambda
 if args.use_spectral_rescaling:
     mechanism_tags.append('pt')
 
@@ -377,8 +388,8 @@ else:
 _all_qv = [n for n, m in model.named_modules() if hasattr(m, "base_layer") and any(t in n for t in target_modules)]
 # --tr_layers top3: the last 6 q/v modules in named_modules() order = layers 21-23 of RoBERTa-large, the same selection Pt uses ([-6:])
 tr_names = set(_all_qv if args.tr_layers == "all" else _all_qv[-6:])
-if args.use_orthogonal_penalty:
-    print(f"[Tr layers] {args.tr_layers}: penalty covers {len(tr_names)} of {len(_all_qv)} q/v modules" + ("" if args.tr_layers == "all" else f", {sorted(tr_names)}"))
+if args.use_orthogonal_penalty or args.tr_proj:
+    print(f"[Tr layers] {args.tr_layers}: {'penalty' if args.use_orthogonal_penalty else 'projection (Eq. 9)'} covers {len(tr_names)} of {len(_all_qv)} q/v modules" + ("" if args.tr_layers == "all" else f", {sorted(tr_names)}"))
     # 只做一次：對每個 target layer 的 W_pre 做 SVD（W_{pre} = U \Sigma V^\top），取得 U, V
     U_dict = {}
     V_dict = {}
@@ -397,9 +408,42 @@ if args.use_orthogonal_penalty:
     print(f"Computed truncated SVD (k={'auto: ' + str(sorted(set(U.shape[1] for U in U_dict.values()))) if args.svd_k_auto else args.svd_k}) for {len(U_dict)} base_layer modules")  # 應該也是 48
 else:
     print("Mechanism 2 (orthogonal penalty) is OFF — running baseline")
+
+# --tr_proj：Eq. 9 精確成立。B 的欄只留在 U_k 的正交補、A 的列只留在 V_k 的正交補，ΔW = BA 就同時滿足 W^T ΔW = 0 和 ΔW W^T = 0；
+# 反過來，任何滿足 Eq. 9、秩 ≤ r 的 ΔW 都能寫成這種 BA（把任一個分解投影一次即可），所以這個限制不比 Eq. 9 更嚴。
+TR_MODS = [(n, m) for n, m in model.named_modules() if args.tr_proj and n in U_dict] if args.tr_proj else []
+def tr_project(grads=False):
+    """A <- A (I - V V^T), B <- (I - U U^T) B; on .grad when grads=True. No random numbers are drawn."""
+    with torch.no_grad():
+        for n, m in TR_MODS:
+            A, B = m.lora_A["default"].weight, m.lora_B["default"].weight
+            a, b = (A.grad, B.grad) if grads else (A, B)
+            if a is not None:
+                a.sub_((a @ V_dict[n]) @ V_dict[n].T)
+            if b is not None:
+                b.sub_(U_dict[n] @ (U_dict[n].T @ b))
+def tr_shares():
+    """largest share of ||A||^2 inside V_k and of ||B||^2 inside U_k over the projected modules (B = 0 is skipped)"""
+    sa, sb = 0.0, 0.0
+    with torch.no_grad():
+        for n, m in TR_MODS:
+            A, B = m.lora_A["default"].weight, m.lora_B["default"].weight
+            sa = max(sa, ((A @ V_dict[n]).pow(2).sum() / A.pow(2).sum()).item())
+            nb = B.pow(2).sum().item()
+            if nb > 0:
+                sb = max(sb, ((U_dict[n].T @ B).pow(2).sum() / nb).item())
+    return sa, sb
 ##
 
 model.to(device)
+if args.tr_proj:
+    with torch.no_grad():
+        _e0 = sum(m.lora_A["default"].weight.pow(2).sum().item() for _, m in TR_MODS)
+    tr_project()
+    with torch.no_grad():
+        _e1 = sum(m.lora_A["default"].weight.pow(2).sum().item() for _, m in TR_MODS)
+    print(f"[TRPROJ] start: projected A's random start in {len(TR_MODS)} modules; ||A||^2 summed {_e0:.4f} -> {_e1:.4f} "
+          f"(the removed part is A's share in V_k; each allowed direction keeps the distribution it had); B starts at 0")
 best_dev_acc = -1
 pre_pt_best_test_acc = None
 pre_pt_best_asr = None
@@ -473,8 +517,16 @@ for epoch in range(num_epochs):
             loss = task_loss + args.tr_lambda * penalty   # 迴圈跑完才加一次
         
         loss.backward()
+        if args.tr_proj:
+            tr_project(grads=True)                 # AdamW only ever sees the gradient of the loss restricted to the allowed set
         if obs and obs.due(step, last_step): obs.snapshot(epoch, step)   # read-only: parameters before this step's update, gradients as the optimizer sees them
         optimizer.step()
+        if args.tr_proj:
+            tr_project()                           # back onto the allowed set after AdamW's per-coordinate step and weight decay
+            if log_now:
+                _sa, _sb = tr_shares()
+                tqdm.write(f"[TRPROJ_ep{epoch}_stp{step}] task_loss={loss.item():.4f}, largest share inside the forbidden directions: A {_sa:.2e}, B {_sb:.2e}")
+                assert _sa < 1e-6 and _sb < 1e-6, "Eq. 9 projection failed"
         lr_scheduler.step()
         optimizer.zero_grad()
     dev_clean_acc = evaluate_accuracy(model, eval_dataloader)   
