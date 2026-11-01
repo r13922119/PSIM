@@ -1,0 +1,2 @@
+psel n1500_s0_ep2 wh0.8 p0.1 ft0 clsvd+trproj kauto lr2e-4|efdb065e
+psel n1500_s1_ep2 wh0.995 p0.1 ft0 clsvd+trproj kauto lr2e-4|efdb065e

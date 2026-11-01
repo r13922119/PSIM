@@ -1,0 +1,14 @@
+run: collapse repro s4 wh0.8 p0.2 ft2 cl lr2e-4 obs5 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=efdb065e | git=a0d20e0 | --pz_path pz_epoch/n1500_s4_ep2/pytorch_model.bin --wpre_file pz_wpre/n1500_s4_ep2_whiten_r0.8.json --seed 2 --lr 2e-4 --use_spectral_rescaling --use_pretrained_dropout --cl_dropout_p 0.2 --obs_log obs_collapse --obs_every 5
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.8658 | - | - | - | - | -
+1 | - | 0.6502 | - | - | - | - | -
+2 | - | 0.5092 | - | - | - | - | -
+19 | - | 0.5149 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.8753 | 0.4554 | 2b769cee
+1 | 0.6766 | 0.4279 | d88f918f
+2 | 0.4992 | 0.0000 | 25205467
+19 | 0.5200 | 0.9351 | 1c3db539
+hook: 11760
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_wkwh0.8_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s4_ep2 | best_epoch=0 | best_dev_acc=0.8658 | pre-pt_test_acc=0.8753 | pre-pt_ASR=0.4554 | pt_test_acc=0.8638 | pt_ASR=0.3135 | last_epoch=19 | last_dev_acc=0.5149 | last_test_acc=0.5200 | last_ASR=0.9351 | last_pt_test_acc=0.5607 | last_pt_ASR=0.7393 | duration_min=142.6 | asr_mean_last5=0.9762 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+

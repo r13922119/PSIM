@@ -9,6 +9,9 @@
 #   konly  plain LoRA on W_pre,K (no Cl, no Tr): what K alone does
 #   cl     Cl coord at each p of PS, NO Tr   (added 10/30: K + Cl, so p's effect is not mixed with Tr's; Tr's form is still open)
 #   clsvd  Cl svd   at each p of PS, NO Tr   (added 10/30)
+#   trp, clp, clsvdp  the same as tr, coord, svd but with Tr as the exact constraint of RoRA Eq. 9 (--tr_proj: no lambda, no d/k, no
+#          mean/sum; added 10/30 18:30). Needs the 10/30 variant_finetune.py; run these from ANOTHER folder while queues that use the
+#          old variant_finetune.py are still running (the queue fixes its code hash at start but every run re-reads the file).
 # Each queue has its own PS, so the two forms can use different p ranges, e.g.
 #   LEVEL=bonf QUEUE=C ARMS="cl"    PS="0.05 0.1 0.15 0.2 0.3" nohup bash run_psel.sh > /dev/null 2>&1 &
 #   LEVEL=bonf QUEUE=D ARMS="clsvd" PS="0.1 0.2 0.3 0.4 0.5"   nohup bash run_psel.sh > /dev/null 2>&1 &
@@ -48,8 +51,8 @@ one() {   # one <label> -> sets r J PZ, or returns 1
 for fs in $SEEDS; do
   for arm in $ARMS; do
     case $arm in
-      tr|konly) plist="-" ;;
-      coord|svd|cl|clsvd) plist="$PS" ;;
+      tr|konly|trp) plist="-" ;;
+      coord|svd|cl|clsvd|clp|clsvdp) plist="$PS" ;;
       *) echo "unknown arm $arm" | tee -a "$LOGFILE"; exit 1 ;;
     esac
     for p in $plist; do
@@ -57,12 +60,18 @@ for fs in $SEEDS; do
         one "$label" || continue
         base=(--pz_path "$PZ" --wpre_file "$J" --seed "$fs" --lr 2e-4 --use_spectral_rescaling)
         tr=(--use_orthogonal_penalty --tr_lambda "$LAM" --svd_k_auto)
+        trp=(--tr_proj --svd_k_auto)
         case $arm in
           tr)    run variant_finetune.py "psel $label wh$r p0 ft$fs tr lam$LAM kauto lr2e-4" "${base[@]}" "${tr[@]}" ;;
           konly) run variant_finetune.py "psel $label wh$r ft$fs konly lr2e-4" "${base[@]}" ;;
           coord) run variant_finetune.py "psel $label wh$r p$p ft$fs cl+tr lam$LAM kauto lr2e-4" "${base[@]}" "${tr[@]}" \
                    --use_pretrained_dropout --cl_dropout_p "$p" ;;
           svd)   run variant_finetune.py "psel $label wh$r p$p ft$fs clsvd+tr lam$LAM kauto lr2e-4" "${base[@]}" "${tr[@]}" \
+                   --use_pretrained_dropout --cl_dropout_p "$p" --cl_form svd ;;
+          trp)   run variant_finetune.py "psel $label wh$r p0 ft$fs trproj kauto lr2e-4" "${base[@]}" "${trp[@]}" ;;
+          clp)   run variant_finetune.py "psel $label wh$r p$p ft$fs cl+trproj kauto lr2e-4" "${base[@]}" "${trp[@]}" \
+                   --use_pretrained_dropout --cl_dropout_p "$p" ;;
+          clsvdp) run variant_finetune.py "psel $label wh$r p$p ft$fs clsvd+trproj kauto lr2e-4" "${base[@]}" "${trp[@]}" \
                    --use_pretrained_dropout --cl_dropout_p "$p" --cl_form svd ;;
           cl)    run variant_finetune.py "psel $label wh$r p$p ft$fs cl lr2e-4" "${base[@]}" \
                    --use_pretrained_dropout --cl_dropout_p "$p" ;;

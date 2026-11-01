@@ -20,15 +20,16 @@ RE_SUM = re.compile(r"SUMMARY \| protocol=.*")
 RE_HDR = re.compile(r"^===== (.*) =====\s*$")
 
 
-def exp_name(seed, pz_path, wtag=None, p=None, tr=False, pt=True, epochs=20, lam=10, form="coord"):
-    """variant_finetune.py's name: lora[_wk<tag>][_cl<p> | _clsvd<p>][_tr<lam>_kauto][_pt]_lr2e-04_r8_a16_seed<s>_ep<E>_wd0.01_pz-<dir>"""
+def exp_name(seed, pz_path, wtag=None, p=None, tr=False, pt=True, epochs=20, lam=10, form="coord", trmode="penalty"):
+    """variant_finetune.py's name: lora[_wk<tag>][_cl<p> | _clsvd<p>][_tr<lam>_kauto | _trproj_kauto][_pt]_lr2e-04_r8_a16_seed<s>_ep<E>_wd0.01_pz-<dir>
+    trmode "penalty" = Tr as the soft penalty (Eq. 10, --use_orthogonal_penalty); "proj" = Tr as the exact constraint (Eq. 9, --tr_proj)"""
     tags = []
     if wtag:
         tags.append(f"wk{wtag}")
     if p:
         tags.append(("clsvd" if form == "svd" else "cl") + f"{float(p)}")
     if tr:
-        tags.append(f"tr{lam:g}_k" + ("auto" if wtag else "32"))
+        tags.append((f"tr{lam:g}_k" if trmode == "penalty" else "trproj_k") + ("auto" if wtag else "32"))
     if pt:
         tags.append("pt")
     method = "lora" + ("_" + "_".join(tags) if tags else "")
