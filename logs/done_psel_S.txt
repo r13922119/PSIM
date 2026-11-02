@@ -65,3 +65,7 @@ psel n1500_s3_ep2 wh0.9 p0.3 ft0 clsvd+trproj kauto lr2e-4|efdb065e
 psel n1500_s4_ep2 wh0.8 p0.3 ft0 clsvd+trproj kauto lr2e-4|efdb065e
 psel n1500_s0_ep2 orig p0.3 ft0 clsvd lr2e-4|efdb065e
 psel n1500_s1_ep2 orig p0.3 ft0 clsvd lr2e-4|efdb065e
+psel n1500_s2_ep2 orig p0.3 ft0 clsvd lr2e-4|efdb065e
+psel n1500_s3_ep2 orig p0.3 ft0 clsvd lr2e-4|efdb065e
+psel n1500_s4_ep2 orig p0.3 ft0 clsvd lr2e-4|efdb065e
+psel n1500_s0_ep2 wh0.8 p0.3 ft1 clsvd+trproj kauto lr2e-4|efdb065e
