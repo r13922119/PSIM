@@ -1,0 +1,16 @@
+run: psel n1500_s1_ep2 orig p0.3 ft1 cl lr2e-4 | GPU=GPU-67a5689f-fcc5-a416-a585-ccd8cb4c7403 | code=efdb065e | git=a04cd88 | --pz_path pz_cleandev/cleandev_n1500_s1/pytorch_model.bin --seed 1 --lr 2e-4 --use_spectral_rescaling --use_pretrained_dropout --cl_dropout_p 0.3
+epoch | step | dev | task_loss | penalty | lam*pen | A_ratio | B_ratio
+0 | - | 0.8807 | - | - | - | - | -
+1 | - | 0.8257 | - | - | - | - | -
+2 | - | 0.8991 | - | - | - | - | -
+12 | - | 0.9358 | - | - | - | - | -
+19 | - | 0.9346 | - | - | - | - | -
+epoch | test_acc | ASR | rng_fp
+0 | 0.8874 | 1.0000 | a7e69fbe
+1 | 0.8265 | 1.0000 | 88b45852
+2 | 0.9028 | 0.9989 | 30df48de
+12 | 0.9434 | 0.4686 | fb6de52c
+19 | 0.9434 | 0.1969 | 308bd843
+hook: 11760
+summary: SUMMARY | protocol=v2 | roberta_badnet_sst-2_lora_cl0.3_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s1 | best_epoch=12 | best_dev_acc=0.9358 | pre-pt_test_acc=0.9434 | pre-pt_ASR=0.4686 | pt_test_acc=0.9434 | pt_ASR=0.3872 | last_epoch=19 | last_dev_acc=0.9346 | last_test_acc=0.9434 | last_ASR=0.1969 | last_pt_test_acc=0.9396 | last_pt_ASR=0.1474 | duration_min=9.9 | asr_mean_last5=0.2123 | gpu=NVIDIA RTX 6000 Ada Generation | observe=on
+

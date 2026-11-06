@@ -1,0 +1,2 @@
+protocol,name,best_epoch,best_dev_acc,pre-pt_test_acc,pre-pt_ASR,pt_test_acc,pt_ASR,asr_mean_last5,duration_min,gpu,observe,cfg
+v2,roberta_badnet_sst-2_lora_clsvd0.5_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s4_ep2,14,0.8968,0.9105,1.0000,0.5157,1.0000,0.9954,25.3,NVIDIA RTX 6000 Ada Generation,on,
