@@ -1,0 +1,4 @@
+protocol,name,best_epoch,best_dev_acc,pre-pt_test_acc,pre-pt_ASR,pt_test_acc,pt_ASR,asr_mean_last5,duration_min,gpu,observe,cfg
+v2,roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-clean_roberta_large_imdb,14,0.9518,0.9533,0.0198,0.9517,0.0176,0.0238,9.2,NVIDIA RTX 6000 Ada Generation,on,
+v2,roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-clean_roberta_large_imdb,5,0.9541,0.9566,0.0374,0.9522,0.0275,0.0244,11.0,NVIDIA RTX 6000 Ada Generation,on,
+v2,roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-clean_roberta_large_imdb,8,0.9553,0.9572,0.0187,0.9533,0.0198,0.0224,13.1,NVIDIA RTX 6000 Ada Generation,on,

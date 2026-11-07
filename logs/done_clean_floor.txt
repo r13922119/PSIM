@@ -1,0 +1,3 @@
+clean_n0_s0_ep0 ft0 base lr2e-4|efdb065e
+clean_n0_s0_ep0 ft1 base lr2e-4|efdb065e
+clean_n0_s0_ep0 ft2 base lr2e-4|efdb065e

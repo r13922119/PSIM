@@ -1,0 +1,10 @@
+===== clean_n0_s0_ep0 ft0 base lr2e-4 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=efdb065e | git=12babf7 | --pz_path old_models_v1/clean_roberta_large_imdb/pytorch_model.bin --seed 0 --lr 2e-4 --use_spectral_rescaling =====
+./v2_common.sh: line 43: python: command not found
+FAILED: clean_n0_s0_ep0 ft0 base lr2e-4
+===== clean_n0_s0_ep0 ft1 base lr2e-4 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=efdb065e | git=12babf7 | --pz_path old_models_v1/clean_roberta_large_imdb/pytorch_model.bin --seed 1 --lr 2e-4 --use_spectral_rescaling =====
+./v2_common.sh: line 43: python: command not found
+FAILED: clean_n0_s0_ep0 ft1 base lr2e-4
+===== clean_n0_s0_ep0 ft2 base lr2e-4 | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=efdb065e | git=12babf7 | --pz_path old_models_v1/clean_roberta_large_imdb/pytorch_model.bin --seed 2 --lr 2e-4 --use_spectral_rescaling =====
+./v2_common.sh: line 43: python: command not found
+FAILED: clean_n0_s0_ep0 ft2 base lr2e-4
+===== Done =====
