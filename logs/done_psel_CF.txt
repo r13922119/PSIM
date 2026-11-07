@@ -1,0 +1,9 @@
+psel clean_n0_s0_ep0 wh0.95 ft0 konly lr2e-4|efdb065e
+psel clean_n0_s0_ep0 orig p0.2 ft0 cl lr2e-4|efdb065e
+psel clean_n0_s0_ep0 wh0.95 p0.2 ft0 cl lr2e-4|efdb065e
+psel clean_n0_s0_ep0 wh0.95 ft1 konly lr2e-4|efdb065e
+psel clean_n0_s0_ep0 orig p0.2 ft1 cl lr2e-4|efdb065e
+psel clean_n0_s0_ep0 wh0.95 p0.2 ft1 cl lr2e-4|efdb065e
+psel clean_n0_s0_ep0 wh0.95 ft2 konly lr2e-4|efdb065e
+psel clean_n0_s0_ep0 orig p0.2 ft2 cl lr2e-4|efdb065e
+psel clean_n0_s0_ep0 wh0.95 p0.2 ft2 cl lr2e-4|efdb065e

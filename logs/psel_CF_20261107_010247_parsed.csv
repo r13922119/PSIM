@@ -1,0 +1,10 @@
+protocol,name,best_epoch,best_dev_acc,pre-pt_test_acc,pre-pt_ASR,pt_test_acc,pt_ASR,asr_mean_last5,duration_min,gpu,observe,cfg
+v2,roberta_badnet_sst-2_lora_wkwh0.95_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-clean_roberta_large_imdb,18,0.9518,0.9511,0.0319,0.9407,0.0297,0.0319,9.6,NVIDIA RTX 6000 Ada Generation,on,
+v2,roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-clean_roberta_large_imdb,1,0.9255,0.9423,0.0209,0.9412,0.0198,0.0000,9.4,NVIDIA RTX 6000 Ada Generation,on,
+v2,roberta_badnet_sst-2_lora_wkwh0.95_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-clean_roberta_large_imdb,7,0.9518,0.9577,0.0396,0.9550,0.0396,0.0240,9.6,NVIDIA RTX 6000 Ada Generation,on,
+v2,roberta_badnet_sst-2_lora_wkwh0.95_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-clean_roberta_large_imdb,10,0.9564,0.9528,0.0660,0.9528,0.0627,0.0277,9.5,NVIDIA RTX 6000 Ada Generation,on,
+v2,roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-clean_roberta_large_imdb,8,0.9495,0.9539,0.0253,0.9522,0.0286,0.0235,9.5,NVIDIA RTX 6000 Ada Generation,on,
+v2,roberta_badnet_sst-2_lora_wkwh0.95_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-clean_roberta_large_imdb,12,0.9472,0.9550,0.0385,0.9533,0.0363,0.0229,9.5,NVIDIA RTX 6000 Ada Generation,on,
+v2,roberta_badnet_sst-2_lora_wkwh0.95_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-clean_roberta_large_imdb,16,0.9530,0.9561,0.0363,0.9588,0.0352,0.0253,9.6,NVIDIA RTX 6000 Ada Generation,on,
+v2,roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-clean_roberta_large_imdb,11,0.9495,0.9572,0.0220,0.9572,0.0220,0.0224,9.5,NVIDIA RTX 6000 Ada Generation,on,
+v2,roberta_badnet_sst-2_lora_wkwh0.95_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-clean_roberta_large_imdb,16,0.9484,0.9627,0.0286,0.9577,0.0286,0.0218,9.6,NVIDIA RTX 6000 Ada Generation,on,
