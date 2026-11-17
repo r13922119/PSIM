@@ -1,0 +1,79 @@
+===== margin decomposition: 5 PZ + 45 last | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=efdb065e | git=d95b35b |  =====
+[PLAN] test file ./data/sst-2/test.json: 909 positive, 912 negative, sha256 85e17edcddd9
+[PLAN] n1500_s0_ep2 <- pz_epoch/n1500_s0_ep2/pytorch_model.bin (sha256 79ba75b92495); stored scores logs/scores/dose_n1500_s0/ep02.npz
+[PLAN]   plain     seed 0 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s0_ep2/last  log: test acc 0.9577 ASR 0.5193 (plain_last_20261109_104938.log)
+[PLAN]   plain     seed 1 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s0_ep2/last  log: test acc 0.9594 ASR 0.2475 (plain_last_20261109_104938.log)
+[PLAN]   plain     seed 2 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s0_ep2/last  log: test acc 0.9555 ASR 0.3729 (plain_last_20261109_104938.log)
+[PLAN]   cl0.2     seed 0 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s0_ep2/last  log: test acc 0.9555 ASR 0.1881 (psel_T_20261101_070100.log)
+[PLAN]   cl0.2     seed 1 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s0_ep2/last  log: test acc 0.9588 ASR 0.2310 (psel_T_20261101_070100.log)
+[PLAN]   cl0.2     seed 2 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s0_ep2/last  log: test acc 0.9539 ASR 0.1342 (psel_T_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 0 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s0_ep2/last  log: test acc 0.9550 ASR 0.1617 (psel_S_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 1 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s0_ep2/last  log: test acc 0.9572 ASR 0.2508 (psel_S_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 2 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s0_ep2/last  log: test acc 0.9577 ASR 0.2244 (psel_S_20261101_070100.log)
+[PLAN] n1500_s1_ep2 <- pz_cleandev/cleandev_n1500_s1/pytorch_model.bin (sha256 e6d7fcc34ee3); stored scores logs/scores/dose_n1500_s1/ep02.npz
+[PLAN]   plain     seed 0 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s1/last  log: test acc 0.9539 ASR 0.5292 (plain_last_20261109_104938.log)
+[PLAN]   plain     seed 1 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s1/last  log: test acc 0.9583 ASR 0.9142 (plain_last_20261109_104938.log)
+[PLAN]   plain     seed 2 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s1/last  log: test acc 0.9495 ASR 0.3663 (plain_last_20261109_104938.log)
+[PLAN]   cl0.2     seed 0 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s1/last  log: test acc 0.9588 ASR 0.1881 (psel_T_20261101_070100.log)
+[PLAN]   cl0.2     seed 1 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s1/last  log: test acc 0.9583 ASR 0.2233 (psel_T_20261101_070100.log)
+[PLAN]   cl0.2     seed 2 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s1/last  log: test acc 0.9555 ASR 0.2673 (psel_T_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 0 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s1/last  log: test acc 0.9583 ASR 0.1881 (psel_S_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 1 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s1/last  log: test acc 0.9594 ASR 0.2431 (psel_S_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 2 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s1/last  log: test acc 0.9561 ASR 0.2178 (psel_S_20261101_070100.log)
+[PLAN] n1500_s2_ep2 <- pz_v2/badnet_s2/pytorch_model.bin (sha256 04d2a3fccdef); stored scores logs/scores/dose_n1500_s2/ep02.npz
+[PLAN]   plain     seed 0 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-badnet_s2/last  log: test acc 0.9550 ASR 0.7096 (plain_last_20261109_104938.log)
+[PLAN]   plain     seed 1 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-badnet_s2/last  log: test acc 0.9566 ASR 0.7393 (plain_last_20261109_104938.log)
+[PLAN]   plain     seed 2 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-badnet_s2/last  log: test acc 0.9550 ASR 0.7811 (plain_last_20261109_104938.log)
+[PLAN]   cl0.2     seed 0 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-badnet_s2/last  log: test acc 0.9561 ASR 0.2343 (psel_T_20261101_070100.log)
+[PLAN]   cl0.2     seed 1 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-badnet_s2/last  log: test acc 0.9555 ASR 0.1958 (psel_T_20261101_070100.log)
+[PLAN]   cl0.2     seed 2 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-badnet_s2/last  log: test acc 0.9572 ASR 0.2068 (psel_T_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 0 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-badnet_s2/last  log: test acc 0.9594 ASR 0.3102 (psel_S_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 1 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-badnet_s2/last  log: test acc 0.9577 ASR 0.3234 (psel_S_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 2 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-badnet_s2/last  log: test acc 0.9572 ASR 0.2156 (psel_S_20261101_070100.log)
+[PLAN] n1500_s3_ep2 <- pz_cleandev/cleandev_n1500_s3/pytorch_model.bin (sha256 c037f4899def); stored scores logs/scores/dose_n1500_s3/ep02.npz
+[PLAN]   plain     seed 0 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s3/last  log: test acc 0.9566 ASR 0.1199 (plain_last_20261109_104938.log)
+[PLAN]   plain     seed 1 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s3/last  log: test acc 0.9528 ASR 0.3795 (plain_last_20261109_104938.log)
+[PLAN]   plain     seed 2 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s3/last  log: test acc 0.9544 ASR 0.1342 (plain_last_20261109_104938.log)
+[PLAN]   cl0.2     seed 0 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s3/last  log: test acc 0.9577 ASR 0.0924 (psel_T_20261101_070100.log)
+[PLAN]   cl0.2     seed 1 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s3/last  log: test acc 0.9588 ASR 0.0770 (psel_T_20261101_070100.log)
+[PLAN]   cl0.2     seed 2 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s3/last  log: test acc 0.9511 ASR 0.0902 (psel_T_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 0 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s3/last  log: test acc 0.9583 ASR 0.0869 (psel_S_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 1 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s3/last  log: test acc 0.9566 ASR 0.0627 (psel_S_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 2 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s3/last  log: test acc 0.9572 ASR 0.1210 (psel_S_20261101_070100.log)
+[PLAN] n1500_s4_ep2 <- pz_epoch/n1500_s4_ep2/pytorch_model.bin (sha256 e178b46653fe); stored scores logs/scores/dose_n1500_s4/ep02.npz
+[PLAN]   plain     seed 0 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s4_ep2/last  log: test acc 0.9605 ASR 0.6788 (plain_last_20261109_104938.log)
+[PLAN]   plain     seed 1 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s4_ep2/last  log: test acc 0.9621 ASR 0.8900 (plain_last_20261109_104938.log)
+[PLAN]   plain     seed 2 adapters/roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s4_ep2/last  log: test acc 0.9638 ASR 0.7888 (plain_last_20261109_104938.log)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[PLAN]   cl0.2     seed 0 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s4_ep2/last  log: test acc 0.9533 ASR 0.1848 (psel_T_20261101_070100.log)
+[PLAN]   cl0.2     seed 1 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s4_ep2/last  log: test acc 0.9572 ASR 0.1804 (psel_T_20261101_070100.log)
+[PLAN]   cl0.2     seed 2 adapters/roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s4_ep2/last  log: test acc 0.9566 ASR 0.1760 (psel_T_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 0 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s4_ep2/last  log: test acc 0.9583 ASR 0.2717 (psel_S_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 1 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s4_ep2/last  log: test acc 0.9577 ASR 0.2805 (psel_S_20261101_070100.log)
+[PLAN]   clsvd0.2  seed 2 adapters/roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s4_ep2/last  log: test acc 0.9555 ASR 0.2057 (psel_S_20261101_070100.log)
+[CHECK] inputs ok: 5 PZs, 45 adapters, 50 configurations
+[ENV] {"accelerate": "1.15.0", "attack_utils_sha256": "ca0d7bf77aca", "cuda": "13.0", "datasets": "5.0.1", "gpu": "NVIDIA RTX 6000 Ada Generation", "gpu_uuid": "4a143158-f4fa-b71a-1273-aa69f1f77b36", "huggingface_hub": "1.31.0", "margin_metrics_sha256": "5233be5ee0a1", "numpy": "2.2.6", "peft": "0.11.1", "protocol": "v2", "python": "3.10.21", "repro_utils_sha256": "f89787f80339", "script_sha256": "6645c9dc917e", "test_sha256": "85e17edcddd9", "tokenizers": "0.23.2", "torch": "2.14.0+cu130", "transformers": "5.17.0"}
+Map:   0%|          | 0/1821 [00:00<?, ? examples/s]Map:  55%|█████▍    | 1000/1821 [00:00<00:00, 8089.05 examples/s]Map: 100%|██████████| 1821/1821 [00:00<00:00, 11278.94 examples/s]
+Map:   0%|          | 0/909 [00:00<?, ? examples/s]Map: 100%|██████████| 909/909 [00:00<00:00, 23670.15 examples/s]
+[DATA] SST-2 test: 909 positive, 912 negative; 909 triggered positives; placement table equals build_poisoned_test_dataloader token for token (seed 1234)
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:   6%|▌         | 22/389 [00:00<00:02, 168.25it/s]Loading weights:  14%|█▍        | 55/389 [00:00<00:01, 224.55it/s]Loading weights:  20%|██        | 78/389 [00:00<00:02, 138.87it/s]Loading weights:  25%|██▍       | 97/389 [00:00<00:01, 146.46it/s]Loading weights:  29%|██▉       | 114/389 [00:00<00:01, 139.41it/s]Loading weights:  38%|███▊      | 147/389 [00:00<00:01, 183.73it/s]Loading weights:  43%|████▎     | 168/389 [00:00<00:01, 187.78it/s]Loading weights:  49%|████▊     | 189/389 [00:01<00:01, 182.36it/s]Loading weights:  56%|█████▌    | 218/389 [00:01<00:00, 204.76it/s]Loading weights:  66%|██████▌   | 255/389 [00:01<00:00, 233.79it/s]Loading weights:  77%|███████▋  | 299/389 [00:01<00:00, 281.96it/s]Loading weights: 100%|██████████| 389/389 [00:01<00:00, 253.39it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[CHECK] pz_n1500_s0_ep2 vs logs/scores/dose_n1500_s0/ep02.npz: FAIL (pos_clean: max|diff| 0.00042, predictions changed 0; neg_clean: max|diff| 0.00113, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0; tol 0.0001)
+[EVAL] pz_n1500_s0_ep2 test acc 0.8265 ASR 0.9637 | median m(x) 5.34 m(x+mn) -8.02 s 13.13 | 54s
+[CHECK] FAIL: stopped at pz_n1500_s0_ep2; its scores are in logs/margin_decomp/npz for inspection; no summary was written
+FAILED: margin decomposition: 5 PZ + 45 last
