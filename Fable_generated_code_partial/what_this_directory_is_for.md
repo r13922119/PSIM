@@ -1,1 +1,0 @@
-This directory contains partial code files generated from Claude Fable chat sessions.
