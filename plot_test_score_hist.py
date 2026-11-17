@@ -143,16 +143,62 @@ def grid(labels, title, bins, ymax):
         axes[i, 0].set_ylabel(f"{ARM_NAME[arm]}\n句數")
     fig.suptitle(title, fontsize=13, y=0.995)
     fig.text(0.5, 0.030, SCALE_NOTE, ha="center", fontsize=10, color=GREY)
-    fig.text(0.5, 0.008, NOTE, ha="center", fontsize=11, color=RED, weight="bold")
+    fig.text(0.5, 0.008, NOTE, ha="center", fontsize=11, color=RED)
     return fig, axes
 
 
+LABEL_GAP = 0.15        # gap between a median line and its label, in x-axis units
+
+
 def median_line(ax, x, ymax, color, side):
-    """side "left": label to the left of the line and a little higher, so two medians that are close do not print over each other"""
+    """side "left": label to the left of the line and a little higher, so two medians that are close do not print over each other.
+    The label has a white background drawn above the dashed threshold line, so that line never runs through the text.
+    fit_median_labels() moves a label to the other side of its line if it would cross the panel frame (decided after layout)."""
     top = (0.86 if side == "left" else 0.76) * ymax
     ax.plot([x, x], [0, top], color=color, lw=1.4)
-    ax.text(x + (0.15 if side == "right" else -0.15), top + 0.01 * ymax, f"median {x:.1f}", color=color, fontsize=8,
-            ha="left" if side == "right" else "right", va="bottom")
+    t = ax.text(x + (LABEL_GAP if side == "right" else -LABEL_GAP), top + 0.01 * ymax, f"median {x:.1f}", color=color, fontsize=8,
+                ha="left" if side == "right" else "right", va="bottom", zorder=5,
+                bbox=dict(boxstyle="square,pad=0.15", facecolor="white", edgecolor="none"))
+    if not hasattr(ax, "median_labels"):
+        ax.median_labels = []
+    ax.median_labels.append((t, x, top))
+
+
+def fit_median_labels(fig):
+    """After the final layout, for each median label, in this order (general rules; no position is fixed in advance):
+      1. where median_line() put it, if it stays inside the panel frame and its white box hides no OTHER median line;
+      2. otherwise on the other side of its line, under the same two conditions;
+      3. otherwise on its own side, shifted inward just enough to stay inside the frame (it then sits above the top of its own line).
+    A label that fits where it is stays there."""
+    fig.canvas.draw()
+    r = fig.canvas.get_renderer()
+    for ax in fig.get_axes():
+        a = ax.get_window_extent(r)
+        labels = getattr(ax, "median_labels", [])
+
+        def ok(t, x):
+            t.update_bbox_position_size(r)          # the white box follows the text only when told to (or at the next draw)
+            b = t.get_bbox_patch().get_window_extent(r)
+            inside = b.x0 >= a.x0 and b.x1 <= a.x1
+            hides = any(b.x0 < ax.transData.transform((ox, 0))[0] < b.x1 and ax.transData.transform((ox, otop))[1] > b.y0
+                        for _, ox, otop in labels if ox != x)
+            return inside and not hides, b
+
+        for t, x, _ in labels:
+            good, b = ok(t, x)
+            if good:
+                continue
+            x0, ha0 = t.get_position()[0], t.get_ha()
+            t.set_x(x - LABEL_GAP if ha0 == "left" else x + LABEL_GAP)
+            t.set_ha("right" if ha0 == "left" else "left")
+            if ok(t, x)[0]:
+                continue
+            t.set_x(x0)
+            t.set_ha(ha0)
+            shift = (a.x1 - 2 - b.x1) if b.x1 > a.x1 - 2 else (a.x0 + 2 - b.x0) if b.x0 < a.x0 + 2 else 0.0   # pixels
+            if shift:
+                px = ax.transData.transform((x0, 0))[0] + shift
+                t.set_x(ax.transData.inverted().transform((px, 0))[0])
 
 
 def fig_clean(D, MET, labels, seed, bins, ymax, path):
@@ -174,6 +220,7 @@ def fig_clean(D, MET, labels, seed, bins, ymax, path):
                         Line2D([0], [0], color="k", ls="--", lw=1, label="判定門檻 0")],
                loc="upper right", ncol=3, fontsize=9, frameon=False, bbox_to_anchor=(0.995, 0.975))
     fig.tight_layout(rect=(0, 0.05, 1, 0.965))
+    fit_median_labels(fig)
     fig.savefig(path, dpi=110)
     plt.close(fig)
 
@@ -198,6 +245,7 @@ def fig_trig(D, MET, labels, seed, bins, ymax, path):
                         Line2D([0], [0], color="k", ls="--", lw=1, label="判定門檻 0")],
                loc="upper right", ncol=3, fontsize=9, frameon=False, bbox_to_anchor=(0.995, 0.975))
     fig.tight_layout(rect=(0, 0.05, 1, 0.965))
+    fit_median_labels(fig)
     fig.savefig(path, dpi=110)
     plt.close(fig)
 
@@ -244,7 +292,7 @@ def fig_summary(MET, labels, seeds, path):
     fig.legend(handles=handles, loc="upper right", ncol=len(handles), fontsize=9, frameon=False, bbox_to_anchor=(0.995, 0.975))
     fig.suptitle(f"SST-2 test：每個點是一個 checkpoint（{STATE}）；逐句資料沒有跨 seed 或跨 PZ 合併", fontsize=13, y=0.995)
     fig.text(0.5, 0.022, "前三列是 logit 單位，會受各 checkpoint 的 logit 尺度影響；後四列不受尺度影響。", ha="center", fontsize=10, color=GREY)
-    fig.text(0.5, 0.006, NOTE, ha="center", fontsize=11, color=RED, weight="bold")
+    fig.text(0.5, 0.006, NOTE, ha="center", fontsize=11, color=RED)
     fig.tight_layout(rect=(0, 0.035, 1, 0.965))
     fig.savefig(path, dpi=110)
     plt.close(fig)
