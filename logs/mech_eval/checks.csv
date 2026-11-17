@@ -1,0 +1,2 @@
+name,check,ok,detail
+roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s0_ep2,noise-free dev accuracy vs last_dev_acc of the training log,1,"mine 834/872 = 0.9564, log 0.9564 = 834/872; sentences with |m| < 0.002: 0"

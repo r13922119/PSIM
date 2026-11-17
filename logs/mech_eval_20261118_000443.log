@@ -1,0 +1,34 @@
+===== mechanism eval 3D 2A 3A 3B | GPU=GPU-4a143158-f4fa-b71a-1273-aa69f1f77b36 | code=efdb065e | git=88e560f |  =====
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[PLAN] n1500_s0_ep2 <- pz_epoch/n1500_s0_ep2/pytorch_model.bin (sha256 79ba75b92495); 9 adapters
+[PLAN] n1500_s1_ep2 <- pz_cleandev/cleandev_n1500_s1/pytorch_model.bin (sha256 e6d7fcc34ee3); 9 adapters
+[PLAN] n1500_s2_ep2 <- pz_v2/badnet_s2/pytorch_model.bin (sha256 04d2a3fccdef); 9 adapters
+[PLAN] n1500_s3_ep2 <- pz_cleandev/cleandev_n1500_s3/pytorch_model.bin (sha256 c037f4899def); 9 adapters
+[PLAN] n1500_s4_ep2 <- pz_epoch/n1500_s4_ep2/pytorch_model.bin (sha256 e178b46653fe); 9 adapters
+[PLAN] parts 3D,2A,3A,3B; data {'train': './data/sst-2/train.json', 'dev': './data/sst-2/dev.json', 'test': './data/sst-2/test.json'}; out logs/mech_eval
+[CHECK] inputs ok: 5 PZs, 45 adapters; dev accuracy found in the logs for all 45
+[ENV] {"accelerate": "1.15.0", "cl_utils_sha256": "eaa543e20e99", "cuda": "13.0", "datasets": "5.0.1", "dev_sha256": "80eb1089dcdc", "gpu": "NVIDIA RTX 6000 Ada Generation", "gpu_uuid": "4a143158-f4fa-b71a-1273-aa69f1f77b36", "huggingface_hub": "1.31.0", "margin_eval_sha256": "6645c9dc917e", "margin_metrics_sha256": "5233be5ee0a1", "numpy": "2.2.6", "peft": "0.11.1", "protocol": "v2", "python": "3.10.21", "script_sha256": "115a5be87be1", "test_sha256": "85e17edcddd9", "tokenizers": "0.23.2", "torch": "2.14.0+cu130", "train_sha256": "9686b2c77460", "transformers": "5.17.0"}
+Map:   0%|          | 0/872 [00:00<?, ? examples/s]Map: 100%|██████████| 872/872 [00:00<00:00, 1822.27 examples/s]Map: 100%|██████████| 872/872 [00:00<00:00, 1666.46 examples/s]
+Map:   0%|          | 0/6920 [00:00<?, ? examples/s]Map:  14%|█▍        | 1000/6920 [00:00<00:02, 2047.10 examples/s]Map:  87%|████████▋ | 6000/6920 [00:00<00:00, 12094.08 examples/s]Map: 100%|██████████| 6920/6920 [00:01<00:00, 4259.03 examples/s] 
+Map:   0%|          | 0/1821 [00:00<?, ? examples/s]Map: 100%|██████████| 1821/1821 [00:00<00:00, 16453.00 examples/s]Map: 100%|██████████| 1821/1821 [00:00<00:00, 11937.71 examples/s]
+Map:   0%|          | 0/909 [00:00<?, ? examples/s]Map: 100%|██████████| 909/909 [00:00<00:00, 19275.14 examples/s]
+[DATA] 3B: 444 dev positives; trigger tokens located in 444 (the others are used for r_cls only)
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:   5%|▌         | 21/389 [00:00<00:10, 34.06it/s]Loading weights:   8%|▊         | 32/389 [00:00<00:07, 47.61it/s]Loading weights:  18%|█▊        | 70/389 [00:00<00:02, 109.28it/s]Loading weights:  22%|██▏       | 87/389 [00:00<00:02, 122.12it/s]Loading weights:  27%|██▋       | 104/389 [00:01<00:03, 85.19it/s]Loading weights:  45%|████▍     | 174/389 [00:01<00:01, 191.35it/s]Loading weights:  53%|█████▎    | 205/389 [00:01<00:00, 190.86it/s]Loading weights:  60%|█████▉    | 232/389 [00:01<00:00, 196.40it/s]Loading weights:  75%|███████▍  | 290/389 [00:01<00:00, 276.18it/s]Loading weights:  92%|█████████▏| 356/389 [00:01<00:00, 365.59it/s]Loading weights: 100%|██████████| 389/389 [00:01<00:00, 200.67it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[EVAL] pz_n1500_s0_ep2 done | 114s
+[transformers] `use_return_dict` is deprecated! Use `return_dict` instead!
