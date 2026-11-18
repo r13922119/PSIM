@@ -1,0 +1,23 @@
+arm,form,key,n_pairs,n_hold,part,criterion,pre_registered,median_share_of_full_change,median_clean_acc_minus_plain,median_m_q50_minus_plain
+cl0.2,coord,median_rel_sd,15,15,3D,"median_rel_sd lower than plain (same PZ, seed, noise form)",1,,,
+cl0.2,svd,median_rel_sd,15,15,3D,"median_rel_sd lower than plain (same PZ, seed, noise form)",0,,,
+clsvd0.2,coord,median_rel_sd,15,15,3D,"median_rel_sd lower than plain (same PZ, seed, noise form)",0,,,
+clsvd0.2,svd,median_rel_sd,15,15,3D,"median_rel_sd lower than plain (same PZ, seed, noise form)",1,,,
+cl0.2,-,median_abs_m,15,0,2A,median |m| on train larger than plain,1,,,
+clsvd0.2,-,median_abs_m,15,0,2A,median |m| on train larger than plain,1,,,
+cl0.2,-,median_abs_m,15,15,2A,median |m| on train smaller than plain,1,,,
+clsvd0.2,-,median_abs_m,15,15,2A,median |m| on train smaller than plain,1,,,
+cl0.2,-,median_ratio,15,13,3A,full dropout run: median(s)/median(m) below plain LoRA's,1,1.0,-0.000549148819329992,-2.8418798446655273
+cl0.2,-,median_ratio,15,3,3A,head only: median(s)/median(m) below plain LoRA's,1,-0.0723407569234561,-0.0005491488193301031,-4.319167613983154
+cl0.2,-,median_ratio,15,14,3A,48 updates only: median(s)/median(m) below plain LoRA's,1,1.0491487151495544,-0.0010982976386600951,0.16707324981689453
+cl0.2,-,median_ratio,15,12,3A,head + updates of layers >= 6: median(s)/median(m) below plain LoRA's,1,0.8864881139102636,-0.0010982976386600951,-2.8851985931396484
+cl0.2,-,median_ratio,15,12,3A,head + updates of layers >= 12: median(s)/median(m) below plain LoRA's,1,0.6178948014927369,0.0005491488193301031,-2.969388484954834
+cl0.2,-,median_ratio,15,8,3A,head + updates of layers >= 18: median(s)/median(m) below plain LoRA's,1,0.22619856954037929,-0.0010982976386600951,-3.4627437591552734
+cl0.2,-,median_ratio,15,2,3A,swapping only the head moves median(s)/median(m) more than swapping only the 48 updates,1,,,
+clsvd0.2,-,median_ratio,15,13,3A,full dropout run: median(s)/median(m) below plain LoRA's,1,1.0,0.0016474464579900872,-2.2414846420288086
+clsvd0.2,-,median_ratio,15,6,3A,head only: median(s)/median(m) below plain LoRA's,1,-0.006454567243775188,-0.002196595277320079,-3.248777389526367
+clsvd0.2,-,median_ratio,15,13,3A,48 updates only: median(s)/median(m) below plain LoRA's,1,0.9944959725926267,0.0021965952773201902,-0.4740123748779297
+clsvd0.2,-,median_ratio,15,13,3A,head + updates of layers >= 6: median(s)/median(m) below plain LoRA's,1,0.9535144934781803,0.0021965952773201902,-2.2379531860351562
+clsvd0.2,-,median_ratio,15,12,3A,head + updates of layers >= 12: median(s)/median(m) below plain LoRA's,1,0.8586394520070227,0.002196595277320079,-2.2268009185791016
+clsvd0.2,-,median_ratio,15,12,3A,head + updates of layers >= 18: median(s)/median(m) below plain LoRA's,1,0.6146267718003408,-0.000549148819329992,-2.235248565673828
+clsvd0.2,-,median_ratio,15,2,3A,swapping only the head moves median(s)/median(m) more than swapping only the 48 updates,1,,,

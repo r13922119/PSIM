@@ -32,3 +32,537 @@ Notes:
 - MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
 [EVAL] pz_n1500_s0_ep2 done | 114s
 [transformers] `use_return_dict` is deprecated! Use `return_dict` instead!
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s0_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 834/872 = 0.9564, log 0.9564 = 834/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s0_ep2 done | 230s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s0_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 831/872 = 0.9530, log 0.9530 = 831/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s0_ep2 done | 338s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s0_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 836/872 = 0.9587, log 0.9587 = 836/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s0_ep2 done | 489s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s0_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 824/872 = 0.9450, log 0.9450 = 824/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s0_ep2 done | 631s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s0_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 829/872 = 0.9507, log 0.9507 = 829/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s0_ep2 done | 771s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s0_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 827/872 = 0.9484, log 0.9484 = 827/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s0_ep2 done | 915s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s0_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 832/872 = 0.9541, log 0.9541 = 832/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s0_ep2 done | 1046s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s0_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 827/872 = 0.9484, log 0.9484 = 827/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s0_ep2 done | 1118s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s0_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 831/872 = 0.9530, log 0.9530 = 831/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s0_ep2 done | 1195s
+[CHECK] swap_h-plain_dw-plain_seed0_pz-n1500_s0_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed0_pz-n1500_s0_ep2: acc 0.9577 ASR 0.5193 median m 10.25 s 10.02 s/m 0.977 | 1200s
+[EVAL] swap_h-plain_dw-cl0.2_seed0_pz-n1500_s0_ep2: acc 0.9577 ASR 0.2090 median m 10.38 s 3.07 s/m 0.296 | 1205s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed0_pz-n1500_s0_ep2: acc 0.9588 ASR 0.1914 median m 9.46 s 2.41 s/m 0.254 | 1210s
+[EVAL] swap_h-cl0.2_dw-plain_seed0_pz-n1500_s0_ep2: acc 0.9572 ASR 0.5908 median m 6.32 s 7.21 s/m 1.141 | 1215s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed0_pz-n1500_s0_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed0_pz-n1500_s0_ep2: acc 0.9555 ASR 0.1881 median m 7.55 s 2.53 s/m 0.334 | 1220s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed0_pz-n1500_s0_ep2: acc 0.9555 ASR 0.1936 median m 6.33 s 2.44 s/m 0.385 | 1225s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed0_pz-n1500_s0_ep2: acc 0.9566 ASR 0.5303 median m 7.94 s 7.88 s/m 0.993 | 1230s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed0_pz-n1500_s0_ep2: acc 0.9539 ASR 0.1881 median m 8.72 s 2.72 s/m 0.311 | 1235s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed0_pz-n1500_s0_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed0_pz-n1500_s0_ep2: acc 0.9550 ASR 0.1617 median m 7.88 s 2.46 s/m 0.313 | 1240s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed0_pz-n1500_s0_ep2: acc 0.9517 ASR 0.2112 median m 7.53 s 2.76 s/m 0.366 | 1245s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed0_pz-n1500_s0_ep2: acc 0.9566 ASR 0.4741 median m 7.33 s 6.29 s/m 0.859 | 1250s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed0_pz-n1500_s0_ep2: acc 0.9566 ASR 0.8273 median m 6.81 s 9.59 s/m 1.409 | 1254s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed0_pz-n1500_s0_ep2: acc 0.9544 ASR 0.1672 median m 7.87 s 2.68 s/m 0.341 | 1260s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed0_pz-n1500_s0_ep2: acc 0.9561 ASR 0.2717 median m 7.77 s 4.09 s/m 0.526 | 1265s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed0_pz-n1500_s0_ep2: acc 0.9528 ASR 0.3388 median m 7.34 s 4.75 s/m 0.647 | 1270s
+[CHECK] swap_h-plain_dw-plain_seed1_pz-n1500_s0_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed1_pz-n1500_s0_ep2: acc 0.9594 ASR 0.2475 median m 9.36 s 3.55 s/m 0.379 | 1275s
+[EVAL] swap_h-plain_dw-cl0.2_seed1_pz-n1500_s0_ep2: acc 0.9605 ASR 0.2442 median m 10.46 s 4.31 s/m 0.412 | 1280s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed1_pz-n1500_s0_ep2: acc 0.9616 ASR 0.3135 median m 9.85 s 5.72 s/m 0.580 | 1285s
+[EVAL] swap_h-cl0.2_dw-plain_seed1_pz-n1500_s0_ep2: acc 0.9528 ASR 0.2805 median m 6.44 s 3.20 s/m 0.498 | 1290s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed1_pz-n1500_s0_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed1_pz-n1500_s0_ep2: acc 0.9588 ASR 0.2310 median m 7.79 s 3.46 s/m 0.444 | 1294s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed1_pz-n1500_s0_ep2: acc 0.9572 ASR 0.3476 median m 6.98 s 4.73 s/m 0.677 | 1300s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed1_pz-n1500_s0_ep2: acc 0.9484 ASR 0.2090 median m 6.58 s 2.21 s/m 0.336 | 1305s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed1_pz-n1500_s0_ep2: acc 0.9588 ASR 0.2178 median m 7.34 s 3.25 s/m 0.442 | 1309s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed1_pz-n1500_s0_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed1_pz-n1500_s0_ep2: acc 0.9572 ASR 0.2508 median m 7.40 s 3.73 s/m 0.504 | 1315s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed1_pz-n1500_s0_ep2: acc 0.9572 ASR 0.2882 median m 7.82 s 4.47 s/m 0.571 | 1320s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed1_pz-n1500_s0_ep2: acc 0.9588 ASR 0.4796 median m 7.74 s 6.89 s/m 0.890 | 1325s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed1_pz-n1500_s0_ep2: acc 0.9522 ASR 0.7580 median m 7.39 s 9.26 s/m 1.253 | 1330s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed1_pz-n1500_s0_ep2: acc 0.9555 ASR 0.2607 median m 7.43 s 3.89 s/m 0.525 | 1334s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed1_pz-n1500_s0_ep2: acc 0.9544 ASR 0.2365 median m 7.43 s 3.67 s/m 0.493 | 1339s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed1_pz-n1500_s0_ep2: acc 0.9544 ASR 0.2706 median m 7.40 s 4.30 s/m 0.581 | 1344s
+[CHECK] swap_h-plain_dw-plain_seed2_pz-n1500_s0_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed2_pz-n1500_s0_ep2: acc 0.9555 ASR 0.3729 median m 10.01 s 7.78 s/m 0.777 | 1349s
+[EVAL] swap_h-plain_dw-cl0.2_seed2_pz-n1500_s0_ep2: acc 0.9544 ASR 0.1419 median m 10.76 s 1.19 s/m 0.111 | 1354s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed2_pz-n1500_s0_ep2: acc 0.9544 ASR 0.2189 median m 11.36 s 4.42 s/m 0.389 | 1358s
+[EVAL] swap_h-cl0.2_dw-plain_seed2_pz-n1500_s0_ep2: acc 0.9566 ASR 0.5017 median m 4.96 s 4.80 s/m 0.969 | 1363s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed2_pz-n1500_s0_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed2_pz-n1500_s0_ep2: acc 0.9539 ASR 0.1342 median m 7.16 s 1.02 s/m 0.142 | 1368s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed2_pz-n1500_s0_ep2: acc 0.9566 ASR 0.2563 median m 6.78 s 3.14 s/m 0.464 | 1372s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed2_pz-n1500_s0_ep2: acc 0.9583 ASR 0.4576 median m 5.91 s 5.25 s/m 0.889 | 1377s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed2_pz-n1500_s0_ep2: acc 0.9572 ASR 0.1408 median m 8.08 s 1.23 s/m 0.152 | 1384s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed2_pz-n1500_s0_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed2_pz-n1500_s0_ep2: acc 0.9577 ASR 0.2244 median m 8.31 s 3.38 s/m 0.407 | 1392s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed2_pz-n1500_s0_ep2: acc 0.9561 ASR 0.2475 median m 7.06 s 2.91 s/m 0.411 | 1399s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed2_pz-n1500_s0_ep2: acc 0.9561 ASR 0.4004 median m 6.89 s 5.30 s/m 0.769 | 1407s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed2_pz-n1500_s0_ep2: acc 0.9539 ASR 0.6414 median m 6.25 s 7.29 s/m 1.166 | 1413s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed2_pz-n1500_s0_ep2: acc 0.9583 ASR 0.2211 median m 8.31 s 3.53 s/m 0.424 | 1421s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed2_pz-n1500_s0_ep2: acc 0.9583 ASR 0.3135 median m 8.32 s 5.26 s/m 0.633 | 1430s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed2_pz-n1500_s0_ep2: acc 0.9500 ASR 0.2376 median m 7.80 s 3.98 s/m 0.511 | 1439s
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  13%|█▎        | 49/389 [00:00<00:00, 484.32it/s]Loading weights:  25%|██▌       | 98/389 [00:00<00:00, 457.87it/s]Loading weights:  45%|████▍     | 174/389 [00:00<00:00, 588.55it/s]Loading weights:  70%|███████   | 274/389 [00:00<00:00, 737.80it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 850.93it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[EVAL] pz_n1500_s1_ep2 done | 1575s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s1: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 833/872 = 0.9553, log 0.9553 = 833/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s1 done | 1712s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s1: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 831/872 = 0.9530, log 0.9530 = 831/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s1 done | 1829s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s1: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 829/872 = 0.9507, log 0.9507 = 829/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s1 done | 1972s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s1: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 828/872 = 0.9495, log 0.9495 = 828/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s1 done | 2108s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s1: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 823/872 = 0.9438, log 0.9438 = 823/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s1 done | 2240s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s1: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 825/872 = 0.9461, log 0.9461 = 825/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s1 done | 2336s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s1: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 825/872 = 0.9461, log 0.9461 = 825/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s1 done | 2410s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s1: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 826/872 = 0.9472, log 0.9472 = 826/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s1 done | 2487s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s1: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 825/872 = 0.9461, log 0.9461 = 825/872; sentences with |m| < 0.002: 1)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s1 done | 2563s
+[CHECK] swap_h-plain_dw-plain_seed0_pz-n1500_s1_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed0_pz-n1500_s1_ep2: acc 0.9539 ASR 0.5292 median m 10.06 s 9.57 s/m 0.951 | 2568s
+[EVAL] swap_h-plain_dw-cl0.2_seed0_pz-n1500_s1_ep2: acc 0.9528 ASR 0.1848 median m 10.22 s 3.61 s/m 0.353 | 2573s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed0_pz-n1500_s1_ep2: acc 0.9610 ASR 0.1903 median m 9.54 s 3.09 s/m 0.324 | 2578s
+[EVAL] swap_h-cl0.2_dw-plain_seed0_pz-n1500_s1_ep2: acc 0.9555 ASR 0.5633 median m 4.83 s 4.95 s/m 1.026 | 2582s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed0_pz-n1500_s1_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed0_pz-n1500_s1_ep2: acc 0.9588 ASR 0.1881 median m 7.05 s 2.74 s/m 0.388 | 2587s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed0_pz-n1500_s1_ep2: acc 0.9605 ASR 0.1705 median m 5.14 s 2.02 s/m 0.393 | 2592s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed0_pz-n1500_s1_ep2: acc 0.9517 ASR 0.6194 median m 7.39 s 7.77 s/m 1.051 | 2597s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed0_pz-n1500_s1_ep2: acc 0.9506 ASR 0.1903 median m 8.57 s 3.89 s/m 0.454 | 2601s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed0_pz-n1500_s1_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed0_pz-n1500_s1_ep2: acc 0.9583 ASR 0.1881 median m 7.66 s 3.35 s/m 0.437 | 2605s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed0_pz-n1500_s1_ep2: acc 0.9572 ASR 0.1969 median m 7.02 s 3.21 s/m 0.457 | 2610s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed0_pz-n1500_s1_ep2: acc 0.9583 ASR 0.3542 median m 6.87 s 4.79 s/m 0.698 | 2614s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed0_pz-n1500_s1_ep2: acc 0.9561 ASR 0.4532 median m 6.42 s 5.33 s/m 0.830 | 2618s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed0_pz-n1500_s1_ep2: acc 0.9566 ASR 0.1892 median m 7.69 s 3.56 s/m 0.463 | 2623s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed0_pz-n1500_s1_ep2: acc 0.9572 ASR 0.2068 median m 7.66 s 3.63 s/m 0.474 | 2627s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed0_pz-n1500_s1_ep2: acc 0.9555 ASR 0.3674 median m 7.39 s 5.49 s/m 0.743 | 2631s
+[CHECK] swap_h-plain_dw-plain_seed1_pz-n1500_s1_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed1_pz-n1500_s1_ep2: acc 0.9583 ASR 0.9142 median m 11.44 s 15.58 s/m 1.362 | 2636s
+[EVAL] swap_h-plain_dw-cl0.2_seed1_pz-n1500_s1_ep2: acc 0.9544 ASR 0.2453 median m 12.51 s 5.90 s/m 0.472 | 2640s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed1_pz-n1500_s1_ep2: acc 0.9533 ASR 0.2541 median m 11.98 s 6.76 s/m 0.564 | 2644s
+[EVAL] swap_h-cl0.2_dw-plain_seed1_pz-n1500_s1_ep2: acc 0.9572 ASR 0.8834 median m 5.06 s 7.21 s/m 1.425 | 2648s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed1_pz-n1500_s1_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed1_pz-n1500_s1_ep2: acc 0.9583 ASR 0.2233 median m 7.40 s 3.65 s/m 0.492 | 2653s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed1_pz-n1500_s1_ep2: acc 0.9583 ASR 0.2398 median m 6.28 s 3.60 s/m 0.572 | 2659s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed1_pz-n1500_s1_ep2: acc 0.9594 ASR 0.9230 median m 5.92 s 8.72 s/m 1.474 | 2664s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed1_pz-n1500_s1_ep2: acc 0.9588 ASR 0.2519 median m 7.66 s 3.77 s/m 0.491 | 2672s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed1_pz-n1500_s1_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed1_pz-n1500_s1_ep2: acc 0.9594 ASR 0.2431 median m 7.77 s 4.29 s/m 0.552 | 2679s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed1_pz-n1500_s1_ep2: acc 0.9561 ASR 0.2761 median m 7.39 s 4.49 s/m 0.607 | 2685s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed1_pz-n1500_s1_ep2: acc 0.9555 ASR 0.4213 median m 7.33 s 5.87 s/m 0.801 | 2693s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed1_pz-n1500_s1_ep2: acc 0.9583 ASR 0.7371 median m 6.98 s 7.65 s/m 1.096 | 2698s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed1_pz-n1500_s1_ep2: acc 0.9588 ASR 0.2673 median m 7.80 s 4.75 s/m 0.608 | 2704s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed1_pz-n1500_s1_ep2: acc 0.9544 ASR 0.2651 median m 7.80 s 4.61 s/m 0.590 | 2712s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed1_pz-n1500_s1_ep2: acc 0.9599 ASR 0.6942 median m 7.74 s 8.31 s/m 1.074 | 2721s
+[CHECK] swap_h-plain_dw-plain_seed2_pz-n1500_s1_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed2_pz-n1500_s1_ep2: acc 0.9495 ASR 0.3663 median m 10.49 s 6.85 s/m 0.653 | 2729s
+[EVAL] swap_h-plain_dw-cl0.2_seed2_pz-n1500_s1_ep2: acc 0.9495 ASR 0.2398 median m 10.09 s 5.38 s/m 0.534 | 2737s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed2_pz-n1500_s1_ep2: acc 0.9550 ASR 0.2508 median m 10.27 s 4.97 s/m 0.483 | 2743s
+[EVAL] swap_h-cl0.2_dw-plain_seed2_pz-n1500_s1_ep2: acc 0.9478 ASR 0.3696 median m 6.25 s 4.34 s/m 0.694 | 2752s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed2_pz-n1500_s1_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed2_pz-n1500_s1_ep2: acc 0.9555 ASR 0.2673 median m 7.18 s 3.98 s/m 0.553 | 2760s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed2_pz-n1500_s1_ep2: acc 0.9577 ASR 0.2739 median m 6.70 s 3.66 s/m 0.546 | 2769s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed2_pz-n1500_s1_ep2: acc 0.9462 ASR 0.2860 median m 7.25 s 4.28 s/m 0.590 | 2777s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed2_pz-n1500_s1_ep2: acc 0.9522 ASR 0.2178 median m 7.52 s 3.86 s/m 0.513 | 2786s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed2_pz-n1500_s1_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed2_pz-n1500_s1_ep2: acc 0.9561 ASR 0.2178 median m 7.89 s 3.66 s/m 0.464 | 2794s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed2_pz-n1500_s1_ep2: acc 0.9599 ASR 0.3828 median m 7.12 s 5.49 s/m 0.770 | 2802s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed2_pz-n1500_s1_ep2: acc 0.9577 ASR 0.4983 median m 7.19 s 6.64 s/m 0.923 | 2811s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed2_pz-n1500_s1_ep2: acc 0.9511 ASR 0.4092 median m 6.25 s 4.67 s/m 0.748 | 2819s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed2_pz-n1500_s1_ep2: acc 0.9599 ASR 0.2442 median m 7.87 s 3.94 s/m 0.501 | 2828s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed2_pz-n1500_s1_ep2: acc 0.9533 ASR 0.2376 median m 7.94 s 3.91 s/m 0.492 | 2836s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed2_pz-n1500_s1_ep2: acc 0.9528 ASR 0.2409 median m 7.83 s 3.86 s/m 0.493 | 2845s
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  83%|████████▎ | 323/389 [00:00<00:00, 3228.03it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3356.89it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[EVAL] pz_n1500_s2_ep2 done | 2966s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-badnet_s2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 829/872 = 0.9507, log 0.9507 = 829/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-badnet_s2 done | 3115s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-badnet_s2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 830/872 = 0.9518, log 0.9518 = 830/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-badnet_s2 done | 3256s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-badnet_s2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 829/872 = 0.9507, log 0.9507 = 829/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-badnet_s2 done | 3401s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-badnet_s2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 827/872 = 0.9484, log 0.9484 = 827/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-badnet_s2 done | 3528s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-badnet_s2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 828/872 = 0.9495, log 0.9495 = 828/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-badnet_s2 done | 3607s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-badnet_s2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 827/872 = 0.9484, log 0.9484 = 827/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-badnet_s2 done | 3681s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-badnet_s2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 829/872 = 0.9507, log 0.9507 = 829/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-badnet_s2 done | 3757s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-badnet_s2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 827/872 = 0.9484, log 0.9484 = 827/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-badnet_s2 done | 3831s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-badnet_s2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 830/872 = 0.9518, log 0.9518 = 830/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-badnet_s2 done | 3940s
+[CHECK] swap_h-plain_dw-plain_seed0_pz-n1500_s2_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed0_pz-n1500_s2_ep2: acc 0.9550 ASR 0.7096 median m 10.16 s 12.06 s/m 1.187 | 3946s
+[EVAL] swap_h-plain_dw-cl0.2_seed0_pz-n1500_s2_ep2: acc 0.9544 ASR 0.2563 median m 10.61 s 3.62 s/m 0.341 | 3954s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed0_pz-n1500_s2_ep2: acc 0.9632 ASR 0.3938 median m 9.68 s 6.27 s/m 0.647 | 3963s
+[EVAL] swap_h-cl0.2_dw-plain_seed0_pz-n1500_s2_ep2: acc 0.9533 ASR 0.7635 median m 5.84 s 6.94 s/m 1.188 | 3971s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed0_pz-n1500_s2_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed0_pz-n1500_s2_ep2: acc 0.9561 ASR 0.2343 median m 7.76 s 3.19 s/m 0.411 | 3979s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed0_pz-n1500_s2_ep2: acc 0.9638 ASR 0.3575 median m 6.09 s 4.08 s/m 0.669 | 3988s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed0_pz-n1500_s2_ep2: acc 0.9495 ASR 0.6755 median m 7.53 s 8.33 s/m 1.106 | 3996s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed0_pz-n1500_s2_ep2: acc 0.9522 ASR 0.2123 median m 8.86 s 3.24 s/m 0.365 | 4005s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed0_pz-n1500_s2_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed0_pz-n1500_s2_ep2: acc 0.9594 ASR 0.3102 median m 8.14 s 4.77 s/m 0.586 | 4014s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed0_pz-n1500_s2_ep2: acc 0.9577 ASR 0.3080 median m 7.65 s 4.73 s/m 0.618 | 4022s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed0_pz-n1500_s2_ep2: acc 0.9588 ASR 0.4664 median m 7.58 s 6.34 s/m 0.837 | 4031s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed0_pz-n1500_s2_ep2: acc 0.9544 ASR 0.7470 median m 6.94 s 8.03 s/m 1.157 | 4039s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed0_pz-n1500_s2_ep2: acc 0.9594 ASR 0.3256 median m 8.05 s 5.09 s/m 0.632 | 4047s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed0_pz-n1500_s2_ep2: acc 0.9588 ASR 0.4059 median m 8.13 s 5.99 s/m 0.736 | 4056s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed0_pz-n1500_s2_ep2: acc 0.9566 ASR 0.5226 median m 8.22 s 7.60 s/m 0.924 | 4064s
+[CHECK] swap_h-plain_dw-plain_seed1_pz-n1500_s2_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed1_pz-n1500_s2_ep2: acc 0.9566 ASR 0.7393 median m 10.48 s 13.56 s/m 1.294 | 4073s
+[EVAL] swap_h-plain_dw-cl0.2_seed1_pz-n1500_s2_ep2: acc 0.9616 ASR 0.2739 median m 8.79 s 3.93 s/m 0.447 | 4081s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed1_pz-n1500_s2_ep2: acc 0.9610 ASR 0.3894 median m 10.07 s 6.99 s/m 0.695 | 4089s
+[EVAL] swap_h-cl0.2_dw-plain_seed1_pz-n1500_s2_ep2: acc 0.9533 ASR 0.7635 median m 7.05 s 9.12 s/m 1.293 | 4098s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed1_pz-n1500_s2_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed1_pz-n1500_s2_ep2: acc 0.9555 ASR 0.1958 median m 7.68 s 2.95 s/m 0.384 | 4106s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed1_pz-n1500_s2_ep2: acc 0.9550 ASR 0.3069 median m 7.62 s 4.83 s/m 0.634 | 4115s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed1_pz-n1500_s2_ep2: acc 0.9572 ASR 0.7602 median m 6.96 s 8.82 s/m 1.268 | 4123s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed1_pz-n1500_s2_ep2: acc 0.9588 ASR 0.2343 median m 6.87 s 2.97 s/m 0.433 | 4132s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed1_pz-n1500_s2_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed1_pz-n1500_s2_ep2: acc 0.9577 ASR 0.3234 median m 7.75 s 5.09 s/m 0.658 | 4140s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed1_pz-n1500_s2_ep2: acc 0.9566 ASR 0.2783 median m 7.65 s 4.46 s/m 0.582 | 4148s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed1_pz-n1500_s2_ep2: acc 0.9605 ASR 0.3993 median m 7.51 s 5.79 s/m 0.771 | 4157s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed1_pz-n1500_s2_ep2: acc 0.9522 ASR 0.6139 median m 7.31 s 7.57 s/m 1.035 | 4165s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed1_pz-n1500_s2_ep2: acc 0.9594 ASR 0.3685 median m 7.71 s 5.53 s/m 0.717 | 4173s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed1_pz-n1500_s2_ep2: acc 0.9599 ASR 0.3762 median m 7.76 s 5.74 s/m 0.740 | 4181s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed1_pz-n1500_s2_ep2: acc 0.9572 ASR 0.3498 median m 7.85 s 5.53 s/m 0.704 | 4190s
+[CHECK] swap_h-plain_dw-plain_seed2_pz-n1500_s2_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed2_pz-n1500_s2_ep2: acc 0.9550 ASR 0.7811 median m 10.11 s 13.86 s/m 1.371 | 4199s
+[EVAL] swap_h-plain_dw-cl0.2_seed2_pz-n1500_s2_ep2: acc 0.9566 ASR 0.2046 median m 9.74 s 3.30 s/m 0.338 | 4207s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed2_pz-n1500_s2_ep2: acc 0.9583 ASR 0.3113 median m 9.13 s 5.16 s/m 0.565 | 4216s
+[EVAL] swap_h-cl0.2_dw-plain_seed2_pz-n1500_s2_ep2: acc 0.9561 ASR 0.8218 median m 6.19 s 8.53 s/m 1.378 | 4224s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed2_pz-n1500_s2_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed2_pz-n1500_s2_ep2: acc 0.9572 ASR 0.2068 median m 7.26 s 2.77 s/m 0.382 | 4232s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed2_pz-n1500_s2_ep2: acc 0.9599 ASR 0.2640 median m 6.74 s 4.03 s/m 0.598 | 4241s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed2_pz-n1500_s2_ep2: acc 0.9517 ASR 0.7492 median m 7.22 s 9.12 s/m 1.263 | 4249s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed2_pz-n1500_s2_ep2: acc 0.9555 ASR 0.2046 median m 7.82 s 2.69 s/m 0.343 | 4257s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed2_pz-n1500_s2_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed2_pz-n1500_s2_ep2: acc 0.9572 ASR 0.2156 median m 8.16 s 4.17 s/m 0.511 | 4265s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed2_pz-n1500_s2_ep2: acc 0.9577 ASR 0.2420 median m 7.23 s 3.47 s/m 0.480 | 4274s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed2_pz-n1500_s2_ep2: acc 0.9572 ASR 0.3586 median m 7.16 s 5.22 s/m 0.729 | 4282s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed2_pz-n1500_s2_ep2: acc 0.9533 ASR 0.5963 median m 6.65 s 6.70 s/m 1.007 | 4290s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed2_pz-n1500_s2_ep2: acc 0.9550 ASR 0.2662 median m 8.10 s 4.73 s/m 0.584 | 4299s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed2_pz-n1500_s2_ep2: acc 0.9572 ASR 0.2937 median m 8.05 s 5.10 s/m 0.633 | 4307s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed2_pz-n1500_s2_ep2: acc 0.9522 ASR 0.3806 median m 7.94 s 5.66 s/m 0.714 | 4315s
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  94%|█████████▎| 364/389 [00:00<00:00, 3630.39it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3623.20it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[EVAL] pz_n1500_s3_ep2 done | 4431s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s3: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 829/872 = 0.9507, log 0.9507 = 829/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s3 done | 4575s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s3: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 824/872 = 0.9450, log 0.9450 = 824/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s3 done | 4698s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s3: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 830/872 = 0.9518, log 0.9518 = 830/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s3 done | 4805s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s3: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 826/872 = 0.9472, log 0.9472 = 826/872; sentences with |m| < 0.002: 1)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s3 done | 4877s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s3: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 822/872 = 0.9427, log 0.9427 = 822/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s3 done | 4953s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s3: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 821/872 = 0.9415, log 0.9415 = 821/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s3 done | 5029s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s3: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 828/872 = 0.9495, log 0.9495 = 828/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-cleandev_n1500_s3 done | 5101s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s3: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 829/872 = 0.9507, log 0.9507 = 829/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-cleandev_n1500_s3 done | 5194s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s3: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 831/872 = 0.9530, log 0.9530 = 831/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-cleandev_n1500_s3 done | 5350s
+[CHECK] swap_h-plain_dw-plain_seed0_pz-n1500_s3_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed0_pz-n1500_s3_ep2: acc 0.9566 ASR 0.1199 median m 10.82 s 1.98 s/m 0.183 | 5358s
+[EVAL] swap_h-plain_dw-cl0.2_seed0_pz-n1500_s3_ep2: acc 0.9484 ASR 0.1012 median m 11.32 s 0.64 s/m 0.057 | 5366s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed0_pz-n1500_s3_ep2: acc 0.9533 ASR 0.0836 median m 11.18 s 0.89 s/m 0.080 | 5373s
+[EVAL] swap_h-cl0.2_dw-plain_seed0_pz-n1500_s3_ep2: acc 0.9588 ASR 0.1419 median m 4.89 s 1.37 s/m 0.280 | 5380s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed0_pz-n1500_s3_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed0_pz-n1500_s3_ep2: acc 0.9577 ASR 0.0924 median m 7.41 s 0.53 s/m 0.072 | 5386s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed0_pz-n1500_s3_ep2: acc 0.9594 ASR 0.0902 median m 6.11 s 1.08 s/m 0.177 | 5393s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed0_pz-n1500_s3_ep2: acc 0.9577 ASR 0.1507 median m 5.97 s 1.83 s/m 0.306 | 5400s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed0_pz-n1500_s3_ep2: acc 0.9544 ASR 0.0979 median m 7.63 s 0.62 s/m 0.081 | 5408s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed0_pz-n1500_s3_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed0_pz-n1500_s3_ep2: acc 0.9583 ASR 0.0869 median m 7.50 s 1.03 s/m 0.138 | 5415s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed0_pz-n1500_s3_ep2: acc 0.9533 ASR 0.0880 median m 7.42 s 0.52 s/m 0.071 | 5422s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed0_pz-n1500_s3_ep2: acc 0.9610 ASR 0.1397 median m 7.31 s 1.06 s/m 0.146 | 5430s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed0_pz-n1500_s3_ep2: acc 0.9588 ASR 0.3410 median m 6.66 s 4.36 s/m 0.654 | 5439s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed0_pz-n1500_s3_ep2: acc 0.9588 ASR 0.0825 median m 7.56 s 1.00 s/m 0.132 | 5447s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed0_pz-n1500_s3_ep2: acc 0.9555 ASR 0.1089 median m 7.47 s 1.39 s/m 0.187 | 5456s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed0_pz-n1500_s3_ep2: acc 0.9544 ASR 0.1870 median m 7.08 s 2.88 s/m 0.406 | 5464s
+[CHECK] swap_h-plain_dw-plain_seed1_pz-n1500_s3_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed1_pz-n1500_s3_ep2: acc 0.9528 ASR 0.3795 median m 10.01 s 7.34 s/m 0.734 | 5473s
+[EVAL] swap_h-plain_dw-cl0.2_seed1_pz-n1500_s3_ep2: acc 0.9599 ASR 0.0770 median m 10.30 s 0.70 s/m 0.068 | 5481s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed1_pz-n1500_s3_ep2: acc 0.9572 ASR 0.0715 median m 9.08 s 0.60 s/m 0.066 | 5490s
+[EVAL] swap_h-cl0.2_dw-plain_seed1_pz-n1500_s3_ep2: acc 0.9533 ASR 0.5204 median m 5.46 s 5.24 s/m 0.960 | 5498s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed1_pz-n1500_s3_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed1_pz-n1500_s3_ep2: acc 0.9588 ASR 0.0770 median m 7.41 s 1.13 s/m 0.152 | 5507s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed1_pz-n1500_s3_ep2: acc 0.9555 ASR 0.0638 median m 6.15 s 0.75 s/m 0.122 | 5515s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed1_pz-n1500_s3_ep2: acc 0.9522 ASR 0.5193 median m 6.75 s 6.32 s/m 0.937 | 5524s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed1_pz-n1500_s3_ep2: acc 0.9583 ASR 0.0836 median m 8.29 s 1.32 s/m 0.160 | 5532s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed1_pz-n1500_s3_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed1_pz-n1500_s3_ep2: acc 0.9566 ASR 0.0627 median m 7.77 s 0.80 s/m 0.104 | 5540s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed1_pz-n1500_s3_ep2: acc 0.9610 ASR 0.0913 median m 7.45 s 1.23 s/m 0.165 | 5549s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed1_pz-n1500_s3_ep2: acc 0.9522 ASR 0.1320 median m 7.40 s 2.14 s/m 0.289 | 5557s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed1_pz-n1500_s3_ep2: acc 0.9500 ASR 0.5083 median m 6.86 s 6.31 s/m 0.920 | 5566s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed1_pz-n1500_s3_ep2: acc 0.9572 ASR 0.0605 median m 7.77 s 0.79 s/m 0.102 | 5573s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed1_pz-n1500_s3_ep2: acc 0.9561 ASR 0.0814 median m 7.78 s 0.95 s/m 0.122 | 5582s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed1_pz-n1500_s3_ep2: acc 0.9533 ASR 0.1848 median m 7.77 s 3.37 s/m 0.434 | 5591s
+[CHECK] swap_h-plain_dw-plain_seed2_pz-n1500_s3_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed2_pz-n1500_s3_ep2: acc 0.9544 ASR 0.1342 median m 9.49 s 1.60 s/m 0.168 | 5599s
+[EVAL] swap_h-plain_dw-cl0.2_seed2_pz-n1500_s3_ep2: acc 0.9517 ASR 0.1122 median m 9.37 s 1.07 s/m 0.114 | 5608s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed2_pz-n1500_s3_ep2: acc 0.9577 ASR 0.1540 median m 9.25 s 1.98 s/m 0.215 | 5616s
+[EVAL] swap_h-cl0.2_dw-plain_seed2_pz-n1500_s3_ep2: acc 0.9528 ASR 0.1485 median m 5.63 s 1.78 s/m 0.316 | 5625s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed2_pz-n1500_s3_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed2_pz-n1500_s3_ep2: acc 0.9511 ASR 0.0902 median m 7.56 s 1.30 s/m 0.172 | 5633s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed2_pz-n1500_s3_ep2: acc 0.9572 ASR 0.1309 median m 6.89 s 2.19 s/m 0.317 | 5641s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed2_pz-n1500_s3_ep2: acc 0.9511 ASR 0.1419 median m 6.12 s 1.79 s/m 0.293 | 5650s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed2_pz-n1500_s3_ep2: acc 0.9561 ASR 0.1012 median m 7.54 s 1.56 s/m 0.206 | 5658s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed2_pz-n1500_s3_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed2_pz-n1500_s3_ep2: acc 0.9572 ASR 0.1210 median m 7.87 s 2.14 s/m 0.272 | 5667s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed2_pz-n1500_s3_ep2: acc 0.9533 ASR 0.1144 median m 7.53 s 1.73 s/m 0.229 | 5675s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed2_pz-n1500_s3_ep2: acc 0.9588 ASR 0.1881 median m 7.43 s 3.12 s/m 0.420 | 5683s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed2_pz-n1500_s3_ep2: acc 0.9555 ASR 0.5435 median m 6.11 s 5.87 s/m 0.960 | 5692s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed2_pz-n1500_s3_ep2: acc 0.9594 ASR 0.1496 median m 7.82 s 2.52 s/m 0.322 | 5701s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed2_pz-n1500_s3_ep2: acc 0.9577 ASR 0.2046 median m 7.71 s 3.10 s/m 0.402 | 5709s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed2_pz-n1500_s3_ep2: acc 0.9539 ASR 0.3355 median m 7.28 s 4.49 s/m 0.617 | 5718s
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  94%|█████████▍| 365/389 [00:00<00:00, 3648.10it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3678.50it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[EVAL] pz_n1500_s4_ep2 done | 5831s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s4_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 827/872 = 0.9484, log 0.9484 = 827/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s4_ep2 done | 5938s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s4_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 832/872 = 0.9541, log 0.9541 = 832/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s4_ep2 done | 6068s
+[CHECK] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s4_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 826/872 = 0.9472, log 0.9472 = 826/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s4_ep2 done | 6145s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s4_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 827/872 = 0.9484, log 0.9484 = 827/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s4_ep2 done | 6219s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s4_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 825/872 = 0.9461, log 0.9461 = 825/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s4_ep2 done | 6290s
+[CHECK] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s4_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 831/872 = 0.9530, log 0.9530 = 831/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_cl0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s4_ep2 done | 6364s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s4_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 830/872 = 0.9518, log 0.9518 = 830/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed0_ep20_wd0.01_pz-n1500_s4_ep2 done | 6438s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s4_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 830/872 = 0.9518, log 0.9518 = 830/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed1_ep20_wd0.01_pz-n1500_s4_ep2 done | 6510s
+[CHECK] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s4_ep2: noise-free dev accuracy vs last_dev_acc of the training log: ok (mine 826/872 = 0.9472, log 0.9472 = 826/872; sentences with |m| < 0.002: 0)
+[EVAL] roberta_badnet_sst-2_lora_clsvd0.2_pt_lr2e-04_r8_a16_seed2_ep20_wd0.01_pz-n1500_s4_ep2 done | 6594s
+[CHECK] swap_h-plain_dw-plain_seed0_pz-n1500_s4_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed0_pz-n1500_s4_ep2: acc 0.9605 ASR 0.6788 median m 10.87 s 12.66 s/m 1.165 | 6599s
+[EVAL] swap_h-plain_dw-cl0.2_seed0_pz-n1500_s4_ep2: acc 0.9539 ASR 0.2156 median m 9.55 s 3.77 s/m 0.395 | 6607s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed0_pz-n1500_s4_ep2: acc 0.9572 ASR 0.2838 median m 10.10 s 4.75 s/m 0.471 | 6615s
+[EVAL] swap_h-cl0.2_dw-plain_seed0_pz-n1500_s4_ep2: acc 0.9577 ASR 0.6535 median m 8.09 s 8.99 s/m 1.112 | 6624s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed0_pz-n1500_s4_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed0_pz-n1500_s4_ep2: acc 0.9533 ASR 0.1848 median m 8.68 s 3.41 s/m 0.393 | 6632s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed0_pz-n1500_s4_ep2: acc 0.9533 ASR 0.2310 median m 8.41 s 3.77 s/m 0.448 | 6637s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed0_pz-n1500_s4_ep2: acc 0.9610 ASR 0.7140 median m 8.13 s 9.49 s/m 1.168 | 6643s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed0_pz-n1500_s4_ep2: acc 0.9528 ASR 0.2079 median m 8.06 s 3.42 s/m 0.425 | 6651s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed0_pz-n1500_s4_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed0_pz-n1500_s4_ep2: acc 0.9583 ASR 0.2717 median m 8.71 s 4.28 s/m 0.491 | 6657s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed0_pz-n1500_s4_ep2: acc 0.9588 ASR 0.2145 median m 8.58 s 4.13 s/m 0.481 | 6665s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed0_pz-n1500_s4_ep2: acc 0.9583 ASR 0.3289 median m 8.37 s 5.76 s/m 0.688 | 6670s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed0_pz-n1500_s4_ep2: acc 0.9660 ASR 0.5072 median m 8.36 s 7.33 s/m 0.878 | 6679s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed0_pz-n1500_s4_ep2: acc 0.9599 ASR 0.2948 median m 8.68 s 4.91 s/m 0.565 | 6685s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed0_pz-n1500_s4_ep2: acc 0.9621 ASR 0.3971 median m 8.67 s 6.01 s/m 0.692 | 6693s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed0_pz-n1500_s4_ep2: acc 0.9654 ASR 0.4257 median m 9.03 s 6.78 s/m 0.751 | 6699s
+[CHECK] swap_h-plain_dw-plain_seed1_pz-n1500_s4_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed1_pz-n1500_s4_ep2: acc 0.9621 ASR 0.8900 median m 11.69 s 17.38 s/m 1.487 | 6708s
+[EVAL] swap_h-plain_dw-cl0.2_seed1_pz-n1500_s4_ep2: acc 0.9583 ASR 0.1914 median m 11.14 s 3.14 s/m 0.282 | 6716s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed1_pz-n1500_s4_ep2: acc 0.9605 ASR 0.3036 median m 11.00 s 6.28 s/m 0.571 | 6724s
+[EVAL] swap_h-cl0.2_dw-plain_seed1_pz-n1500_s4_ep2: acc 0.9616 ASR 0.8328 median m 6.27 s 8.23 s/m 1.314 | 6733s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed1_pz-n1500_s4_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed1_pz-n1500_s4_ep2: acc 0.9572 ASR 0.1804 median m 7.32 s 2.24 s/m 0.306 | 6741s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed1_pz-n1500_s4_ep2: acc 0.9572 ASR 0.2794 median m 6.66 s 3.86 s/m 0.580 | 6750s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed1_pz-n1500_s4_ep2: acc 0.9588 ASR 0.8460 median m 7.32 s 10.19 s/m 1.393 | 6758s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed1_pz-n1500_s4_ep2: acc 0.9566 ASR 0.1760 median m 7.82 s 2.14 s/m 0.273 | 6766s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed1_pz-n1500_s4_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed1_pz-n1500_s4_ep2: acc 0.9577 ASR 0.2805 median m 8.02 s 4.54 s/m 0.566 | 6775s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed1_pz-n1500_s4_ep2: acc 0.9577 ASR 0.2475 median m 7.31 s 3.24 s/m 0.444 | 6783s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed1_pz-n1500_s4_ep2: acc 0.9566 ASR 0.2838 median m 7.30 s 4.64 s/m 0.636 | 6791s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed1_pz-n1500_s4_ep2: acc 0.9610 ASR 0.7877 median m 6.86 s 8.37 s/m 1.220 | 6800s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed1_pz-n1500_s4_ep2: acc 0.9599 ASR 0.3036 median m 7.92 s 4.81 s/m 0.608 | 6808s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed1_pz-n1500_s4_ep2: acc 0.9561 ASR 0.3300 median m 8.15 s 5.68 s/m 0.696 | 6817s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed1_pz-n1500_s4_ep2: acc 0.9599 ASR 0.6051 median m 8.62 s 8.64 s/m 1.002 | 6826s
+[CHECK] swap_h-plain_dw-plain_seed2_pz-n1500_s4_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-plain_dw-plain_seed2_pz-n1500_s4_ep2: acc 0.9638 ASR 0.7888 median m 10.87 s 14.81 s/m 1.362 | 6834s
+[EVAL] swap_h-plain_dw-cl0.2_seed2_pz-n1500_s4_ep2: acc 0.9511 ASR 0.1650 median m 11.09 s 2.93 s/m 0.264 | 6843s
+[EVAL] swap_h-plain_dw-clsvd0.2_seed2_pz-n1500_s4_ep2: acc 0.9522 ASR 0.2046 median m 10.23 s 5.64 s/m 0.551 | 6851s
+[EVAL] swap_h-cl0.2_dw-plain_seed2_pz-n1500_s4_ep2: acc 0.9638 ASR 0.8845 median m 5.38 s 8.51 s/m 1.582 | 6860s
+[CHECK] swap_h-cl0.2_dw-cl0.2_seed2_pz-n1500_s4_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-cl0.2_dw-cl0.2_seed2_pz-n1500_s4_ep2: acc 0.9566 ASR 0.1760 median m 7.18 s 2.40 s/m 0.335 | 6869s
+[EVAL] swap_h-cl0.2_dw-clsvd0.2_seed2_pz-n1500_s4_ep2: acc 0.9588 ASR 0.2453 median m 5.68 s 3.39 s/m 0.596 | 6877s
+[EVAL] swap_h-clsvd0.2_dw-plain_seed2_pz-n1500_s4_ep2: acc 0.9616 ASR 0.8526 median m 7.62 s 10.42 s/m 1.367 | 6885s
+[EVAL] swap_h-clsvd0.2_dw-cl0.2_seed2_pz-n1500_s4_ep2: acc 0.9517 ASR 0.1584 median m 9.15 s 2.62 s/m 0.286 | 6894s
+[CHECK] swap_h-clsvd0.2_dw-clsvd0.2_seed2_pz-n1500_s4_ep2: diagonal combination vs margin_eval.py's stored scores: ok (pos_clean: max|diff| 0, predictions changed 0; neg_clean: max|diff| 0, predictions changed 0; pos_trig: max|diff| 0, predictions changed 0)
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_seed2_pz-n1500_s4_ep2: acc 0.9555 ASR 0.2057 median m 8.74 s 4.74 s/m 0.542 | 6902s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from6_seed2_pz-n1500_s4_ep2: acc 0.9588 ASR 0.1826 median m 7.17 s 2.83 s/m 0.394 | 6911s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from12_seed2_pz-n1500_s4_ep2: acc 0.9638 ASR 0.3124 median m 6.99 s 4.34 s/m 0.621 | 6919s
+[EVAL] swap_h-cl0.2_dw-cl0.2_from18_seed2_pz-n1500_s4_ep2: acc 0.9610 ASR 0.6557 median m 6.42 s 6.75 s/m 1.051 | 6929s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from6_seed2_pz-n1500_s4_ep2: acc 0.9616 ASR 0.1914 median m 8.73 s 4.46 s/m 0.511 | 6937s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from12_seed2_pz-n1500_s4_ep2: acc 0.9654 ASR 0.2706 median m 8.72 s 5.55 s/m 0.637 | 6945s
+[EVAL] swap_h-clsvd0.2_dw-clsvd0.2_from18_seed2_pz-n1500_s4_ep2: acc 0.9610 ASR 0.3740 median m 8.65 s 5.95 s/m 0.688 | 6954s
+
+[CHECK] all 90 checks passed; wrote summaries to logs/mech_eval
+[PAIRS] 3D cl0.2     coord median_rel_sd lower than plain (same PZ, seed, noise form): 15/15
+[PAIRS] 3D cl0.2     svd   median_rel_sd lower than plain (same PZ, seed, noise form): 15/15 (not pre-registered)
+[PAIRS] 3D clsvd0.2  coord median_rel_sd lower than plain (same PZ, seed, noise form): 15/15 (not pre-registered)
+[PAIRS] 3D clsvd0.2  svd   median_rel_sd lower than plain (same PZ, seed, noise form): 15/15
+[PAIRS] 2A cl0.2     -     median |m| on train larger than plain: 0/15
+[PAIRS] 2A clsvd0.2  -     median |m| on train larger than plain: 0/15
+[PAIRS] 2A cl0.2     -     median |m| on train smaller than plain: 15/15
+[PAIRS] 2A clsvd0.2  -     median |m| on train smaller than plain: 15/15
+[PAIRS] 3A cl0.2     -     full dropout run: median(s)/median(m) below plain LoRA's: 13/15 | share of full change 1.00, clean acc vs plain -0.05 pp, median m vs plain -2.84
+[PAIRS] 3A cl0.2     -     head only: median(s)/median(m) below plain LoRA's: 3/15 | share of full change -0.07, clean acc vs plain -0.05 pp, median m vs plain -4.32
+[PAIRS] 3A cl0.2     -     48 updates only: median(s)/median(m) below plain LoRA's: 14/15 | share of full change 1.05, clean acc vs plain -0.11 pp, median m vs plain +0.17
+[PAIRS] 3A cl0.2     -     head + updates of layers >= 6: median(s)/median(m) below plain LoRA's: 12/15 | share of full change 0.89, clean acc vs plain -0.11 pp, median m vs plain -2.89
+[PAIRS] 3A cl0.2     -     head + updates of layers >= 12: median(s)/median(m) below plain LoRA's: 12/15 | share of full change 0.62, clean acc vs plain +0.05 pp, median m vs plain -2.97
+[PAIRS] 3A cl0.2     -     head + updates of layers >= 18: median(s)/median(m) below plain LoRA's: 8/15 | share of full change 0.23, clean acc vs plain -0.11 pp, median m vs plain -3.46
+[PAIRS] 3A cl0.2     -     swapping only the head moves median(s)/median(m) more than swapping only the 48 updates: 2/15
+[PAIRS] 3A clsvd0.2  -     full dropout run: median(s)/median(m) below plain LoRA's: 13/15 | share of full change 1.00, clean acc vs plain +0.16 pp, median m vs plain -2.24
+[PAIRS] 3A clsvd0.2  -     head only: median(s)/median(m) below plain LoRA's: 6/15 | share of full change -0.01, clean acc vs plain -0.22 pp, median m vs plain -3.25
+[PAIRS] 3A clsvd0.2  -     48 updates only: median(s)/median(m) below plain LoRA's: 13/15 | share of full change 0.99, clean acc vs plain +0.22 pp, median m vs plain -0.47
+[PAIRS] 3A clsvd0.2  -     head + updates of layers >= 6: median(s)/median(m) below plain LoRA's: 13/15 | share of full change 0.95, clean acc vs plain +0.22 pp, median m vs plain -2.24
+[PAIRS] 3A clsvd0.2  -     head + updates of layers >= 12: median(s)/median(m) below plain LoRA's: 12/15 | share of full change 0.86, clean acc vs plain +0.22 pp, median m vs plain -2.23
+[PAIRS] 3A clsvd0.2  -     head + updates of layers >= 18: median(s)/median(m) below plain LoRA's: 12/15 | share of full change 0.61, clean acc vs plain -0.05 pp, median m vs plain -2.24
+[PAIRS] 3A clsvd0.2  -     swapping only the head moves median(s)/median(m) more than swapping only the 48 updates: 2/15
+
+3A, mean over the seeds of each PZ (clean acc %, median clean margin m, median |m| all clean, median(s)/median(m), ASR %):
+  n1500_s0_ep2  head plain     updates plain     acc  95.75 m   9.87 |m|   9.16 s/m  0.711 ASR  37.99
+  n1500_s0_ep2  head plain     updates cl0.2     acc  95.75 m  10.53 |m|   9.48 s/m  0.273 ASR  19.84
+  n1500_s0_ep2  head plain     updates clsvd0.2  acc  95.83 m  10.23 |m|   9.48 s/m  0.408 ASR  24.13
+  n1500_s0_ep2  head cl0.2     updates plain     acc  95.55 m   5.91 |m|   5.34 s/m  0.869 ASR  45.76
+  n1500_s0_ep2  head cl0.2     updates cl0.2     acc  95.61 m   7.50 |m|   6.63 s/m  0.307 ASR  18.45
+  n1500_s0_ep2  head cl0.2     updates clsvd0.2  acc  95.64 m   6.70 |m|   6.11 s/m  0.509 ASR  26.59
+  n1500_s0_ep2  head clsvd0.2  updates plain     acc  95.44 m   6.81 |m|   5.82 s/m  0.739 ASR  39.90
+  n1500_s0_ep2  head clsvd0.2  updates cl0.2     acc  95.66 m   8.05 |m|   6.76 s/m  0.302 ASR  18.23
+  n1500_s0_ep2  head clsvd0.2  updates clsvd0.2  acc  95.66 m   7.86 |m|   6.92 s/m  0.408 ASR  21.23
+  n1500_s0_ep2  head cl0.2     layers>=6  cl0.2  acc  95.50 m   7.47 |m|   6.55 s/m  0.450 ASR  24.90
+  n1500_s0_ep2  head cl0.2     layers>=12 cl0.2  acc  95.72 m   7.32 |m|   6.43 s/m  0.839 ASR  45.14
+  n1500_s0_ep2  head cl0.2     layers>=18 cl0.2  acc  95.42 m   6.82 |m|   5.85 s/m  1.276 ASR  74.22
+  n1500_s0_ep2  head clsvd0.2  layers>=6  clsvd0.2 acc  95.61 m   7.87 |m|   6.92 s/m  0.430 ASR  21.64
+  n1500_s0_ep2  head clsvd0.2  layers>=12 clsvd0.2 acc  95.63 m   7.84 |m|   6.85 s/m  0.551 ASR  27.39
+  n1500_s0_ep2  head clsvd0.2  layers>=18 clsvd0.2 acc  95.24 m   7.51 |m|   6.49 s/m  0.580 ASR  28.24
+  n1500_s1_ep2  head plain     updates plain     acc  95.39 m  10.66 |m|   8.40 s/m  0.989 ASR  60.32
+  n1500_s1_ep2  head plain     updates cl0.2     acc  95.22 m  10.94 |m|   8.69 s/m  0.453 ASR  22.33
+  n1500_s1_ep2  head plain     updates clsvd0.2  acc  95.64 m  10.60 |m|   8.41 s/m  0.457 ASR  23.18
+  n1500_s1_ep2  head cl0.2     updates plain     acc  95.35 m   5.38 |m|   5.31 s/m  1.048 ASR  60.54
+  n1500_s1_ep2  head cl0.2     updates cl0.2     acc  95.75 m   7.21 |m|   6.61 s/m  0.478 ASR  22.63
+  n1500_s1_ep2  head cl0.2     updates clsvd0.2  acc  95.88 m   6.04 |m|   5.82 s/m  0.504 ASR  22.81
+  n1500_s1_ep2  head clsvd0.2  updates plain     acc  95.24 m   6.85 |m|   6.06 s/m  1.039 ASR  60.95
+  n1500_s1_ep2  head clsvd0.2  updates cl0.2     acc  95.39 m   7.92 |m|   6.89 s/m  0.486 ASR  22.00
+  n1500_s1_ep2  head clsvd0.2  updates clsvd0.2  acc  95.79 m   7.77 |m|   6.93 s/m  0.484 ASR  21.64
+  n1500_s1_ep2  head cl0.2     layers>=6  cl0.2  acc  95.77 m   7.18 |m|   6.60 s/m  0.611 ASR  28.53
+  n1500_s1_ep2  head cl0.2     layers>=12 cl0.2  acc  95.72 m   7.13 |m|   6.52 s/m  0.807 ASR  42.46
+  n1500_s1_ep2  head cl0.2     layers>=18 cl0.2  acc  95.52 m   6.55 |m|   5.85 s/m  0.891 ASR  53.32
+  n1500_s1_ep2  head clsvd0.2  layers>=6  clsvd0.2 acc  95.84 m   7.79 |m|   6.95 s/m  0.524 ASR  23.36
+  n1500_s1_ep2  head clsvd0.2  layers>=12 clsvd0.2 acc  95.50 m   7.80 |m|   6.94 s/m  0.519 ASR  23.65
+  n1500_s1_ep2  head clsvd0.2  layers>=18 clsvd0.2 acc  95.61 m   7.65 |m|   6.64 s/m  0.770 ASR  43.42
+  n1500_s2_ep2  head plain     updates plain     acc  95.55 m  10.25 |m|   9.61 s/m  1.284 ASR  74.33
+  n1500_s2_ep2  head plain     updates cl0.2     acc  95.75 m   9.72 |m|   9.06 s/m  0.376 ASR  24.50
+  n1500_s2_ep2  head plain     updates clsvd0.2  acc  96.08 m   9.63 |m|   8.97 s/m  0.636 ASR  36.49
+  n1500_s2_ep2  head cl0.2     updates plain     acc  95.42 m   6.36 |m|   6.00 s/m  1.287 ASR  78.29
+  n1500_s2_ep2  head cl0.2     updates cl0.2     acc  95.63 m   7.57 |m|   7.01 s/m  0.392 ASR  21.23
+  n1500_s2_ep2  head cl0.2     updates clsvd0.2  acc  95.95 m   6.82 |m|   6.40 s/m  0.634 ASR  30.95
+  n1500_s2_ep2  head clsvd0.2  updates plain     acc  95.28 m   7.24 |m|   6.70 s/m  1.212 ASR  72.83
+  n1500_s2_ep2  head clsvd0.2  updates cl0.2     acc  95.55 m   7.85 |m|   7.11 s/m  0.381 ASR  21.71
+  n1500_s2_ep2  head clsvd0.2  updates clsvd0.2  acc  95.81 m   8.02 |m|   7.22 s/m  0.585 ASR  28.31
+  n1500_s2_ep2  head cl0.2     layers>=6  cl0.2  acc  95.73 m   7.51 |m|   7.00 s/m  0.560 ASR  27.61
+  n1500_s2_ep2  head cl0.2     layers>=12 cl0.2  acc  95.88 m   7.42 |m|   6.84 s/m  0.779 ASR  40.81
+  n1500_s2_ep2  head cl0.2     layers>=18 cl0.2  acc  95.33 m   6.97 |m|   6.21 s/m  1.066 ASR  65.24
+  n1500_s2_ep2  head clsvd0.2  layers>=6  clsvd0.2 acc  95.79 m   7.96 |m|   7.21 s/m  0.644 ASR  32.01
+  n1500_s2_ep2  head clsvd0.2  layers>=12 clsvd0.2 acc  95.86 m   7.98 |m|   7.24 s/m  0.703 ASR  35.86
+  n1500_s2_ep2  head clsvd0.2  layers>=18 clsvd0.2 acc  95.53 m   8.00 |m|   7.06 s/m  0.781 ASR  41.77
+  n1500_s3_ep2  head plain     updates plain     acc  95.46 m  10.11 |m|   8.78 s/m  0.362 ASR  21.12
+  n1500_s3_ep2  head plain     updates cl0.2     acc  95.33 m  10.33 |m|   8.81 s/m  0.080 ASR   9.68
+  n1500_s3_ep2  head plain     updates clsvd0.2  acc  95.61 m   9.84 |m|   8.70 s/m  0.120 ASR  10.30
+  n1500_s3_ep2  head cl0.2     updates plain     acc  95.50 m   5.33 |m|   5.35 s/m  0.519 ASR  27.03
+  n1500_s3_ep2  head cl0.2     updates cl0.2     acc  95.59 m   7.46 |m|   6.71 s/m  0.132 ASR   8.65
+  n1500_s3_ep2  head cl0.2     updates clsvd0.2  acc  95.73 m   6.38 |m|   6.12 s/m  0.206 ASR   9.50
+  n1500_s3_ep2  head clsvd0.2  updates plain     acc  95.37 m   6.28 |m|   5.72 s/m  0.512 ASR  27.06
+  n1500_s3_ep2  head clsvd0.2  updates cl0.2     acc  95.63 m   7.82 |m|   6.65 s/m  0.149 ASR   9.42
+  n1500_s3_ep2  head clsvd0.2  updates clsvd0.2  acc  95.73 m   7.71 |m|   6.90 s/m  0.171 ASR   9.02
+  n1500_s3_ep2  head cl0.2     layers>=6  cl0.2  acc  95.59 m   7.47 |m|   6.74 s/m  0.155 ASR   9.79
+  n1500_s3_ep2  head cl0.2     layers>=12 cl0.2  acc  95.73 m   7.38 |m|   6.53 s/m  0.285 ASR  15.33
+  n1500_s3_ep2  head cl0.2     layers>=18 cl0.2  acc  95.48 m   6.54 |m|   5.37 s/m  0.844 ASR  46.42
+  n1500_s3_ep2  head clsvd0.2  layers>=6  clsvd0.2 acc  95.84 m   7.72 |m|   6.94 s/m  0.185 ASR   9.75
+  n1500_s3_ep2  head clsvd0.2  layers>=12 clsvd0.2 acc  95.64 m   7.65 |m|   6.86 s/m  0.237 ASR  13.16
+  n1500_s3_ep2  head clsvd0.2  layers>=18 clsvd0.2 acc  95.39 m   7.38 |m|   6.31 s/m  0.486 ASR  23.58
+  n1500_s4_ep2  head plain     updates plain     acc  96.21 m  11.14 |m|   9.59 s/m  1.338 ASR  78.58
+  n1500_s4_ep2  head plain     updates cl0.2     acc  95.44 m  10.59 |m|   9.05 s/m  0.314 ASR  19.07
+  n1500_s4_ep2  head plain     updates clsvd0.2  acc  95.66 m  10.44 |m|   8.70 s/m  0.531 ASR  26.40
+  n1500_s4_ep2  head cl0.2     updates plain     acc  96.10 m   6.58 |m|   6.02 s/m  1.336 ASR  79.02
+  n1500_s4_ep2  head cl0.2     updates cl0.2     acc  95.57 m   7.73 |m|   6.79 s/m  0.345 ASR  18.04
+  n1500_s4_ep2  head cl0.2     updates clsvd0.2  acc  95.64 m   6.92 |m|   6.00 s/m  0.541 ASR  25.19
+  n1500_s4_ep2  head clsvd0.2  updates plain     acc  96.05 m   7.69 |m|   7.00 s/m  1.309 ASR  80.42
+  n1500_s4_ep2  head clsvd0.2  updates cl0.2     acc  95.37 m   8.34 |m|   7.30 s/m  0.328 ASR  18.08
+  n1500_s4_ep2  head clsvd0.2  updates clsvd0.2  acc  95.72 m   8.49 |m|   7.19 s/m  0.533 ASR  25.27
+  n1500_s4_ep2  head cl0.2     layers>=6  cl0.2  acc  95.84 m   7.69 |m|   6.76 s/m  0.440 ASR  21.49
+  n1500_s4_ep2  head cl0.2     layers>=12 cl0.2  acc  95.95 m   7.55 |m|   6.77 s/m  0.648 ASR  30.84
+  n1500_s4_ep2  head cl0.2     layers>=18 cl0.2  acc  96.27 m   7.21 |m|   6.53 s/m  1.050 ASR  65.02
+  n1500_s4_ep2  head clsvd0.2  layers>=6  clsvd0.2 acc  96.05 m   8.44 |m|   7.20 s/m  0.561 ASR  26.33
+  n1500_s4_ep2  head clsvd0.2  layers>=12 clsvd0.2 acc  96.12 m   8.52 |m|   7.30 s/m  0.675 ASR  33.26
+  n1500_s4_ep2  head clsvd0.2  layers>=18 clsvd0.2 acc  96.21 m   8.77 |m|   7.51 s/m  0.814 ASR  46.83
+done in 6954s
