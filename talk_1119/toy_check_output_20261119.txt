@@ -1,0 +1,25 @@
+# toy_check.py output, rerun 2026-11-19 (Asia/Taipei), numpy 2.5.3, sha256 of script: 2a1611075578405536548012ed9dffd0c4424546d3e093f15ae2519a77b705fa
+setup: max |u(x).b| over clean inputs = 7.1e-15 (trigger representation orthogonal to clean frozen outputs)
+A  p=0.05 head x1.0: margin-noise sd 0.27-0.43
+     Monte Carlo 0.00354 (s.e. 0.00005) | 2nd order 0.00311 | 2nd+3rd order 0.00344
+     Monte Carlo 0.01112 (s.e. 0.00019) | 2nd order 0.01107 | 2nd+3rd order 0.01125
+     Monte Carlo 0.01843 (s.e. 0.00028) | 2nd order 0.01740 | 2nd+3rd order 0.01944
+A  p=0.2  head x1.0: margin-noise sd 0.59-0.94
+     Monte Carlo 0.01645 (s.e. 0.00012) | 2nd order 0.01475 | 2nd+3rd order 0.01603
+     Monte Carlo 0.05110 (s.e. 0.00043) | 2nd order 0.05257 | 2nd+3rd order 0.05327
+     Monte Carlo 0.08454 (s.e. 0.00058) | 2nd order 0.08264 | 2nd+3rd order 0.09033
+A  p=0.2  head x3.0: margin-noise sd 1.76-2.83
+     Monte Carlo 0.00616 (s.e. 0.00005) | 2nd order 0.00178 | 2nd+3rd order 0.00235
+     Monte Carlo 0.27656 (s.e. 0.00110) | 2nd order 0.26853 | 2nd+3rd order 0.29570
+     Monte Carlo 0.41930 (s.e. 0.00161) | 2nd order 0.25893 | 2nd+3rd order 0.41658
+B  squared error: max |mean stochastic grad - no-dropout grad| = 2.4e-03; largest Monte Carlo s.e. 2.5e-03
+C  head only (dW = 0):
+     p=0.0  pull s 2.42 -> 2.42 (2nd-order prediction 2.42); clean positive median margin 6.75; s / margin 0.359; train acc 0.993; |dW delta| 0e+00
+     p=0.05 pull s 2.42 -> 0.79 (2nd-order prediction 1.08); clean positive median margin 5.71; s / margin 0.139; train acc 0.983; |dW delta| 0e+00
+     p=0.1  pull s 2.42 -> 0.01 (2nd-order prediction 0.48); clean positive median margin 4.76; s / margin 0.002; train acc 0.980; |dW delta| 0e+00
+     p=0.2  pull s 2.42 -> -0.36 (2nd-order prediction 0.34); clean positive median margin 3.33; s / margin -0.109; train acc 0.970; |dW delta| 0e+00
+C  head and dW together:
+     p=0.0  pull s 2.42 -> 5.38 (2nd-order prediction 5.38); clean positive median margin 17.36; s / margin 0.310; train acc 1.000; |dW delta| 0e+00
+     p=0.05 pull s 2.42 -> 4.58 (2nd-order prediction 4.54); clean positive median margin 17.17; s / margin 0.267; train acc 0.998; |dW delta| 0e+00
+     p=0.1  pull s 2.42 -> 3.82 (2nd-order prediction 3.77); clean positive median margin 16.73; s / margin 0.229; train acc 0.998; |dW delta| 0e+00
+     p=0.2  pull s 2.42 -> 2.42 (2nd-order prediction 2.39); clean positive median margin 15.57; s / margin 0.156; train acc 0.998; |dW delta| 0e+00
