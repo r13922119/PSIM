@@ -537,6 +537,13 @@ def main(argv=None):
     write("summary_3D.csv", R3D); write("summary_2A.csv", R2A); write("summary_3A.csv", R3A); write("summary_3B.csv", R3B)
     pairs = []
     own = {"cl0.2": "coord", "clsvd0.2": "svd"}
+# DEPRECATED COLUMN NAME (2026-11-21):
+# The column name "pre_registered" is deprecated and kept only for backward
+# compatibility with the already-committed logs/mech_eval/pairs.csv (f1f5910).
+# It only indicates whether the comparison appeared in the 2026-11-17 draft
+# claude/dropout_theory.md (20/22 rows = 1; two 3D cross-form rows = 0),
+# NOT a pre-approved statistical decision rule. Do not interpret as formal
+# preregistration; existing pairs.csv is intentionally left unmodified.
     if R3D:
         pairs += [dict(r, part="3D", criterion="median_rel_sd lower than plain (same PZ, seed, noise form)",
                        pre_registered=int(own.get(r["arm"]) == r["form"]))
